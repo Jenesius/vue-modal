@@ -1,10 +1,5 @@
 <template>
-    <!--
-    <div class = "widget__modal-container" v-show = "modalQueue.length">
-
-    </div>
-    -->
-    <transition-group name = "list">
+    <transition-group name = "modal-list">
         <widget-container-modal-item
                 v-for = "(elem, index) in modalQueue"
                 :key = index
@@ -38,31 +33,23 @@
     }
 </script>
 
-<style >
+<style>
 
 
-    .list-enter-active,
-    .list-leave-active {
+    .modal-list-enter-active,
+    .modal-list-leave-active,
+    .modal-list-enter-active .widget__modal-back,
+    .modal-list-leave-active .widget__modal-back{
         transition: all 0.2s ease;
     }
-    .list-enter-from,
-    .list-leave-to {
-
-
-    }
-
-    .list-enter-from,
-    .list-leave-to{
+    .modal-list-enter-from,
+    .modal-list-leave-to{
 		opacity: 0 !important;
     }
-/*
-    .list-enter-from .widget__modal-back,
-    .list-leave-to .widget__modal-back{
-		opacity: 0 !important;
-    }*/
+
     
-    .list-enter-from .widget__modal-wrap,
-    .list-leave-to .widget__modal-wrap{
+    .modal-list-enter-from .widget__modal-wrap,
+    .modal-list-leave-to .widget__modal-wrap{
 		transform: translateY(-60px);
     }
     

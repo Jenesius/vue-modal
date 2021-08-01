@@ -10,7 +10,6 @@ For add modals in your project you need to put the modal's container in the App 
 ```vue
 <template>
     <widget-container-modal />
-
 </template>
 <script>
     import {container} from "jenesius-vue-modal";
@@ -39,7 +38,6 @@ or
             openModal(VueComponent, props);
         }
     }
-
 ```
 
 ## Methods

@@ -39,7 +39,10 @@
     .modal-list-enter-active,
     .modal-list-leave-active,
     .modal-list-enter-active .widget__modal-back,
-    .modal-list-leave-active .widget__modal-back{
+    .modal-list-leave-active .widget__modal-back,
+    .modal-list-enter-active .widget__modal-wrap,
+    .modal-list-leave-active .widget__modal-wrap
+    {
         transition: all 0.2s ease;
     }
     .modal-list-enter-from,

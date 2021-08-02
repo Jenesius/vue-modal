@@ -61,12 +61,6 @@
         width: 100%;
 
         cursor: pointer;
-
-        transition:0.3s;
     }
-
-    .widget__modal-container__item-component{
-        transition: transform 0.1s;
-    }
-    
+	
 </style>

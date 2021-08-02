@@ -14,7 +14,7 @@
     "src/plugin/*"
   ],
   "author": "Jenesius",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

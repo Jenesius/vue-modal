@@ -2,6 +2,12 @@
 
 Jenesius vue modal is simple library for **Vue 3** only.
 
+### Installation
+
+```markdown
+npm i jenesius-vue-modal
+```
+
 ----
 
 For add modals in your project you need to put the modal's container in the App component:
@@ -58,13 +64,13 @@ or
     </template>
     <script>
         export default {
-        	props: {
-        		title: String
+            props: {
+                title: String
             }
         }
     </script>
 ```
-For show this component
+To show this component
 ```js
     import {useModal} from "jenesius-vue-modal"
     import WidgeTestModal from "WidgeTestModal.vue";

@@ -98,4 +98,16 @@ export function useModal(){
 
 export function initialize(){
     state.initialized = true;
+
+
+
+    /**
+     * If user press Escape then close last opened modal
+     * */
+    document.addEventListener("keyup", e => {
+
+        if (e.key === "Escape") popModal();
+
+    })
+
 }

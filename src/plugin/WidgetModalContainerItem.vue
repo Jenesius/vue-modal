@@ -2,10 +2,8 @@
     <div class = "widget__modal-container__item" >
 
         <div class = "widget__modal-container__item-back widget__modal-back" @click="popModal"/>
-
-        <div class = "widget__modal-container__item-component widget__modal-wrap">
-            <component :is = component v-bind = "params" />
-        </div>
+	
+		<component :is = component v-bind = "params" class = "widget__modal-wrap" />
 
     </div>
 </template>

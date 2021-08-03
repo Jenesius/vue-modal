@@ -1,0 +1,11 @@
+.modal-title{
+    margin: 5px 0;
+    font-family: Verdana,serif;
+    font-size: 15px;
+}
+.modal-bottom{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}

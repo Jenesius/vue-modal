@@ -1,0 +1,11 @@
+@import "button.css";
+@import "modal.css";
+@import "input.css";
+@import "title.css";
+*{
+    font-family: Verdana, sans-serif;
+}
+
+p{
+    margin: 0;
+}

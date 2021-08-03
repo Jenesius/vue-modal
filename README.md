@@ -6,7 +6,7 @@ Jenesius vue modal is simple library for **Vue 3** only.
 ### Installation
 
 ```markdown
-npm i jenesius-vue-modals
+npm i jenesius-vue-modal
 ```
 
 ----

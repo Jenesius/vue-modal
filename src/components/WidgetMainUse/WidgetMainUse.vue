@@ -20,7 +20,7 @@
 	import WidgetCode from "../WidgetCode";
 	import {App, Modal} from "./filesHtml";
 	import WidgetModalAlert from "../modals/WidgetModalAlert";
-	import {useModal} from "../../plugin";
+	import {useModal} from "../../../plugin";
 	
 	export default {
 		

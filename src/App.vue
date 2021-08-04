@@ -31,7 +31,7 @@
 <script>
 	/*eslint-disable*/
 	
-    import {container, openModal} from "./plugin";
+    import {container, openModal} from "../plugin";
 
     import {reactive} from "vue";
 	import WidgetStars from "./components/WidgetStars/WidgetStars";

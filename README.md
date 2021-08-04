@@ -1,7 +1,12 @@
 # Jenesius Vue Modal
 
 Jenesius vue modal is simple library for **Vue 3** only.
+
+![](https://img.shields.io/github/stars/Jenesius/vue-modal)
+
 [Examples](https://modal.jenesius.com/)
+
+
 
 ### Installation
 

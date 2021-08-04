@@ -1,11 +1,12 @@
 <template>
-	<p>{{title}}</p>
+	<p>{{title}} {{age}}</p>
 </template>
 
 <script>
 	export default {
 		props: {
-			title: String
+			title: String,
+			age  : Number,
 		},
 		name: "ModalTest"
 	}

@@ -30,6 +30,9 @@ watch(modalQueue.value, () => {
 function closeById(id){
     const indexFoRemove = modalQueue.value.findIndex(item => item.id === id);
 
+    //Modal with id not found
+    if (indexFoRemove === -1) return;
+
     modalQueue.value.splice(indexFoRemove, 1);
 }
 
@@ -106,7 +109,7 @@ export function initialize(){
      * */
     document.addEventListener("keyup", e => {
 
-        if (e.key === "Escape") popModal();
+        if (e.key === "Escape" || e.code === "Escape") popModal();
 
     })
 

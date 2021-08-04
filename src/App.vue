@@ -1,6 +1,7 @@
 <template>
 	
 	<widget-container-modal />
+	
 	<div class = "app-header">
 		
 		<p>Documentation (not now)</p>

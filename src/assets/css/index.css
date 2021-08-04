@@ -9,3 +9,21 @@
 p{
     margin: 0;
 }
+
+#app{
+    margin: auto;
+
+    width: 100%;
+}
+
+@media screen and (min-width: 768px){
+    #app{
+        width: 600px;
+    }
+}
+
+@media screen and (min-width: 1144px) {
+    #app{
+        width: 900px;
+    }
+}

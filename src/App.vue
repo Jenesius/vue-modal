@@ -1,6 +1,7 @@
 <template>
 	
 	<widget-container-modal />
+	
 	<div class = "app-header">
 		
 		<p>Documentation (not now)</p>
@@ -30,7 +31,7 @@
 <script>
 	/*eslint-disable*/
 	
-    import {container, openModal} from "./plugin";
+    import {container, openModal} from "../plugin";
 
     import {reactive} from "vue";
 	import WidgetStars from "./components/WidgetStars/WidgetStars";

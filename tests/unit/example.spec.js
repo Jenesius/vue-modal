@@ -9,13 +9,7 @@ import ModalTest from "./ModalTest";
 import WidgetModalContainerItem from "../../plugin/WidgetModalContainerItem";
 
 
-function longWait(){
 
-  return new Promise(resolve => {
-    setTimeout(resolve, 1000);
-  })
-
-}
 
 describe('tests', () => {
 
@@ -27,7 +21,7 @@ describe('tests', () => {
   })
   it ("Initialized", async () => {
 
-    const wrap = await mount(container);
+    await mount(container);
 
     expect(() => openModal(ModalTest)).not.toThrow()
 
@@ -161,8 +155,6 @@ describe('tests', () => {
 
   it("press escape", async () => {
 
-    const wrapper = await mount(App);
-
     openModal(ModalTest);
 
     await nextTick();
@@ -180,8 +172,6 @@ describe('tests', () => {
 
   it("close destroyed modal", async () => {
 
-    const wrapper = await mount(App);
-
     const modal = openModal(ModalTest);
     pushModal(ModalTest);
 
@@ -197,7 +187,6 @@ describe('tests', () => {
 
   it("close by id", async () => {
 
-    const wrapper = await mount(App);
 
     const modal1 = pushModal(ModalTest);
     const modal2 = pushModal(ModalTest);
@@ -213,9 +202,8 @@ describe('tests', () => {
   })
 
   it("close destroyed modal", async () => {
-    const wrapper = await mount(App);
 
-    const modal1 = openModal(ModalTest);
+    openModal(ModalTest);
     const modal2 = openModal(ModalTest);
     const modal3 = openModal(ModalTest);
 

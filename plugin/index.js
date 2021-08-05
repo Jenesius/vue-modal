@@ -11,7 +11,10 @@ function ModalObject(id){
 
     object.close = () => {
 
-        if (object.onclose && object.onclose() === false) return false;
+        try {
+            if (object.onclose && object.onclose() === false) return false;
+
+        } catch (e) {}
 
         closeById(id);
 
@@ -71,10 +74,11 @@ export function closeModal() {
 
     for(let i = modalQueue.value.length - 1; i >= 0; i--) {
 
-        if (!modalQueue.value[i].modalObject.close()) return;
+        if (!modalQueue.value[i].modalObject.close()) return false;
 
     }
 
+    return true;
 }
 
 /**

@@ -1,6 +1,9 @@
 # Jenesius Vue Modal
 
-Jenesius vue modal is simple library for **Vue 3** only.[Web](https://modal.jenesius.com/)
+Jenesius vue modal is simple library for **Vue 3** only.
+
+- [Site](https://modal.jenesius.com/)
+- [Documentation](https://modal.jenesius.com/docs.html/installation#npm)
 
 ![](https://img.shields.io/github/stars/Jenesius/vue-modal)
 ![Greet everyone](https://github.com/Jenesius/vue-modal/actions/workflows/node.js.yml/badge.svg)

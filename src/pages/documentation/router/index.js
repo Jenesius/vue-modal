@@ -27,7 +27,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory("/docs/"),
+    history: createWebHistory("/docs.html"),
     routes,
     scrollBehavior(to) {
         if (to.hash) {

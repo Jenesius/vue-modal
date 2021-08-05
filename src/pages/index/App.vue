@@ -5,7 +5,7 @@
 	<div class = "app-content">
 		<div class = "app-header">
 
-			<h3><a href = "/docs" class = "link_dark">Documentation</a></h3>
+			<h3><a href = "/docs.html" class = "link_dark">Documentation</a></h3>
 
 			<widget-stars/>
 

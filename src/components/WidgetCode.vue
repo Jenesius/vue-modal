@@ -1,7 +1,7 @@
 <template>
 	
 	<pre class = 'container-code'>
-		<div class = "filename">{{name}}</div>
+		<div class = "filename" v-if = "name">{{name}}</div>
 		<code ref = "code" class = "code">
 			{{text}}
 		</code>
@@ -34,7 +34,7 @@
 			const wordConfig = [
 
 				{
-					words: ["export", "default", "const", "from", "import"],
+					words: ["export", "default", "const", "from", "import", "true", "false", "return", "let", "const", "if", "else"],
 					style: "color: orange"
 				},
 				{
@@ -45,7 +45,10 @@
 					words: ["template", "script"],
 					style: "color: yellow"
 				},
-
+				{
+					reg: /(\/\/.*)/g,
+					style: "color: #8d8d8d"
+				},
 			];
 			
 			text = text.replace('<', "&lt;").replace('>', "&gt;");
@@ -63,7 +66,7 @@
 				})
 				
 				
-				if (item.reg) text = text.replace(item.reg, `<span style = "${item.style}">"$1"</span>`)
+				if (item.reg) text = text.replace(item.reg, `<span style = "${item.style}">$1</span>`)
 				
 				
 			})

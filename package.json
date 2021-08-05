@@ -15,7 +15,8 @@
     "plugin/*"
   ],
   "dependencies": {
-    "vue": "^3.0.6"
+    "vue": "^3.0.6",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

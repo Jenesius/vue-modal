@@ -10,7 +10,7 @@
 		<div class = "widget-main__result">
 			<button class = "button purple" @click = "openAlert">Result</button>
 			
-			<p>*Don't forget to add css styles for you modals. Like background-color: white and other</p>
+			<span class = "text-comment">*Don't forget to add css styles for you modals. Like background-color: white and other</span>
 		</div>
 		
 	</div>
@@ -49,8 +49,5 @@
 		align-items: center;
 		gap: 10px;
 	}
-	.widget-main__result>p{
-		color: #625e5e;
-		font-size: 13px;
-	}
+
 </style>

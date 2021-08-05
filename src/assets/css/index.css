@@ -54,3 +54,7 @@ a{
 .link_dark:hover{
     color: var(--main)
 }
+
+.cursor-pointer{
+    cursor: pointer;
+}

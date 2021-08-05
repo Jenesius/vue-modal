@@ -4,14 +4,21 @@
 		<div class = "flex">
 			<img class = "header__logo" src = "./../../assets/ico/vue.svg" alt = "logo"/>
 
-			<span class = "header__title">Jenesius vue modal</span>
+			<span class = "header__title">jenesius vue modal</span>
 		</div>
 
-		<nav class = "header__list">
+		<ul class = "header__list">
 
-			<a href = "https://github.com/Jenesius/vue-modal">GitHub</a>
+			<li>
+				<widget-dropdown title = "Translations" :array = "arrayTransition"/>
+			</li>
 
-		</nav>
+			<li>
+				<a href = "https://github.com/Jenesius/vue-modal">GitHub</a>
+			</li>
+
+
+		</ul>
 
 	</header>
 
@@ -30,10 +37,37 @@
 	import WidgetNavbar from "./components/WidgetNavbar";
 	import {container} from "../../../plugin";
 	import "./assets/js/Vocabulary";
-	export default {
-		components: {WidgetNavbar, WidgetModalContainer: container},
+	import WidgetDropdown from "../../components/WidgetDropdown";
 
-		
+
+	export default {
+
+		setup(){
+
+
+
+			const arrayTransition = [
+				{
+					title: "English",
+					func : () => {
+						localStorage.setItem("language", "en");
+						location.reload();
+					}
+				},
+				{
+					title: "Русский",
+					func : () => {
+						localStorage.setItem("language", "ru");
+						location.reload();
+					}
+				}
+			];
+
+			return {
+				arrayTransition
+			};
+		},
+		components: {WidgetDropdown, WidgetNavbar, WidgetModalContainer: container},
 		name: "App"
 	}
 </script>
@@ -66,12 +100,19 @@
 		line-height: 32px;
 		font-weight: 500;
 		color: #2c3e50;
+
+		text-transform: capitalize;
 	}
 
 	.header__list{
 		align-items: center;
 		display: flex;
+		margin: 0;
+		list-style: none;
 
+	}
+	.header__list>li{
+		margin: 0 10px;
 	}
 	.header__list a{
 		color:#2c3e50;

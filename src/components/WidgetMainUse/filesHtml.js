@@ -1,13 +1,24 @@
 
 
 export const App =
-`import {useModal} from "jenesius-vue-modal";
-import Modal from "Modal.vue"
+`<template>
+	<widget-container-modal/>
+</template>
 
-const {openModal, closeModal} = useModal();
-openModal(Modal, {
-    title: "Hello world!"
-})`;
+<script>
+    import {openModal, container} from "jenesius-vue-modal";
+    import Modal from "Modal.vue"
+
+    export default {
+		mounted(){
+			openModal(Modal, {
+				title: "Hello world!"
+			})
+		},
+		components: {WidgetContainerModal: container}
+    }
+</script>
+`;
 
 
 export const Modal =

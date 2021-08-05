@@ -2,7 +2,7 @@
 	<div class = "widget-main">
 		
 		<p class = "title-md">How to    use?</p>
-		
+
 		<widget-code name = "App.vue">{{App}}</widget-code>
 		
 		<widget-code name = "Modal.vue">{{Modal}}</widget-code>

@@ -7,10 +7,13 @@
 		installation: "установка",
 		methods: "методы",
 
+		"getting started": "Начало работы",
+
 		styles: "Стилизация",
 		animation: "Анимация",
 		example: "пример",
 		recommendation_npm: "Npm рекомендуется для инсталяции пакета.",
+		info_get_started: "Для начала работы нам необходимо проинициализировать модальные окна, добавим контейнер в котором будут показываться наши компоненты. Контейнер импортируем из библиотеки:",
 
 		//OPEN_MODAL
 		using_openModal: "Метод openModal используется для показа компоненты в контейнере модальных окон.",
@@ -48,11 +51,14 @@
 		installation: "Installation",
 		methods: "methods",
 
+		"getting started": "Getting started",
+
 		styles: "styles",
 		animation: "Animation",
 		example: "example",
 		recommendation_npm: "Npm is recommended for installing a package.",
 
+		info_get_started: "To get started, we need to initialize the modals. We import the container from the library:",
 		//OPEN_MODAL
 		using_openModal: "The openModal method is used to display a component in a modal window container.",
 		first_param_openModal: "The first parameter is any VueComponent that needs to be displayed:",
@@ -87,9 +93,9 @@
 	}
 }
 export function useVocabulary(name, {} = {}) {
-	let lang = "en";
+	let lang = localStorage.getItem("language") || navigator.language || "en";
 
-	if (/^ru\b/.test(navigator.language)) {
+	if (/^ru\b/.test(lang)) {
 		lang = 'ru';
 	}
 	return store[lang][name];

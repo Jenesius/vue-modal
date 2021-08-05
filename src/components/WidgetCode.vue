@@ -57,6 +57,7 @@
 
 			text = slots.default()[0].children;
 
+			text = text.replace(/\t/g, '    ')
 			
 
 			

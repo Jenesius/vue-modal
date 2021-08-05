@@ -23,6 +23,10 @@ const routes = [
     {
         path: "/best-practices",
         component: ViewDefaultDocumentation
+    },
+    {
+        path: "/",
+        redirect: "/installation"
     }
 ];
 

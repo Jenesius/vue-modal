@@ -1,15 +1,17 @@
 <template>
-	<p><widget-vocabulary name = "recommendation_npm"/></p>
-	<widget-code>{{codeNpmInstall}}</widget-code>
+	<p><widget-vocabulary name = "info_get_started"/></p>
+	<widget-code>
+		{{init}}
+	</widget-code>
 </template>
 
 <script>
 import WidgetCode from "../../../../../components/WidgetCode";
-import * as code from "./codeNpm";
+import * as code from "./codeGettingStarted";
 import WidgetVocabulary from "../../WidgetVocabulary";
 export default {
 	setup: () => ({...code}),
-	name: "FragmentNpm",
+	name: "FragmentGettingStarted",
 	components: {WidgetVocabulary, WidgetCode}
 }
 </script>

@@ -6,6 +6,7 @@ import FragmentPushModal from "../../components/materials/methods/FragmentPushMo
 import FragmentCloseModal from "../../components/materials/methods/FragmentCloseModal";
 import FragmentPopModal from "../../components/materials/methods/FragmentPopModal";
 import {useVocabulary} from "./Vocabulary";
+import FragmentGettingStarted from "../../components/materials/Installation/FragmentGettingStarted";
 
 export const config = [
 	{
@@ -16,6 +17,11 @@ export const config = [
 				title: "npm",
 				link : "npm",
 				component: FragmentNpm
+			},
+			{
+				title: useVocabulary("getting started"),
+				link : "getting-started",
+				component: FragmentGettingStarted
 			}
 		]
 	},

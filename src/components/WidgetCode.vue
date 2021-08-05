@@ -3,7 +3,7 @@
 	<pre class = 'container-code'>
 		<div class = "filename" v-if = "name">{{name}}</div>
 		<code ref = "code" class = "code">
-			{{text}}
+
 		</code>
 	</pre>
 </template>
@@ -26,11 +26,6 @@
 			 * 2. Обернуть &lt;span&gt в цвет <span color = 'red'>&lt;span&gt</span>
 			 * 3. Строки
 			 * */
-			
-
-			let text = slots.default()[0].children;
-			console.log(text, slots.default());
-			
 			const wordConfig = [
 
 				{
@@ -46,10 +41,24 @@
 					style: "color: yellow"
 				},
 				{
+					reg: /^(npm )/g,
+					style: "color: yellow"
+				},
+				{
 					reg: /(\/\/.*)/g,
 					style: "color: #8d8d8d"
 				},
 			];
+
+			let text = "";
+
+			onMounted(() => {
+
+
+			text = slots.default()[0].children;
+
+			
+
 			
 			text = text.replace('<', "&lt;").replace('>', "&gt;");
 			
@@ -72,7 +81,7 @@
 			})
 
 			
-			onMounted(() => {
+
 				code.value.innerHTML= text;
 				
 			})

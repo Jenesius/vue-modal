@@ -1,17 +1,18 @@
 <template>
-	<p>Методы openModal и pushModal возвращают объект <router-link to = "/details#modal-object">modalObject</router-link>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент к этому объекту:</p>
+	<p><widget-vocabulary name = "info_on_close" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
 
 	<widget-code>{{codeOnClose}}</widget-code>
 
 	<div class = "flex gap_5 flex_align-center">
-		<button class = "button purple" @click = "openModalWithoutHook">Example</button>
+		<button class = "button purple" @click = "openModalWithoutHook"><widget-vocabulary name = "example"/></button>
+		<span class = "text-comment"><widget-vocabulary name = "modal_was_close_after"/></span>
 
-		<span class = "text-comment">*Modal was closed after 5 trying.</span>
 	</div>
 
-	<p>В случае, если onclose вернёт <b>false</b>, модальное окно не будет закрыто.</p>
+	<p><widget-vocabulary name = "if_onclose_false_on_close"/></p>
 
-	<p>Если будет открыто несколько модальных окон, и на одном из них будет стоять обработчик onclose, возвращающий false, можно закрыть будет только те, модальных окна, которые были открыты после него.</p>
+
+	<p><widget-vocabulary name = "if_will_open_some_modals_on_close"/></p>
 
 	<widget-code>{{codeOnCloseMiddle}}</widget-code>
 
@@ -22,6 +23,7 @@ import WidgetCode from "../../../../../components/WidgetCode";
 import * as code from "./codeOnClose";
 import {openModal} from "../../../../../../plugin";
 import WidgetModalWithClose from "../../../../../components/modals/WidgetModalWithClose";
+import WidgetVocabulary from "../../WidgetVocabulary";
 
 export default {
 	setup(){
@@ -44,7 +46,7 @@ export default {
 		}
 	},
 	name: "FragmentOnClose",
-	components: {WidgetCode}
+	components: {WidgetVocabulary, WidgetCode}
 }
 </script>
 

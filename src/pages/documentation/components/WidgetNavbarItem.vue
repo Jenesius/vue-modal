@@ -39,6 +39,8 @@
 		font-size: 16px;
 		font-weight: 600;
 		line-height: 34px;
+
+		text-transform: capitalize;
 	}
 
 	.navbar{

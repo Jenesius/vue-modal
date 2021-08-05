@@ -1,60 +1,31 @@
 <template>
-	<div class = "flex">
-	
-		<div class = "navigation">
 
-			<widget-navbar-item v-for = "(elem, index) in array" :key = "index" :title = "elem.title" :array = "elem.array" :link = "elem.link"/>
+	<div class = "navigation">
 
-		</div>
-	
-		<div class = "content">
+		<widget-navbar-item v-for = "(elem, index) in array" :key = "index" :title = "elem.title" :array = "elem.array" :link = "elem.link"/>
 
-
-			<div v-for = "(elem, index) in arrayContent" :key = "index" :id = "elem.link">
-
-				<h2 class = "content-form__title">{{ elem.title }}</h2>
-
-
-				<component :is = "elem.component"  />
-
-			</div>
-
-
-		</div>
-		
 	</div>
+
+
 </template>
 
 <script>
 	import WidgetNavbarItem from "./WidgetNavbarItem";
-	import {useRoute} from "vue-router";
-	import {computed} from "vue";
+
+	import {config} from "../assets/js/AppStore";
 
 	export default {
 		components: {WidgetNavbarItem},
-		props: {
-			array: Array
-		},
-
-		setup(props) {
-
-			const route = useRoute();
-
-			const arrayContent = computed(() => {
-
-				const prettyPath = route.path.replace(/^\//, "" );
-
-				//Текущая страница
-				const currentObject = props.array.find(item => item.link === prettyPath);
-
-				if (!currentObject) return [];
 
 
-				return currentObject.array;
-			});
+		setup() {
+
+			const array = config;
+
+
 
 			return {
-				arrayContent
+				array
 			}
 		},
 		name: "WidgetNavbar"
@@ -77,6 +48,7 @@
 		position: fixed;
 		left: 0;
 
+		top: 63px;
 		width: 320px;
 		padding: 24px 0;
 	}

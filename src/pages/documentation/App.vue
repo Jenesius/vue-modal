@@ -1,8 +1,8 @@
 <template>
-	<div class = "header">
+	<header class = "header">
 
 		<div class = "flex">
-			<img class = "header__logo" src = "./../../assets/ico/vue.svg"/>
+			<img class = "header__logo" src = "./../../assets/ico/vue.svg" alt = "logo"/>
 
 			<span class = "header__title">Jenesius vue modal</span>
 		</div>
@@ -13,114 +13,26 @@
 
 		</nav>
 
-	</div>
+	</header>
 
 	<widget-modal-container/>
 
 	<div class = "app-content">
-		<WidgetNavbar :array="navbarConfig"/>
+
+		<router-view/>
+
+		<WidgetNavbar />
 	</div>
 </template>
 
 <script>
-	import FragmentOpenModal from "./components/materials/FragmentOpenModal";
+
 	import WidgetNavbar from "./components/WidgetNavbar";
-	import FragmentPushModal from "./components/materials/FragmentPushModal";
-	import FragmentCloseModal from "./components/materials/FragmentCloseModal";
 	import {container} from "../../../plugin";
-	import FragmentPopModal from "./components/materials/FragmentPopModal";
-	import FragmentOnClose from "./components/materials/hooks/FragmentOnClose";
-	import FragmentModalObject from "./components/materials/details/FragmentModalObject";
+	import "./assets/js/Vocabulary";
 	export default {
 		components: {WidgetNavbar, WidgetModalContainer: container},
-		setup(){
 
-
-
-			//if (route.path === "/") router.replace("/essentials#installation")
-
-			const navbarConfig = [
-				{
-					title: "Essentials",
-					link : "essentials",
-					array: [
-						{
-							title: "Installation",
-							link : "installation",
-						}
-					]
-				},
-				{
-					title: "Methods",
-					link : "methods",
-					array: [
-						{
-							title: "OpenModal",
-							link : "open-modal",
-							component: FragmentOpenModal
-						},
-						{
-							title: "PushModal",
-							link : "push-modal",
-							component: FragmentPushModal
-						},
-						{
-							title: "CloseModal",
-							link : "close-modal",
-							component: FragmentCloseModal
-						},
-						{
-							title: "PopModal",
-							link : "pop-modal",
-							component: FragmentPopModal
-						}
-					]
-				},
-				{
-					title: "Lifecycle Hooks",
-					link : "lifecycle-hooks",
-					array: [
-						{
-							title: "onClose",
-							link : "on-close",
-							component: FragmentOnClose
-						}
-					]
-				},
-				{
-					title: "Details",
-					link : "details",
-					array: [
-						{
-							title: "ModalObject",
-							link : "modal-object",
-							component: FragmentModalObject
-						},
-						{
-							title: "Styles",
-							link : "styles"
-						},
-						{
-							title: "Animation",
-							link : "animation"
-						}
-					]
-				},
-				{
-					title: "Best practices",
-					link : "best-practices",
-					array: [
-						{
-							title: "Wrapping",
-							link : "wrapping"
-						}
-					]
-				}
-			]
-			
-			return {navbarConfig}
-			
-		},
 		
 		name: "App"
 	}

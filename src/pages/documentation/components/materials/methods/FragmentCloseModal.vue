@@ -1,16 +1,17 @@
 <template>
-	<p>Для закрытия <b>всех</b> модальных окон используется метод closeModal:</p>
+	<p><widget-vocabulary name = "info_closeModal"/></p>
 	<widget-code>{{codeCloseModal}}</widget-code>
 </template>
 
 <script>
-import WidgetCode from "../../../../components/WidgetCode";
+import WidgetCode from "../../../../../components/WidgetCode";
 import {codeCloseModal} from "./codeCloseModal";
+import WidgetVocabulary from "../../WidgetVocabulary";
 
 export default {
 	setup: () => ({codeCloseModal}),
 	name: "FragmentCloseModal",
-	components: {WidgetCode}
+	components: {WidgetVocabulary, WidgetCode}
 }
 </script>
 

@@ -42,17 +42,7 @@ For add modals in your project you need to put the modal's container in the App 
 
     openModal(VueComponent, props);
 ```
-or
-```js
-    import {useModal} from "jenesius-vue-modal";
 
-    export default{
-        setup(){
-            const {openModal} = useModal();
-            openModal(VueComponent, props);
-        }
-    }
-```
 
 ## Methods
 
@@ -62,6 +52,26 @@ or
 | `closeModal()`   | Close all modals |
 | `pushModal(VueComponent, props)` | Add on top modal component |
 | `popModal()` | Close the last modal component |
+
+## onclose hook
+
+To track the closing of a modal window, you need to use **onclick**
+```js
+const modal = openModal(Modal);
+modal.onclose = () => {
+    console.log("Close");
+}
+```
+
+To cancel closing the window, return **false**:
+```js
+const modal = openModal(Modal);
+modal.onclose = () => {
+    if (something === "false") return false;
+}
+
+closeModal();//if something === false, modal will not be closed
+```
 
 ## Example VueModalComponent
 
@@ -80,10 +90,8 @@ or
 ```
 To show this component
 ```js
-    import {useModal} from "jenesius-vue-modal"
+    import {openModal} from "jenesius-vue-modal"
     import WidgeTestModal from "WidgeTestModal.vue";
-
-    const {openModal} = useModal();
 
     openModal(WidgeTestModal, {
         title: "Hello World!"

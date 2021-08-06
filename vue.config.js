@@ -13,6 +13,10 @@ module.exports = {
 
         index: {
             entry: "./src/pages/index/main.js"
+        },
+
+        test: {
+            entry: "./src/pages/test/main.js"
         }
 
     }

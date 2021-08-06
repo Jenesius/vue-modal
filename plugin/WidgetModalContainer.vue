@@ -6,6 +6,7 @@
 
                 :component = elem.component
                 :params    = elem.params
+				:id		   = elem.id
 
         />
     </transition-group>

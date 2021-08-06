@@ -27,6 +27,9 @@ const routes = [
     {
         path: "/",
         redirect: "/installation"
+    },
+    {
+        path: '/:pathMatch(.*)*', redirect: "/installation"
     }
 ];
 

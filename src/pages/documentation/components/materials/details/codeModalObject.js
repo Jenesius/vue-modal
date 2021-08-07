@@ -1,13 +1,13 @@
 export const codeOnClose =
 `import {openModal} from "jenesius-vue-modal;
-const modal = openModal(Modal);
+const modal = await openModal(Modal);
 modal.onclose = () => false;
 
 modal.close() // Модальное окно не закроется
 `;
 
 export const codeModalObject =
-`const modal = openModal(Modal);
+`const modal = await openModal(Modal);
 
 modal.id; //Уникальный идентификатор. 1,2,3 ...
 

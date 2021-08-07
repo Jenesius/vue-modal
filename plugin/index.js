@@ -1,9 +1,6 @@
 /*eslint-disable*/
 import {ref, watch, shallowRef, getCurrentInstance} from "vue";
 import WidgetModalContainer from "./WidgetModalContainer";
-import store from "../src/pages/documentation/assets/js/Vocabulary";
-
-const oncloseStore = {};
 
 export const modalQueue = ref([]); //All modals that showing now
 
@@ -158,7 +155,7 @@ watch(modalQueue.value, () => {
  * */
 export function openModal(component, params = {}){
     return closeModal()
-    .then(res => {
+    .then(() => {
         if (!modalQueue.value.length) return pushModal(component, params)
 
         return null;
@@ -230,7 +227,7 @@ export function onBeforeModalClose(callback){
 
     const a = getCurrentInstance();
 
-    let modalId = a.attrs.id.replace(/[^0-9]/g, "");
+    let modalId = a.attrs["modal-id"].replace(/[^0-9]/g, "");
 
     guards.add(modalId, "close", callback);
 

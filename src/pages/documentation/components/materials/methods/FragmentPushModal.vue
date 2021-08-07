@@ -8,7 +8,8 @@
 
 	<button class = "button purple" @click = "pushInfinityModals"><widget-vocabulary name = "example"/></button>
 
-	<p><widget-vocabulary name = "return_pushModal" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
+	<p><widget-vocabulary name = "onAddModalReturn" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
+	<widget-code>{{codePushModalReturn}}</widget-code>
 	<p><widget-vocabulary name = "for_close_pushModal" :links = "[{hash: 'pop-modal'}]"/></p>
 
 

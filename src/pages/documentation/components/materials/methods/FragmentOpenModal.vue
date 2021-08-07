@@ -10,7 +10,9 @@
 
 	<p><widget-vocabulary name = "second_param_openModal" /></p>
 
-	<p><widget-vocabulary name = "return_openModal" :links = "[{name: 'Details', hash: 'modal-object'}]" /></p>
+	<p><widget-vocabulary name = "onAddModalReturn" :links = "[{name: 'Details', hash: 'modal-object'}]" /></p>
+
+	<widget-code>{{codeOpenModalReturn}}</widget-code>
 
 	<p><widget-vocabulary name = "about_close_openModal" :links = "[{hash: '#push-modal'}]"/></p>
 
@@ -18,7 +20,7 @@
 
 <script>
 	import WidgetCode from "../../../../../components/WidgetCode";
-	import {codeOpenModal, codeOpenModalSimpleComponent} from "./codeOpenModa";
+	import * as code from "./codeOpenModa";
 	import WidgetVocabulary from "../../WidgetVocabulary";
 
 	export default {
@@ -27,7 +29,7 @@
 
 
 
-			return {codeOpenModal,codeOpenModalSimpleComponent}
+			return code
 		},
 
 		name: "FragmentOpenModal",

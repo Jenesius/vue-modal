@@ -30,3 +30,6 @@ export const codePushModalComponent2 =
         setup: () => ({pushModal: () => pushModal(ModalFirst)}),
     }
 </script>`;
+
+export const codePushModalReturn =
+	`const modal = await pushModal(VueComponent); //{id, close, onclose}`

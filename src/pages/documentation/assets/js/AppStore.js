@@ -7,6 +7,8 @@ import FragmentCloseModal from "../../components/materials/methods/FragmentClose
 import FragmentPopModal from "../../components/materials/methods/FragmentPopModal";
 import {useVocabulary} from "./Vocabulary";
 import FragmentGettingStarted from "../../components/materials/Installation/FragmentGettingStarted";
+import FragmentBeforeModalClose from "../../components/materials/hooks/FragmentBeforeModalClose";
+import FragmentOnBeforeModalClose from "../../components/materials/hooks/FragmentOnBeforeModalClose";
 
 export const config = [
 	{
@@ -59,6 +61,16 @@ export const config = [
 				title: "onClose",
 				link : "on-close",
 				component: FragmentOnClose
+			},
+			{
+				title: "Хуки для конкретных компонентов",
+				link: "before-modal-close",
+				component: FragmentBeforeModalClose
+			},
+			{
+				title: "Composition Api",
+				link: "composition-api",
+				component: FragmentOnBeforeModalClose
 			}
 		]
 	},

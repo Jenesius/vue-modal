@@ -13,3 +13,6 @@ export const codeOpenModalSimpleComponent =
         }
     }
 </script>`;
+
+export const codeOpenModalReturn =
+`const modal = await openModal(VueComponent); //{id, close, onclose}`

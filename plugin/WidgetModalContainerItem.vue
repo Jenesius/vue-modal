@@ -2,7 +2,7 @@
     <div class = "widget__modal-container__item" >
         <div class = "widget__modal-container__item-back widget__modal-back" @click="popModal"/>
 	
-		<component :is = component v-bind = "params" class = "widget__modal-wrap" ref = "modalRef" :id = "`_modal_${id}`" />
+		<component :is = component v-bind = "params" class = "widget__modal-wrap" ref = "modalRef" :modal-id = "`_modal_${id}`" />
     </div>
 </template>
 
@@ -16,7 +16,6 @@
             params: Object,
 			id    : Number, // uniq identifier of modals
         },
-
         setup(props){
 
 			const modalRef = ref(null);

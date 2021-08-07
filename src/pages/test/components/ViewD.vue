@@ -10,13 +10,9 @@ export default {
 
 		console.log("+1")
 		onBeforeRouteLeave((to, form, next) => {
-			return new Promise(() => {
-
-				setTimeout(() => {
-
-					next(false)
-				}, 2000);
-			})
+			setTimeout(() => {
+				next(true)
+			}, 2000);
 		})
 		console.log("+2")
 

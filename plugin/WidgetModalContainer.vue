@@ -17,10 +17,8 @@
     import {initialize, modalQueue} from "./index";
     import {onMounted} from "vue";
 
-
     export default {
         setup(){
-
 
             onMounted(() => {
 				initialize();

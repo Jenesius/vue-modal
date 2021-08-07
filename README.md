@@ -57,7 +57,7 @@ For add modals in your project you need to put the modal's container in the App 
 
 To track the closing of a modal window, you need to use **onclick**
 ```js
-const modal = openModal(Modal);
+const modal = await openModal(Modal);
 modal.onclose = () => {
     console.log("Close");
 }
@@ -65,12 +65,28 @@ modal.onclose = () => {
 
 To cancel closing the window, return **false**:
 ```js
-const modal = openModal(Modal);
-modal.onclose = () => {
-    if (something === "false") return false;
+const modal = await openModal(Modal);
+modal.onclose = (next) => {
+    if (something === "false") return next(false);
 }
 
 closeModal();//if something === false, modal will not be closed
+```
+
+Inside component, you can use: 
+```js
+    export default{
+        beforeModalClose(next){}
+    }
+```
+or
+```js
+    export default{
+        setup() {
+			onBeforeModalClose((next) => {
+			});
+		}
+    }
 ```
 
 ## Example VueModalComponent

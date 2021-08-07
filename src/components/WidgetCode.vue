@@ -45,6 +45,10 @@
 					style: "color: yellow"
 				},
 				{
+					words: ["async", "await"],
+					style: "color: #a839cc"
+				},
+				{
 					reg: /(\/\/.*)/g,
 					style: "color: #8d8d8d"
 				},

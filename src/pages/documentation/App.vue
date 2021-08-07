@@ -34,41 +34,14 @@
 
 <script>
 
-	/*eslint-disable*/
-
 	import WidgetNavbar from "./components/WidgetNavbar";
-	import {container, openModal, pushModal} from "../../../plugin";
+	import {container} from "../../../plugin";
 	import "./assets/js/Vocabulary";
 	import WidgetDropdown from "../../components/WidgetDropdown";
 
-	import WidgetModalAlert from "../../components/modals/WidgetModalAlert";
-	import {onMounted} from "vue";
-	import TestModalComponentComposition from "../../components/modals/TestModalComponentComposition";
-	import TestModalComponent from "../../components/modals/TestModalComponent";
-
-
-
 	export default {
 
-		mounted() {
-			console.log("+");
-		},
 		setup(){
-
-
-			onMounted(() => {
-				/*openModal(TestModalComponentComposition, {title: "Modal 1"});
-				pushModal(TestModalComponentComposition, {title: "Modal 2"});
-				pushModal(TestModalComponentComposition, {title: "Modal 3"});*/
-
-
-				openModal(TestModalComponent, {title: "Modal - 1"})
-				pushModal(TestModalComponent, {title: "Modal - 2"})
-				pushModal(TestModalComponent, {title: "Modal - 3"})
-
-			})
-
-
 			const arrayTransition = [
 				{
 					title: "English",

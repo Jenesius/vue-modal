@@ -51,7 +51,7 @@
 						setTimeout(() => {
 
 							next(true);
-							next(false);
+
 
 						}, 2000);
 					})

@@ -2,7 +2,7 @@
 
 
 
- const store =  {
+const store =  {
 	ru: {
 		installation: "установка",
 		methods: "методы",
@@ -90,7 +90,40 @@
 		param_close_modalObject: "<b> close </b> - a method that allows you to close the created modal window",
 		param_onclose_modalObject: "<b> onclose </b> is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If <b> onclose </b> returns false, the modal will not be closed.",
 
+	},
+
+	navigationGuards: {
+		ru: "Навигационные хуки",
+		en: "Navigation Guards",
+	},
+
+	onAddModalReturn: {
+		ru: "Метод возвращает промис, который в случае успеха вернёт <a>ModalObject</a>",
+		en: "The method returns a promise, which, if successful, will return <a> ModalObject </a>"
+	},
+
+	guardNavigationHooksOncloseInfo: {
+		ru: "Методы <a>openModal<a/> и <a>pushModal<a/> возвращают promoise, который в случае успеха вернёт объект <a>modalObject</a>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент к этому объекту:",
+		en: "The <a> openModal <a/> and <a> pushModal <a/> methods return promoise, which, if successful, will return the <a> modalObject </a> object. In order to catch the closing of a modal window, you need to add an event to this object:"
+	},
+	guardNavigationHooksOncloseReturnFalse: {
+		ru: "Если в функциюю 'next' будет передано значение false, модальное окно не будет закрыто.",
+		en: "If false is passed to the 'next' function, the modal will not be closed."
+	},
+	guardNavigationHooksOncloseList: {
+		ru: "Если будет открыто несколько модальных окон, и на одном из них будет стоять обработчик onclose, возвращающий false, можно закрыть будет только те, модальных окна, которые были открыты после него.",
+		en: "If several modal windows are open, and one of them will have an onclose handler that returns false, you can close only those modal windows that were opened after it."
+	},
+
+	guardNavigationHooksInComponent: {
+		ru: "Наконец, навигационный хук можно указать и непосредственно в компоненте (том, что указан в конфигурации маршрута), используя следующие опции:",
+		en: "Finally, the navigation hook can be specified directly in the component (the one specified in the route configuration) using the following options:"
+	},
+	guardNavigationHooksCompositionApiInfo: {
+		ru: "Хотя вы все еще можете использовать встроенные функции, Jenesius Vue Modal предоставляет функции для Composition API:",
+		en: "While you can still use built-in functions, Jenesius Vue Modal provides functions for the Composition API:"
 	}
+
 }
 export function useVocabulary(name, {} = {}) {
 	let lang = localStorage.getItem("language") || navigator.language || "en";
@@ -98,7 +131,7 @@ export function useVocabulary(name, {} = {}) {
 	if (/^ru\b/.test(lang)) {
 		lang = 'ru';
 	}
-	return store[lang][name];
+	return store[lang][name] || store[name][lang];
 
 }
 export  default store;

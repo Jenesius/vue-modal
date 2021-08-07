@@ -1,5 +1,5 @@
 <template>
-	<p><widget-vocabulary name = "info_on_close" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
+	<p><widget-vocabulary name = "guardNavigationHooksOncloseInfo" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
 
 	<widget-code>{{codeOnClose}}</widget-code>
 
@@ -9,10 +9,10 @@
 
 	</div>
 
-	<p><widget-vocabulary name = "if_onclose_false_on_close"/></p>
+	<p><widget-vocabulary name = "guardNavigationHooksOncloseReturnFalse"/></p>
 
 
-	<p><widget-vocabulary name = "if_will_open_some_modals_on_close"/></p>
+	<p><widget-vocabulary name = "guardNavigationHooksOncloseList"/></p>
 
 	<widget-code>{{codeOnCloseMiddle}}</widget-code>
 
@@ -28,8 +28,8 @@ import WidgetVocabulary from "../../WidgetVocabulary";
 export default {
 	setup(){
 
-		function openModalWithoutHook(){
-			const modal = openModal(WidgetModalWithClose);
+		async function openModalWithoutHook(){
+			const modal = await openModal(WidgetModalWithClose);
 
 			let count = 5;
 

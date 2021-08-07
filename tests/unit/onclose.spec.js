@@ -1,10 +1,9 @@
 /*eslint-disable*/
 
 import { mount } from '@vue/test-utils'
-import {nextTick} from "vue";
 
 import App from "./Example";
-import {modalQueue, closeModal,pushModal} from "../../plugin";
+import {modalQueue, closeModal, pushModal, openModal, popModal} from "../../plugin";
 import ModalTest from "./ModalTest";
 import WidgetModalContainerItem from "../../plugin/WidgetModalContainerItem";
 
@@ -12,164 +11,255 @@ beforeEach(() => {
 	modalQueue.value = [];
 });
 
-describe('onClose hook', () => {
+function waitTime(n) {
+	return new Promise(resolve => {
+		setTimeout(resolve, n);
+	})
+}
 
-	/*onclose test*/
+describe('onClose', () => {
 
-	it("dont close", async () => {
+	it ("Should closed", async () => {
 
 		const wrapper = await mount(App);
 
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => {
-			return false;
+		const modal = await openModal(ModalTest);
+		await modal.close();
+
+		expect(modalQueue.value.length).toBe(0);
+	})
+	it ("Should closed with onclose true", async () => {
+
+		const wrapper = await mount(App);
+
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = (next) => {
+			next(true);
 		}
 
-		await nextTick();
+		await modal.close();
+
+		expect(modalQueue.value.length).toBe(0);
+	})
+
+	it ("Should not be closed", async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = (next) => {
+			next(false);
+		}
+
+		try {
+			await modal.close();
+		} catch (e) {}
 
 		expect(modalQueue.value.length).toBe(1);
-		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(1);
-
 	})
-	it("close after 3 try", async () => {
+
+	it("Should not be closed(async)", async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = async (next) => {
+			await waitTime(1000);
+
+			next(false);
+		}
+
+		try {
+			await modal.close();
+		} catch (e) {}
+
+		expect(modalQueue.value.length).toBe(1);
+	})
+
+	it("Should be closed(async)", async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = (next) => {
+			setTimeout(() => {
+				next(true);
+			}, 1000);
+		}
+
+		try {
+			await modal.close();
+		} catch (e) {}
+
+		expect(modalQueue.value.length).toBe(0);
+	})
+
+	it ("Should be closed after 3 attempts", async () => {
 		const wrapper = await mount(App);
-		const modal = pushModal(ModalTest);
+		const modal = await pushModal(ModalTest);
 
 		let count = 3;
-		modal.onclose = () => {
+		modal.onclose = (next) => {
 			count--;
-			if (count > 0) return false;
+
+			if (count > 0) return next(false);
 		}
 
 		closeModal();
 		closeModal();
-		await nextTick();
 
 		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(1);
 
-		closeModal();
-		await nextTick();
+		await closeModal();
 		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);
 	})
 
-	it("function set onclose return null", async () => {
+	it("onclose dont call next", async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
 
-		const wrapper = await mount(App);
-
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => {
-			return null;
+		modal.onclose = () => {
+			let a = 5;
+			a++;
 		}
-		closeModal();
+		expect(modalQueue.value.length).toBe(1);
+		await modal.close();
 
-		await nextTick();
-
-		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);
+		expect(modalQueue.value.length).toBe(0);
 	})
-	it("async function set onclose", async () => {
 
-		const wrapper = await mount(App);
+	it("onclose set like bad value(Number)", async () => {
+		const wrapper = await mount(App)
 
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => {
-			return new Promise(resolve => {
+		const modal = await openModal(ModalTest);
 
-				setTimeout(() => {
-					resolve();
-				}, 10);
+		modal.onclose = 5;
 
-			});
+		await modal.close();
+
+		expect(modalQueue.value.length).toBe(0);
+	})
+
+	it("onclose(true) by closeModal"		, async () => {
+		const wrapper = await mount(App)
+		await openModal(ModalTest);
+
+		expect(modalQueue.value.length).toBe(1);
+		await closeModal();
+		expect(modalQueue.value.length).toBe(0);
+	})
+	it("onclose(false) by closeModal"		, async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = (next) => next(false)
+
+		expect(modalQueue.value.length).toBe(1);
+		await closeModal();
+		expect(modalQueue.value.length).toBe(1);
+	})
+	it("async onclose(false) by closeModal", async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = async (next) => {
+			await waitTime(100);
+
+			next(false);
 		}
-		closeModal();
 
-		await nextTick();
+		expect(modalQueue.value.length).toBe(1);
+		await closeModal();
+		expect(modalQueue.value.length).toBe(1);
+	})
+	it("async onclose(true) by closeModal"	, async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
 
-		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);
+		modal.onclose = async (next) => {
+			await waitTime(100);
 
+			next(true);
+		}
+
+		expect(modalQueue.value.length).toBe(1);
+		await closeModal();
+		expect(modalQueue.value.length).toBe(0);
 	})
 
-	it("onclose dont return", async () => {
+	it("onclose(true) by popModal"		, async () => {
+		const wrapper = await mount(App)
+		await openModal(ModalTest);
+
+		expect(modalQueue.value.length).toBe(1);
+		await popModal();
+		expect(modalQueue.value.length).toBe(0);
+	})
+	it("onclose(false) by popModal"		, async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = (next) => next(false)
+
+		expect(modalQueue.value.length).toBe(1);
+		await popModal();
+		expect(modalQueue.value.length).toBe(1);
+	})
+	it("async onclose(false) by popModal", async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = async (next) => {
+			await waitTime(100);
+
+			next(false);
+		}
+
+		expect(modalQueue.value.length).toBe(1);
+		await popModal();
+		expect(modalQueue.value.length).toBe(1);
+	})
+	it("async onclose(true) by popModal"	, async () => {
+		const wrapper = await mount(App)
+		const modal = await openModal(ModalTest);
+
+		modal.onclose = async (next) => {
+			await waitTime(100);
+
+			next(true);
+		}
+
+		expect(modalQueue.value.length).toBe(1);
+		await popModal();
+		expect(modalQueue.value.length).toBe(0);
+	})
+
+	it("Try open window, before prev window can't be closed", async () => {
 		const wrapper = await mount(App);
 
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => {
+		const modal1 = await openModal(ModalTest, {title: "1"});
+		modal1.onclose = next => next(false);
 
+		const modal2 = await openModal(ModalTest, {title: "2"});
 
+		expect(wrapper.text()).toBe("1");
+	})
+
+	it("Multi next", async () => {
+
+		const wrapper = await mount(App);
+
+		const modal1 = await openModal(ModalTest, {title: "1"});
+		modal1.onclose = next => {
+
+			next(false);
+			next(false);
+			next(false);
+			next(false);
 
 		}
-		closeModal();
 
-		await nextTick();
-
-		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);
-	})
-
-	it("onclose set like not function", async () => {
-		const wrapper = await mount(App);
-
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = 5;
-		closeModal();
-
-		await nextTick();
-
-		expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);
-	})
-
-	it("close return true", async () => {
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = 5;
+		await modal1.close();
 
 
-		await nextTick();
-
-		expect(closeModal()).toBe(true);
-	})
-	it("close return false", async () => {
-
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => false;
-
-
-		await nextTick();
-
-		expect(closeModal()).toBe(false);
-	})
-
-	it("pop return false", async () => {
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => false;
-
-
-		await nextTick();
-
-		expect(closeModal()).toBe(false);
-	})
-
-	it("pop return true", async () => {
-		pushModal(ModalTest);
-
-		await nextTick();
-
-		expect(closeModal()).toBe(true);
-	})
-
-	it("close modalObject return false", async () => {
-		const modal1 = pushModal(ModalTest);
-		modal1.onclose = () => false;
-
-
-		await nextTick();
-
-		expect(modal1.close()).toBe(false);
-	})
-
-	it("close modalObject return true", async () => {
-		const modal1 = pushModal(ModalTest);
-
-		await nextTick();
-
-		expect(modal1.close()).toBe(true);
 	})
 
 })

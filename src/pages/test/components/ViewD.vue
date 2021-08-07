@@ -9,8 +9,14 @@ export default {
 	setup(){
 
 		console.log("+1")
-		onBeforeRouteLeave(function()  {
-			console.log("Router leave aaa", this)
+		onBeforeRouteLeave((to, form, next) => {
+			return new Promise(() => {
+
+				setTimeout(() => {
+
+					next(false)
+				}, 2000);
+			})
 		})
 		console.log("+2")
 

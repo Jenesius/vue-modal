@@ -1,92 +1,153 @@
 /*eslint-disable*/
 import {ref, watch, shallowRef, getCurrentInstance} from "vue";
 import WidgetModalContainer from "./WidgetModalContainer";
+import store from "../src/pages/documentation/assets/js/Vocabulary";
 
 const oncloseStore = {};
 
-const guards = {
-    onclose: {}
-}
+export const modalQueue = ref([]); //All modals that showing now
 
-function ModalObject(id){
-
-    const object = {
-        id: id
-    };
-
-    object.close = () => {
-
-        try {
-            if (object.onclose && object.onclose() === false) return false;
-
-        } catch (e) {}
-
-        _closeById(id);
-
-        return true;
-    }
-
-    return object
-}
 
 const state = {
     modalId: 0,
-    initialized: false
+    initialized: false,
 }
 
-export const modalQueue = ref([]);
 
 
-/**
- * Function check store for hooks
- *
- * @Return true - if successful close modal, false else
- *
- * */
-function _closeById(id) {
+const guards = {
+
+    store: {},
+
+    add(id, name, func){
+        const availableNames = ["close"];
+
+        if (!availableNames.includes(name)) return console.warn(`Name ${name} is not declaration.`);
+
+        if (!this.store[id]) this.store[id] = {};
+
+        if (!this.store[id][name]) this.store[id][name] = [];
+
+        if (typeof func !== "function") return console.warn("Onclose callback was provided not function:", func);
+
+        this.store[id][name].push(func);
+    },
+
+    get(id, name) {
+
+        if (!(id in this.store)) return [];
+        if (!(name in this.store[id])) return [];
+
+        return this.store[id][name];
+    }
+}
+
+class ModalObject{
+
+    id;
+    component;
+    params;
+
+    constructor(component, params) {
+        this.id = state.modalId++;
+        this.component = shallowRef(component);
+        this.params = params;
+
+        if (component.beforeModalClose) guards.add(this.id, "close", component.beforeModalClose);
+    }
+
+    close(){
+        return closeById(this.id);
+    }
+
+    set onclose(func) {
+        guards.add(this.id, "close", func);
+    }
+
+}
+
+
+function createModalError() {
+
+    return Object.assign(new ModalError(), {
+        isModalError: true
+    });
+
+}
+
+function canOnlyBeCalledOnce(next) {
+    let called = false;
+    return function () {
+        if (called) console.warn(`The "next" callback was called more than once in one modal's guard. It should be called exactly one time in each navigation guard. This will fail in production.`);
+        if (!called) {
+            called = true;
+            next.apply(null, arguments);
+        }
+    };
+}
+
+function closeById(id) {
+
     const indexFoRemove = modalQueue.value.findIndex(item => item.id === id);
 
     //Modal with id not found
     if (indexFoRemove === -1) return;
 
-    if (Array.isArray(oncloseStore[id]) && oncloseStore[id].length) {
-        for(let i = 0; i < oncloseStore[id].length; i++) {
+    const arr = guards.get(id, "close").map(guard => guardToPromiseFn(guard, id));
 
-            console.log("+", id, oncloseStore[id][i], instanceStorage[id])
+    return runGuardQueue(arr)
+    .then(() => {
+        modalQueue.value.splice(indexFoRemove, 1);
 
-            let res = oncloseStore[id][i].call(instanceStorage[id]);
-            console.log("+", res)
-            if (res === false) return;
+        delete guards.store[id];
+        delete instanceStorage[id];
 
-        }
+    })
+    .catch(err => (err instanceof ModalError)?err: Promise.reject(err))
+
+}
+
+class ModalError extends Error{
+    isModalError;
+    constructor() {
+        super();
+
+        this.isModalError = true;
+    }
+
+}
+
+function guardToPromiseFn(guard, id){
+    return () => new Promise((resolve, reject) => {
+        const next = (valid) => {
+            if (valid === false) return reject(createModalError());
+
+            if (valid instanceof Error) reject(valid);
+
+            resolve();
+        };
+
+        Promise.resolve(guard.call(instanceStorage[id], canOnlyBeCalledOnce(next)))
+        .then(next)
+        .catch(err => reject(err));
+    });
+}
+
+
+function runGuardQueue(guards) {
+    return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
+}
+
+watch(modalQueue.value, () => {
+    try {
+        if (modalQueue.value.length) document.body.style.overflowY = "hidden";
+        else document.body.style.overflowY = "auto";
+    } catch (e) {
 
     }
 
-    modalQueue.value.splice(indexFoRemove, 1);
-}
-
-
-watch(modalQueue.value, () => {
-    if (modalQueue.value.length) document.body.style.overflowY = "hidden";
-    else document.body.style.overflowY = "auto";
 })
 
-/**
- * Return modalObject by id or undefined(if modalObject with provided id not founded)
- * */
-
-function getModalObjectById(id){
-    return modalQueue.value.find(item => item.id === id)?.modalObject;
-}
-
-function closeById(id){
-    const indexFoRemove = modalQueue.value.findIndex(item => item.id === id);
-
-    //Modal with id not found
-    if (indexFoRemove === -1) return;
-
-    modalQueue.value.splice(indexFoRemove, 1);
-}
 
 /**
  * Function open one and close previous modals
@@ -96,55 +157,38 @@ function closeById(id){
  * @Return ModalObject
  * */
 export function openModal(component, params = {}){
-    closeModal();
-    return pushModal(component, params);
-}
+    return closeModal()
+    .then(res => {
+        if (!modalQueue.value.length) return pushModal(component, params)
 
-/**
- * Function close all previous modals.
- *
- * */
-export function closeModal() {
-
-    for(let i = modalQueue.value.length - 1; i >= 0; i--) {
-
-        if (!modalQueue.value[i].modalObject.close()) return false;
-
-    }
-
-    return true;
+        return null;
+    })
 }
 
 /**
  * Function add modal to modalQuery
  * */
 export function pushModal(component, params = {}) {
+    return _addModal(component, params);
+}
 
+
+
+
+function _addModal(component, params){
 
     if (!state.initialized) {
-        throw `Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://www.npmjs.com/package/jenesius-vue-modal.`;
+        let err = `Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://www.npmjs.com/package/jenesius-vue-modal.`;
+
+        console.warn(err);
+        throw err;
     }
 
-    state.modalId++;
-    console.log("Modal get id:", state.modalId)
+    const modal = new ModalObject(component, params);
 
+    modalQueue.value.push(modal);
 
-    const modalObject = ModalObject(state.modalId);
-
-    //Put to storage
-    if (component.beforeModalClose) oncloseStore[state.modalId] = [component.beforeModalClose];
-
-    modalQueue.value.push({
-        component   : shallowRef(component),
-        params      : params,
-        id          : state.modalId,
-        modalObject : shallowRef(modalObject)
-    });
-
-
-
-
-    return modalObject;
+    return modal;
 }
 
 /**
@@ -152,60 +196,43 @@ export function pushModal(component, params = {}) {
  *
  * */
 export function popModal(){
-
     if (modalQueue.value.length === 0) return;
 
-    let lastModal = modalQueue.value[modalQueue.value.length - 1].modalObject;
-
+    let lastModal = modalQueue.value[modalQueue.value.length - 1];
     return lastModal.close();
 }
+
+/**
+ * Function close all previous modals.
+ *
+ * */
+export function closeModal() {
+    return runGuardQueue(modalQueue.value.map(modalObject => () => modalObject.close()))
+
+}
+
 
 export const container = WidgetModalContainer;
 
 
-export function useModal(){
-    return {
-        openModal,
-        closeModal,
-
-        popModal,
-        pushModal,
-    }
-}
-
 export function initialize(){
     state.initialized = true;
-
-
-
     /**
      * If user press Escape then close last opened modal
      * */
     document.addEventListener("keyup", e => {
-
         if (e.key === "Escape" || e.code === "Escape") popModal();
-
     })
-
 }
 
 
 export function onBeforeModalClose(callback){
+
     const a = getCurrentInstance();
 
+    let modalId = a.attrs.id.replace(/[^0-9]/g, "");
 
-    let modalId = a.attrs.id.replace(/[^0-9]/g, "")
-    oncloseStore[modalId] = [callback];
-
-}
-
-export function onModalClose(callback) {
-    const a = getCurrentInstance();
-
-
-    let modalId = a.attrs.id.replace(/[^0-9]/g, "")
-    oncloseStore[modalId] = [callback];
-    console.log(modalId, a,a.attrs.id, modalQueue.value.length);
+    guards.add(modalId, "close", callback);
 
 }
 
@@ -214,4 +241,22 @@ export function onModalClose(callback) {
 const instanceStorage = {};
 export function saveInstance(id, instance) {
     instanceStorage[id] = instance;
+}
+
+
+/**
+* Deprecated
+* */
+export function useModal(){
+
+    console.warn("Function useModal is deprecated and was removed on 2.x.x version. Please use: import {openModal, closeModal, pushModal, popModal} from 'jenesius-vue-modal';");
+
+
+    return {
+        openModal,
+        closeModal,
+
+        popModal,
+        pushModal,
+    }
 }

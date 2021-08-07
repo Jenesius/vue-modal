@@ -113,3 +113,7 @@ To show this component
         title: "Hello World!"
     });
 ```
+
+---
+
+####Do you like this module? Put a star on [GitHub](https://github.com/Jenesius/vue-modal)

@@ -19,7 +19,7 @@
 	export default {
 		setup(){
 			
-			const {popModal} = useModal();
+			const {popModal} = useModal(); //sdf
 			
 			return {
 				popModal

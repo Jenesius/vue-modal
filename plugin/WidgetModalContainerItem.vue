@@ -1,28 +1,32 @@
 <template>
     <div class = "widget__modal-container__item" >
-
         <div class = "widget__modal-container__item-back widget__modal-back" @click="popModal"/>
 	
-		<component :is = component v-bind = "params" class = "widget__modal-wrap" />
-
+		<component :is = component v-bind = "params" class = "widget__modal-wrap" ref = "modalRef" :modal-id = "`_modal_${id}`" />
     </div>
 </template>
 
 <script>
+    import {popModal, saveInstance} from "./index";
+    import {ref, watch} from "vue";
 
-
-    import {popModal} from "./index";
-
-    export default {
+	export default {
         props: {
             component: Object,
-            params: Object
+            params: Object,
+			id    : Number, // uniq identifier of modals
         },
+        setup(props){
 
-        setup(){
+			const modalRef = ref(null);
+
+			watch(() => modalRef.value, newValue => {
+				saveInstance(props.id, newValue);
+			})
 
             return {
 
+				modalRef,
                 popModal
             }
         },

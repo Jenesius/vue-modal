@@ -5,7 +5,7 @@
 </template>
 
 <script>
-	import {useModal} from "../../../plugin";
+
 	export default {
 		props: {
 			title: {
@@ -13,12 +13,11 @@
 				required: true
 			}
 		},
-		setup(){
-			
-			const {closeModal} = useModal()
-			
-			return {closeModal};
+
+		beforeModalClose(){
+			console.log("+++");
 		},
+
 		name: "WidgetModalAlert"
 	}
 </script>

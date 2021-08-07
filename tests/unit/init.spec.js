@@ -8,26 +8,29 @@ import {modalQueue, closeModal, openModal, popModal, pushModal, container} from 
 import ModalTest from "./ModalTest";
 import WidgetModalContainerItem from "../../plugin/WidgetModalContainerItem";
 
+beforeEach(() => {
+  modalQueue.value = [];
+});
 
-function longWait(){
-
+function waitTime(n) {
   return new Promise(resolve => {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, n);
   })
-
 }
 
-describe('tests', () => {
+describe('Init', () => {
 
-  it ("Not initialized", () => {
+  /*
+  it ("Not initialized",  async() => {
 
-    expect(() => openModal(ModalTest)).toThrow()
-
+    expect(async () => await openModal(ModalTest)).toThrow()
 
   })
+
+   */
   it ("Initialized", async () => {
 
-    const wrap = await mount(container);
+    await mount(container);
 
     expect(() => openModal(ModalTest)).not.toThrow()
 
@@ -37,38 +40,35 @@ describe('tests', () => {
 
     const wrap = await mount(container);
 
-    openModal(ModalTest, {title: "Modal-1"});
+    await openModal(ModalTest, {title: "Modal-1"});
     expect(modalQueue.value.length).toBe(1);
 
     //Повторное открытие окна, должно заменить предыдущее
-    const modalObject2 = openModal(ModalTest, {title: "Modal-2"});
+    const modalObject2 = await openModal(ModalTest, {title: "Modal-2"});
     expect(modalQueue.value.length).toBe(1);
 
-    await nextTick()
 
     expect(wrap.text()).toEqual("Modal-2");
-    modalObject2.close();
+    await modalObject2.close();
     expect(modalQueue.value.length).toBe(0);
 
   })
 
   it("closeModal", async () => {
+    const wrap = await mount(container);
 
-    openModal(ModalTest);
-    await nextTick();
-    closeModal();
-
-    expect(modalQueue.value.length).toBe(0);
-
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-
-    await nextTick();
-    closeModal();
+    await openModal(ModalTest);
+    await closeModal();
 
     expect(modalQueue.value.length).toBe(0);
 
+    pushModal(ModalTest);
+    pushModal(ModalTest);
+    pushModal(ModalTest);
+
+    await closeModal();
+
+    expect(modalQueue.value.length).toBe(0);
   })
 
   it("pushModal", async () => {
@@ -79,8 +79,6 @@ describe('tests', () => {
     pushModal(ModalTest);
     pushModal(ModalTest);
     pushModal(ModalTest);
-
-    await nextTick();
 
     expect(modalQueue.value.length).toBe(4);
 
@@ -95,37 +93,27 @@ describe('tests', () => {
   })
 
   it("popModal", async () => {
-
     const wrapper = await mount(App);
 
-    openModal(ModalTest);
-
-    await nextTick();
-
-    popModal();
-    await nextTick();
+    await openModal(ModalTest);
+    await popModal();
 
     expect(modalQueue.value.length).toBe(0);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(0);
 
-
     pushModal(ModalTest);
     pushModal(ModalTest);
     pushModal(ModalTest);
     pushModal(ModalTest);
 
-    await nextTick();
-
-    popModal();
-    await nextTick();
+    await popModal();
 
     expect(modalQueue.value.length).toBe(3);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(3);
 
-    popModal();
-    popModal();
+    await popModal();
+    await popModal();
 
-    await nextTick();
     expect(modalQueue.value.length).toBe(1);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(1);
   })
@@ -134,13 +122,10 @@ describe('tests', () => {
 
     const wrapper = await mount(App);
 
-    openModal(ModalTest, {title: "test"});
-
-    await nextTick();
-
+    const modal = await openModal(ModalTest, {title: "test"});
     wrapper.find(".widget__modal-back").trigger("click");
 
-    await nextTick();
+    await waitTime(100);
 
     expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);
 
@@ -149,19 +134,16 @@ describe('tests', () => {
   it("provide props", async () => {
     const wrapper = await mount(App);
 
-    openModal(ModalTest, {
+    await openModal(ModalTest, {
       title: "Jenesius",
       age  : 22
     });
 
-    await nextTick();
 
     expect(wrapper.text()).toBe("Jenesius 22");
   })
 
   it("press escape", async () => {
-
-    const wrapper = await mount(App);
 
     openModal(ModalTest);
 
@@ -179,17 +161,14 @@ describe('tests', () => {
   })
 
   it("close destroyed modal", async () => {
-
     const wrapper = await mount(App);
+    const modal = await openModal(ModalTest);
+    await pushModal(ModalTest);
 
-    const modal = openModal(ModalTest);
-    pushModal(ModalTest);
+    await closeModal();
 
-    closeModal();
 
-    await nextTick();
-
-    modal.close()
+    await modal.close()
 
     expect(modalQueue.value.length).toBe(0);
 
@@ -198,40 +177,28 @@ describe('tests', () => {
   it("close by id", async () => {
 
     const wrapper = await mount(App);
+    const modal1 = await pushModal(ModalTest);
+    const modal2 = await pushModal(ModalTest);
+    const modal3 = await pushModal(ModalTest);
 
-    const modal1 = pushModal(ModalTest);
-    const modal2 = pushModal(ModalTest);
-    const modal3 = pushModal(ModalTest);
-
-
-    modal2.close()
-    await nextTick();
-
+    await modal2.close()
 
     expect(modalQueue.value.map(item => item.id)).toEqual([modal1.id,modal3.id]);
 
   })
 
   it("close destroyed modal", async () => {
-    const wrapper = await mount(App);
 
-    const modal1 = openModal(ModalTest);
-    const modal2 = openModal(ModalTest);
-    const modal3 = openModal(ModalTest);
-
-
-    await nextTick();
+    await openModal(ModalTest);
+    const modal2 = await openModal(ModalTest);
+    const modal3 = await openModal(ModalTest);
 
     expect(modalQueue.value[0].id).toBe(modal3.id);
 
-    modal2.close()
-
-    await nextTick();
+    await modal2.close()
 
     expect(modalQueue.value.length).toBe(1);
     expect(modalQueue.value[0].id).toBe(modal3.id);
-
-
   })
 
 })

@@ -6,6 +6,7 @@
 
                 :component = elem.component
                 :params    = elem.params
+				:id		   = elem.id
 
         />
     </transition-group>
@@ -16,10 +17,8 @@
     import {initialize, modalQueue} from "./index";
     import {onMounted} from "vue";
 
-
     export default {
         setup(){
-
 
             onMounted(() => {
 				initialize();

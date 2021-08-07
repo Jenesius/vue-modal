@@ -1,0 +1,14 @@
+.flex{
+	display: flex;
+}
+
+.flex-column{
+	display: flex;
+	flex-direction: column;
+}
+.flex_align-center{
+	align-items: center;
+}
+.gap_5{
+	gap:5px
+}

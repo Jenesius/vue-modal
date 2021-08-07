@@ -1,9 +1,9 @@
 <template>
 	
 	<pre class = 'container-code'>
-		<div class = "filename">{{name}}</div>
+		<div class = "filename" v-if = "name">{{name}}</div>
 		<code ref = "code" class = "code">
-			{{text}}
+
 		</code>
 	</pre>
 </template>
@@ -26,15 +26,10 @@
 			 * 2. Обернуть &lt;span&gt в цвет <span color = 'red'>&lt;span&gt</span>
 			 * 3. Строки
 			 * */
-			
-
-			let text = slots.default()[0].children;
-			console.log(text, slots.default());
-			
 			const wordConfig = [
 
 				{
-					words: ["export", "default", "const", "from", "import"],
+					words: ["export", "default", "const", "from", "import", "true", "false", "return", "let", "const", "if", "else"],
 					style: "color: orange"
 				},
 				{
@@ -45,8 +40,30 @@
 					words: ["template", "script"],
 					style: "color: yellow"
 				},
-
+				{
+					reg: /^(npm )/g,
+					style: "color: yellow"
+				},
+				{
+					words: ["async", "await"],
+					style: "color: #a839cc"
+				},
+				{
+					reg: /(\/\/.*)/g,
+					style: "color: #8d8d8d"
+				},
 			];
+
+			let text = "";
+
+			onMounted(() => {
+
+
+			text = slots.default()[0].children;
+
+			text = text.replace(/\t/g, '    ')
+			
+
 			
 			text = text.replace('<', "&lt;").replace('>', "&gt;");
 			
@@ -63,13 +80,13 @@
 				})
 				
 				
-				if (item.reg) text = text.replace(item.reg, `<span style = "${item.style}">"$1"</span>`)
+				if (item.reg) text = text.replace(item.reg, `<span style = "${item.style}">$1</span>`)
 				
 				
 			})
 
 			
-			onMounted(() => {
+
 				code.value.innerHTML= text;
 				
 			})

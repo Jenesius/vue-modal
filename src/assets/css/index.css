@@ -2,28 +2,59 @@
 @import "modal.css";
 @import "input.css";
 @import "title.css";
+@import "flex.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
+
 *{
-    font-family: Verdana, sans-serif;
+    font-family: 'Inter', sans-serif;
+
+    --main:#3eaf7c;
 }
 
-p{
+h1, h2, h3, h4, h5, body{
     margin: 0;
 }
+p {
+    line-height: 1.7;
+    margin: 15px 0 15px 0;
+}
 
-#app{
+a{
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--main)
+}
+.text-comment{
+    color: #625e5e;
+    font-size: 13px;
+}
+
+.app-content{
     margin: auto;
 
     width: 100%;
 }
 
 @media screen and (min-width: 768px){
-    #app{
-        width: 600px;
+    .app-content{
+        width: 550px;
     }
 }
 
 @media screen and (min-width: 1144px) {
-    #app{
-        width: 900px;
+    .app-content{
+        width: 850px;
     }
+}
+
+.link_dark{
+    color:#2c3e50;
+}
+.link_dark:hover{
+    color: var(--main)
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }

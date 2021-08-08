@@ -97,6 +97,11 @@ const store =  {
 		en: "Navigation Guards",
 	},
 
+	pluginInformation: {
+		ru: "Jenesius Vue Modal это легковесная и простая библиотека для работы с модальными окнами в Vue3. Она глубоко интегрируется с Vue.js и позволяет создавать модальные окна любой сложности.",
+		en: "Jenesius Vue Modal is a lightweight and simple library for working with modal windows in Vue3. It integrates deeply with Vue.js and allows you to create modals of any complexity.",
+	},
+
 	onAddModalReturn: {
 		ru: "Метод возвращает промис, который в случае успеха вернёт <a>ModalObject</a>",
 		en: "The method returns a promise, which, if successful, will return <a> ModalObject </a>"

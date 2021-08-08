@@ -9,12 +9,16 @@ import {useVocabulary} from "./Vocabulary";
 import FragmentGettingStarted from "../../components/materials/Installation/FragmentGettingStarted";
 import FragmentBeforeModalClose from "../../components/materials/hooks/FragmentBeforeModalClose";
 import FragmentOnBeforeModalClose from "../../components/materials/hooks/FragmentOnBeforeModalClose";
+import FragmentInformation from "../../components/materials/Installation/FragmentInformation";
 
 export const config = [
 	{
 		title: useVocabulary("installation"),
 		link : "installation",
 		array: [
+			{
+				component: FragmentInformation
+			},
 			{
 				title: "npm",
 				link : "npm",

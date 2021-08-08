@@ -64,6 +64,8 @@
 		font-weight: 400;
 		display: inline-block;
 		color: #2c3e50;
+
+		text-transform: capitalize;
 	}
 	.navbar-item__link:hover{
 		color: var(--main);

@@ -4,13 +4,7 @@
 
 const store =  {
 	ru: {
-		installation: "установка",
-		methods: "методы",
 
-		"getting started": "Начало работы",
-
-		styles: "Стилизация",
-		animation: "Анимация",
 		example: "пример",
 		recommendation_npm: "Npm рекомендуется для инсталяции пакета.",
 		info_get_started: "Для начала работы нам необходимо проинициализировать модальные окна, добавим контейнер в котором будут показываться наши компоненты. Контейнер импортируем из библиотеки:",
@@ -39,22 +33,8 @@ const store =  {
 		if_onclose_false_on_close: "В случае, если onclose вернёт <b>false</b>, модальное окно не будет закрыто.",
 		if_will_open_some_modals_on_close: "Если будет открыто несколько модальных окон, и на одном из них будет стоять обработчик onclose, возвращающий false, можно закрыть будет только те, модальных окна, которые были открыты после него.",
 
-
-		//ModalObject
-		return_modalObject: "Методы pushModal и openModal возвращают объект следующего типа:",
-		param_id_modalObject: "<b>id</b> - уникальныидентификатор модального окна",
-		param_close_modalObject: "<b>close</b> - метод позволяющий закрыть созданное модальное коно",
-		param_onclose_modalObject: "<b>onclose</b> - функция, которая выполняется при попытке закрыть окно. Данную функцию можно переопределить для контроля закрытия окна. Если <b>onclose</b> вернёт false, модальное окно не будет закрыто.",
-
 	},
 	en: {
-		installation: "Installation",
-		methods: "methods",
-
-		"getting started": "Getting started",
-
-		styles: "styles",
-		animation: "Animation",
 		example: "example",
 		recommendation_npm: "Npm is recommended for installing a package.",
 
@@ -85,10 +65,6 @@ const store =  {
 
 
 		//ModalObject
-		return_modalObject: "The pushModal and openModal methods return an object of the following type:",
-		param_id_modalObject: "<b> id </b> - unique identifier of the modal window",
-		param_close_modalObject: "<b> close </b> - a method that allows you to close the created modal window",
-		param_onclose_modalObject: "<b> onclose </b> is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If <b> onclose </b> returns false, the modal will not be closed.",
 
 	},
 
@@ -127,16 +103,97 @@ const store =  {
 	guardNavigationHooksCompositionApiInfo: {
 		ru: "Хотя вы все еще можете использовать встроенные функции, Jenesius Vue Modal предоставляет функции для Composition API:",
 		en: "While you can still use built-in functions, Jenesius Vue Modal provides functions for the Composition API:"
+	},
+
+	modalWillNotBeClosed: {
+		ru: "Модальное окно не будет закрыто",
+		en: "The modal will not be closed"
+	},
+
+	uniqueIdentity: {
+		ru: "Уникальный идентификатор",
+		en: "Unique identity",
+	},
+
+	weather: {
+		ru: "погода",
+		en: "weather"
+	},
+
+	rainy: {
+		ru:"дождливая",
+		en:"rainy"
+	},
+
+	closeModalIfWeatherIsRainy: {
+		ru: "Закрыть модальное окно, если погода дождливая",
+		en: "Close modal if the weather is rainy",
+	},
+
+	modalObjectParamId: {
+		ru: "<b>id</b> - уникальныидентификатор модального окна.",
+		en: "<b> id </b> - unique identifier of the modal window.",
+	},
+	modalObjectParamClose: {
+		ru: "<b>close</b> - метод позволяющий закрыть созданное модальное окно.",
+		en: "<b> close </b> - a method that allows you to close the created modal window.",
+	},
+	modalObjectParamOnclose: {
+		ru: "<b>onclose</b> - функция, которая выполняется при попытке закрыть окно. Данную функцию можно переопределить для контроля закрытия окна. Если <b>onclose</b> вернёт false, модальное окно не будет закрыто.",
+		en: "<b> onclose </b> is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If <b> onclose </b> returns false, the modal will not be closed.",
+	},
+
+	methodsPushAndCloseReturnModalObject: {
+		ru: "Методы pushModal и openModal возвращают объект следующего типа:",
+		en: "The pushModal and openModal methods return an object of the following type:"
+	},
+
+	style: {
+		ru: "стилизация",
+	},
+	animation: {
+		ru: "анимация"
+	},
+	installation: {
+		ru: "установка"
+	},
+	methods: {
+		ru: "методы"
+	},
+	gettingStarted: {
+		ru: "Начало работы",
+		en: "getting started"
 	}
 
 }
-export function useVocabulary(name, {} = {}) {
-	let lang = localStorage.getItem("language") || navigator.language || "en";
 
-	if (/^ru\b/.test(lang)) {
-		lang = 'ru';
-	}
-	return store[lang][name] || store[name][lang];
 
+
+
+
+
+let lang = localStorage.getItem("language") || navigator.language || "en";
+
+if (/^ru\b/.test(lang)) {
+	lang = 'ru';
 }
+
+export  const useVocabulary = new Proxy((name) => {
+	return useVocabulary[name]
+}, {
+	get: (a, b, c) => {
+
+		return a[b];
+	}
+});
+
+
+for(let key in store) {
+	if (["ru", "en"].includes(key)) continue;
+
+	if (!store[key][lang]) useVocabulary[key] = key;
+	else
+	useVocabulary[key] = store[key][lang];
+}
+
 export  default store;

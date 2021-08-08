@@ -40,7 +40,7 @@ export default {
 		text-transform: capitalize;
 		padding: 73px 0 0 0 ;
 
-		margin-top: -1.5rem;
+		margin-top: -2.5rem;
 		margin-bottom: 30px;
 
 		font-size: 2.2rem;

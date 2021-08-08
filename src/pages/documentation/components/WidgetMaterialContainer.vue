@@ -27,5 +27,7 @@ export default {
 
 		margin-top: -3.1rem;
 		padding-top: 4.6rem;
+
+		text-transform: capitalize;
 	}
 </style>

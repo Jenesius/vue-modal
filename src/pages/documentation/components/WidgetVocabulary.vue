@@ -1,22 +1,41 @@
-<template>
-	{{text}}
-</template>
+
 
 <script>
 import {useVocabulary} from "../assets/js/Vocabulary";
+import {h} from "vue";
 export default {
 	props: {
 		name: String,
-		links: Array
-	},
-	computed: {
-		text(){
+		links: Array,
+		tag  : {
+			type: String,
+			default: () => "p"
+		},
 
-			return useVocabulary(this.name, {});
+		noTag: {
+			type: Boolean,
+			default: () => false
+		}
+
+	},
+	setup(props){
+
+		const text = useVocabulary(props.name, {});
+
+		return () => {
+
+			if (props.noTag) return text;
+
+			//Tag was provided
+			if (props.tag) return h(props.tag, { innerHTML: text})
+
+
+
 
 		}
 
 	},
+
 	name: "WidgetVocabulary"
 }
 </script>

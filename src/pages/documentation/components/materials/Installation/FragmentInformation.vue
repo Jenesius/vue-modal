@@ -1,6 +1,5 @@
 <template>
-	<p><widget-vocabulary name = "pluginInformation"></widget-vocabulary></p>
-
+	<widget-vocabulary name = "pluginInformation"></widget-vocabulary>
 </template>
 
 <script>

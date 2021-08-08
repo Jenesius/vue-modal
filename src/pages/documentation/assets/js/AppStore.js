@@ -25,7 +25,7 @@ export const config = [
 				component: FragmentNpm
 			},
 			{
-				title: useVocabulary("getting started"),
+				title: useVocabulary("gettingStarted"),
 				link : "getting-started",
 				component: FragmentGettingStarted
 			}
@@ -88,11 +88,11 @@ export const config = [
 				component: FragmentModalObject
 			},
 			{
-				title: "Styles",
+				title: useVocabulary.style,
 				link : "styles"
 			},
 			{
-				title: "Animation",
+				title: useVocabulary.animation,
 				link : "animation"
 			}
 		]

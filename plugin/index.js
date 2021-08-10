@@ -1,6 +1,7 @@
 /*eslint-disable*/
+"use strict";
 import {ref, watch, shallowRef, getCurrentInstance} from "vue";
-import WidgetModalContainer from "./WidgetModalContainer";
+import WidgetModalContainer from "./WidgetModalContainer.vue";
 
 export const modalQueue = ref([]); //All modals that showing now
 
@@ -60,7 +61,6 @@ class ModalObject{
     set onclose(func) {
         guards.add(this.id, "close", func);
     }
-
 }
 
 
@@ -180,6 +180,14 @@ function _addModal(component, params){
         console.warn(err);
         throw err;
     }
+
+    if (!component) {
+        let err = `The first parameter(Component) was not specified.`
+        console.warn(err)
+
+        throw err;
+    }
+
 
     const modal = new ModalObject(component, params);
 

@@ -21,7 +21,6 @@
 	/*eslint-disable*/
 	import TestModalComponent from "../../components/modals/TestModalComponent";
 	import {pushModal, container} from "./../../../plugin/index";
-	import {onBeforeRouteLeave} from "vue-router";
 	import TestModalComponentComposition from "../../components/modals/TestModalComponentComposition";
 
 	export default {

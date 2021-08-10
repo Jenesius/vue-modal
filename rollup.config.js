@@ -11,19 +11,26 @@ const banner = `/*!
   * @license MIT
   */`
 
+/*
+
+	"unpkg": "plugin-dist/jenesius-vue-modal.iife.js",
+	"module": "plugin-dist/jenesius-vue-modal.es.js",
+
+* */
 
 const name = pkg.name
 
 const outputDir = "plugin-dist/"
 
 const outputConfig = {
-	'esm-bundler': {
-		file: pkg.module,
-		format: `es`,
-	},
 	cjs: {
 		file: pkg.main,
 		format: `cjs`,
+	},
+/*
+	'esm-bundler': {
+		file: pkg.module,
+		format: `es`,
 	},
 	global: {
 		file: pkg.unpkg,
@@ -33,6 +40,8 @@ const outputConfig = {
 		file: pkg.browser || pkg.module.replace('bundler', 'browser'),
 		format: `es`,
 	},
+*/
+
 }
 
 function createOutputs(config) {

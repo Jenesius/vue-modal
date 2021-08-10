@@ -181,6 +181,14 @@ function _addModal(component, params){
         throw err;
     }
 
+    if (!component) {
+        let err = `The first parameter(Component) was not specified.`
+        console.warn(err)
+
+        throw err;
+    }
+
+
     const modal = new ModalObject(component, params);
 
     modalQueue.value.push(modal);

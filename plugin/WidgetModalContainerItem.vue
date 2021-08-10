@@ -1,14 +1,7 @@
-<template>
-    <div class = "widget__modal-container__item" >
-        <div class = "widget__modal-container__item-back widget__modal-back" @click="popModal"/>
-	
-		<component :is = component v-bind = "params" class = "widget__modal-wrap" ref = "modalRef" :modal-id = "`_modal_${id}`" />
-    </div>
-</template>
 
 <script>
     import {popModal, saveInstance} from "./index";
-    import {ref, watch} from "vue";
+    import {ref, watch, h} from "vue";
 
 	export default {
         props: {
@@ -24,11 +17,12 @@
 				saveInstance(props.id, newValue);
 			})
 
-            return {
-
-				modalRef,
-                popModal
-            }
+			return () => h("div", {
+				class: "widget__modal-container__item"
+			}, [
+				h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: popModal}),
+				h(props.component, { ...props.params, class: "widget__modal-wrap", "modal-id": `_modal_${props.id}`, ref: modalRef})
+			])
         },
     }
 </script>

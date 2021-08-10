@@ -19,9 +19,8 @@
 <script>
 
 	/*eslint-disable*/
-    import WidgetModalContainer from "../../../plugin/WidgetModalContainer";
 	import TestModalComponent from "../../components/modals/TestModalComponent";
-	import {pushModal, modalQueue} from "../../../plugin";
+	import {pushModal, container} from "./../../../plugin/index";
 	import {onBeforeRouteLeave} from "vue-router";
 	import TestModalComponentComposition from "../../components/modals/TestModalComponentComposition";
 
@@ -60,16 +59,12 @@
 				}
 			},
 
-			show(){
-				console.log(modalQueue)
-				console.log(modalQueue.value[0])
-				console.log(modalQueue.value[0].id)
-			}
+
 
 		},
 
         name: "App",
-		components: {WidgetModalContainer}
+		components: {WidgetModalContainer: container}
 	}
 </script>
 

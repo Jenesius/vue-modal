@@ -4,9 +4,11 @@
   "private": false,
   "description": "Simple modal plugin for Vue3",
   "author": "Jenesius",
+
   "main": "plugin-dist/jenesius-vue-modal.cjs.js",
   "unpkg": "plugin-dist/jenesius-vue-modal.iife.js",
   "module": "plugin-dist/jenesius-vue-modal.es.js",
+
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

@@ -1,8 +1,10 @@
 module.exports = {
   "presets": [
     ["@babel/preset-env",
-      {
-        "useBuiltIns": "entry"
-      }]
+        {
+          "useBuiltIns": "entry",
+           targets: {node: 'current'}
+        }
+      ]
   ]
 }

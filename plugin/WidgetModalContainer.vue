@@ -1,32 +1,20 @@
-<template>
-    <transition-group name = "modal-list">
-        <widget-container-modal-item
-                v-for = "(elem, index) in modalQueue"
-                :key = index
-
-                :component = elem.component
-                :params    = elem.params
-				:id		   = elem.id
-
-        />
-    </transition-group>
-</template>
-
 <script>
-    import WidgetContainerModalItem from "./WidgetModalContainerItem";
+    import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
     import {initialize, modalQueue} from "./index";
-    import {onMounted} from "vue";
+	import {h, onMounted, TransitionGroup} from "vue";
 
     export default {
         setup(){
 
-            onMounted(() => {
-				initialize();
-            })
+			onMounted(initialize)
 
-            return {
-                modalQueue
-            }
+			return () => {
+				return h(TransitionGroup, {name: "modal-list"}, {
+					default: () =>modalQueue.value.map(modalObject => {
+						return h(WidgetContainerModalItem, {component: modalObject.component, params: modalObject.params, key: modalObject.id, id: modalObject.id});
+					})
+				})
+			}
         },
         components: {WidgetContainerModalItem}
     }

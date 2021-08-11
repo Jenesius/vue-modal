@@ -35,7 +35,7 @@
 <script>
 
 	import WidgetNavbar from "./components/WidgetNavbar";
-	import {container} from "../../../plugin";
+	import {container} from "../../../../plugin";
 	import "./assets/js/Vocabulary";
 	import WidgetDropdown from "../../components/WidgetDropdown";
 

@@ -18,7 +18,7 @@
 <script>
 import WidgetCode from "../../../../../components/WidgetCode";
 import * as code from "./codePushModal";
-import {pushModal} from "../../../../../../plugin";
+import {pushModal} from "../../../../../../../plugin";
 import WidgetModalExamplePush from "../../../../../components/modals/WidgetModalExamplePush";
 import WidgetVocabulary from "../../WidgetVocabulary";
 

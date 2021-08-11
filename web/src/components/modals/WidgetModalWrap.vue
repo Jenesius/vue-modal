@@ -14,7 +14,7 @@
 
 <script>
 	
-	import {useModal} from "../../../plugin";
+	import {useModal} from "../../../../plugin";
 	
 	export default {
 		setup(){

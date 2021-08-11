@@ -14,7 +14,7 @@ function waitTime(n) {
 
 describe("beforeModalClose", () => {
 	const component = {
-		template: `<p></p>`,
+		template: `<p>3</p>`,
 		data: () => ({title: "Test"})
 	}
 	it("beforeModalClose run", async () => {

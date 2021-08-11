@@ -4,7 +4,7 @@
 
 <script>
 
-import {onBeforeModalClose} from "../../../plugin";
+import {onBeforeModalClose} from "../../../../plugin";
 
 export default {
 	props: {

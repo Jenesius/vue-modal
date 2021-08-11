@@ -20,10 +20,11 @@
 
 	/*eslint-disable*/
 	import TestModalComponent from "../../components/modals/TestModalComponent";
-	import {pushModal, container} from "./../../../plugin/index";
+	import {pushModal, container} from "./../../../../plugin/index";
 	import TestModalComponentComposition from "../../components/modals/TestModalComponentComposition";
 
 	export default {
+
 
 		mounted() {
 			window.show = () => {

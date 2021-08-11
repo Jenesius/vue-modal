@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import { popModal} from "../../../plugin";
+    import { popModal} from "../../../../plugin";
 
     import WidgetModalWrap from "./WidgetModalWrap";
 

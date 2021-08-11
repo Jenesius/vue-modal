@@ -6,7 +6,7 @@
 
 <script>
 
-import {onBeforeModalClose, closeModal} from "../../../plugin";
+import {onBeforeModalClose, closeModal} from "../../../../plugin";
 
 class Test{
 	constructor() {

@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	import {pushModal} from "../../../plugin";
+	import {pushModal} from "../../../../plugin";
 	import WidgetModalConfirm from "./WidgetModalConfirm";
 	import WidgetModalWrap from "./WidgetModalWrap";
 	import {reactive} from "vue";

@@ -9,7 +9,7 @@
 
 <script>
 import WidgetModalWrap from "./WidgetModalWrap";
-import {closeModal} from '../../../plugin';
+import {closeModal} from '../../../../plugin';
 
 export default {
 	setup: () => ({closeModal}),

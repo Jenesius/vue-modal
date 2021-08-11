@@ -14,7 +14,7 @@ function waitTime(n) {
 
 describe("onBeforeModalClose", () => {
 	const component = {
-
+		template: "<p>1</p>"
 	}
 	it("onBeforeModalClose run", async () => {
 		await mount(container);

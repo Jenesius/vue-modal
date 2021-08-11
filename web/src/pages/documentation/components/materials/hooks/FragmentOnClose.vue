@@ -21,7 +21,7 @@
 <script>
 import WidgetCode from "../../../../../components/WidgetCode";
 import * as code from "./codeOnClose";
-import {openModal} from "../../../../../../plugin";
+import {openModal} from "../../../../../../../plugin";
 import WidgetModalWithClose from "../../../../../components/modals/WidgetModalWithClose";
 import WidgetVocabulary from "../../WidgetVocabulary";
 

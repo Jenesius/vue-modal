@@ -8,15 +8,8 @@
 
 import {onBeforeModalClose, closeModal} from "../../../../plugin";
 
-class Test{
-	constructor() {
-		this.title = "TEST BINDING"
-	}
-	show(){
-		console.log(this.title);
-	}
-}
-const test = new Test();
+
+
 export default {
 	props: {
 		title: {
@@ -30,17 +23,10 @@ export default {
 		}
 	},
 	setup(){
-		onBeforeModalClose((next) => {
+		onBeforeModalClose(() => {
 
-			console.log("NOPE", next(false));
 
 		})
-	},
-	beforeModalClose(){
-
-		test.show();
-		console.log(this.title);
-		console.log("Try Close test modal component.", );
 	},
 	name: "TestModalComponent"
 }

@@ -3,13 +3,12 @@
 </template>
 
 <script>
+/*eslint-disable*/
+import {onBeforeRouteLeave} from "vue-router";
+
 export default {
-	beforeRouteLeave(){
-		console.log("Leave")
-	},
-	beforeRouteEnter(){
-		console.log("Enter")
-	},
+	beforeRouteLeave(to, from, next){},
+
 	name: "ViewA"
 }
 </script>

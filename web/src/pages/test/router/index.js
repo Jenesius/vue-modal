@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { createWebHistory, createRouter} from "vue-router";
 import ViewA from "../components/ViewA";
 import ViewB from "../components/ViewB";
@@ -31,5 +32,6 @@ const router = createRouter({
     history: createWebHistory("/test.html"),
     routes,
 });
+
 
 export default router;

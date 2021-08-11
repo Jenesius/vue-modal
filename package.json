@@ -12,7 +12,7 @@
     "lint": "vue-cli-service lint"
   },
   "files": [
-    "plugin-dist/jenesius-vue-modal.cjs.js",
+    "dist/jenesius-vue-modal.cjs.js",
     "README.MD"
   ],
   "dependencies": {

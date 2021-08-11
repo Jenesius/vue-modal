@@ -38,8 +38,8 @@ describe("onBeforeModalClose", () => {
 		await mount(container);
 
 		component.setup = () => {
-			onBeforeModalClose((next) => {
-				next(false)
+			onBeforeModalClose(() => {
+				return false;
 			})
 		}
 
@@ -52,8 +52,8 @@ describe("onBeforeModalClose", () => {
 		await mount(container);
 
 		component.setup = () => {
-			onBeforeModalClose((next) => {
-				next(true)
+			onBeforeModalClose(() => {
+				return true;
 			})
 		}
 
@@ -67,10 +67,10 @@ describe("onBeforeModalClose", () => {
 		await mount(container);
 
 		component.setup = () => {
-			onBeforeModalClose(async (next) => {
+			onBeforeModalClose(async () => {
 				await waitTime(100);
 
-				next(false);
+				return false;
 			})
 		}
 
@@ -83,10 +83,10 @@ describe("onBeforeModalClose", () => {
 		await mount(container);
 
 		component.setup = () => {
-			onBeforeModalClose(async (next) => {
+			onBeforeModalClose(async () => {
 				await waitTime(100);
 
-				next(true);
+				return true;
 			})
 		}
 

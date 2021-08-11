@@ -4,6 +4,7 @@ import {closeModal, container, modalQueue, openModal} from "../../plugin";
 
 beforeEach(() => {
 	modalQueue.value = [];
+
 });
 
 function waitTime(n) {
@@ -36,8 +37,8 @@ describe("beforeModalClose", () => {
 	it("beforeModalClose next(false)", async () => {
 		await mount(container);
 
-		component.beforeModalClose = function(next){
-			next(false);
+		component.beforeModalClose = function(){
+			return false;
 		}
 
 		await openModal(component);
@@ -48,8 +49,23 @@ describe("beforeModalClose", () => {
 	it("beforeModalClose next(true)", async () => {
 		await mount(container);
 
-		component.beforeModalClose = function(next){
-			next(true);
+		const testComponent = {
+			template: "<p>a</p>",
+			beforeModalClose(){
+				return true;
+			}
+		}
+
+		await openModal(testComponent);
+		await closeModal();
+
+		expect(modalQueue.value.length).toBe(0);
+	})
+	it("beforeModalClose retrun undefined", async () => {
+		await mount(container);
+
+		component.beforeModalClose = function(){
+
 		}
 
 		await openModal(component);
@@ -61,10 +77,10 @@ describe("beforeModalClose", () => {
 	it("beforeModalClose async next(false)", async () => {
 		await mount(container);
 
-		component.beforeModalClose = async function(next){
+		component.beforeModalClose = async function(){
 			await waitTime(100);
 
-			next(false);
+			return false;
 		}
 
 		await openModal(component);
@@ -75,13 +91,17 @@ describe("beforeModalClose", () => {
 	it("beforeModalClose async next(true)", async () => {
 		await mount(container);
 
-		component.beforeModalClose = async function(next){
-			await waitTime(100);
-			next(true);
-		}
 
-		await openModal(component);
-		await closeModal();
+		await openModal({
+			...component,
+			beforeModalClose: async function(){
+				await waitTime(100);
+				return true;
+			}
+		});
+		const a = await closeModal();
+
+		console.log(a);
 
 		expect(modalQueue.value.length).toBe(0);
 	})

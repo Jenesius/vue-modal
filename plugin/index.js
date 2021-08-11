@@ -119,8 +119,10 @@ function guardToPromiseFn(guard, id){
     return () => new Promise((resolve, reject) => {
 
         const next = (valid) => {
+
             if (valid === false) return reject(ModalError.nextReject(id));
             if (valid instanceof Error) reject(valid);
+
             resolve();
         };
 

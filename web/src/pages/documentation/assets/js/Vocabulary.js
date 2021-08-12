@@ -230,5 +230,4 @@ for(let key in store) {
 	useVocabulary[key] = store[key][lang];
 }
 
-console.log(useVocabulary);
 export  default store;

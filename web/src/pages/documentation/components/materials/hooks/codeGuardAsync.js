@@ -8,13 +8,10 @@ export const codeAsync =
 }`;
 
 export const codePromise =
-`{
-	const modal = await openModal(Modal);
+`const modal = await openModal(Modal);
 	
-	modal.onclose = () => {
-		return new Promise(resolve => {
-			setTimeout(resolve, 1000); // ${useVocabulary.modalWillCloseAfterSecond}
-		})
-	}
-	
+modal.onclose = () => {
+	return new Promise(resolve => {
+		setTimeout(resolve, 1000); // ${useVocabulary.modalWillCloseAfterSecond}
+	})
 }`;

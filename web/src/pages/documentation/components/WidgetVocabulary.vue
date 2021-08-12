@@ -22,7 +22,6 @@ export default {
 
 		const text = useVocabulary(props.name, {});
 
-
 		return () => {
 
 			if (props.noTag) return text;

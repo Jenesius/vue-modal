@@ -4,65 +4,30 @@
 
 const store =  {
 	ru: {
-
-		example: "пример",
-
-		//OPEN_MODAL
-		using_openModal: "Метод openModal используется для показа компоненты в контейнере модальных окон.",
-		first_param_openModal: "В качестве первого параметра выступает любой VueComponent, который нужно отобразить:",
-		second_param_openModal: "В качестве второго параметра передаются входные данные props.",
-		return_openModal: `Метод возвращает объект <a>modalObject.</a>`,
-		about_close_openModal: `При показе модальных окон этим методом, все предыдущие окна будут закрыты. Для налаживания модальных окон друг на друг используйте <a>pushModal</a>.`,
-
-		//PUSH_MODAL
-		using_pushModal: "В случае, если вам необходимо показатьмодальное окно, а затем над ним показать ещё одно модальное окно(и т.д.), например окно подтверждения действия, необходимо использовать метод pushModal",
-		return_pushModal: "Метод возвращает объект <a>modalObject.</a>",
-		for_close_pushModal: "Для закрытия только последнего модального окна используется метод <a>popModal</a>",
-
-		//CLOSE_MODAL
-		info_closeModal: "Для закрытия <b>всех</b> модальных окон используется метод closeModal:",
-
-		//POP_MODAL
-		info_popModal: "Для закрытия <b>только последнего</b> модального окна, если их было открыто несколько при помощи метода pushModal, используется метод <a>popModal</a>:",
-
 		//ON_CLOSE
 		info_on_close: "Методы openModal и pushModal возвращают объект <a>modalObject</a>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент к этому объекту:",
 		modal_was_close_after: "*Модальное окно будет закрыто после пяти попыток.",
 		if_onclose_false_on_close: "В случае, если onclose вернёт <b>false</b>, модальное окно не будет закрыто.",
 		if_will_open_some_modals_on_close: "Если будет открыто несколько модальных окон, и на одном из них будет стоять обработчик onclose, возвращающий false, можно закрыть будет только те, модальных окна, которые были открыты после него.",
-
 	},
 	en: {
-		example: "example",
-
-		//OPEN_MODAL
-		using_openModal: "The openModal method is used to display a component in a modal window container.",
-		first_param_openModal: "The first parameter is any VueComponent that needs to be displayed:",
-		second_param_openModal: "The props input is passed as the second parameter.",
-		return_openModal: `The method returns a <a> modalObject. </a>`,
-		about_close_openModal: `When displaying modals using this method, all previous windows will be closed. Use <a> pushModal </a> to stack modals on top of each other.`,
-
-		//PUSH_MODAL
-		using_pushModal: "In case you need to show a modal window, and then show another modal window (etc.) above it, for example, an action confirmation window, you must use the pushModal method.",
-		return_pushModal: "The method returns a <a> modalObject. </a>",
-		for_close_pushModal: "To close only the last modal window, use the <a> popModal </a> method.",
-
-		//CLOSE_MODAL
-		info_closeModal: "To close <b> all </b> modals, use the closeModal method:",
-
-		//POP_MODAL
-		info_popModal: "To close <b> only the last </b> modal window, if several were opened using the pushModal method, use the <a> popModal </a> method:",
-
 		//ON_CLOSE
 		info_on_close: "The openModal and pushModal methods return an <a> modalObject </a> object. In order to catch the closing of a modal window, you need to add an event to this object:",
 		modal_was_close_after: "* The modal window will close after five attempts.",
 		if_onclose_false_on_close: "If onclose returns <b> false </b>, the modal will not be closed.",
 		if_will_open_some_modals_on_close: "If several modal windows are open, and one of them will have an onclose handler that returns false, you can close only those modal windows that were opened after it.",
-
-
-		//ModalObject
-
 	},
+
+	example: {
+		en: "example",
+		ru: "пример"
+	},
+
+	returnValue: {
+		ru: "Возвращаемое значение",
+		en: "Return value"
+	},
+
 
 	navigationGuards: {
 		ru: "Навигационные хуки",
@@ -83,10 +48,43 @@ const store =  {
 	},
 
 
-	onAddModalReturn: {
-		ru: "Метод возвращает промис, который в случае успеха вернёт <a>ModalObject</a>",
-		en: "The method returns a promise, which, if successful, will return <a> ModalObject </a>"
+	openModalInfo: {
+		ru: "Метод openModal используется для показа компоненты в контейнере модальных окон. Перед показом модального окна, метод закроет все открытые модальные окна, если у него получится сделать это, он откроет новое. На вход принимаются два параметра:",
+		en: "The openModal method is used to display a component in a modal window container. Before showing the modal window, the method will close all open modal windows, if it succeeds, it will open a new one. Two parameters are accepted as input:"
 	},
+	addModalFirstParam : {
+		ru: "объект компоненты, который будет отрисован в качестве модального окна.",
+		en: "a component object that will be rendered as a modal window."
+	},
+	addModalSecondParam: {
+		ru: "объект в котором находятся входные параметры, которые передаются в модальное окно и будут доступным из props.",
+		en: "the object that contains the input parameters that are passed to the modal and will be accessible from props."
+	},
+
+	addModalReturnValue: {
+		ru: `Promise, который в случае успеха вернёт объект <a>ModalObject</a>.`,
+		en: `Promise that, if successful, will return a <a> ModalObject </a>.`
+	},
+
+	pushModalInfo: {
+		ru: "Метод pushModal используется для показа модального окна, но ,в отличии от openModal, он не закрывает откртые ранее модальные окна, а показывает новое поверх остальных. На вход принимаются два параметра:",
+		en: "The pushModal method is used to show a modal window, but, unlike openModal, it does not close previously opened modals, but shows the new one on top of the rest. Two parameters are accepted as input:"
+	},
+	howCloseLastModal: {
+		ru: "Чтобы закрыть только последнее окно, необходимо использовать метод <a>popModal</a>",
+		en: "To close only the last window, you need to use the <a> popModal </a> method"
+	},
+
+	closeModalInfo: {
+		ru: "Для закрытия <b>всех</b> модальных окон используется метод closeModal:",
+		en: "To close <b> all </b> modals, use the closeModal method"
+	},
+	popModalInfo: {
+		en: "To close <b> only the last </b> modal window, if several were opened using the pushModal method, use the <a> popModal </a> method:",
+		ru: "Для закрытия <b>только последнего</b> модального окна, если их было открыто несколько при помощи метода pushModal, используется метод <a>popModal</a>:"
+	},
+
+
 
 	guardNavigationHooksOncloseInfo: {
 		ru: "Методы <a>openModal<a/> и <a>pushModal<a/> возвращают promoise, который в случае успеха вернёт объект <a>modalObject</a>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент к этому объекту:",

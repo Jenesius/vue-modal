@@ -1,5 +1,5 @@
 <template>
-	<p><widget-vocabulary name = "info_popModal"/></p>
+	<p><widget-vocabulary name = "popModalInfo"/></p>
 	<widget-code>{{codePopModal}}</widget-code>
 </template>
 

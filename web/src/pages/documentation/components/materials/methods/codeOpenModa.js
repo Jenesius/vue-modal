@@ -1,6 +1,10 @@
 export const codeOpenModal =
-`import {openModal} from "jenesius-vue-modal"
-openModal(VueComponent, {title: "Hello"})`;
+`import {openModal} from "jenesius-vue-modal";
+import VueComponent from "AnyVueComponent.vue";
+
+const props = {title: "Hello"};
+
+openModal(VueComponent, props)`;
 
 export const codeOpenModalSimpleComponent =
 `<template>

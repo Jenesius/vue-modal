@@ -34,8 +34,8 @@ describe('onClose', () => {
 
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = (next) => {
-			next(true);
+		modal.onclose = () => {
+			return true;
 		}
 
 		await modal.close();
@@ -47,8 +47,8 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = (next) => {
-			next(false);
+		modal.onclose = () => {
+			return false;
 		}
 
 		try {
@@ -62,10 +62,10 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = async (next) => {
+		modal.onclose = async () => {
 			await waitTime(1000);
 
-			next(false);
+			return false;
 		}
 
 		try {
@@ -79,10 +79,15 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = (next) => {
-			setTimeout(() => {
-				next(true);
-			}, 1000);
+		modal.onclose = () => {
+
+			return new Promise(resolve => {
+				setTimeout(() => {
+					resolve(true);
+				}, 1000);
+			})
+
+
 		}
 
 		try {
@@ -97,10 +102,10 @@ describe('onClose', () => {
 		const modal = await pushModal(ModalTest);
 
 		let count = 3;
-		modal.onclose = (next) => {
+		modal.onclose = () => {
 			count--;
 
-			if (count > 0) return next(false);
+			if (count > 0) return false;
 		}
 
 		closeModal();
@@ -150,7 +155,7 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = (next) => next(false)
+		modal.onclose = () => false
 
 		expect(modalQueue.value.length).toBe(1);
 		await closeModal();
@@ -160,10 +165,10 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = async (next) => {
+		modal.onclose = async () => {
 			await waitTime(100);
 
-			next(false);
+			return false;
 		}
 
 		expect(modalQueue.value.length).toBe(1);
@@ -174,10 +179,10 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = async (next) => {
+		modal.onclose = async () => {
 			await waitTime(100);
 
-			next(true);
+			return true;
 		}
 
 		expect(modalQueue.value.length).toBe(1);
@@ -197,7 +202,7 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = (next) => next(false)
+		modal.onclose = () => false
 
 		expect(modalQueue.value.length).toBe(1);
 		await popModal();
@@ -207,10 +212,10 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = async (next) => {
+		modal.onclose = async () => {
 			await waitTime(100);
 
-			next(false);
+			return false;
 		}
 
 		expect(modalQueue.value.length).toBe(1);
@@ -221,10 +226,10 @@ describe('onClose', () => {
 		const wrapper = await mount(App)
 		const modal = await openModal(ModalTest);
 
-		modal.onclose = async (next) => {
+		modal.onclose = async () => {
 			await waitTime(100);
 
-			next(true);
+			return true;
 		}
 
 		expect(modalQueue.value.length).toBe(1);
@@ -236,7 +241,7 @@ describe('onClose', () => {
 		const wrapper = await mount(App);
 
 		const modal1 = await openModal(ModalTest, {title: "1"});
-		modal1.onclose = next => next(false);
+		modal1.onclose = () => false;
 
 		const modal2 = await openModal(ModalTest, {title: "2"});
 
@@ -248,12 +253,9 @@ describe('onClose', () => {
 		const wrapper = await mount(App);
 
 		const modal1 = await openModal(ModalTest, {title: "1"});
-		modal1.onclose = next => {
+		modal1.onclose = () => {
 
-			next(false);
-			next(false);
-			next(false);
-			next(false);
+			return false;
 
 		}
 

@@ -42,19 +42,12 @@
 				const m = pushModal(TestModalComponent, {title: "hi3"});
 
 				m.onclose = (next) => {
-					console.log("modal.close");
-
 
 					return new Promise((resolve, reject) => {
-
 						setTimeout(() => {
-
-							next(true);
-
-
+							reject(false);
 						}, 2000);
 					})
-
 
 				}
 			},

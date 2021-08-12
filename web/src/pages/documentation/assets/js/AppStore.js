@@ -9,6 +9,9 @@ import {useVocabulary} from "./Vocabulary";
 import FragmentGettingStarted from "../../components/materials/Installation/FragmentGettingStarted";
 import FragmentBeforeModalClose from "../../components/materials/hooks/FragmentBeforeModalClose";
 import FragmentOnBeforeModalClose from "../../components/materials/hooks/FragmentOnBeforeModalClose";
+import FragmentInformation from "../../components/materials/Installation/FragmentInformation";
+import FragmentGuardsInformation from "../../components/materials/hooks/FragmentGuardsInformation";
+import FragmentGuardAsync from "../../components/materials/hooks/FragmentGuardAsync";
 
 export const config = [
 	{
@@ -16,12 +19,15 @@ export const config = [
 		link : "installation",
 		array: [
 			{
+				component: FragmentInformation
+			},
+			{
 				title: "npm",
 				link : "npm",
 				component: FragmentNpm
 			},
 			{
-				title: useVocabulary("getting started"),
+				title: useVocabulary("gettingStarted"),
 				link : "getting-started",
 				component: FragmentGettingStarted
 			}
@@ -54,16 +60,21 @@ export const config = [
 		]
 	},
 	{
-		title: "Lifecycle Hooks",
-		link : "lifecycle-hooks",
+		title: useVocabulary.navigationGuards,
+		link : "navigation-guards",
 		array: [
 			{
-				title: "onClose",
+				title: useVocabulary.Information,
+				link: "information",
+				component: FragmentGuardsInformation
+			},
+			{
+				title: "onclose",
 				link : "on-close",
 				component: FragmentOnClose
 			},
 			{
-				title: "Хуки для конкретных компонентов",
+				title: useVocabulary.InComponentGuards,
 				link: "before-modal-close",
 				component: FragmentBeforeModalClose
 			},
@@ -71,11 +82,16 @@ export const config = [
 				title: "Composition Api",
 				link: "composition-api",
 				component: FragmentOnBeforeModalClose
+			},
+			{
+				title: useVocabulary.asyncGuards,
+				link: "async",
+				component: FragmentGuardAsync
 			}
 		]
 	},
 	{
-		title: "Details",
+		title: useVocabulary.details,
 		link : "details",
 		array: [
 			{
@@ -84,11 +100,11 @@ export const config = [
 				component: FragmentModalObject
 			},
 			{
-				title: "Styles",
+				title: useVocabulary.style,
 				link : "styles"
 			},
 			{
-				title: "Animation",
+				title: useVocabulary.animation,
 				link : "animation"
 			}
 		]

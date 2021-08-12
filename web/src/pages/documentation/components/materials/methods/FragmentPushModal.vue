@@ -1,16 +1,21 @@
 <template>
-	<p><widget-vocabulary name = "using_pushModal"/></p>
+	<widget-vocabulary name = "pushModalInfo"/>
+	<ul>
+		<li><p><b>VueComponent</b> - <widget-vocabulary name = "addModalFirstParam" no-tag/></p></li>
+		<li><p><b>props</b> - <widget-vocabulary name = "addModalSecondParam" no-tag/></p></li>
+	</ul>
 
 	<widget-code>{{codePushModal}}</widget-code>
 
 	<widget-code name = "ModalFirst.vue">{{codePushModalComponent}}</widget-code>
 	<widget-code name = "ModalSecond.vue">{{codePushModalComponent2}}</widget-code>
 
-	<button class = "button purple" @click = "pushInfinityModals"><widget-vocabulary name = "example"/></button>
+	<widget-vocabulary name = "example" class = "button purple" tag = "button" @click = "pushInfinityModals"/>
 
-	<p><widget-vocabulary name = "onAddModalReturn" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
+	<p><widget-vocabulary name = "returnValue" tag = "b"/>: <widget-vocabulary name = "addModalReturnValue" :links = "[{name: 'Details', hash: 'modal-object'}]" no-tag/> </p>
+
 	<widget-code>{{codePushModalReturn}}</widget-code>
-	<p><widget-vocabulary name = "for_close_pushModal" :links = "[{hash: 'pop-modal'}]"/></p>
+	<p><widget-vocabulary name = "howCloseLastModal" :links = "[{hash: 'pop-modal'}]"/></p>
 
 
 </template>

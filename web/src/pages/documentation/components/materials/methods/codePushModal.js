@@ -1,6 +1,6 @@
 export const codePushModal =
 `import {pushModal} from "jenesius-vue-modal"
-pushModal(VueComponent, {})
+pushModal(VueComponent)
 `;
 
 export const codePushModalComponent =

@@ -2,6 +2,7 @@
 
 module.exports = {
 
+    outputDir: "./web/dist",
     pages: {
         docs: {
             entry: './web/src/pages/documentation/main.js',

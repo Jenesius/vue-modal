@@ -1,10 +1,9 @@
+import {useVocabulary} from "../../../assets/js/Vocabulary";
+
 export const codeBeforeModalClose =
-`
-const Foo = {
+`const Foo = {
 	template: "...",
-	beforeModalClose(next) {
-		// вызывается перед закрытием модального окна
-		// имеет доступ к контексту экземпляра компонента this.
+	beforeModalClose() {
+		// ${useVocabulary.hasAccessToThis}
 	}
-}
-`;
+}`;

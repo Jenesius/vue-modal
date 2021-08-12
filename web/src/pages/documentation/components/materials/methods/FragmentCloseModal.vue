@@ -1,5 +1,5 @@
 <template>
-	<p><widget-vocabulary name = "info_closeModal"/></p>
+	<p><widget-vocabulary name = "closeModalInfo"/></p>
 	<widget-code>{{codeCloseModal}}</widget-code>
 </template>
 

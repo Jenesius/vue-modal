@@ -1,20 +1,21 @@
 <template>
 
-	<p><widget-vocabulary name = "using_openModal" /></p>
+	<widget-vocabulary name = "openModalInfo" />
+
+	<ul>
+		<li><p><b>VueComponent</b> - <widget-vocabulary name = "addModalFirstParam" no-tag/></p></li>
+		<li><p><b>props</b> - <widget-vocabulary name = "addModalSecondParam" no-tag/></p></li>
+	</ul>
 
 	<widget-code>{{codeOpenModal}}</widget-code>
 
-	<p><widget-vocabulary name = "first_param_openModal" /></p>
 
-	<widget-code>{{ codeOpenModalSimpleComponent }}</widget-code>
+	<widget-code name="AnyVueComponent.vue">{{ codeOpenModalSimpleComponent }}</widget-code>
 
-	<p><widget-vocabulary name = "second_param_openModal" /></p>
+	<p><widget-vocabulary name = "returnValue" tag = "b"/>: <widget-vocabulary name = "addModalReturnValue" :links = "[{name: 'Details', hash: 'modal-object'}]" no-tag/> </p>
 
-	<p><widget-vocabulary name = "onAddModalReturn" :links = "[{name: 'Details', hash: 'modal-object'}]" /></p>
 
 	<widget-code>{{codeOpenModalReturn}}</widget-code>
-
-	<p><widget-vocabulary name = "about_close_openModal" :links = "[{hash: '#push-modal'}]"/></p>
 
 </template>
 

@@ -1,10 +1,14 @@
 <template>
 	<header class = "header">
 
-		<div class = "flex">
+		<div class = "header__mobile-menu-button desktop-hide" @click = "toggleMenu">
+			<img src = "./../../assets/ico/menu.svg" alt = "menu" />
+		</div>
+
+		<div class = "flex header__container-logo">
 			<img class = "header__logo" src = "./../../assets/ico/vue.svg" alt = "logo"/>
 
-			<span class = "header__title">jenesius vue modal</span>
+			<span class = "header__title mobile-hide">jenesius vue modal</span>
 		</div>
 
 		<ul class = "header__list">
@@ -24,9 +28,11 @@
 
 	<widget-modal-container/>
 
-	<div class = "app-content">
+	<div class = "app-body">
 
-		<router-view/>
+		<div class = "app-content">
+			<router-view/>
+		</div>
 
 		<WidgetNavbar />
 	</div>
@@ -38,10 +44,18 @@
 	import {container} from "../../../../plugin";
 	import "./assets/js/Vocabulary";
 	import WidgetDropdown from "../../components/WidgetDropdown";
+	import {useStore} from "vuex";
 
 	export default {
 
 		setup(){
+
+			const store = useStore();
+
+			function toggleMenu(){
+				store.commit("toggleMenu");
+			}
+
 			const arrayTransition = [
 				{
 					title: "English",
@@ -60,7 +74,8 @@
 			];
 
 			return {
-				arrayTransition
+				arrayTransition,
+				toggleMenu
 			};
 		},
 		components: {WidgetDropdown, WidgetNavbar, WidgetModalContainer: container},
@@ -85,6 +100,14 @@
 		border-bottom: 1px solid #eaecef;
 
 		background-color: white;
+	}
+	@media screen and (max-width: 768px){
+		.header{
+			padding: 0;
+		}
+		.header__container-logo{
+			align-items: center;
+		}
 	}
 	.header__logo{
 		height: 32px;
@@ -114,4 +137,20 @@
 		color:#2c3e50;
 
 	}
+
+	@media screen and (min-width: 768px){
+		.app-body{
+			padding-left: 300px;
+		}
+	}
+
+	.header__mobile-menu-button{
+
+
+		padding: 10px;
+	}
+	.header__mobile-menu-button>img {
+		height: 24px;
+	}
+
 </style>

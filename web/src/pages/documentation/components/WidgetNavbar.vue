@@ -1,6 +1,6 @@
 <template>
 
-	<div class = "navigation">
+	<div class = "navigation" :class = "{active: active}">
 
 		<widget-navbar-item v-for = "(elem, index) in array" :key = "index" :title = "elem.title" :array = "elem.array" :link = "elem.link"/>
 
@@ -13,6 +13,8 @@
 	import WidgetNavbarItem from "./WidgetNavbarItem";
 
 	import {config} from "../assets/js/AppStore";
+	import {useStore} from "vuex";
+	import {computed} from "vue";
 
 	export default {
 		components: {WidgetNavbarItem},
@@ -23,9 +25,13 @@
 			const array = config;
 
 
+			const store = useStore();
+
+			const active = computed(() => store.state.isMenuActive);
 
 			return {
-				array
+				array,
+				active
 			}
 		},
 		name: "WidgetNavbar"
@@ -33,28 +39,35 @@
 </script>
 
 <style scoped>
-	.content-form__title{
-		font-size: 20px;
-		line-height: 32px;
-		font-weight: 500;
-
-		border-bottom: 1px solid #eaecef;
-
-		margin-top: -3.1rem;
-		padding-top: 4.6rem;
-	}
-
 	.navigation{
+
+		--top: 63px;
 		position: fixed;
 		left: 0;
 
-		top: 63px;
-		width: 320px;
+		top: var(--top);
+		width: 300px;
 		padding: 24px 0;
+
+		background-color: white;
+		transition: transform 0.3s;
 	}
 
-	.content{
-		padding:  0 0 18px 0;
-		width: 100%;
+
+
+	@media screen and (max-width: 768px){
+		.navigation{
+			--top: 48px;
+			height: calc(100% - var(--top));
+			overflow-y: auto;
+			padding: 0;
+			top: var(--top);
+
+			transform: translateX(-300px);
+		}
+		.navigation.active{
+			transform: translateX(0);
+		}
 	}
+
 </style>

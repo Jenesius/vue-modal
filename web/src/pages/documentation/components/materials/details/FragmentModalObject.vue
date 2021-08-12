@@ -1,8 +1,10 @@
 <template>
-	<p><widget-vocabulary name = "return_modalObject"/></p>
-	<p><widget-vocabulary name = "param_id_modalObject"/></p>
-	<p><widget-vocabulary name = "param_close_modalObject"/></p>
-	<p><widget-vocabulary name = "param_onclose_modalObject"/></p>
+	<widget-vocabulary name = "methodsPushAndCloseReturnModalObject"/>
+	<ul>
+		<li><widget-vocabulary name = "modalObjectParamId"/></li>
+		<li><widget-vocabulary name = "modalObjectParamClose"/></li>
+		<li><widget-vocabulary name = "modalObjectParamOnclose"/></li>
+	</ul>
 
 	<widget-code>{{codeOnClose}}</widget-code>
 	<widget-code>{{codeModalObject}}</widget-code>

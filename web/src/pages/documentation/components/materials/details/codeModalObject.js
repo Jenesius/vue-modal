@@ -1,19 +1,20 @@
+import {useVocabulary} from "../../../assets/js/Vocabulary";
+
 export const codeOnClose =
 `import {openModal} from "jenesius-vue-modal;
 const modal = await openModal(Modal);
-modal.onclose = (next) => next(false);
+modal.onclose = () => false
 
-modal.close() // Модальное окно не закроется
+modal.close() // ${useVocabulary("modalWillNotBeClosed")}
 `;
 
 export const codeModalObject =
 `const modal = await openModal(Modal);
 
-modal.id; //Уникальный идентификатор. 1,2,3 ...
+modal.id; // ${useVocabulary.uniqueIdentity}
 
-modal.onclose = (next) => {
-    console.log("Меня пытаются закрыть!");
-    if (погода === "дождливая") return next(false);
+modal.onclose = () => {
+    if (${useVocabulary.weather} === "${useVocabulary.rainy}") return false;
 }
  
-modal.close() //Закроет модальное окно, если погода не дождливая`;
+modal.close() // ${useVocabulary.closeModalIfWeatherIsRainy}`;

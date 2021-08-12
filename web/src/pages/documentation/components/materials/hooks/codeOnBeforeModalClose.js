@@ -1,15 +1,15 @@
+import {useVocabulary} from "../../../assets/js/Vocabulary";
+
 export const codeBeforeModalClose =
-`import {onBeforeModalClose} from 'jenesius-vue-modal'
+`import {onBeforeModalClose} from "jenesius-vue-modal"
 
 export default {
   setup() {
-    onBeforeModalClose(next => {
+    onBeforeModalClose(() => {
       const answer = window.confirm(
-        'Do you really want to leave? you have unsaved changes!'
+        "${useVocabulary.doYouWantToLeave}"
       )
-      // cancel the navigation and stay on the same page
-      if (!answer) return next(false)
+      if (!answer) return false
     })
-
-  },
+  }
 }`;

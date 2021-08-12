@@ -1,6 +1,6 @@
 <template>
 	<div >
-		<h2 class = "material-container__title">{{title}}</h2>
+		<h2 class = "material-container__title" v-if = "title">{{title}}</h2>
 
 		<slot/>
 	</div>
@@ -27,5 +27,7 @@ export default {
 
 		margin-top: -3.1rem;
 		padding-top: 4.6rem;
+
+		text-transform: capitalize;
 	}
 </style>

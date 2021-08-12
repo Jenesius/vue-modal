@@ -1,18 +1,15 @@
 <template>
-	<p><widget-vocabulary name = "guardNavigationHooksOncloseInfo" :links = "[{name: 'details', hash: 'modal-object'}]"/></p>
+	<widget-vocabulary name = "guardNavigationHooksOncloseInfo" :links = "[{name: 'details', hash: 'modal-object'}]"/>
 
 	<widget-code>{{codeOnClose}}</widget-code>
 
 	<div class = "flex gap_5 flex_align-center">
-		<button class = "button purple" @click = "openModalWithoutHook"><widget-vocabulary name = "example"/></button>
-		<span class = "text-comment"><widget-vocabulary name = "modal_was_close_after"/></span>
+		<widget-vocabulary name = "example" class = "button purple" @click = "openModalWithoutHook" tag = "button"/>
+		<span class = "text-comment">*<widget-vocabulary name = "closeModalAfterFiveAttempts" no-tag /></span>
 
 	</div>
 
-	<p><widget-vocabulary name = "guardNavigationHooksOncloseReturnFalse"/></p>
-
-
-	<p><widget-vocabulary name = "guardNavigationHooksOncloseList"/></p>
+	<widget-vocabulary name = "guardNavigationHooksOncloseList"/>
 
 	<widget-code>{{codeOnCloseMiddle}}</widget-code>
 

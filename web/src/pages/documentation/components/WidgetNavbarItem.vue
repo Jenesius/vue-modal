@@ -8,7 +8,7 @@
 			v-if = "array?.length"
 		>
 			<li v-for = "(elem, index) in array" :key = index>
-				<a :href = "`${link}#${elem.link}`" class = "navbar-item__link"  >{{elem.title}}</a>
+				<a :href = "`${link}#${elem.link}`" class = "navbar-item__link"  v-if = "elem.title">{{elem.title}}</a>
 
 			</li>
 		</ul>
@@ -64,6 +64,8 @@
 		font-weight: 400;
 		display: inline-block;
 		color: #2c3e50;
+
+		text-transform: capitalize;
 	}
 	.navbar-item__link:hover{
 		color: var(--main);

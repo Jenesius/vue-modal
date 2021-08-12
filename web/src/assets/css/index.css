@@ -33,18 +33,23 @@ a{
 .app-content{
     margin: auto;
 
-    width: 100%;
-}
 
+}
+@media screen and (max-width: 768px){
+    .app-content{
+        padding: 0 5px;    width: auto;
+
+    }
+}
 @media screen and (min-width: 768px){
     .app-content{
-        width: 550px;
+        max-width: 650px;
     }
 }
 
 @media screen and (min-width: 1144px) {
     .app-content{
-        width: 850px;
+        max-width: 850px;
     }
 }
 
@@ -57,4 +62,15 @@ a{
 
 .cursor-pointer{
     cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-hide{
+        display: none !important;
+    }
+}
+@media screen and (min-width: 768px) {
+    .desktop-hide{
+        display: none !important;
+    }
 }

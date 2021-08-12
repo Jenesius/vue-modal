@@ -94,8 +94,8 @@ const store =  {
 	},
 
 	guardNavigationHooksInComponent: {
-		ru: "Наконец, навигационный хук можно указать и непосредственно в компоненте (том, что указан в конфигурации маршрута), используя следующие опции:",
-		en: "Finally, the navigation hook can be specified directly in the component (the one specified in the route configuration) using the following options:"
+		ru: "Наконец, навигационный хук можно указать и непосредственно в компоненте, используя следующие опции:",
+		en: "Finally, the navigation hook can be specified directly in the component using the following options:"
 	},
 	guardNavigationHooksCompositionApiInfo: {
 		ru: "Хотя вы все еще можете использовать встроенные функции, Jenesius Vue Modal предоставляет функции для Composition API:",

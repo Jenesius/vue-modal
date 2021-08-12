@@ -67,11 +67,19 @@ Methods return promise, in this case promise is resolved - [modalObject](https:/
 
 There are three ways to track the closing of a modal:
 
+---
+
+Versions is higher than 1.2.0 **NOT support** 'next'. Now **All** hooks use only returned value(Boolean) for navigation hooks.
+If function return **false** or throwing an Error modal window will not be closed.
+
+---
+
 - onclose
 ```js
 const modal = await openModal(Modal);
-modal.onclose = (next) => {
+modal.onclose = () => {
     console.log("Close");
+    return false; //Modal will not be closed
 }
 ```
 
@@ -80,8 +88,12 @@ modal.onclose = (next) => {
 ```js
     export default {
         props: {},
-        beforeModalClose(next){
-            console.log("Close")
+        data: () => ({isValidate: false}),
+        beforeModalClose(){
+            console.log("Close");
+            
+            if (!isValidate) return false; //modal will not be closed while isValidate === false
+            
         }
     }
 ```
@@ -89,31 +101,33 @@ modal.onclose = (next) => {
 ```js
     export default{
         setup() {
-            onBeforeModalClose(next => {
-                console.log("Close")
+            onBeforeModalClose(() => {
+                console.log("Close");
             });
         }
     }
 ```
 
-First parameter of each hook is `next` - callback can be run with `false` value for stop closing a modal window.
-```js
-    export default {
-        props: {},
-        beforeModalClose(next){
-            next(false); // This modal can not be closed!
-        }
-    }
-```
+
 ### Async/Await
 
 Hooks also can be asynchronous functions:
 ```js
-    async beforeModalClose(next){
+    async beforeModalClose(){
         await doSome();
-        next(true); // This modal can not be closed!
+        return false; // This modal can not be closed!
     }
 ```
+or
+
+```js
+    beforeModalClose(){
+        return Promise(resolve => {
+            setTimeout(() => resolve(true), 2000); //Modal will closed after 2 second
+        })
+    }
+```
+
 
 # Example VueModalComponent
 

@@ -8,11 +8,18 @@ export const modalQueue = ref([]); //All modals that showing now
 
 const state = {
     modalId: 0,
-    initialized: false,
+    initialized: false, // Boolean, false - if ModalContainer not inserted in project.
 }
 
 
-
+/**
+ * Storage of hooks
+ * store: {
+ *     modalId: {
+ *         close: [func, func]
+ *     }
+ * }
+ * */
 const guards = {
 
     store: {},
@@ -63,32 +70,30 @@ class ModalObject{
     }
 }
 
+class ModalError extends Error{
+    isModalError;
+    constructor(message) {
+        super();
 
-function createModalError() {
+        this.isModalError = true;
+        this.message = message;
+    }
 
-    return Object.assign(new ModalError(), {
-        isModalError: true
-    });
+    static Undefined(id) {
+        return new ModalError(`Modal with id: ${id} not founded. The modal window may have been closed earlier.`);
+    }
 
-}
+    static nextReject(id){
+        return new ModalError(`Next function from hook was rejected. Modal id ${id}`);
+    }
 
-function canOnlyBeCalledOnce(next) {
-    let called = false;
-    return function () {
-        if (called) console.warn(`The "next" callback was called more than once in one modal's guard. It should be called exactly one time in each navigation guard. This will fail in production.`);
-        if (!called) {
-            called = true;
-            next.apply(null, arguments);
-        }
-    };
 }
 
 function closeById(id) {
 
     const indexFoRemove = modalQueue.value.findIndex(item => item.id === id);
 
-    //Modal with id not found
-    if (indexFoRemove === -1) return;
+    if (indexFoRemove === -1) return Promise.reject(ModalError.Undefined(id));    //Modal with id not found
 
     const arr = guards.get(id, "close").map(guard => guardToPromiseFn(guard, id));
 
@@ -104,36 +109,42 @@ function closeById(id) {
 
 }
 
-class ModalError extends Error{
-    isModalError;
-    constructor() {
-        super();
-
-        this.isModalError = true;
-    }
-
+function runGuardQueue(guards) {
+    return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
 }
-
+/*
+* FUNCTION ONLY FOR ONE GUARD.
+* */
 function guardToPromiseFn(guard, id){
     return () => new Promise((resolve, reject) => {
-        const next = (valid) => {
-            if (valid === false) return reject(createModalError());
 
+        const next = (valid) => {
+
+            if (valid === false) return reject(ModalError.nextReject(id));
             if (valid instanceof Error) reject(valid);
 
             resolve();
         };
 
-        Promise.resolve(guard.call(instanceStorage[id], canOnlyBeCalledOnce(next)))
+        //First params is function-warning: next now is not available
+
+        const nextWarning = (v = null) => {
+            const err = new ModalError(
+                `Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values.`
+            );
+            console.warn(err);
+
+            //return throw ModalError.nextReject(4);
+        };
+
+        Promise.resolve(guard.call(instanceStorage[id], nextWarning))
         .then(next)
         .catch(err => reject(err));
     });
 }
 
 
-function runGuardQueue(guards) {
-    return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
-}
+
 
 watch(modalQueue.value, () => {
     try {
@@ -147,9 +158,9 @@ watch(modalQueue.value, () => {
 
 
 /**
- * Function open one and close previous modals
+ * Close all modals, if resolved -> open Modal
  *
- * Get: NameOfComponent:String or VueComponent, params:Object
+ * Get: NameOfComponent:VueComponent, params:Object
  *
  * @Return ModalObject
  * */
@@ -198,7 +209,6 @@ function _addModal(component, params){
 
 /**
  * Function close a last modal
- *
  * */
 export function popModal(){
     if (modalQueue.value.length === 0) return;
@@ -213,7 +223,6 @@ export function popModal(){
  * */
 export function closeModal() {
     return runGuardQueue(modalQueue.value.map(modalObject => () => modalObject.close()))
-
 }
 
 

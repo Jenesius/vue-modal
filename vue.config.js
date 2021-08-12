@@ -4,15 +4,15 @@ module.exports = {
 
     pages: {
         docs: {
-            entry: './src/pages/documentation/main.js',
+            entry: './web/src/pages/documentation/main.js',
         },
 
         index: {
-            entry: "./src/pages/index/main.js"
+            entry: "./web/src/pages/index/main.js"
         },
 
         test: {
-            entry: "./src/pages/test/main.js"
+            entry: "./web/src/pages/test/main.js"
         }
 
     }

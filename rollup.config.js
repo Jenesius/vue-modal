@@ -20,7 +20,7 @@ const banner = `/*!
 
 const name = pkg.name
 
-const outputDir = "plugin-dist/"
+const outputDir = "dist/"
 
 const outputConfig = {
 	cjs: {

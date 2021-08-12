@@ -1,5 +1,5 @@
 <template>
-	<widget-vocabulary name = "recommendation_npm"/>
+	<widget-vocabulary name = "informationNpm"/>
 	<widget-code>{{codeNpmInstall}}</widget-code>
 </template>
 

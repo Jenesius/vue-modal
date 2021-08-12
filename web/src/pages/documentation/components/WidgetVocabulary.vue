@@ -22,15 +22,13 @@ export default {
 
 		const text = useVocabulary(props.name, {});
 
+
 		return () => {
 
 			if (props.noTag) return text;
 
 			//Tag was provided
 			if (props.tag) return h(props.tag, { innerHTML: text})
-
-
-
 
 		}
 

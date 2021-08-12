@@ -1,5 +1,5 @@
 <template>
-	<widget-vocabulary name = "info_get_started"/>
+	<widget-vocabulary name = "informationGetStarted"/>
 	<widget-code>
 		{{init}}
 	</widget-code>

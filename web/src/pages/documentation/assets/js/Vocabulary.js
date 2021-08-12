@@ -6,8 +6,6 @@ const store =  {
 	ru: {
 
 		example: "пример",
-		recommendation_npm: "Npm рекомендуется для инсталяции пакета.",
-		info_get_started: "Для начала работы нам необходимо проинициализировать модальные окна, добавим контейнер в котором будут показываться наши компоненты. Контейнер импортируем из библиотеки:",
 
 		//OPEN_MODAL
 		using_openModal: "Метод openModal используется для показа компоненты в контейнере модальных окон.",
@@ -36,9 +34,7 @@ const store =  {
 	},
 	en: {
 		example: "example",
-		recommendation_npm: "Npm is recommended for installing a package.",
 
-		info_get_started: "To get started, we need to initialize the modals. We import the container from the library:",
 		//OPEN_MODAL
 		using_openModal: "The openModal method is used to display a component in a modal window container.",
 		first_param_openModal: "The first parameter is any VueComponent that needs to be displayed:",
@@ -77,6 +73,15 @@ const store =  {
 		ru: "Jenesius Vue Modal это легковесная и простая библиотека для работы с модальными окнами в Vue3. Она глубоко интегрируется с Vue.js и позволяет создавать модальные окна любой сложности.",
 		en: "Jenesius Vue Modal is a lightweight and simple library for working with modal windows in Vue3. It integrates deeply with Vue.js and allows you to create modals of any complexity.",
 	},
+	informationNpm: {
+		ru: "Npm рекомендуется для инсталяции пакета.",
+		en: "Npm is recommended for installing a package."
+	},
+	informationGetStarted: {
+		ru: "Для начала работы нам необходимо проинициализировать модальные окна, добавим контейнер в котором будут показываться наши компоненты. Контейнер импортируем из библиотеки:",
+		en: "To get started, we need to initialize modal windows, add a container in which our components will be displayed. We import the container from the library:"
+	},
+
 
 	onAddModalReturn: {
 		ru: "Метод возвращает промис, который в случае успеха вернёт <a>ModalObject</a>",
@@ -167,26 +172,17 @@ const store =  {
 
 }
 
-
-
-
-
-
 let lang = localStorage.getItem("language") || navigator.language || "en";
 
 if (/^ru\b/.test(lang)) {
 	lang = 'ru';
 }
 
-export  const useVocabulary = new Proxy((name) => {
+export const useVocabulary = new Proxy((name) => {
 	return useVocabulary[name]
 }, {
-	get: (a, b, c) => {
 
-		return a[b];
-	}
 });
-
 
 for(let key in store) {
 	if (["ru", "en"].includes(key)) continue;
@@ -196,4 +192,5 @@ for(let key in store) {
 	useVocabulary[key] = store[key][lang];
 }
 
+console.log(useVocabulary);
 export  default store;

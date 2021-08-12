@@ -13,7 +13,7 @@ const routes = [
         component: ViewDefaultDocumentation
     },
     {
-        path: "/lifecycle-hooks",
+        path: "/navigation-guards",
         component: ViewDefaultDocumentation
     },
     {

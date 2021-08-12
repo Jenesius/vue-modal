@@ -3,20 +3,6 @@
 
 
 const store =  {
-	ru: {
-		//ON_CLOSE
-		info_on_close: "Методы openModal и pushModal возвращают объект <a>modalObject</a>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент к этому объекту:",
-		modal_was_close_after: "*Модальное окно будет закрыто после пяти попыток.",
-		if_onclose_false_on_close: "В случае, если onclose вернёт <b>false</b>, модальное окно не будет закрыто.",
-		if_will_open_some_modals_on_close: "Если будет открыто несколько модальных окон, и на одном из них будет стоять обработчик onclose, возвращающий false, можно закрыть будет только те, модальных окна, которые были открыты после него.",
-	},
-	en: {
-		//ON_CLOSE
-		info_on_close: "The openModal and pushModal methods return an <a> modalObject </a> object. In order to catch the closing of a modal window, you need to add an event to this object:",
-		modal_was_close_after: "* The modal window will close after five attempts.",
-		if_onclose_false_on_close: "If onclose returns <b> false </b>, the modal will not be closed.",
-		if_will_open_some_modals_on_close: "If several modal windows are open, and one of them will have an onclose handler that returns false, you can close only those modal windows that were opened after it.",
-	},
 
 	example: {
 		en: "example",
@@ -26,12 +12,6 @@ const store =  {
 	returnValue: {
 		ru: "Возвращаемое значение",
 		en: "Return value"
-	},
-
-
-	navigationGuards: {
-		ru: "Навигационные хуки",
-		en: "Navigation Guards",
 	},
 
 	pluginInformation: {
@@ -85,10 +65,24 @@ const store =  {
 	},
 
 
+	guardInformation: {
+		en: "Sometimes it is necessary to catch the closing of a modal and manage this state. This can be useful to prevent the user from closing the modal until they have entered input, or to send a request to the server.",
+		ru: "Иногда необходимо отлавливать закрытие модального окна и управлять этим состоянием. Это может быть удобно для того, чтобы не дать пользователю закрыть модальное окно, пока он не ввёл входные данные, или отправить запрос на сервер."
+	},
+
+	guardReturn: {
+		en: "If the handler returns <b> false </b> or <b> throws an error </b>, closing the modal window will be interrupted.",
+		ru: "Если обработчик вернёт <b>false</b> или <b>выбросит ошибку</b>, закрытие модалього окна будет прервано."
+	},
+	guardMethods: {
+		en: "Jenesius Vue Modal provides three ways to catch closures:",
+		ru: "Jenesius Vue Modal предоставляет три способа отлавливать закрытие:"
+	},
+
 
 	guardNavigationHooksOncloseInfo: {
-		ru: "Методы <a>openModal<a/> и <a>pushModal<a/> возвращают promoise, который в случае успеха вернёт объект <a>modalObject</a>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент к этому объекту:",
-		en: "The <a> openModal <a/> and <a> pushModal <a/> methods return promoise, which, if successful, will return the <a> modalObject </a> object. In order to catch the closing of a modal window, you need to add an event to this object:"
+		ru: `Методы <a>openModal</a> и <a>pushModal</a> возвращают Promise, который в случае успеха вернёт объект <a>modalObject</a>. Для того, чтобы отлавливать закрытие модального окна, нужно добавить эвент <b>onclose</b> к этому объекту:`,
+		en: "The <a> openModal </a> and <a> pushModal </a> methods return Promise, which, if successful, will return the <a> modalObject </a> object. In order to catch the closing of a modal window, you need to add an event <b>onclose</b> to this object:"
 	},
 	guardNavigationHooksOncloseReturnFalse: {
 		ru: "Если в функциюю 'next' будет передано значение false, модальное окно не будет закрыто.",
@@ -113,6 +107,19 @@ const store =  {
 		en: "The modal will not be closed"
 	},
 
+	hasAccessToThis: {
+		en: "has access to the context of the component instance this.",
+		ru: "имеет доступ к контексту экземпляра компонента this."
+	},
+	doYouWantToLeave: {
+		en: "Do you really want to leave? You have unsaved changes!",
+		ru: "Вы действительно хотите уйти? У вас есть несохранённые данные!"
+	},
+	navigationGuards: {
+		en: "Navigation Guards",
+		ru: "Навигационные хуки"
+	},
+
 	uniqueIdentity: {
 		ru: "Уникальный идентификатор",
 		en: "Unique identity",
@@ -127,12 +134,30 @@ const store =  {
 		ru:"дождливая",
 		en:"rainy"
 	},
-
+	closeOnly: {
+		en: "close only",
+		ru: "закроет только"
+	},
+	closeModalAfterFiveAttempts: {
+		en: "The modal window will be closed after five attempts.",
+		ru: "Модальное окно будет закрыто после пяти попыток."
+	},
 	closeModalIfWeatherIsRainy: {
 		ru: "Закрыть модальное окно, если погода дождливая",
 		en: "Close modal if the weather is rainy",
 	},
-
+	Information: {
+		en: "information",
+		ru: "информация"
+	},
+	details: {
+		en: "details",
+		ru: "подробности"
+	},
+	InComponentGuards: {
+		en: "in-Component guards",
+		ru: "хуки внутри компонент"
+	},
 	modalObjectParamId: {
 		ru: "<b>id</b> - уникальныидентификатор модального окна.",
 		en: "<b> id </b> - unique identifier of the modal window.",
@@ -150,7 +175,22 @@ const store =  {
 		ru: "Методы pushModal и openModal возвращают объект следующего типа:",
 		en: "The pushModal and openModal methods return an object of the following type:"
 	},
+	guardAsyncInfo: {
+		ru: "Навигационный хук может быть асинхронным. Модальное окно будет закрыто только тогда, когда он завершит свою работу:",
+		en: "The navigation hook can be asynchronous. The modal window will be closed only when it finishes its work:"
+	},
+	modalWillCloseAfterSecond: {
+		ru: "Модальное окно будет закрыто после одной секунды.",
+		en: "The modal will be closed after one second."
+	},
+	asyncGuards: {
+		ru: "асинхронные хуки",
+		en: "async guards"
+	},
 
+	or: {
+		ru: "или"
+	},
 	style: {
 		ru: "стилизация",
 	},

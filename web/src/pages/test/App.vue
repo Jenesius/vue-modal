@@ -4,7 +4,7 @@
 	<router-link to = "/b">b</router-link>
 	<router-link to = "/c">c</router-link>
 	<router-link to = "/d">d</router-link>
-	<router-link to="/user-list">user-list</router-link>
+	<router-link to="/user-list/4">user-list</router-link>
 
 	<widget-modal-container/>
 
@@ -14,6 +14,7 @@
 	<button @click = "show">show queue</button>
 
 	<router-view/>
+	<router-view name = "test"/>
 
 </template>
 
@@ -62,9 +63,13 @@
 	}
 </script>
 
-<style scoped>
+<style>
 	@import "../../assets/css/index.css";
-	
+
+
+	html{
+		background-color: #1b062d;
+	}
 	.app-main{
 		padding: 200px 0;
 		text-align: center;

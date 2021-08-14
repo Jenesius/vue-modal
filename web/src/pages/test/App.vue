@@ -4,7 +4,8 @@
 	<router-link to = "/b">b</router-link>
 	<router-link to = "/c">c</router-link>
 	<router-link to = "/d">d</router-link>
-	<router-link to="/user-list/4">user-list</router-link>
+	<router-link to="/user-list">user-list</router-link>
+	<router-link to="/user-list/3">user-list-3</router-link>
 
 	<widget-modal-container/>
 
@@ -13,7 +14,10 @@
 
 	<button @click = "show">show queue</button>
 
+
+
 	<router-view/>
+
 	<router-view name = "test"/>
 
 </template>
@@ -34,6 +38,7 @@
 			}
 		},
 		methods: {
+
 
 			add(){
 				pushModal(TestModalComponentComposition, {title: "hi"});
@@ -93,5 +98,5 @@
 	}
 	
 
-	
+
 </style>

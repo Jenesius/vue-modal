@@ -1,6 +1,15 @@
 <template>
 	<div class = "modal-test">
 		<p>User - {{id}}</p>
+
+		<div class = "flex">
+
+			<router-link :to= "`/user-list/${Number(id)+1}`">next</router-link>
+
+			<button @click = "back">back</button>
+
+		</div>
+
 	</div>
 </template>
 
@@ -11,6 +20,11 @@ export default {
 		id: String
 	},
 
+	methods: {
+		back(){
+			this.$router.go(-1);
+		}
+	},
 	name: "Modal"
 }
 </script>

@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.2.3
+  * jenesius-vue-modal v1.3.0
   * (c) 2021 Jenesius
   * @license MIT
   */
@@ -237,7 +237,7 @@ var state$1 = {
 };
 
 function init(router) {
-  if (state$1.router) return console.warn("useRouterModal should escaped only once.");
+  if (state$1.router) return console.warn("useModalRouter should escaped only once.");
   state$1.router = router;
   /**
    * Return ModalRouter or null
@@ -281,16 +281,15 @@ function init(router) {
               return modal.close(true);
 
             case 5:
-              _context.next = 11;
+              _context.next = 10;
               break;
 
             case 7:
               _context.prev = 7;
               _context.t0 = _context["catch"](0);
-              console.log("Modal not closed. Error:", _context.t0);
               return _context.abrupt("return", false);
 
-            case 11:
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -548,12 +547,10 @@ var guards = {
   store: {},
   add: function add(id, name, func) {
     var availableNames = ["close"];
-    if (!availableNames.includes(name)) throw ModalError.UndefinedGuardName(name); //return console.warn(`Name ${name} is not declaration.`);
-
+    if (!availableNames.includes(name)) throw ModalError.UndefinedGuardName(name);
     if (!this.store[id]) this.store[id] = {};
     if (!this.store[id][name]) this.store[id][name] = [];
-    if (typeof func !== "function") throw ModalError.GuardDeclarationType(func); //return console.warn("Onclose callback was provided not function:", func);
-
+    if (typeof func !== "function") throw ModalError.GuardDeclarationType(func);
     this.store[id][name].push(func);
   },
   get: function get(id, name) {
@@ -707,7 +704,7 @@ function guardToPromiseFn(guard, id) {
 
 
       var nextWarning = function nextWarning() {
-        var err = new ModalError("Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values.");
+        var err = new ModalError("Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values. https://modal.jenesius.com/docs.html/navigation-guards");
         console.warn(err); //return throw ModalError.nextReject(4);
       };
 

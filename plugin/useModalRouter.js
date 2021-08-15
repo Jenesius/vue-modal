@@ -7,7 +7,7 @@ const state = {
 }
 
 function init(router){
-	if (state.router) return console.warn("useRouterModal should escaped only once.");
+	if (state.router) return console.warn("useModalRouter should escaped only once.");
 	state.router = router;
 
 	/**
@@ -37,7 +37,6 @@ function init(router){
 			const modal = findModal(from);
 			if (modal && !modal.getModalObject()?.closed?.value) await modal.close(true);
 		} catch (e){
-			console.log("Modal not closed. Error:", e);
 			return false;
 		}
 	})

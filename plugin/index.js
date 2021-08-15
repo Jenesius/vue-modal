@@ -54,14 +54,12 @@ const guards = {
         const availableNames = ["close"];
 
         if (!availableNames.includes(name)) throw ModalError.UndefinedGuardName(name);
-            //return console.warn(`Name ${name} is not declaration.`);
 
         if (!this.store[id]) this.store[id] = {};
 
         if (!this.store[id][name]) this.store[id][name] = [];
 
         if (typeof func !== "function") throw ModalError.GuardDeclarationType(func);
-            //return console.warn("Onclose callback was provided not function:", func);
 
         this.store[id][name].push(func);
     },

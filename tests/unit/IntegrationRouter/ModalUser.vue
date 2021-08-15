@@ -1,11 +1,13 @@
 <template>
-	<p>c</p>
+	<p>user-{{id}}</p>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	props: {
+		id: String
+	},
+	name: "ModalUser"
 }
 </script>
 

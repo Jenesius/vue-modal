@@ -1,11 +1,10 @@
 <template>
-	<p>c</p>
+	<router-view name = "modal"/>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	name: "ContainerUsers"
 }
 </script>
 

@@ -7,7 +7,7 @@
 import {onBeforeRouteLeave} from "vue-router";
 
 export default {
-	beforeRouteLeave(to, from, next){},
+
 
 	name: "ViewA"
 }

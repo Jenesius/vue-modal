@@ -1,6 +1,6 @@
 {
   "name": "jenesius-vue-modal",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "private": false,
   "description": "Simple modal plugin for Vue3",
   "author": "Jenesius",
@@ -9,20 +9,23 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "rollup": "rollup -c ./rollup.config.js --environment BABEL_ENV:production"
   },
   "files": [
     "dist/jenesius-vue-modal.cjs.js",
     "README.MD"
   ],
   "dependencies": {
-    "vue": "^3.2.1",
-    "vuex": "^4.0.2"
+    "vue": "^3.2.1"
   },
   "devDependencies": {
+    "vuex": "^4.0.2",
     "@babel/core": "^7.15.0",
     "@babel/plugin-proposal-throw-expressions": "^7.14.5",
     "@babel/plugin-transform-modules-commonjs": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.15.0",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^20.0.0",
@@ -33,6 +36,8 @@
     "@vue/compiler-sfc": "^3.2.1",
     "@vue/test-utils": "^2.0.0-rc.12",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "chalk": "^4.1.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",

@@ -41,6 +41,10 @@
 					style: "color: yellow"
 				},
 				{
+					words: ["useModalRouter"],
+					style: "color: yellow"
+				},
+				{
 					reg: /^(npm )/g,
 					style: "color: yellow"
 				},

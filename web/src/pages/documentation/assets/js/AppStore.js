@@ -12,6 +12,11 @@ import FragmentOnBeforeModalClose from "../../components/materials/hooks/Fragmen
 import FragmentInformation from "../../components/materials/Installation/FragmentInformation";
 import FragmentGuardsInformation from "../../components/materials/hooks/FragmentGuardsInformation";
 import FragmentGuardAsync from "../../components/materials/hooks/FragmentGuardAsync";
+import FragmentIntegrationInstallation
+	from "../../components/materials/integrationRouter/FragmentIntegrationInstallation";
+import FragmentIntegrationInformation
+	from "../../components/materials/integrationRouter/FragmentIntegrationInformation";
+import FragmentParticularQualities from "../../components/materials/integrationRouter/FragmentParticularQualities";
 
 export const config = [
 	{
@@ -106,6 +111,25 @@ export const config = [
 			{
 				title: useVocabulary.animation,
 				link : "animation"
+			}
+		]
+	},
+	{
+		title: useVocabulary.integrationWithVueRouter,
+		link : "integration-vue-router",
+		array: [
+			{
+				component: FragmentIntegrationInformation
+			},
+			{
+				title: useVocabulary.installation,
+				link : "installation",
+				component: FragmentIntegrationInstallation
+			},
+			{
+				title: useVocabulary.particularQualities,
+				link : "particular-qualities",
+				component: FragmentParticularQualities
 			}
 		]
 	},

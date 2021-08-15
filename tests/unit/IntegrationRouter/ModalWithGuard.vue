@@ -1,11 +1,10 @@
 <template>
-	<p>c</p>
+	<p>test</p>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	name: "ModalWithGurad"
 }
 </script>
 

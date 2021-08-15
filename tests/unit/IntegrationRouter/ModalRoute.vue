@@ -1,11 +1,12 @@
 <template>
-	<p>c</p>
+	<div>
+		<p>Modal router</p>
+	</div>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	name: "ModalRoute"
 }
 </script>
 

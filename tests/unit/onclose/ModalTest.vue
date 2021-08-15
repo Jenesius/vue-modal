@@ -1,11 +1,13 @@
 <template>
-	<p>c</p>
+	<p>{{title}}</p>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	props: {
+		title: String
+	},
+	name: "ModalTest"
 }
 </script>
 

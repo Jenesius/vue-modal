@@ -1,6 +1,9 @@
-import { createWebHistory, createRouter} from "vue-router";
+import { createWebHistory, createRouter, RouterView} from "vue-router";
 
 import ViewDefaultDocumentation from "../view/ViewDefaultDocumentation";
+import ViewUserList from "../view/ViewUserList";
+import ModalUser from "../components/modal/ModalUser";
+import {useModalRouter} from "./../../../../../plugin";
 
 
 const routes = [
@@ -25,6 +28,30 @@ const routes = [
         component: ViewDefaultDocumentation
     },
     {
+        path: "/integration-vue-router",
+        component: ViewDefaultDocumentation
+    },
+    {
+        path: "/example",
+        component: RouterView,
+        children: [
+            {
+                path: "user-list",
+                name: "ExampleUserList",
+                component: ViewUserList,
+                children : [
+                    {
+                        path: ":id",
+                        name: "UserProfile",
+                        components: {
+                            modal: useModalRouter(ModalUser)
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
         path: "/",
         redirect: "/installation"
     },
@@ -45,5 +72,7 @@ const router = createRouter({
         }
     }
 });
+
+useModalRouter.init(router);
 
 export default router;

@@ -26,7 +26,7 @@
 
 	</header>
 
-	<widget-modal-container/>
+
 
 	<div class = "app-body">
 
@@ -36,6 +36,9 @@
 
 		<WidgetNavbar />
 	</div>
+
+	<widget-modal-container/>
+
 </template>
 
 <script>

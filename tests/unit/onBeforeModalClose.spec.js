@@ -44,7 +44,12 @@ describe("onBeforeModalClose", () => {
 		}
 
 		await openModal(component);
-		await closeModal();
+		try {
+			expect(await closeModal()).toThrow()
+
+		} catch (e) {
+
+		}
 
 		expect(modalQueue.value.length).toBe(1);
 	})
@@ -75,7 +80,12 @@ describe("onBeforeModalClose", () => {
 		}
 
 		await openModal(component);
-		await closeModal();
+		try {
+			expect(await closeModal()).toThrow()
+
+		} catch (e) {
+
+		}
 
 		expect(modalQueue.value.length).toBe(1);
 	})

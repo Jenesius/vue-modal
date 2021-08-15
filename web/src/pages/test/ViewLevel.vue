@@ -1,11 +1,10 @@
 <template>
-	<p>c</p>
+	<p>Level</p>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	name: "ViewLevel"
 }
 </script>
 

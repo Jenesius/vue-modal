@@ -1,11 +1,13 @@
 <template>
-	<p>c</p>
+	<p>123</p>
 </template>
 
 <script>
 export default {
-
-	name: "ViewC"
+	beforeModalClose(){
+		return false;
+	},
+	name: "Modalguard"
 }
 </script>
 

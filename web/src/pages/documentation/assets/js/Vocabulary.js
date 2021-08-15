@@ -206,8 +206,71 @@ const store =  {
 	gettingStarted: {
 		ru: "Начало работы",
 		en: "getting started"
-	}
+	},
 
+
+	integrationWithVueRouter: {
+		en: "Integration with VueRouter",
+		ru: 'Интеграция с VueRouter'
+	},
+
+
+	integrationInfo: {
+		ru: "Иногда появляется необходимость связать vue-router с показом модального окна. Для этого нужно писать свой обработчик для router и интегрировать его " +
+			"с открытием/закрытием модального окна. Одна в Jenesius Vue Modal это всё уже есть, нужно только подключить.",
+		en: "Sometimes it becomes necessary to link vue-router to show a modal window. To do this, you need to write your own handler for router and integrate it\n" +
+			"with opening/closing a modal window. One in Jenesius Vue Modal already has it all, you just need to connect it."
+
+	},
+	integrationExample: {
+		ru: `Для примера была создана таблица пользователей, на маршруте <b>/users</b>. На маршрут <b>/users/:id</b> был добавлен обработчик модальных окон. Теперь при переходе на <b>/users/3</b> откроется модальное окно в которое будут переданы входные параметры из route, доступные в props.`,
+		en: 'For example, a table of users was created, on the route <b>/users</b>. A modal handler has been added to the route <b>/users/:id</b>.\n' +
+			'Now, when switching to <b>/users/3</b>, a modal window will open into which the input parameters from route, available in props, will be passed.'
+	},
+	goToExample: {
+		en: "Go to example",
+		ru: "Перейти к примеру"
+	},
+	orAnyOther: {
+		en: "Or any other",
+		ru: "Или любой другой"
+	},
+	dontForgetAboutInitialize: {
+		en: "Don't forget to <a> initialize </a> Jenesius Vue Modal",
+		ru: "Не забудьте <a>проинициализировать</a> Jenesius Vue Modal"
+	},
+	onRouterCreatedAddModal: {
+		ru: "При создании router добавьте интеграцию с modal:",
+		en: "When creating router add modal integration:"
+	},
+	resultRouterCreatedAddModal: {
+		ru: "Теперь обработчик модальных окон будет реагировать на смену навигации.",
+		en: "Now the modal handler will react to navigation changes."
+	},
+	addRouterModal: {
+		ru: "Добавьте модальный маршрут:",
+		en: "Add new route:"
+	},
+	resultAddRouterModal: {
+		ru: "Теперь при переходе на <b>/any-route</b> будет показываться модально окно, которые было передано в <b>useModalRouter</b>",
+		en: "Now, when switching to <b>/any-route</b>, the window that was passed to <b> useModalRouter </b> will be shown modally"
+	},
+	particularQualities: {
+		ru: "Особенности",
+		en: "Particular Qualities"
+	},
+	propsRouterModal: {
+		ru: "Для получения входных параметров можно использовать <b>props.</b>",
+		en: "You can use <b> props</b> to get input parameters. "
+	},
+	useRouterNavigationGuard: {
+		ru: "Использование <b>beforeRouteEnter</b>, <b>beforeRouteUpdate</b>, <b>beforeRouteLeave</b> на данном этапе невозможно. Я попытаюсь вскоре решить эту проблему. Как временное решение можно использовать beforeModalClose.",
+		en: "Using <b> beforeRouteEnter </b>, <b> beforeRouteUpdate </b>, <b> beforeRouteLeave </b> is not possible at this stage. I will try to fix this problem shortly. BeforeModalClose can be used as a temporary solution."
+	},
+	yourHTML:{
+		ru: "Ваш HTML",
+		en: "Your HTML"
+	}
 }
 
 let lang = localStorage.getItem("language") || navigator.language || "en";

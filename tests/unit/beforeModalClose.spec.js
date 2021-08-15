@@ -1,6 +1,6 @@
 import {mount} from "@vue/test-utils";
 import {closeModal, container, modalQueue, openModal} from "../../plugin";
-
+/*eslint-disable*/
 
 beforeEach(() => {
 	modalQueue.value = [];
@@ -42,7 +42,12 @@ describe("beforeModalClose", () => {
 		}
 
 		await openModal(component);
-		await closeModal();
+		try {
+			expect(await closeModal()).toThrow()
+
+		} catch (e) {
+
+		}
 
 		expect(modalQueue.value.length).toBe(1);
 	})
@@ -84,7 +89,12 @@ describe("beforeModalClose", () => {
 		}
 
 		await openModal(component);
-		await closeModal();
+		try {
+			expect(await closeModal()).toThrow()
+
+		} catch (e) {
+
+		}
 
 		expect(modalQueue.value.length).toBe(1);
 	})

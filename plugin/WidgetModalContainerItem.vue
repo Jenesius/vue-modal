@@ -20,7 +20,12 @@
 			return () => h("div", {
 				class: "widget__modal-container__item"
 			}, [
-				h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: popModal}),
+				h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: () => {
+
+						return popModal()
+						.catch(() => {})
+
+					}}),
 				h(props.component, { ...props.params, class: "widget__modal-wrap", "modal-id": `_modal_${props.id}`, ref: modalRef})
 			])
         },

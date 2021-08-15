@@ -1,9 +1,12 @@
 <template>
 
-	<router-link to = "/a">a</router-link>
-	<router-link to = "/b">b</router-link>
-	<router-link to = "/c">c</router-link>
-	<router-link to = "/d">d</router-link>
+	<div class = "flex-column">
+		<router-link to = "/a">a</router-link>
+		<router-link to = "/b">b</router-link>
+		<router-link to = "/c">c</router-link>
+		<router-link to = "/d">d</router-link>
+		<router-link to = "/e">e</router-link>
+	</div>
 	<router-link to="/user-list">user-list</router-link>
 	<router-link to="/user-list/3">user-list-3</router-link>
 
@@ -31,12 +34,63 @@
 
 	export default {
 
-
+/*
 		mounted() {
-			window.show = () => {
-				this.show();
+			class ModalError extends Error{
+				isModalError;
+				constructor(message) {
+					super();
+
+					this.isModalError = true;
+					this.message = message;
+				}
+
+				static Undefined(id) {
+					return new ModalError(`Modal with id: ${id} not founded. The modal window may have been closed earlier.`);
+				}
+
+				static nextReject(id){
+					return new ModalError(`Next function from hook was rejected. Modal id ${id}`);
+				}
+
 			}
-		},
+			function guardToPromiseFn(guard, id){
+				return () => new Promise((resolve, reject) => {
+
+					const next = (valid) => {
+
+						if (valid === false) return reject(ModalError.nextReject(id));
+						if (valid instanceof Error) reject(valid);
+
+						resolve();
+					};
+
+					//First params is function-warning: next now is not available
+
+					const nextWarning = (v = null) => {
+						const err = new ModalError(
+							`Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values.`
+						);
+						console.warn(err);
+
+						//return throw ModalError.nextReject(4);
+					};
+
+					Promise.resolve(guard.call(null, nextWarning))
+					.then(next)
+					.catch(err => reject(err));
+				});
+			}
+
+
+			const test = guardToPromiseFn(() => false,0);
+
+			test()
+			.then(res => console.log(res))
+			.catch(err => console.warn(err));
+
+
+		},*/
 		methods: {
 
 

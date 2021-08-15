@@ -10,7 +10,7 @@ function useRouterModal(router){
 	if (state.router) return console.warn("useRouterModal should escaped only once.");
 	state.router = router;
 
-	router.beforeEach(async (to, from, next) => {
+	router.beforeEach(async (to, from) => {
 
 		function findModal(routerLocation){
 
@@ -30,10 +30,26 @@ function useRouterModal(router){
 
 		try {
 			const modal = findModal(from);
-			if (modal) await modal.close(true);
-		} catch (e){}
 
-		next(true);
+			console.log("Closing modal:", modal);
+
+			//Router with ModalRouter was founded
+			if (modal ) {
+
+				if (modal.getModalObject()?.closed?.value === true) return;
+
+
+				console.log("Closing modal windows in beforeEach");
+				await modal.close(true);
+			}
+		} catch (e){
+
+			console.log("Error", e);
+
+			return false;
+		}
+
+		return true;
 	})
 }
 
@@ -46,22 +62,33 @@ useRouterModal.add = function(component){
 		isNavigationClosingGuard = false;
 		modalObject = null;
 
+		console.log("Set modal object", null);
+
 		openModal(component, computed(() => state.router.currentRoute.value.params))
 		.then(c => {
+
 			modalObject = c;
+			console.log("Set modal object", modalObject);
+
+			if (modalObject !== null)
+
 			modalObject.onclose = () => {
+
+
+
 				if (!isNavigationClosingGuard) state.router.back();
 			};
 		})
 	}
 
 	return{
+		getModalObject: () => modalObject,
 		_isModal: true,
 
 		async close(v = false){
 			isNavigationClosingGuard = v;
 
-			return await modalObject.close()
+			if (modalObject) return await modalObject.close()
 		},
 		beforeRouteUpdate(){
 			initialize()

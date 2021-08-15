@@ -1,6 +1,6 @@
 /*eslint-disable*/
 "use strict";
-import {ref, watch, shallowRef, getCurrentInstance} from "vue";
+import {ref, watch, shallowRef, getCurrentInstance, computed} from "vue";
 import WidgetModalContainer from "./WidgetModalContainer.vue";
 
 export const modalQueue = ref([]); //All modals that showing now
@@ -27,13 +27,15 @@ const guards = {
     add(id, name, func){
         const availableNames = ["close"];
 
-        if (!availableNames.includes(name)) return console.warn(`Name ${name} is not declaration.`);
+        if (!availableNames.includes(name)) throw ModalError.UndefinedGuardName(name);
+            //return console.warn(`Name ${name} is not declaration.`);
 
         if (!this.store[id]) this.store[id] = {};
 
         if (!this.store[id][name]) this.store[id][name] = [];
 
-        if (typeof func !== "function") return console.warn("Onclose callback was provided not function:", func);
+        if (typeof func !== "function") throw ModalError.GuardDeclarationType(func);
+            //return console.warn("Onclose callback was provided not function:", func);
 
         this.store[id][name].push(func);
     },
@@ -44,6 +46,12 @@ const guards = {
         if (!(name in this.store[id])) return [];
 
         return this.store[id][name];
+    },
+
+    delete(id){
+        if (!(id in this.store)) return;
+
+        delete this.store[id];
     }
 }
 
@@ -52,14 +60,18 @@ class ModalObject{
     id;
     component;
     params;
-
+    closed;
     constructor(component, params) {
         this.id = state.modalId++;
         this.component = shallowRef(component);
         this.params = params;
+        this.closed = computed(() => !modalQueue.value.includes(this));
+
 
         if (component.beforeModalClose) guards.add(this.id, "close", component.beforeModalClose);
     }
+
+
 
     close(){
         return closeById(this.id);
@@ -82,9 +94,16 @@ class ModalError extends Error{
     static Undefined(id) {
         return new ModalError(`Modal with id: ${id} not founded. The modal window may have been closed earlier.`);
     }
+    static UndefinedGuardName(name) {
+        return new ModalError(`Guard's name ${name} is not declaration.`);
+    }
 
-    static nextReject(id){
-        return new ModalError(`Next function from hook was rejected. Modal id ${id}`);
+    static NextReject(id){
+        return new ModalError(`Guard returned false. Modal navigation was stopped. Modal id ${id}`);
+    }
+
+    static GuardDeclarationType(func){
+        return new ModalError("Guard's type should be a function. Provided:", func);
     }
 
 }
@@ -101,11 +120,14 @@ function closeById(id) {
     .then(() => {
         modalQueue.value.splice(indexFoRemove, 1);
 
-        delete guards.store[id];
         delete instanceStorage[id];
-
+        guards.delete(id)
     })
+    /*
+    .catch(err => Promise.reject(err))
     .catch(err => (err instanceof ModalError)?err: Promise.reject(err))
+
+     */
 
 }
 
@@ -120,7 +142,7 @@ function guardToPromiseFn(guard, id){
 
         const next = (valid) => {
 
-            if (valid === false) return reject(ModalError.nextReject(id));
+            if (valid === false) return reject(ModalError.NextReject(id));
             if (valid instanceof Error) reject(valid);
 
             resolve();
@@ -142,6 +164,7 @@ function guardToPromiseFn(guard, id){
         .catch(err => reject(err));
     });
 }
+
 
 
 

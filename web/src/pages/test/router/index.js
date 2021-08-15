@@ -10,6 +10,7 @@ import Modal from "../Modal";
 
 import useRouterModal from "../path";
 import ViewUserList from "../ViewUserList";
+import Modalguard from "../Modalguard";
 
 /**
  * Maybe try to update to functional component
@@ -32,6 +33,10 @@ const routes = [
     {
         path: "/d",
         component: ViewD
+    },
+    {
+        path: "/e",
+        component: useRouterModal.add(Modalguard)
     },
     {
         path: "/user-list",

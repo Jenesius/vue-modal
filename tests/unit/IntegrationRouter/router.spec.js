@@ -10,6 +10,7 @@ import ModalRoute from "./ModalRoute";
 import {nextTick} from "vue";
 import ContainerUsers from "./ContainerUsers";
 import ModalUser from "./ModalUser";
+import {modalQueue} from "../../../plugin";
 
 const waiter = (n) => {
 
@@ -22,6 +23,16 @@ const waiter = (n) => {
 	})
 
 }
+let wrapper = null;
+
+beforeAll(async () => {
+	wrapper = await mount(App);
+})
+
+beforeEach(() => {
+	modalQueue.value = [];
+})
+
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -66,7 +77,6 @@ describe("Integration with VueRouter", () => {
 
 		expect(wrapper.text()).toBe("Test");
 	})
-
 	it("Opening a window on a simple match", async () => {
 		await router.push("/simple-modal");
 		await router.isReady();
@@ -77,7 +87,6 @@ describe("Integration with VueRouter", () => {
 
 		expect(wrapper.text()).toBe("Modal router");
 	})
-
 	it("Opening and the closing", async () => {
 		await router.push("/simple-modal");
 		await router.isReady();
@@ -90,7 +99,6 @@ describe("Integration with VueRouter", () => {
 		expect(wrapper.text()).toBe("Test");
 
 	})
-
 	it("Open child routeModal with params", async () => {
 		await router.push("/users/3");
 		await router.isReady();
@@ -119,6 +127,9 @@ describe("Integration with VueRouter", () => {
 
 	})
 	it("Push", async () => {
+
+		console.log("++++++++++++")
+
 		await router.push("/");
 		await router.isReady();
 
@@ -133,9 +144,13 @@ describe("Integration with VueRouter", () => {
 		expect(wrapper.text()).toBe("user-3");
 
 		await router.push("/");
-		await nextTick();
+		await waiter(2000)
 
 		expect(wrapper.text()).toBe("Test");
+
+
+		console.log("++++++++++++")
+
 	})
 	it("Back", async () => {
 		await router.push("/");
@@ -147,7 +162,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/users/3");
 
 		await nextTick();
-		await waiter(1)
+		await waiter(1000)
 
 		expect(wrapper.text()).toBe("user-3");
 

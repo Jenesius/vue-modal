@@ -2,11 +2,13 @@ import {mount} from "@vue/test-utils";
 import {closeModal, container, modalQueue, openModal} from "../../plugin";
 /*eslint-disable*/
 
-beforeEach(() => {
+beforeEach(async () => {
 	modalQueue.value = [];
-
+	await waitTime(10);
+})
+afterAll(() => {
+	modalQueue.value = [];
 });
-
 function waitTime(n) {
 	return new Promise(resolve => {
 		setTimeout(resolve, n);

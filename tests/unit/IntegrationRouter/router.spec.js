@@ -29,7 +29,9 @@ let wrapper = null;
 beforeAll(async () => {
 	wrapper = await mount(App);
 })
-
+afterAll(() => {
+	modalQueue.value = [];
+});
 beforeEach(async () => {
 	modalQueue.value = [];
 	await router.push("/");

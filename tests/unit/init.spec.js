@@ -8,26 +8,24 @@ import {modalQueue, closeModal, openModal, popModal, pushModal, container} from 
 import ModalTest from "./ModalTest";
 import WidgetModalContainerItem from "../../plugin/WidgetModalContainerItem";
 
-beforeEach(() => {
-  modalQueue.value = [];
-});
 
 function waitTime(n) {
   return new Promise(resolve => {
     setTimeout(resolve, n);
   })
 }
+beforeEach(async () => {
+  modalQueue.value = [];
+  await waitTime(10);
+})
+afterAll(() => {
+  modalQueue.value = [];
+});
+
 
 describe('Init', () => {
 
-  /*
-  it ("Not initialized",  async() => {
 
-    expect(async () => await openModal(ModalTest)).toThrow()
-
-  })
-
-   */
   it ("Initialized", async () => {
 
     await mount(container);
@@ -184,28 +182,12 @@ describe('Init', () => {
     const modal2 = await pushModal(ModalTest);
     const modal3 = await pushModal(ModalTest);
 
-    await modal2.close()
+    try {
+      await modal2.close()
+    } catch (e) {}
 
     expect(modalQueue.value.map(item => item.id)).toEqual([modal1.id,modal3.id]);
 
   })
-/*
-  it("close destroyed modal", async () => {
 
-    await openModal(ModalTest);
-    const modal2 = await openModal(ModalTest);
-    const modal3 = await openModal(ModalTest);
-
-    expect(modalQueue.value[0].id).toBe(modal3.id);
-
-
-    try {
-      await modal2.close()
-    } catch (e) {
-      expect(e).toMatch('error');
-    }
-    expect(modalQueue.value.length).toBe(1);
-    expect(modalQueue.value[0].id).toBe(modal3.id);
-  })
-*/
 })

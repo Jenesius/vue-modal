@@ -152,6 +152,22 @@ describe("Integration with VueRouter", () => {
 		}
 
 	})
+	it("Closing modal with guard", async () => {
+		await router.push("/guard");
+		await router.isReady();
+
+		expect(router.currentRoute.value.path).toBe("/guard");
+
+		try {
+			await router.push("/");
+
+		} catch (e) {
+			console.log("error with open route /");
+		}
+		await router.isReady();
+
+		expect(router.currentRoute.value.path).toBe("/guard");
+	})
 	it("Push", async () => {
 
 		await router.push("/");
@@ -204,15 +220,5 @@ describe("Integration with VueRouter", () => {
 
 		expect(wrapper.text()).toBe("Test");
 	})
-	it("Closing modal with guard", async () => {
-		await router.push("/guard");
-		await router.isReady();
 
-		expect(router.currentRoute.value.path).toBe("/guard");
-
-		await router.push("/")
-		await router.isReady();
-
-		expect(router.currentRoute.value.path).toBe("/guard");
-	})
 });

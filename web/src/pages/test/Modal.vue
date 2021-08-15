@@ -16,20 +16,13 @@
 
 <script>
 
-import {onBeforeRouteLeave} from "vue-router";
 
 export default {
 	props: {
 		id: String
 	},
 
-	setup(){
 
-		onBeforeRouteLeave(() => {
-			console.log("+++");
-		})
-
-	},
 	methods: {
 		back(){
 			this.$router.go(-1);

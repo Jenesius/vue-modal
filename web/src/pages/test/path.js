@@ -10,97 +10,73 @@ function useRouterModal(router){
 	if (state.router) return console.warn("useRouterModal should escaped only once.");
 	state.router = router;
 
-	router.beforeEach(async (to, from) => {
+	/**
+	 * Return ModalRouter or null
+	 * */
+	function findModal(routerLocation){
 
-		function findModal(routerLocation){
+		if (!routerLocation.matched.length) return null;
 
-			if (!routerLocation.matched.length) return null;
+		for(let i = routerLocation.matched.length - 1; i >=0; i--) {
 
-			for(let i = routerLocation.matched.length - 1; i >=0; i--) {
+			let components = routerLocation.matched[i].components;
+			let a = Object.values(components).find(route => route._isModal);
 
-				let components = routerLocation.matched[i].components;
-				let a = Object.values(components).find(route => route._isModal);
-
-				if (a) return a;
-			}
-
-			return null;
-
+			if (a) return a;
 		}
 
+		return null;
+
+	}
+
+	/**
+	 * Hook only for closing
+	 * */
+	router.beforeEach(async (to, from) => {
 		try {
 			const modal = findModal(from);
-
-			if (modal && modal.getModalObject())
-			console.log("Closing modal:", modal?.getModalObject?.()?.id, from.path);
-
-			//Router with ModalRouter was founded
-			if (modal ) {
-
-				if (modal.getModalObject()?.closed?.value === true) return;
-
-
-				console.log("Closing modal windows in beforeEach");
-				await modal.close(true);
-				console.log("Modal was closed.");
-			}
+			if (modal && !modal.getModalObject()?.closed?.value) await modal.close(true);
 		} catch (e){
-
 			console.log("Modal not closed. Error:", e);
-
 			return false;
 		}
-
-		return true;
 	})
+
+	/**
+	 * Hook for opening modal
+	 * */
+	router.afterEach(async to => {
+		const modal = findModal(to);
+		if (modal) await modal.initialize()
+	})
+
 }
 
 useRouterModal.add = function(component){
-	let modalObject = null;
-	let isNavigationClosingGuard = false;
-
+	let modal					= null;
+	let isNavigationClosingGuard	= false;
 
 	async function initialize(){
 		isNavigationClosingGuard = false;
-		modalObject = null;
+		modal = null;
 
-		console.log("Initialize useRouterModal:", state.router.currentRoute.value.path);
-
-		await openModal(component, computed(() => state.router.currentRoute.value.params))
-		.then(c => {
-
-			modalObject = c;
-			console.log("New modalObject. Id: ", modalObject?.id, "Path:", state.router.currentRoute.value.path);
-
-			if (modalObject !== null)
-
-			modalObject.onclose = () => {
-
-
-
-				if (!isNavigationClosingGuard) state.router.back();
-			};
-		})
+		modal = await openModal(component, computed(() => state.router.currentRoute.value.params));
+		modal.onclose = () => {
+			if (!isNavigationClosingGuard) state.router.back();
+		};
 	}
 
 	return{
-		getModalObject: () => modalObject,
+		getModalObject: () => modal,
 		_isModal: true,
 
 		async close(v = false){
 			isNavigationClosingGuard = v;
 
-			if (modalObject) return await modalObject.close()
+			if (modal) return await modal.close()
 		},
-		async beforeRouteUpdate(){
-			await initialize()
-		},
-		async beforeRouteEnter(){
-			await initialize();
-		},
-		setup(){
-			return () => null
-		},
+		initialize,
+		setup: () => () => null
 	};
 }
 

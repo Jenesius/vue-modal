@@ -206,6 +206,12 @@ const store =  {
 	gettingStarted: {
 		ru: "Начало работы",
 		en: "getting started"
+	},
+
+
+	integrationWithVueRouter: {
+		en: "Integration with VueRouter",
+		ru: 'Интеграция с VueRouter'
 	}
 
 }

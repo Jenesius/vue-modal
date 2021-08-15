@@ -18,12 +18,12 @@
 	<button @click = "show">show queue</button>
 	<button @click = "test">Start test</button>
 	<button @click = "openModal1">Open Modal</button>
-
+	<button @click = "openLevel">Level test</button>
 
 
 	<router-view/>
 
-	<router-view name = "test"/>
+
 
 </template>
 
@@ -52,7 +52,9 @@
 
 
 			},
-
+			openLevel(){
+				this.$router.push("/level/test")
+			},
 			add(){
 				pushModal(TestModalComponentComposition, {title: "hi"});
 				pushModal(TestModalComponentComposition, {title: "hi2"});

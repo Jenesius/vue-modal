@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHistory, RouterView} from "vue-router";
 
 import ViewA from "../components/ViewA";
 import ViewB from "../components/ViewB";
@@ -12,6 +12,7 @@ import useRouterModal from "../path";
 import ViewUserList from "../ViewUserList";
 import Modalguard from "../Modalguard";
 import ModalTest from "../../../../../tests/unit/ModalTest";
+import ViewLevel from "../ViewLevel";
 
 /**
  * Maybe try to update to functional component
@@ -61,11 +62,27 @@ const routes = [
         components: ViewA,
     },
     {
+        path: "/test-with-out",
+        component: RouterView,
+        meta: {
+            modal: Modal
+        }
+    },
+    {
+        path:"/level",
+        component: RouterView,
+        children: [
+            {
+                path: "test",
+                component: useRouterModal.add(Modal)
+            }
+        ]
+    },
+    {
         path: "/",
         component: {
             template: "<p>Default</p>"
         }
-
     },
     {
         path: '/:pathMatch(.*)*', redirect: "/a"

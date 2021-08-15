@@ -128,6 +128,38 @@ or
     }
 ```
 
+# Integration with VueRouter
+
+For integrate modals into VueRouter you need to initialize your application:
+
+- Provide router to the **useModalRouter**:
+
+```js
+import {createWebHistory, createRouter} from "vue-router";
+import {useRouterModal} from "jenesius-vue-modal";
+
+const router = createRouter({
+    history: createWebHistory(), 
+    routes: [...],
+});
+
+useRouterModal.init(router);
+```
+
+- Wrap your component in a route handler:
+```js
+import Modal from "Modal.vue"
+
+const routes = [
+    {
+        path: "/any-route",
+        component: useRouterModal(Modal)
+    }
+]
+```
+
+Now, when route will be */any-route* the Modal window will open.
+For more information see [Docs](https://modal.jenesius.com/docs.html/integration-vue-router).
 
 # Example VueModalComponent
 

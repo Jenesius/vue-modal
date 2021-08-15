@@ -3,7 +3,7 @@ import { createWebHistory, createRouter, RouterView} from "vue-router";
 import ViewDefaultDocumentation from "../view/ViewDefaultDocumentation";
 import ViewUserList from "../view/ViewUserList";
 import ModalUser from "../components/modal/ModalUser";
-import useRouterModal from "../../test/path";
+import {useModalRouter} from "./../../../../../plugin";
 
 
 const routes = [
@@ -44,7 +44,7 @@ const routes = [
                         path: ":id",
                         name: "UserProfile",
                         components: {
-                            modal: useRouterModal.add(ModalUser)
+                            modal: useModalRouter(ModalUser)
                         }
                     }
                 ]
@@ -73,6 +73,6 @@ const router = createRouter({
     }
 });
 
-useRouterModal(router);
+useModalRouter.init(router);
 
 export default router;

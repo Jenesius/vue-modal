@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 module.exports = {
-
     outputDir: "./web/dist",
     pages: {
         docs: {

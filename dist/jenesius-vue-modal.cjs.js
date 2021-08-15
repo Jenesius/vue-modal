@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.2.2
+  * jenesius-vue-modal v1.2.3
   * (c) 2021 Jenesius
   * @license MIT
   */
@@ -23,6 +23,42 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -196,6 +232,195 @@ function _createSuper(Derived) {
   };
 }
 
+var state$1 = {
+  router: null
+};
+
+function init(router) {
+  if (state$1.router) return console.warn("useRouterModal should escaped only once.");
+  state$1.router = router;
+  /**
+   * Return ModalRouter or null
+   * */
+
+  function findModal(routerLocation) {
+    if (!routerLocation.matched.length) return null;
+
+    for (var i = routerLocation.matched.length - 1; i >= 0; i--) {
+      var components = routerLocation.matched[i].components;
+      var a = Object.values(components).find(function (route) {
+        return route._isModal;
+      });
+      if (a) return a;
+    }
+
+    return null;
+  }
+  /**
+   * Hook only for closing
+   * */
+
+
+  router.beforeEach( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(to, from) {
+      var _modal$getModalObject, _modal$getModalObject2, modal;
+
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              modal = findModal(from);
+
+              if (!(modal && !((_modal$getModalObject = modal.getModalObject()) !== null && _modal$getModalObject !== void 0 && (_modal$getModalObject2 = _modal$getModalObject.closed) !== null && _modal$getModalObject2 !== void 0 && _modal$getModalObject2.value))) {
+                _context.next = 5;
+                break;
+              }
+
+              _context.next = 5;
+              return modal.close(true);
+
+            case 5:
+              _context.next = 11;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.log("Modal not closed. Error:", _context.t0);
+              return _context.abrupt("return", false);
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 7]]);
+    }));
+
+    return function (_x, _x2) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  /**
+   * Hook for opening modal
+   * */
+
+  router.afterEach( /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(to) {
+      var modal;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              modal = findModal(to);
+
+              if (!modal) {
+                _context2.next = 4;
+                break;
+              }
+
+              _context2.next = 4;
+              return modal.initialize();
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function (_x3) {
+      return _ref2.apply(this, arguments);
+    };
+  }());
+}
+
+function useModalRouter(component) {
+  var modal = null;
+  var isNavigationClosingGuard = false;
+
+  function initialize() {
+    return _initialize.apply(this, arguments);
+  }
+
+  function _initialize() {
+    _initialize = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              isNavigationClosingGuard = false;
+              modal = null;
+              _context4.next = 4;
+              return openModal(component, vue.computed(function () {
+                return state$1.router.currentRoute.value.params;
+              }));
+
+            case 4:
+              modal = _context4.sent;
+
+              modal.onclose = function () {
+                if (!isNavigationClosingGuard) state$1.router.back();
+              };
+
+            case 6:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+    return _initialize.apply(this, arguments);
+  }
+
+  return {
+    getModalObject: function getModalObject() {
+      return modal;
+    },
+    _isModal: true,
+    close: function close() {
+      var _arguments = arguments;
+      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var v;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                v = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : false;
+                isNavigationClosingGuard = v;
+
+                if (!modal) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _context3.next = 5;
+                return modal.close();
+
+              case 5:
+                return _context3.abrupt("return", _context3.sent);
+
+              case 6:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    initialize: initialize,
+    setup: function setup() {
+      return function () {
+        return null;
+      };
+    }
+  };
+}
+
+useModalRouter.init = init;
+
 var script$1 = {
         props: {
             component: Object,
@@ -213,7 +438,12 @@ var script$1 = {
 			return () => vue.h("div", {
 				class: "widget__modal-container__item"
 			}, [
-				vue.h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: popModal}),
+				vue.h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: () => {
+
+						return popModal()
+						.catch(() => {})
+
+					}}),
 				vue.h(props.component, { ...props.params, class: "widget__modal-wrap", "modal-id": `_modal_${props.id}`, ref: modalRef})
 			])
         },
@@ -318,21 +548,29 @@ var guards = {
   store: {},
   add: function add(id, name, func) {
     var availableNames = ["close"];
-    if (!availableNames.includes(name)) return console.warn("Name ".concat(name, " is not declaration."));
+    if (!availableNames.includes(name)) throw ModalError.UndefinedGuardName(name); //return console.warn(`Name ${name} is not declaration.`);
+
     if (!this.store[id]) this.store[id] = {};
     if (!this.store[id][name]) this.store[id][name] = [];
-    if (typeof func !== "function") return console.warn("Onclose callback was provided not function:", func);
+    if (typeof func !== "function") throw ModalError.GuardDeclarationType(func); //return console.warn("Onclose callback was provided not function:", func);
+
     this.store[id][name].push(func);
   },
   get: function get(id, name) {
     if (!(id in this.store)) return [];
     if (!(name in this.store[id])) return [];
     return this.store[id][name];
+  },
+  delete: function _delete(id) {
+    if (!(id in this.store)) return;
+    delete this.store[id];
   }
 };
 
 var ModalObject = /*#__PURE__*/function () {
   function ModalObject(component, params) {
+    var _this = this;
+
     _classCallCheck(this, ModalObject);
 
     _defineProperty(this, "id", void 0);
@@ -341,9 +579,14 @@ var ModalObject = /*#__PURE__*/function () {
 
     _defineProperty(this, "params", void 0);
 
+    _defineProperty(this, "closed", void 0);
+
     this.id = state.modalId++;
     this.component = vue.shallowRef(component);
     this.params = params;
+    this.closed = vue.computed(function () {
+      return !modalQueue.value.includes(_this);
+    });
     if (component.beforeModalClose) guards.add(this.id, "close", component.beforeModalClose);
   }
 
@@ -368,17 +611,17 @@ var ModalError = /*#__PURE__*/function (_Error) {
   var _super = _createSuper(ModalError);
 
   function ModalError(message) {
-    var _this;
+    var _this2;
 
     _classCallCheck(this, ModalError);
 
-    _this = _super.call(this);
+    _this2 = _super.call(this);
 
-    _defineProperty(_assertThisInitialized(_this), "isModalError", void 0);
+    _defineProperty(_assertThisInitialized(_this2), "isModalError", void 0);
 
-    _this.isModalError = true;
-    _this.message = message;
-    return _this;
+    _this2.isModalError = true;
+    _this2.message = message;
+    return _this2;
   }
 
   _createClass(ModalError, null, [{
@@ -387,9 +630,19 @@ var ModalError = /*#__PURE__*/function (_Error) {
       return new ModalError("Modal with id: ".concat(id, " not founded. The modal window may have been closed earlier."));
     }
   }, {
-    key: "nextReject",
-    value: function nextReject(id) {
-      return new ModalError("Next function from hook was rejected. Modal id ".concat(id));
+    key: "UndefinedGuardName",
+    value: function UndefinedGuardName(name) {
+      return new ModalError("Guard's name ".concat(name, " is not declaration."));
+    }
+  }, {
+    key: "NextReject",
+    value: function NextReject(id) {
+      return new ModalError("Guard returned false. Modal navigation was stopped. Modal id ".concat(id));
+    }
+  }, {
+    key: "GuardDeclarationType",
+    value: function GuardDeclarationType(func) {
+      return new ModalError("Guard's type should be a function. Provided:", func);
     }
   }, {
     key: "ConfigurationType",
@@ -400,6 +653,11 @@ var ModalError = /*#__PURE__*/function (_Error) {
     key: "ConfigurationUndefinedParam",
     value: function ConfigurationUndefinedParam(param, availableParams) {
       return new ModalError("In configuration founded unknown parameter: ".concat(param, ". Available are ").concat(availableParams.join(", "), " "));
+    }
+  }, {
+    key: "EmptyModalQueue",
+    value: function EmptyModalQueue() {
+      return new ModalError("Modal queue is empty.");
     }
   }]);
 
@@ -417,11 +675,13 @@ function closeById(id) {
   });
   return runGuardQueue(arr).then(function () {
     modalQueue.value.splice(indexFoRemove, 1);
-    delete guards.store[id];
     delete instanceStorage[id];
-  }).catch(function (err) {
-    return err instanceof ModalError ? err : Promise.reject(err);
+    guards.delete(id);
   });
+  /*
+  .catch(err => Promise.reject(err))
+  .catch(err => (err instanceof ModalError)?err: Promise.reject(err))
+     */
 }
 
 function runGuardQueue(guards) {
@@ -440,7 +700,7 @@ function guardToPromiseFn(guard, id) {
   return function () {
     return new Promise(function (resolve, reject) {
       var next = function next(valid) {
-        if (valid === false) return reject(ModalError.nextReject(id));
+        if (valid === false) return reject(ModalError.NextReject(id));
         if (valid instanceof Error) reject(valid);
         resolve();
       }; //First params is function-warning: next now is not available
@@ -512,7 +772,7 @@ function _addModal(component, params) {
 
 
 function popModal() {
-  if (modalQueue.value.length === 0) return;
+  if (modalQueue.value.length === 0) return Promise.reject(ModalError.EmptyModalQueue);
   var lastModal = modalQueue.value[modalQueue.value.length - 1];
   return lastModal.close();
 }
@@ -574,3 +834,4 @@ exports.popModal = popModal;
 exports.pushModal = pushModal;
 exports.saveInstance = saveInstance;
 exports.useModal = useModal;
+exports.useModalRouter = useModalRouter;

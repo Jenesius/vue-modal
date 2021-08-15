@@ -8,11 +8,10 @@ import ViewD from "../components/ViewD";
 import Modal from "../Modal";
 
 
-import useRouterModal from "../path";
+import {useModalRouter} from "./../../../../../plugin";
 import ViewUserList from "../ViewUserList";
 import Modalguard from "../Modalguard";
 import ModalTest from "../../../../../tests/unit/ModalTest";
-import ViewLevel from "../ViewLevel";
 
 /**
  * Maybe try to update to functional component
@@ -26,7 +25,7 @@ const routes = [
     },
     {
         path: "/modal-a",
-        component: useRouterModal.add(ModalTest)
+        component: useModalRouter(ModalTest)
     },
     {
         path: "/b",
@@ -42,7 +41,7 @@ const routes = [
     },
     {
         path: "/e",
-        component: useRouterModal.add(Modalguard)
+        component: useModalRouter(Modalguard)
     },
     {
         path: "/user-list",
@@ -51,7 +50,7 @@ const routes = [
             {
                 path: ":id",
                 components: {
-                    test: useRouterModal.add(Modal)
+                    test: useModalRouter(Modal)
                 },
             }
         ]
@@ -74,7 +73,7 @@ const routes = [
         children: [
             {
                 path: "test",
-                component: useRouterModal.add(Modal)
+                component: useModalRouter(Modal)
             }
         ]
     },
@@ -96,6 +95,6 @@ const router = createRouter({
     routes,
 });
 
-useRouterModal(router);
+useModalRouter.init(router);
 
 export default router;

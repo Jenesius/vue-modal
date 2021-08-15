@@ -41,7 +41,7 @@
 					style: "color: yellow"
 				},
 				{
-					words: ["useRouterModal"],
+					words: ["useModalRouter"],
 					style: "color: yellow"
 				},
 				{

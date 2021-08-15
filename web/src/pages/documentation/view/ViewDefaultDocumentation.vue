@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {computed} from "vue";
 import {useRoute} from "vue-router";
 import {getConfigObject} from "../assets/js/AppStore";
 import WidgetMaterialContainer from "../components/WidgetMaterialContainer";
@@ -18,12 +19,11 @@ export default {
 
 		const route = useRoute();
 
-		const prettyPath = route.path.replace(/^\//, "" );
 
-		let configuration = getConfigObject(prettyPath);
+		let configuration = computed(() => getConfigObject(route.path.replace(/^\//, "" )))
 
-		let array = configuration?.array || [];
-		let title = configuration.title;
+		let array = computed(() => configuration.value?.array || []);
+		let title = computed(() => configuration.value?.title);
 
 		return {
 			array,

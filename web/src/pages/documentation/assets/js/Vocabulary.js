@@ -219,7 +219,7 @@ const store =  {
 		ru: "Иногда появляется необходимость связать vue-router с показом модального окна. Для этого нужно писать свой обработчик для router и интегрировать его " +
 			"с открытием/закрытием модального окна. Одна в Jenesius Vue Modal это всё уже есть, нужно только подключить.",
 		en: "Sometimes it becomes necessary to link vue-router to show a modal window. To do this, you need to write your own handler for router and integrate it\n" +
-			"with opening / closing a modal window. One in Jenesius Vue Modal already has it all, you just need to connect it."
+			"with opening/closing a modal window. One in Jenesius Vue Modal already has it all, you just need to connect it."
 
 	},
 	integrationExample: {
@@ -236,8 +236,8 @@ const store =  {
 		ru: "Или любой другой"
 	},
 	dontForgetAboutInitialize: {
-		en: "Don't forget to <a> initialize </a> Jenesius Vue Router",
-		ru: "Не забудьте <a>проинициализировать</a> Jenesius Vue Router"
+		en: "Don't forget to <a> initialize </a> Jenesius Vue Modal",
+		ru: "Не забудьте <a>проинициализировать</a> Jenesius Vue Modal"
 	},
 	onRouterCreatedAddModal: {
 		ru: "При создании router добавьте интеграцию с modal:",
@@ -252,8 +252,8 @@ const store =  {
 		en: "Add new route:"
 	},
 	resultAddRouterModal: {
-		ru: "Теперь при переходе на <b>/any-route</b> будет показываться модально окно, которые было передано в <b>useRouterModal</b>",
-		en: "Now, when switching to <b>/any-route</b>, the window that was passed to <b> useRouterModal </b> will be shown modally"
+		ru: "Теперь при переходе на <b>/any-route</b> будет показываться модально окно, которые было передано в <b>useModalRouter</b>",
+		en: "Now, when switching to <b>/any-route</b>, the window that was passed to <b> useModalRouter </b> will be shown modally"
 	},
 	particularQualities: {
 		ru: "Особенности",

@@ -1,9 +1,11 @@
 /*eslint-disable*/
 "use strict";
 import {ref, watch, shallowRef, getCurrentInstance, computed} from "vue";
+import useModalRouter from "./useModalRouter";
 import WidgetModalContainer from "./WidgetModalContainer.vue";
 
 export const modalQueue = ref([]); //All modals that showing now
+
 
 
 const state = {
@@ -318,7 +320,7 @@ export function saveInstance(id, instance) {
     instanceStorage[id] = instance;
 }
 
-
+export {useModalRouter}
 /**
 * Deprecated
 * */

@@ -1,12 +1,12 @@
 /*eslint-disable*/
-import {openModal} from "../../../../plugin";
+import {openModal} from "./index";
 import {computed} from "vue";
 
 const state = {
 	router: null
 }
 
-function useRouterModal(router){
+function init(router){
 	if (state.router) return console.warn("useRouterModal should escaped only once.");
 	state.router = router;
 
@@ -51,8 +51,7 @@ function useRouterModal(router){
 	})
 
 }
-
-useRouterModal.add = function(component){
+function useModalRouter(component){
 	let modal					= null;
 	let isNavigationClosingGuard	= false;
 
@@ -80,4 +79,6 @@ useRouterModal.add = function(component){
 	};
 }
 
-export default useRouterModal;
+useModalRouter.init = init;
+
+export default useModalRouter;

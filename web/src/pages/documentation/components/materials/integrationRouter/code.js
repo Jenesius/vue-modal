@@ -2,7 +2,7 @@ import {useVocabulary} from "../../../assets/js/Vocabulary";
 
 const codeIntegration =
 `import { createWebHistory, createRouter} from "vue-router";
-import {useRouterModal} from "jenesius-vue-modal";
+import {useModalRouter} from "jenesius-vue-modal";
 
 const routes = [...];
 const router = createRouter({
@@ -10,7 +10,7 @@ const router = createRouter({
     routes,
 });
 
-useRouterModal.init(router);`;
+useModalRouter.init(router);`;
 
 const codeModalNavigation =
 `import Modal from "Modal.vue"
@@ -18,7 +18,7 @@ const codeModalNavigation =
 const routes = [
 	{
 		path: "/any-route",
-		component: useRouterModal(Modal)
+		component: useModalRouter(Modal)
 	}
 ]`;
 

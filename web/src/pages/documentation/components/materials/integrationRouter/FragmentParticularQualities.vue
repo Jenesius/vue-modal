@@ -1,15 +1,16 @@
 <template>
-	<p>Для получения входных параметров можно использовать <b>props.</b></p>
+	<widget-vocabulary name = "propsRouterModal" />
 	<widget-code>{{codeComponentWithRoute}}</widget-code>
 
-	<p>Использование <b>beforeRouteEnter</b>, <b>beforeRouteUpdate</b>, <b>beforeRouteLeave</b> на данном этапе невозможно. Я попытаюсь вскоре решить эту проблему.</p>
+	<widget-vocabulary name = "useRouterNavigationGuard" />
 </template>
 
 <script>
 import * as code from "./code"
 import WidgetCode from "../../../../../components/WidgetCode";
+import WidgetVocabulary from "../../WidgetVocabulary";
 export default {
-	components: {WidgetCode},
+	components: {WidgetVocabulary, WidgetCode},
 	setup: () => code,
 	name: "FragmentParticularQualities"
 }

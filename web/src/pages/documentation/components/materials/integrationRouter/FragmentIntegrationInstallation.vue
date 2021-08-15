@@ -1,33 +1,30 @@
 <template>
 	<ul>
 		<li>
-			<p>Не забудьте <a>проинициализировать</a> Jenesius Vue Router</p>
+			<widget-vocabulary name = "dontForgetAboutInitialize"/>
 		</li>
 		<li>
-			<p>При создании router добавьте интеграцию с modal:</p>
+			<widget-vocabulary name = "onRouterCreatedAddModal"/>
 
 			<widget-code>{{codeIntegration}}</widget-code>
-
-			<p>Теперь обработчик модальных окон будет реагировать на смену навигации.</p>
+			<widget-vocabulary name = "resultRouterCreatedAddModal"/>
 		</li>
 		<li>
-			<p>Добавьте модальный маршрут:</p>
+			<widget-vocabulary name = "addRouterModal"/>
 
 			<widget-code>{{codeModalNavigation}}</widget-code>
 
-			<p>Теперь при переходе на <b>/any-route</b> будет показываться модально окно, которые было передано в <b>useRouterModal</b></p>
-
+			<widget-vocabulary name = "resultAddRouterModal"/>
 		</li>
 	</ul>
-
-
 </template>
 
 <script>
 import * as code from "./code";
 import WidgetCode from "../../../../../components/WidgetCode";
+import WidgetVocabulary from "../../WidgetVocabulary";
 export default {
-	components: {WidgetCode},
+	components: {WidgetVocabulary, WidgetCode},
 	setup: () => code,
 	name: "FragmentIntegrationInstallation"
 }

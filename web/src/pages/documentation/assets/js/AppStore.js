@@ -127,7 +127,7 @@ export const config = [
 				component: FragmentIntegrationInstallation
 			},
 			{
-				title: "particular qualities",
+				title: useVocabulary.particularQualities,
 				link : "particular-qualities",
 				component: FragmentParticularQualities
 			}

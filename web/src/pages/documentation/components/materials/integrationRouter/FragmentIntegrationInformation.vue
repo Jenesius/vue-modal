@@ -1,17 +1,16 @@
 <template>
-	<p>Иногда появляется необходимость связать vue-router с показом модального окна. Для этого нужно писать свой обработчик для router и интегрировать его
-	с открытием/закрытием модального окна. Одна в Jenesius Vue Modal это всё уже есть, нужно только подключить.
-	</p>
-	<p>Для примера была создана таблица пользователей, на маршруте <b>/users</b>. На маршрут <b>/users/:id</b> был добавлен обработчик модальных окон.
-		Теперь при переходе на <b>/users/3</b> откроется модальное окно в которое будут переданы входные параметры из route, доступные в props.</p>
+	<widget-vocabulary name="integrationInfo"/>
+	<widget-vocabulary name="integrationExample"/>
 
-	<router-link :to = "{name: 'ExampleUserList'}" tag="button">Перейти к примеру</router-link>
+	<router-link :to = "{name: 'ExampleUserList'}" tag="button"><widget-vocabulary no-tag name = "goToExample"/></router-link>
 
 </template>
 
 <script>
+import WidgetVocabulary from "../../WidgetVocabulary";
 export default {
 	name: "FragmentIntegrationInformation",
+	components: {WidgetVocabulary},
 }
 </script>
 

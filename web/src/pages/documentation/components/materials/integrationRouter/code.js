@@ -1,10 +1,12 @@
+import {useVocabulary} from "../../../assets/js/Vocabulary";
+
 const codeIntegration =
 `import { createWebHistory, createRouter} from "vue-router";
 import {useRouterModal} from "jenesius-vue-modal";
 
 const routes = [...];
 const router = createRouter({
-    history: createWebHistory(), //or any other
+    history: createWebHistory(), //${useVocabulary.orAnyOther}
     routes,
 });
 

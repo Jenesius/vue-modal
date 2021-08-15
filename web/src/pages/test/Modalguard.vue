@@ -7,9 +7,6 @@ export default {
 	beforeModalClose(){
 		return false;
 	},
-	beforeRouteLeave(){
-		console.log("beforeRouterLeave");
-	},
 	name: "Modalguard"
 }
 </script>

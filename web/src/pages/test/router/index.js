@@ -11,6 +11,7 @@ import Modal from "../Modal";
 import useRouterModal from "../path";
 import ViewUserList from "../ViewUserList";
 import Modalguard from "../Modalguard";
+import ModalTest from "../../../../../tests/unit/ModalTest";
 
 /**
  * Maybe try to update to functional component
@@ -21,6 +22,10 @@ const routes = [
     {
         path: "/a",
         component: ViewA
+    },
+    {
+        path: "/modal-a",
+        component: useRouterModal.add(ModalTest)
     },
     {
         path: "/b",
@@ -56,8 +61,16 @@ const routes = [
         components: ViewA,
     },
     {
+        path: "/",
+        component: {
+            template: "<p>Default</p>"
+        }
+
+    },
+    {
         path: '/:pathMatch(.*)*', redirect: "/a"
-    }
+    },
+
 
 ];
 

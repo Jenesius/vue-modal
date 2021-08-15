@@ -7,6 +7,7 @@
 			<router-link :to= "`/user-list/${Number(id)+1}`">next</router-link>
 
 			<button @click = "back">back</button>
+			<button @click = "toA">to A</button>
 
 		</div>
 
@@ -15,14 +16,26 @@
 
 <script>
 
+import {onBeforeRouteLeave} from "vue-router";
+
 export default {
 	props: {
 		id: String
 	},
 
+	setup(){
+
+		onBeforeRouteLeave(() => {
+			console.log("+++");
+		})
+
+	},
 	methods: {
 		back(){
 			this.$router.go(-1);
+		},
+		toA(){
+			this.$router.push("/a");
 		}
 	},
 	name: "Modal"

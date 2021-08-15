@@ -137,6 +137,10 @@ class ModalError extends Error{
         return new ModalError(`In configuration founded unknown parameter: ${param}. Available are ${availableParams.join(", ")} `)
     }
 
+    static EmptyModalQueue(){
+        return new ModalError("Modal queue is empty.");
+    }
+
 }
 
 function closeById(id) {
@@ -268,7 +272,7 @@ function _addModal(component, params){
  * Function close a last modal
  * */
 export function popModal(){
-    if (modalQueue.value.length === 0) return;
+    if (modalQueue.value.length === 0) return Promise.reject(ModalError.EmptyModalQueue);
 
     let lastModal = modalQueue.value[modalQueue.value.length - 1];
     return lastModal.close();

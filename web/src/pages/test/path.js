@@ -31,7 +31,8 @@ function useRouterModal(router){
 		try {
 			const modal = findModal(from);
 
-			console.log("Closing modal:", modal);
+			if (modal && modal.getModalObject())
+			console.log("Closing modal:", modal?.getModalObject?.()?.id, from.path);
 
 			//Router with ModalRouter was founded
 			if (modal ) {
@@ -41,10 +42,11 @@ function useRouterModal(router){
 
 				console.log("Closing modal windows in beforeEach");
 				await modal.close(true);
+				console.log("Modal was closed.");
 			}
 		} catch (e){
 
-			console.log("Error", e);
+			console.log("Modal not closed. Error:", e);
 
 			return false;
 		}
@@ -58,17 +60,17 @@ useRouterModal.add = function(component){
 	let isNavigationClosingGuard = false;
 
 
-	function initialize(){
+	async function initialize(){
 		isNavigationClosingGuard = false;
 		modalObject = null;
 
-		console.log("Set modal object", null);
+		console.log("Initialize useRouterModal:", state.router.currentRoute.value.path);
 
-		openModal(component, computed(() => state.router.currentRoute.value.params))
+		await openModal(component, computed(() => state.router.currentRoute.value.params))
 		.then(c => {
 
 			modalObject = c;
-			console.log("Set modal object", modalObject);
+			console.log("New modalObject. Id: ", modalObject?.id, "Path:", state.router.currentRoute.value.path);
 
 			if (modalObject !== null)
 
@@ -90,11 +92,13 @@ useRouterModal.add = function(component){
 
 			if (modalObject) return await modalObject.close()
 		},
-		beforeRouteUpdate(){
-			initialize()
+		async beforeRouteUpdate(){
+			await initialize()
+		},
+		async beforeRouteEnter(){
+			await initialize();
 		},
 		setup(){
-			initialize();
 			return () => null
 		},
 	};

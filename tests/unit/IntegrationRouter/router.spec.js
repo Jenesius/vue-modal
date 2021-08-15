@@ -11,6 +11,7 @@ import {nextTick} from "vue";
 import ContainerUsers from "./ContainerUsers";
 import ModalUser from "./ModalUser";
 import {modalQueue} from "../../../plugin";
+import Modalguard from "../../../web/src/pages/test/Modalguard";
 
 const waiter = (n) => {
 
@@ -29,8 +30,12 @@ beforeAll(async () => {
 	wrapper = await mount(App);
 })
 
-beforeEach(() => {
+beforeEach(async () => {
 	modalQueue.value = [];
+	await router.push("/");
+	await router.isReady();
+	await waiter(10);
+	console.log("Wait")
 })
 
 
@@ -42,7 +47,6 @@ const router = createRouter({
 			path: "/simple-modal",
 			component: useRouterModal.add(ModalRoute)
 		},
-
 		{
 			path: "/users",
 			component: ContainerUsers,
@@ -56,11 +60,33 @@ const router = createRouter({
 			]
 		},
 		{
+			path: '/a',
+			component: {
+				template: 'A'
+			}
+		},
+		{
+			path: '/b',
+			component: {
+				template: 'B'
+			}
+		},
+		{
+			path: '/c',
+			component: {
+				template: 'C'
+			}
+		},
+		{
 			path: '/',
 			component: {
 				template: 'Test'
 			}
 		},
+		{
+			path: "/guard",
+			component: useRouterModal.add(Modalguard)
+		}
 	]
 })
 
@@ -88,6 +114,7 @@ describe("Integration with VueRouter", () => {
 		expect(wrapper.text()).toBe("Modal router");
 	})
 	it("Opening and the closing", async () => {
+
 		await router.push("/simple-modal");
 		await router.isReady();
 
@@ -95,7 +122,9 @@ describe("Integration with VueRouter", () => {
 		await nextTick();
 		expect(wrapper.text()).toBe("Modal router");
 		await router.push("/");
-		await nextTick();
+
+		await waiter(1000);
+
 		expect(wrapper.text()).toBe("Test");
 
 	})
@@ -122,23 +151,25 @@ describe("Integration with VueRouter", () => {
 			expect(wrapper.text()).toBe(`user-${i}`);
 		}
 
-
-
-
 	})
 	it("Push", async () => {
-
-		console.log("++++++++++++")
 
 		await router.push("/");
 		await router.isReady();
 
 		const wrapper = await mount(App, {global: {plugins: [router]}});
 
+		await router.push("/a");
+		await nextTick();
+
+		await router.push("/b");
+		await nextTick();
+
+
+
 		await nextTick();
 		await router.push("/users/3");
 
-		await nextTick();
 		await nextTick();
 
 		expect(wrapper.text()).toBe("user-3");
@@ -149,12 +180,13 @@ describe("Integration with VueRouter", () => {
 		expect(wrapper.text()).toBe("Test");
 
 
-		console.log("++++++++++++")
-
 	})
 	it("Back", async () => {
+
+
 		await router.push("/");
 		await router.isReady();
+
 
 		const wrapper = await mount(App, {global: {plugins: [router]}});
 
@@ -171,5 +203,16 @@ describe("Integration with VueRouter", () => {
 
 
 		expect(wrapper.text()).toBe("Test");
+	})
+	it("Closing modal with guard", async () => {
+		await router.push("/guard");
+		await router.isReady();
+
+		expect(router.currentRoute.value.path).toBe("/guard");
+
+		await router.push("/")
+		await router.isReady();
+
+		expect(router.currentRoute.value.path).toBe("/guard");
 	})
 });

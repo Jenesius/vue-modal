@@ -16,6 +16,8 @@
 	<button @click = "add1">Add1</button>
 
 	<button @click = "show">show queue</button>
+	<button @click = "test">Start test</button>
+	<button @click = "openModal1">Open Modal</button>
 
 
 
@@ -29,70 +31,27 @@
 
 	/*eslint-disable*/
 	import TestModalComponent from "../../components/modals/TestModalComponent";
-	import {pushModal, container} from "./../../../../plugin/index";
+	import {pushModal, container, openModal} from "./../../../../plugin/index";
 	import TestModalComponentComposition from "../../components/modals/TestModalComponentComposition";
+	import Modal from "./Modal";
 
 	export default {
 
-/*
-		mounted() {
-			class ModalError extends Error{
-				isModalError;
-				constructor(message) {
-					super();
 
-					this.isModalError = true;
-					this.message = message;
-				}
-
-				static Undefined(id) {
-					return new ModalError(`Modal with id: ${id} not founded. The modal window may have been closed earlier.`);
-				}
-
-				static nextReject(id){
-					return new ModalError(`Next function from hook was rejected. Modal id ${id}`);
-				}
-
-			}
-			function guardToPromiseFn(guard, id){
-				return () => new Promise((resolve, reject) => {
-
-					const next = (valid) => {
-
-						if (valid === false) return reject(ModalError.nextReject(id));
-						if (valid instanceof Error) reject(valid);
-
-						resolve();
-					};
-
-					//First params is function-warning: next now is not available
-
-					const nextWarning = (v = null) => {
-						const err = new ModalError(
-							`Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values.`
-						);
-						console.warn(err);
-
-						//return throw ModalError.nextReject(4);
-					};
-
-					Promise.resolve(guard.call(null, nextWarning))
-					.then(next)
-					.catch(err => reject(err));
-				});
-			}
-
-
-			const test = guardToPromiseFn(() => false,0);
-
-			test()
-			.then(res => console.log(res))
-			.catch(err => console.warn(err));
-
-
-		},*/
 		methods: {
+			openModal1(){
+				openModal(Modal)
+			},
+			test(){
 
+				this.$router.push("/modal-a");
+
+				setTimeout(() => {
+					this.$router.push("/a")
+				}, 2000);
+
+
+			},
 
 			add(){
 				pushModal(TestModalComponentComposition, {title: "hi"});

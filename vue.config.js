@@ -14,6 +14,9 @@ module.exports = {
 
         test: {
             entry: "./web/src/pages/test/main.js"
+        },
+        stage: {
+            entry: "./web/src/pages/stage/main.js"
         }
 
     }

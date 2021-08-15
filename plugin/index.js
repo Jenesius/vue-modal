@@ -11,6 +11,30 @@ const state = {
     initialized: false, // Boolean, false - if ModalContainer not inserted in project.
 }
 
+const configuration = {
+    /**
+     * true - if Modal was opened the page cannot be scrolled
+     * */
+    scrollLock: true,
+}
+
+export function config(data = {scrollLock}){
+    if (typeof data !== "object") throw ModalError.ConfigurationType(data);
+
+    let availableKeys = Object.keys(configuration);
+
+    for(let key in data) {
+
+        if (!availableKeys.includes(key)) {
+            console.warn(ModalError.ConfigurationUndefinedParam(key, availableKeys));
+            continue;
+        }
+        configuration[key] = data[key];
+    }
+}
+
+
+
 
 /**
  * Storage of hooks
@@ -87,6 +111,13 @@ class ModalError extends Error{
         return new ModalError(`Next function from hook was rejected. Modal id ${id}`);
     }
 
+    static ConfigurationType(config) {
+        return new ModalError("Configuration type must be an Object. Provided", config)
+    }
+    static ConfigurationUndefinedParam(param, availableParams) {
+        return new ModalError(`In configuration founded unknown parameter: ${param}. Available are ${availableParams.join(", ")} `)
+    }
+
 }
 
 function closeById(id) {
@@ -147,6 +178,9 @@ function guardToPromiseFn(guard, id){
 
 
 watch(modalQueue.value, () => {
+
+    if (!configuration.scrollLock) return;
+
     try {
         if (modalQueue.value.length) document.body.style.overflowY = "hidden";
         else document.body.style.overflowY = "auto";

@@ -1,5 +1,8 @@
+import {useVocabulary} from "../../../assets/js/Vocabulary";
+
 export const init =
 `<template>
+	//	${useVocabulary.yourHTML}
     <widget-container-modal />
 </template>
 <script>

@@ -51,7 +51,7 @@ Methods `openModal` and `pushModal` used to display modal windows.
 
 Methods return promise, in this case promise is resolved - [modalObject](https://modal.jenesius.com/docs.html/details#modal-object)
 ```js
-    const modal = await openModal(SomeVueComponent); // {id, close, onclose}
+    const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed}
 ```
 
 
@@ -136,14 +136,14 @@ For integrate modals into VueRouter you need to initialize your application:
 
 ```js
 import {createWebHistory, createRouter} from "vue-router";
-import {useRouterModal} from "jenesius-vue-modal";
+import {useModalRouter} from "jenesius-vue-modal";
 
 const router = createRouter({
     history: createWebHistory(), 
     routes: [...],
 });
 
-useRouterModal.init(router);
+useModalRouter.init(router);
 ```
 
 - Wrap your component in a route handler:
@@ -153,7 +153,7 @@ import Modal from "Modal.vue"
 const routes = [
     {
         path: "/any-route",
-        component: useRouterModal(Modal)
+        component: useModalRouter(Modal)
     }
 ]
 ```

@@ -3,14 +3,14 @@ import {mount} from "@vue/test-utils";
 
 import { createRouter, createWebHistory } from 'vue-router';
 
-import useRouterModal from "../../../web/src/pages/test/path";
+
 
 import App from "./App";
 import ModalRoute from "./ModalRoute";
 import {nextTick} from "vue";
 import ContainerUsers from "./ContainerUsers";
 import ModalUser from "./ModalUser";
-import {modalQueue} from "../../../plugin";
+import {modalQueue, useModalRouter} from "../../../plugin";
 import Modalguard from "../../../web/src/pages/test/Modalguard";
 
 const waiter = (n) => {
@@ -45,7 +45,7 @@ const router = createRouter({
 
 		{
 			path: "/simple-modal",
-			component: useRouterModal.add(ModalRoute)
+			component: useModalRouter(ModalRoute)
 		},
 		{
 			path: "/users",
@@ -54,7 +54,7 @@ const router = createRouter({
 				{
 					path: ":id",
 					components: {
-						modal: useRouterModal.add(ModalUser)
+						modal: useModalRouter(ModalUser)
 					}
 				}
 			]
@@ -85,12 +85,12 @@ const router = createRouter({
 		},
 		{
 			path: "/guard",
-			component: useRouterModal.add(Modalguard)
+			component: useModalRouter(Modalguard)
 		}
 	]
 })
 
-useRouterModal(router);
+useModalRouter.init(router);
 
 describe("Integration with VueRouter", () => {
 

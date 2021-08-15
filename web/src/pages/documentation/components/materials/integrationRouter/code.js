@@ -6,7 +6,7 @@ import {useModalRouter} from "jenesius-vue-modal";
 
 const routes = [...];
 const router = createRouter({
-    history: createWebHistory(), //${useVocabulary.orAnyOther}
+    history: createWebHistory(), // ${useVocabulary.orAnyOther}
     routes,
 });
 
@@ -23,10 +23,10 @@ const routes = [
 ]`;
 
 const codeComponentWithRoute =
-`//user/5
+`// user/5
 {
 	props: {
-		id: String
+		id: String // 5
 	}
 }`;
 

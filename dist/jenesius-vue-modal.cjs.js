@@ -751,7 +751,7 @@ function pushModal(component) {
 
 function _addModal(component, params) {
   if (!state.initialized) {
-    var err = "Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://www.npmjs.com/package/jenesius-vue-modal.";
+    var err = "Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.";
     console.warn(err);
     throw err;
   }
@@ -772,7 +772,7 @@ function _addModal(component, params) {
 
 
 function popModal() {
-  if (modalQueue.value.length === 0) return Promise.reject(ModalError.EmptyModalQueue);
+  if (modalQueue.value.length === 0) return Promise.resolve();
   var lastModal = modalQueue.value[modalQueue.value.length - 1];
   return lastModal.close();
 }

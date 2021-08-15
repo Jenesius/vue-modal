@@ -189,7 +189,7 @@ function guardToPromiseFn(guard, id){
 
         const nextWarning = (v = null) => {
             const err = new ModalError(
-                `Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values.`
+                `Resolver function 'next' in modal's hooks no longer supported. (^1.2.0 version jenesius-vue-modal). You should return false/true values. https://modal.jenesius.com/docs.html/navigation-guards`
             );
             console.warn(err);
 
@@ -249,7 +249,7 @@ export function pushModal(component, params = {}) {
 function _addModal(component, params){
 
     if (!state.initialized) {
-        let err = `Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://www.npmjs.com/package/jenesius-vue-modal.`;
+        let err = `Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.`;
 
         console.warn(err);
         throw err;
@@ -274,7 +274,7 @@ function _addModal(component, params){
  * Function close a last modal
  * */
 export function popModal(){
-    if (modalQueue.value.length === 0) return Promise.reject(ModalError.EmptyModalQueue);
+    if (modalQueue.value.length === 0) return Promise.resolve();
 
     let lastModal = modalQueue.value[modalQueue.value.length - 1];
     return lastModal.close();

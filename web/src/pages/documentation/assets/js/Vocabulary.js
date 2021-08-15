@@ -261,14 +261,16 @@ const store =  {
 	},
 	propsRouterModal: {
 		ru: "Для получения входных параметров можно использовать <b>props.</b>",
-		en: "You can use <b> props to get input parameters. </b>"
+		en: "You can use <b> props</b> to get input parameters. "
 	},
 	useRouterNavigationGuard: {
 		ru: "Использование <b>beforeRouteEnter</b>, <b>beforeRouteUpdate</b>, <b>beforeRouteLeave</b> на данном этапе невозможно. Я попытаюсь вскоре решить эту проблему. Как временное решение можно использовать beforeModalClose.",
 		en: "Using <b> beforeRouteEnter </b>, <b> beforeRouteUpdate </b>, <b> beforeRouteLeave </b> is not possible at this stage. I will try to fix this problem shortly. BeforeModalClose can be used as a temporary solution."
+	},
+	yourHTML:{
+		ru: "Ваш HTML",
+		en: "Your HTML"
 	}
-
-
 }
 
 let lang = localStorage.getItem("language") || navigator.language || "en";

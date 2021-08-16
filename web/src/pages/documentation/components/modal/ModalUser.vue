@@ -18,8 +18,15 @@
 		</div>
 
 		<div class = "modal-user__body flex">
-			<button @click = 'go(-1)'>prev</button>
-			<button @click = "go(1)"> next</button>
+			<div>
+				<button @click = 'go(-1)'>prev</button>
+				<button @click = "go(1)"> next</button>
+			</div>
+
+			<div>
+				<button @click = 'go(1, true)'>replace with next</button>
+			</div>
+
 		</div>
 
 	</div>
@@ -42,7 +49,7 @@ export default {
 		const userData = computed(() => store.state.arrayUser.find(item => item.id === Number(props.id)))
 
 
-		function go(v) {
+		function go(v, replace = false) {
 
 			let index = store.state.arrayUser.findIndex(item => item.id === Number(props.id)) + v;
 
@@ -51,7 +58,9 @@ export default {
 
 			const newUser = store.state.arrayUser[index];
 
-			router.push({name: "UserProfile", params: {id: newUser.id}})
+			let methods = replace? "replace": "push";
+
+			router[methods]({name: "UserProfile", params: {id: newUser.id}})
 
 		}
 
@@ -110,7 +119,7 @@ export default {
 		gap: 10px;
 	}
 
-	.modal-user__body>button{
+	.modal-user__body button{
 		padding: 4px 8px;
 		border: 1px solid #cac8c8;
 		background-color: #f8f7f7;
@@ -118,7 +127,7 @@ export default {
 
 		cursor: pointer;
 	}
-	.modal-user__body>button:hover{
+	.modal-user__body button:hover{
 		border: 1px solid #a9a8a8;
 	}
 </style>

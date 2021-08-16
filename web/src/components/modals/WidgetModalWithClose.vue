@@ -2,7 +2,7 @@
 	<widget-modal-wrap>
 		<p>Close me</p>
 
-		<button @click = "closeModal">CloseModal</button>
+		<button @click = "test">CloseModal</button>
 
 	</widget-modal-wrap>
 </template>
@@ -12,7 +12,14 @@ import WidgetModalWrap from "./WidgetModalWrap";
 import {closeModal} from '../../../../plugin';
 
 export default {
-	setup: () => ({closeModal}),
+	setup: () => ({
+		test: () => {
+			closeModal()
+			.catch(()=> {
+
+			})
+		}
+	}),
 	components: {WidgetModalWrap},
 	name: "WidgetModalWithClose"
 }

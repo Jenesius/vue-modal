@@ -2,7 +2,7 @@
 
 ### Features
 
--Integration with VueRouter, closes [#20](https://github.com/Jenesius/vue-modal/issues/20)
+- Integration with VueRouter, closes [#20](https://github.com/Jenesius/vue-modal/issues/20)
 
 ### Docs
 

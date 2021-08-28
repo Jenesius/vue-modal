@@ -38,7 +38,6 @@
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
-					style: {}
 				})
 			])
         },

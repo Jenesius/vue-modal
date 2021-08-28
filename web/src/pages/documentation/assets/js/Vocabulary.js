@@ -274,6 +274,17 @@ const store =  {
 	yourHTML:{
 		ru: "Ваш HTML",
 		en: "Your HTML"
+	},
+
+	changeStylesInfo: {
+		en: "To control the background and position of the modal window, you need to work with the css class <b> .modal-container </b>. When a modal window is opened, it is placed in" +
+			"container with the aforementioned class. It has the following properties:",
+		ru: "Для управления фоном и расположением модального окна, нужно работать с css классом <b>.modal-container</b>. При открытии модального окна, оно помещается в" +
+			"контейнер с вышеупомянуытым классом. Он имеет слудующие свойства:"
+	},
+	changeStylesExample: {
+		en: "For example, let's change the background of the modal and make it open at the bottom:",
+		ru: "Для примера, давайте поменяем фон у модального окна, и сделаем так, чтобы оно открывалось внизу:"
 	}
 }
 

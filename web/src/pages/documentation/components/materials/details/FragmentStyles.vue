@@ -1,25 +1,32 @@
 <template>
-	<p>Для доступа к стилям есть два класса: *modal-container* и *modal-back*</p>
-	<ul>
-		<li><b>modal-container</b> - блок, в который помещается модальная комопнента. По умолчанию, она имеет сделюущие свойства</li>
-		<widget-code>{{codeModalContainer}}</widget-code>
-		<li><b>modal-back</b> - фон, который находится за модлаьным окном.</li>
-		<widget-code>{{codeModalBack}}</widget-code>
-	</ul>
-	<p>Для примера, давайте поменяем фон у модального окна, и сделаем так, чтобы оно откарывалось внизу:</p>
+	<widget-vocabulary name = "changeStylesInfo"/>
+
+	<widget-code>{{codeModalContainer}}</widget-code>
+	<widget-vocabulary name = "changeStylesExample"/>
 
 	<widget-code>{{codeExampleStyles}}</widget-code>
 
-	<widget-vocabulary name = "example" class = "button purple" tag = "button"/>
-
+	<widget-vocabulary name = "example" class = "button purple" @click = "openModalStyle" tag = "button"/>
 </template>
 
 <script>
 import WidgetCode from "../../../../../components/WidgetCode";
 import * as code from "./codeStyles";
 import WidgetVocabulary from "../../WidgetVocabulary";
+import ModalStyles from "../../modal/ModalStyles";
+import {openModal} from "../../../../../../../plugin";
 export default {
-	setup: () => code,
+	setup: () => {
+
+		function openModalStyle() {
+			openModal(ModalStyles);
+		}
+
+		return {
+			...code,
+			openModalStyle
+		}
+	},
 	name: "FragmentStyles",
 	components: {WidgetVocabulary, WidgetCode}
 }

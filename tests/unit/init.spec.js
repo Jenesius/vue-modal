@@ -116,12 +116,23 @@ describe('Init', () => {
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(1);
   })
 
+  it("click on modal", async () => {
+    const wrapper = await mount(App);
+
+    const modal = await openModal(ModalTest, {title: "test"});
+    wrapper.find(".modal-item").trigger("click");
+
+    await waitTime(100);
+
+    expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(1);
+  })
+
   it("click on modal's back ", async () => {
 
     const wrapper = await mount(App);
 
     const modal = await openModal(ModalTest, {title: "test"});
-    wrapper.find(".widget__modal-back").trigger("click");
+    wrapper.find(".modal-container").trigger("click");
 
     await waitTime(100);
 

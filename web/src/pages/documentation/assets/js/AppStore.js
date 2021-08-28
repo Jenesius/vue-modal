@@ -17,6 +17,7 @@ import FragmentIntegrationInstallation
 import FragmentIntegrationInformation
 	from "../../components/materials/integrationRouter/FragmentIntegrationInformation";
 import FragmentParticularQualities from "../../components/materials/integrationRouter/FragmentParticularQualities";
+import FragmentStyles from "../../components/materials/details/FragmentStyles";
 
 export const config = [
 	{
@@ -105,8 +106,9 @@ export const config = [
 				component: FragmentModalObject
 			},
 			{
-				title: useVocabulary.style,
-				link : "styles"
+				title: useVocabulary.styles,
+				link : "styles",
+				component: FragmentStyles
 			},
 			{
 				title: useVocabulary.animation,

@@ -8,6 +8,10 @@ const store =  {
 		en: "example",
 		ru: "пример"
 	},
+	styles: {
+		en: "styles",
+		ru: "Стили"
+	},
 
 	returnValue: {
 		ru: "Возвращаемое значение",

@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.3.0
+  * jenesius-vue-modal v1.3.1
   * (c) 2021 Jenesius
   * @license MIT
   */
@@ -208,6 +208,8 @@ function _assertThisInitialized(self) {
 function _possibleConstructorReturn(self, call) {
   if (call && (typeof call === "object" || typeof call === "function")) {
     return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
   }
 
   return _assertThisInitialized(self);
@@ -429,21 +431,33 @@ var script$1 = {
         setup(props){
 
 			const modalRef = vue.ref(null);
+			const containerRef = vue.ref(null);
 
 			vue.watch(() => modalRef.value, newValue => {
 				saveInstance(props.id, newValue);
 			});
 
 			return () => vue.h("div", {
-				class: "widget__modal-container__item"
+				class: ["widget__modal-container__item", "modal-container"],
+				ref: containerRef,
+				onClick: e => {
+					if (e.target !== containerRef.value) return;
+
+					return popModal().catch(() => {})
+				}
 			}, [
-				vue.h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: () => {
+				/*
+				h("div", {
+					class: ["modal-back", "widget__modal-container__item-back widget__modal-back"],
 
-						return popModal()
-						.catch(() => {})
-
-					}}),
-				vue.h(props.component, { ...props.params, class: "widget__modal-wrap", "modal-id": `_modal_${props.id}`, ref: modalRef})
+				}),
+				 */
+				vue.h(props.component, {
+					...props.params,
+					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
+					"modal-id": `_modal_${props.id}`,
+					ref: modalRef,
+				})
 			])
         },
     };
@@ -477,10 +491,9 @@ function styleInject(css, ref) {
   }
 }
 
-var css_248z$1 = "\n.widget__modal-container__item[data-v-27c985c9]{\r\n        position: fixed;\r\n\t\tleft: 0;\r\n\t\ttop: 0;\r\n\t\theight: 100%;\r\n\t\twidth: 100%;\r\n\t\t\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tjustify-content: center\n}\n.widget__modal-back[data-v-27c985c9]{\r\n\t\topacity: 1;\r\n\r\n\t\tbackground-color: #3e3e3e21;\n}\n.widget__modal-container__item-back[data-v-27c985c9]{\r\n\t\tposition: absolute;\r\n\t\t\r\n\t\tz-index: -1;\r\n        left: 0;\r\n        top: 0;\r\n        height: 100%;\r\n        width: 100%;\r\n\r\n        cursor: pointer;\n}\r\n\t\r\n";
+var css_248z$1 = "\n.modal-container{\r\n\t\tposition: fixed;\r\n\t\tleft: 0;\r\n\t\ttop: 0;\r\n\t\theight: 100%;\r\n\t\twidth: 100%;\r\n\r\n\t\tdisplay: flex;\r\n\t\talign-items: center;\r\n\t\tjustify-content: center;\r\n\r\n\t\tbackground-color: #3e3e3e21;\r\n\t\tcursor: pointer;\n}\n.modal-item{\r\n\t\tcursor: default;\n}\r\n\r\n";
 styleInject(css_248z$1);
 
-script$1.__scopeId = "data-v-27c985c9";
 script$1.__file = "plugin/WidgetModalContainerItem.vue";
 
 var script = {
@@ -489,7 +502,7 @@ var script = {
 			vue.onMounted(initialize);
 
 			return () => {
-				return vue.h(vue.TransitionGroup, {name: "modal-list"}, {
+				return vue.h(vue.TransitionGroup, {name: configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
 						return vue.h(script$1, {component: modalObject.component, params: modalObject.params, key: modalObject.id, id: modalObject.id});
 					})
@@ -499,7 +512,7 @@ var script = {
         components: {WidgetContainerModalItem: script$1}
     };
 
-var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .widget__modal-back,\r\n    .modal-list-leave-active .widget__modal-back,\r\n    .modal-list-enter-active .widget__modal-wrap,\r\n    .modal-list-leave-active .widget__modal-wrap\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .widget__modal-wrap,\r\n    .modal-list-leave-to .widget__modal-wrap{\r\n\t\ttransform: translateY(-60px);\n}\r\n    \r\n\r\n";
+var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n    \r\n\r\n";
 styleInject(css_248z);
 
 script.__file = "plugin/WidgetModalContainer.vue";
@@ -516,11 +529,17 @@ var configuration = {
   /**
    * true - if Modal was opened the page cannot be scrolled
    * */
-  scrollLock: true
+  scrollLock: true,
+
+  /**
+  * Animation name for transition-group
+  * */
+  animation: "modal-list"
 };
 function config() {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    scrollLock: scrollLock
+    scrollLock: scrollLock,
+    animation: animation
   };
   if (_typeof(data) !== "object") throw ModalError.ConfigurationType(data);
   var availableKeys = Object.keys(configuration);
@@ -820,6 +839,7 @@ function useModal() {
   };
 }
 
+exports._configuration = configuration;
 exports.closeModal = closeModal;
 exports.config = config;
 exports.container = container;

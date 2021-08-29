@@ -12,7 +12,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 	.modal-container{
 		background-color: rgba(0, 204, 255, 0.08);
 		align-items: flex-end;

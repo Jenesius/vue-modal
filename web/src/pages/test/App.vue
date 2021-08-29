@@ -98,4 +98,21 @@
 		background-color: #1b062d;
 	}
 
+	.fade-enter-active,
+	.fade-leave-active,
+	.fade-enter-active .modal-item,
+	.fade-leave-active .modal-item
+	{
+		transition: 0.2s;
+	}
+
+
+	.fade-enter , .fade-leave-to{
+
+		opacity: 0;
+	}
+	.fade-enter .modal-item, .fade-leave-to .modal-item{
+		transform: translateX(100px);
+	}
+
 </style>

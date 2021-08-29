@@ -6,7 +6,10 @@
 
 	<widget-code>{{codeExampleStyles}}</widget-code>
 
+	<!--Стиль переопределяет все остальные-->
+	<!--
 	<widget-vocabulary name = "example" class = "button purple" @click = "openModalStyle" tag = "button"/>
+	-->
 </template>
 
 <script>

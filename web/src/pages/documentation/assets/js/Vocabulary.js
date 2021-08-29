@@ -8,11 +8,29 @@ const store =  {
 		en: "example",
 		ru: "пример"
 	},
+	styles: {
+		en: "styles",
+		ru: "Стили"
+	},
 
 	returnValue: {
 		ru: "Возвращаемое значение",
 		en: "Return value"
 	},
+	anyName: {
+		en: "Any name",
+		ru: "Любое имя"
+	},
+	timeOfAnimationForDefaultBlock: {
+		en: "Don't forget to include the animation time for the start block",
+		ru: "Не забывайте указывать время анимации для начального блока."
+	},
+
+	insteadOfFadeAnyName: {
+		en: "Instead of fade, you can use modal-list. In this case, you do not need to redefine the name in the configuration.",
+		ru: "Вместо fade можно использовать modal-list. В этом случае не нужно переопределять имя в конфигурации."
+	},
+
 
 	pluginInformation: {
 		ru: "Jenesius Vue Modal это легковесная и простая библиотека для работы с модальными окнами в Vue3. Она глубоко интегрируется с Vue.js и позволяет создавать модальные окна любой сложности.",
@@ -270,6 +288,31 @@ const store =  {
 	yourHTML:{
 		ru: "Ваш HTML",
 		en: "Your HTML"
+	},
+
+	changeStylesInfo: {
+		en: "To control the background and position of the modal window, you need to work with the css class <b> .modal-container </b>. When a modal window is opened, it is placed in" +
+			"container with the aforementioned class. It has the following properties:",
+		ru: "Для управления фоном и расположением модального окна, нужно работать с css классом <b>.modal-container</b>. При открытии модального окна, оно помещается в" +
+			"контейнер с вышеупомянуытым классом. Он имеет слудующие свойства:"
+	},
+	changeStylesExample: {
+		en: "For example, let's change the background of the modal and make it open at the bottom:",
+		ru: "Для примера, давайте поменяем фон у модального окна, и сделаем так, чтобы оно открывалось внизу:"
+	},
+	infoAnimation: {
+		en: "If you need to change the animation of showing and hiding the modal, you need to override some properties and styles. Default for animating modal windows\n" +
+			"uses <b> modal-list </b> as the animation name. To override the animation name, you need to specify a new one in the configuration:",
+		ru: "Если вам нужно изменить анимацию показа и скрытия модального окно необхожимо переопределить некотрые свойста и стили. По умолчанию для анимации модальных окон\n" +
+			"используется <b>modal-list</b> в качестве имени анимации. Для переопределения имени анимации, нужно указать новое в конфигурации:"
+	},
+	infoAnimationWarning: {
+		en: "When changing the animation, it is necessary to take into account that we must animate both the <b> .modal-container </b> and the modal window itself <b> .modal-item </b>.",
+		ru: "При изменении анимации, необходимо учитывать то, что мы должны анимировать как <b>.modal-container</b> так и само модальноке окно <b>.modal-item</b>."
+	},
+	infoAnimationExample: {
+		en: "For example, let's change the animation and the length of the appearance of the modal window:",
+		ru: "Для примера поменяем анимацию и протяженность появления модлаьного окна:"
 	}
 }
 

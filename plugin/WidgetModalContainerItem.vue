@@ -12,56 +12,56 @@
         setup(props){
 
 			const modalRef = ref(null);
+			const containerRef = ref(null);
 
 			watch(() => modalRef.value, newValue => {
 				saveInstance(props.id, newValue);
 			})
 
 			return () => h("div", {
-				class: "widget__modal-container__item"
+				class: ["widget__modal-container__item", "modal-container"],
+				ref: containerRef,
+				onClick: e => {
+					if (e.target !== containerRef.value) return;
+
+					return popModal().catch(() => {})
+				}
 			}, [
-				h("div", {class: "widget__modal-container__item-back widget__modal-back", onClick: () => {
+				/*
+				h("div", {
+					class: ["modal-back", "widget__modal-container__item-back widget__modal-back"],
 
-						return popModal()
-						.catch(() => {})
-
-					}}),
-				h(props.component, { ...props.params, class: "widget__modal-wrap", "modal-id": `_modal_${props.id}`, ref: modalRef})
+				}),
+				 */
+				h(props.component, {
+					...props.params,
+					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
+					"modal-id": `_modal_${props.id}`,
+					ref: modalRef,
+				})
 			])
         },
     }
 </script>
+<style>
 
-<style scoped>
-
-    .widget__modal-container__item{
-        position: fixed;
+	.modal-container{
+		position: fixed;
 		left: 0;
 		top: 0;
 		height: 100%;
 		width: 100%;
-		
+
 		display: flex;
 		align-items: center;
-		justify-content: center
-    }
-
-    .widget__modal-back{
-		opacity: 1;
+		justify-content: center;
 
 		background-color: #3e3e3e21;
-    }
+		cursor: pointer;
+	}
 
-    .widget__modal-container__item-back{
-		position: absolute;
-		
-		z-index: -1;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
+	.modal-item{
+		cursor: default;
+	}
 
-        cursor: pointer;
-    }
-	
 </style>

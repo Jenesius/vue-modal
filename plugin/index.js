@@ -6,8 +6,6 @@ import WidgetModalContainer from "./WidgetModalContainer.vue";
 
 export const modalQueue = ref([]); //All modals that showing now
 
-
-
 const state = {
     modalId: 0,
     initialized: false, // Boolean, false - if ModalContainer not inserted in project.
@@ -18,9 +16,14 @@ const configuration = {
      * true - if Modal was opened the page cannot be scrolled
      * */
     scrollLock: true,
+    /**
+    * Animation name for transition-group
+    * */
+    animation: "modal-list"
 }
 
-export function config(data = {scrollLock}){
+
+export function config(data = {scrollLock, animation}){
     if (typeof data !== "object") throw ModalError.ConfigurationType(data);
 
     let availableKeys = Object.keys(configuration);
@@ -34,8 +37,6 @@ export function config(data = {scrollLock}){
         configuration[key] = data[key];
     }
 }
-
-
 
 
 /**
@@ -318,7 +319,10 @@ export function saveInstance(id, instance) {
     instanceStorage[id] = instance;
 }
 
-export {useModalRouter}
+export {
+    useModalRouter,
+    configuration as _configuration
+}
 /**
 * Deprecated
 * */
@@ -335,3 +339,4 @@ export function useModal(){
         pushModal,
     }
 }
+

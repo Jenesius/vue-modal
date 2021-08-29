@@ -1,6 +1,6 @@
 <script>
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
-    import {initialize, modalQueue} from "./index";
+    import {initialize, modalQueue, _configuration} from "./index";
 	import {h, onMounted, TransitionGroup} from "vue";
 
     export default {
@@ -9,7 +9,7 @@
 			onMounted(initialize)
 
 			return () => {
-				return h(TransitionGroup, {name: "modal-list"}, {
+				return h(TransitionGroup, {name: _configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
 						return h(WidgetContainerModalItem, {component: modalObject.component, params: modalObject.params, key: modalObject.id, id: modalObject.id});
 					})
@@ -23,12 +23,13 @@
 <style>
 
 
+
+
+
     .modal-list-enter-active,
     .modal-list-leave-active,
-    .modal-list-enter-active .widget__modal-back,
-    .modal-list-leave-active .widget__modal-back,
-    .modal-list-enter-active .widget__modal-wrap,
-    .modal-list-leave-active .widget__modal-wrap
+    .modal-list-enter-active .modal-item,
+    .modal-list-leave-active .modal-item
     {
         transition: all 0.2s ease;
     }
@@ -38,8 +39,8 @@
     }
 
     
-    .modal-list-enter-from .widget__modal-wrap,
-    .modal-list-leave-to .widget__modal-wrap{
+    .modal-list-enter-from .modal-item,
+    .modal-list-leave-to   .modal-item{
 		transform: translateY(-60px);
     }
     

@@ -161,6 +161,9 @@ const routes = [
 Now, when route will be */any-route* the Modal window will open.
 For more information see [Docs](https://modal.jenesius.com/docs.html/integration-vue-router).
 
+# Style and Animation [1.3.1+]
+Please refer to the [documentation](https://modal.jenesius.com/docs.html/details#styles) to change the styles or animations of modals.
+
 # Example VueModalComponent
 
 `WidgeTestModal.vue`

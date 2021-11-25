@@ -6,7 +6,7 @@ import {nextTick} from "vue";
 import App from "./Example";
 import {modalQueue, closeModal, openModal, popModal, pushModal, container} from "../../plugin";
 import ModalTest from "./ModalTest";
-import WidgetModalContainerItem from "../../plugin/WidgetModalContainerItem";
+import WidgetModalContainerItem from "../../plugin/components/WidgetModalContainerItem";
 
 
 function waitTime(n) {

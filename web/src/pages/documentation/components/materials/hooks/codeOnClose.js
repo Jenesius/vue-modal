@@ -12,11 +12,11 @@ modal.onclose = () => {
 }`;
 
 export const codeOnCloseMiddle =
-`import {openModal, closeModal} from "jenesius-vue-modal";
+`import {pushModal, closeModal} from "jenesius-vue-modal";
 
-const modal1 = await openModal(VueComponent);
-const modal2 = await openModal(VueComponent);
-const modal3 = await openModal(VueComponent);
+const modal1 = await pushModal(VueComponent);
+const modal2 = await pushModal(VueComponent);
+const modal3 = await pushModal(VueComponent);
 
 modal2.onclose = () => false;
 

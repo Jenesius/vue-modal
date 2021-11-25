@@ -1,6 +1,7 @@
 
 <script>
-    import {popModal, saveInstance} from "./index";
+    import popModal from "../methods/popModal";
+    import {saveInstance} from "../utils/instances";
     import {ref, watch, h} from "vue";
 
 	export default {

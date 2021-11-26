@@ -1,13 +1,11 @@
 /*eslint-disable*/
+
+import pkg from './package.json'
 import vuePlugin from 'rollup-plugin-vue';
 import postcss from 'rollup-plugin-postcss';
 import commonjs from '@rollup/plugin-commonjs'
-import pkg from './package.json'
 import typescript from '@rollup/plugin-typescript';
 
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import resolve from "@rollup/plugin-node-resolve";
-import dts from 'rollup-plugin-dts'
 
 const NAME = pkg.name;
 const VERSION = pkg.version;
@@ -48,8 +46,6 @@ function createConfig(format, output) {
 		input: "./plugin/index.ts",
 		external,
 		plugins: [
-			peerDepsExternal(),
-			resolve(),
 			typescript({ tsconfig: './plugin/tsconfig.json' }),
 			vuePlugin({
 				preprocessStyles: true

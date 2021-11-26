@@ -6,7 +6,6 @@ module.exports = {
     // tell Jest to handle `*.vue` files
     "vue"
   ],
-  "preset": "ts-jest",
   transform: {
     '^.+\\.vue$': 'vue-jest',
     "^.+\\.jsx?$": "babel-jest",

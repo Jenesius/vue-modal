@@ -11,5 +11,10 @@ module.exports = {
     "^.+\\.jsx?$": "babel-jest",
     '^.+\\.ts?$': 'ts-jest',
   },
+  globals: {
+    'ts-jest': {
+      babelConfig: true,
+    },
+  },
 
 }

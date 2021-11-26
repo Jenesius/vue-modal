@@ -7,13 +7,14 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+
   "overrides": [
     {
       "files": ".{ts,tsx}", // only parse `.ts` and `.tsx` files as TypeScript
       "parser": "@typescript-eslint/parser"
     },
     {
-      "files": ["vue"],
+      "files": ".{vue}",
       "parser": "vue-eslint-parser"
     }
   ]

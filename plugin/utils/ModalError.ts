@@ -35,8 +35,19 @@ export default class ModalError extends Error{
         return new ModalError(`In configuration founded unknown parameter: ${param}. Available are ${availableParams.join(", ")} `)
     }
 
+    static QueueNoEmpty(){
+        return new ModalError("Modal's queue is not empty. Probably some modal reject closing by onClose hook.")
+    }
     static EmptyModalQueue(){
         return new ModalError("Modal queue is empty.");
+    }
+
+    static NotInitialized(){
+        return new ModalError("Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.");
+    }
+
+    static ModalComponentNotProvided(){
+        return new ModalError("The first parameter(VueComponent) was not specified.");
     }
 
 }

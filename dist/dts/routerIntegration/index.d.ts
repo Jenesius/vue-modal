@@ -1,5 +1,5 @@
 import { Router } from "vue-router";
-declare function useModalRouter(component: Object): {
+declare function useModalRouter(component: any): {
     getModalObject: () => any;
     _isModal: boolean;
     close(v?: boolean): Promise<any>;

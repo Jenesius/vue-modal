@@ -20,7 +20,7 @@ export default class Modal {
      * @param {Object} component Any VueComponent that will be used like modal window
      * @param {Object} params Object of input params. Used like props.
      * */
-    constructor(component: any, params: Object);
+    constructor(component: any, params: any);
     /**
      * @description Method for closing the modal window
      * */

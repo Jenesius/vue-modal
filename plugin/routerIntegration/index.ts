@@ -10,7 +10,7 @@ interface ModalRouterStateInterface{
 
 interface ModalRouterInterface{
 	initialize(): Promise<void>,
-	_isModal: Boolean,
+	_isModal: boolean,
 	getModalObject():Modal,
 	close(v: boolean):Promise<void>
 }
@@ -34,10 +34,10 @@ function init(router: Router){
 
 		for(let i = routerLocation.matched.length - 1; i >=0; i--) {
 
-			let components = routerLocation.matched[i].components;
+			const components = routerLocation.matched[i].components;
 
 			// @ts-ignore
-			let a:ModalRouterInterface | null = Object.values(components).find(route => route._isModal);
+			const a:ModalRouterInterface | null = Object.values(components).find(route => route._isModal);
 
 			if (a) return a;
 		}
@@ -68,7 +68,7 @@ function init(router: Router){
 
 }
 
-function useModalRouter(component: Object){
+function useModalRouter(component: any){
 	let modal:any					= null;
 	let isNavigationClosingGuard	= false;
 

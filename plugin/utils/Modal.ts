@@ -17,7 +17,7 @@ export default class Modal{
      * */
     closed:ComputedRef;
 
-    static modalId:number = 0;
+    static modalId = 0;
 
     /**
      * Создаёт объект управления модальным окном.
@@ -27,7 +27,7 @@ export default class Modal{
      * @param {Object} component Any VueComponent that will be used like modal window
      * @param {Object} params Object of input params. Used like props.
      * */
-    constructor(component: any, params: Object) {
+    constructor(component: any, params: any) {
         this.id = Modal.modalId++;
 
         this.component = shallowRef(component);

@@ -61,7 +61,7 @@ export function runGuardQueue(guards:Array<Function>) {
 export function guardToPromiseFn(guard:Function, id:number){
     return () => new Promise<void>((resolve, reject) => {
 
-        const next = (valid:Boolean | Error) => {
+        const next = (valid:boolean | Error) => {
 
             if (valid === false) return reject(ModalError.NextReject(id));
             if (valid instanceof Error) reject(valid);

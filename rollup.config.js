@@ -4,56 +4,28 @@ import postcss from 'rollup-plugin-postcss';
 import babel from "@rollup/plugin-babel";
 import commonjs from '@rollup/plugin-commonjs'
 import pkg from './package.json'
+import typescript from '@rollup/plugin-typescript';
+
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import resolve from "@rollup/plugin-node-resolve";
+import dts from 'rollup-plugin-dts'
+
+const NAME = pkg.name;
+const VERSION = pkg.version;
 
 const banner = `/*!
-  * ${pkg.name} v${pkg.version}
+  * ${NAME} v${VERSION}
   * (c) ${new Date().getFullYear()} Jenesius
   * @license MIT
   */`
-
-/*
-
-	"unpkg": "plugin-dist/jenesius-vue-modal.iife.js",
-	"module": "plugin-dist/jenesius-vue-modal.es.js",
-
-* */
-
-const name = pkg.name
-
-const outputDir = "dist/"
 
 const outputConfig = {
 	cjs: {
 		file: pkg.main,
 		format: `cjs`,
 	},
-/*
-	'esm-bundler': {
-		file: pkg.module,
-		format: `es`,
-	},
-	global: {
-		file: pkg.unpkg,
-		format: `iife`,
-	},
-	esm: {
-		file: pkg.browser || pkg.module.replace('bundler', 'browser'),
-		format: `es`,
-	},
-*/
-
+	
 }
-
-function createOutputs(config) {
-	return Object.values(config).map(v => {
-		return {
-			file: `${outputDir}${name}.${v.format}.js`,
-			format: v.format
-		}
-	})
-}
-
-
 
 function createConfig(format, output) {
 	if (!output) {
@@ -67,25 +39,26 @@ function createConfig(format, output) {
 		vue: 'Vue',
 	}
 
-
 	const isGlobalBuild = format === 'global'
-
-
+	
 	if (isGlobalBuild) output.name = 'JenesiusVueModal'
 
 	const external = ['vue']
 
 	return {
-		input: "./plugin/index.js",
+		input: "./plugin/index.ts",
 		external,
 		plugins: [
+			peerDepsExternal(),
+			resolve(),
+			typescript({ tsconfig: './tsconfig.json' }),
 			vuePlugin({
 				preprocessStyles: true
 			}),
+			
+			//babel({ babelHelpers: 'bundled', extensions: [".js", ".ts"] }),
+			commonjs(),
 			postcss(),
-			babel({ babelHelpers: 'bundled' }),
-			commonjs()
-
 		],
 		output,
 
@@ -93,33 +66,19 @@ function createConfig(format, output) {
 }
 
 
-
-function createProductionConfig(format) {
-	return createConfig(format, {
-		file: `dist/${name}.${format}.prod.js`,
-		format: outputConfig[format].format,
-	})
-}
-
 const packageConfigs = Object.keys(outputConfig).map(format =>
 	createConfig(format, outputConfig[format])
 )
-export default packageConfigs
 
-/*
-export default {
-	input: "./plugin/index.js",
-	output: createOutputs(outputConfig),
 
-	plugins: [
-		vuePlugin({
-			preprocessStyles: true
-		}),
-		postcss(),
-		babel({ babelHelpers: 'bundled' }),
-		commonjs()
-
-	]
+function createDeclarationConfig(){
+	
+	return {
+		input: './dist/dts/index.d.ts',
+		output: [{ file: 'dist/index.d.ts', format: 'es' }],
+		plugins: [dts()],
+	}
+	
 }
+export default [...packageConfigs];
 
- */

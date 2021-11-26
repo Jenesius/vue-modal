@@ -137,6 +137,7 @@ export const config = [
 			}
 		]
 	},
+	/*
 	{
 		title: "Best practices",
 		link : "best-practices",
@@ -147,6 +148,8 @@ export const config = [
 			}
 		]
 	}
+
+	 */
 ]
 
 export function getConfigObject(link) {

@@ -1,26 +1,43 @@
-/*eslint-disable*/
-import {openModal} from "./index";
+import openModal from "../methods/openModal";
 import {computed} from "vue";
+import {Router} from "vue-router";
+import Modal from "../utils/Modal";
 
-const state = {
+
+interface ModalRouterStateInterface{
+	router: Router | null
+}
+
+interface ModalRouterInterface{
+	initialize(): Promise<void>,
+	_isModal: Boolean,
+	getModalObject():Modal,
+	close(v: boolean):Promise<void>
+}
+
+const state:ModalRouterStateInterface = {
 	router: null
 }
 
-function init(router){
+
+
+function init(router: Router){
 	if (state.router) return console.warn("useModalRouter should escaped only once.");
 	state.router = router;
 
 	/**
 	 * Return ModalRouter or null
 	 * */
-	function findModal(routerLocation){
+	function findModal(routerLocation: any): ModalRouterInterface | null{
 
 		if (!routerLocation.matched.length) return null;
 
 		for(let i = routerLocation.matched.length - 1; i >=0; i--) {
 
 			let components = routerLocation.matched[i].components;
-			let a = Object.values(components).find(route => route._isModal);
+
+			// @ts-ignore
+			let a:ModalRouterInterface | null = Object.values(components).find(route => route._isModal);
 
 			if (a) return a;
 		}
@@ -32,7 +49,7 @@ function init(router){
 	/**
 	 * Hook only for closing
 	 * */
-	router.beforeEach(async (to, from) => {
+	router.beforeEach(async (to:any, from:any) => {
 		try {
 			const modal = findModal(from);
 			if (modal && !modal.getModalObject()?.closed?.value) await modal.close(true);
@@ -44,23 +61,24 @@ function init(router){
 	/**
 	 * Hook for opening modal
 	 * */
-	router.afterEach(async to => {
-		const modal = findModal(to);
+	router.afterEach(async (to:any) => {
+		const modal:ModalRouterInterface | null = findModal(to);
 		if (modal) await modal.initialize()
 	})
 
 }
-function useModalRouter(component){
-	let modal					= null;
+
+function useModalRouter(component: Object){
+	let modal:any					= null;
 	let isNavigationClosingGuard	= false;
 
-	async function initialize(){
+	async function initialize(): Promise<void>{
 		isNavigationClosingGuard = false;
 		modal = null;
 
-		modal = await openModal(component, computed(() => state.router.currentRoute.value.params));
+		modal = await openModal(component, computed(() => state.router?.currentRoute.value.params));
 		modal.onclose = () => {
-			if (!isNavigationClosingGuard) state.router.back();
+			if (!isNavigationClosingGuard) state.router?.back();
 		};
 	}
 

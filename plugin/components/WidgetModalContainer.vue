@@ -1,7 +1,9 @@
-<script>
+<script lang="ts">
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
-    import {initialize, modalQueue, _configuration} from "./index";
-	import {h, onMounted, TransitionGroup} from "vue";
+    import initialize from "../utils/initialize";
+    import {h, onMounted, TransitionGroup} from "vue";
+    import {modalQueue} from "../utils/state";
+    import {configuration} from "../utils/config";
 
     export default {
         setup(){
@@ -9,7 +11,7 @@
 			onMounted(initialize)
 
 			return () => {
-				return h(TransitionGroup, {name: _configuration.animation}, {
+				return h(TransitionGroup, {name: configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
 						return h(WidgetContainerModalItem, {component: modalObject.component, params: modalObject.params, key: modalObject.id, id: modalObject.id});
 					})

@@ -17,8 +17,8 @@
     "README.MD",
     "dist/**/*.ts"
   ],
-  "dependencies": {
-    "vue": "^3.2.23"
+  "peerDependencies": {
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "core-js": "^3.6.5",

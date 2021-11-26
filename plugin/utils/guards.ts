@@ -4,15 +4,16 @@
 
 import ModalError from "./ModalError";
 import {instanceStorage} from "./instances";
+import {GuardFunction, GuardFunctionPromisify} from "./types";
 
 interface GuardsInterface{
     store: {
         [index: number]: {
-            [index: string]: Array<Function>
+            [index: string]: Array<GuardFunction>
         }
     },
-    add(id: number, name: string, func: Function):void,
-    get(id: number, name: string): Array<Function>,
+    add(id: number, name: string, func: GuardFunction):void,
+    get(id: number, name: string): Array<GuardFunction>,
     delete(id: number):void
 }
 
@@ -34,7 +35,7 @@ const guards:GuardsInterface = {
         this.store[id][name].push(func);
     },
 
-    get(id:number, name:string) {
+    get(id, name) {
 
         if (!(id in this.store)) return [];
         if (!(name in this.store[id])) return [];
@@ -52,19 +53,19 @@ const guards:GuardsInterface = {
 export default guards
 
 
-export function runGuardQueue(guards:Array<Function>) {
-    return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
+export function runGuardQueue(guards:Array<GuardFunctionPromisify>): Promise<void> {
+    return guards.reduce((promiseAccumulator, guard) => promiseAccumulator.then(() => guard()), Promise.resolve());
 }
 /*
 * FUNCTION ONLY FOR ONE GUARD.
+* Возвращет промис для любой функции хука
 * */
-export function guardToPromiseFn(guard:Function, id:number){
-    return () => new Promise<void>((resolve, reject) => {
+export function guardToPromiseFn(guard:GuardFunction, id:number): GuardFunctionPromisify{
+    return () => new Promise((resolve, reject) => {
 
-        const next = (valid:boolean | Error) => {
+        const next = (valid:boolean | void = true):void => {
 
-            if (valid === false) return reject(ModalError.NextReject(id));
-            if (valid instanceof Error) reject(valid);
+            if (valid === false) reject(ModalError.NextReject(id));
 
             resolve();
         };

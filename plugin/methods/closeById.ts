@@ -3,7 +3,7 @@ import ModalError from "../utils/ModalError";
 import {guardToPromiseFn, runGuardQueue} from "../utils/guards";
 import {instanceStorage} from "../utils/instances";
 import Modal from "../utils/Modal";
-import {GuardFunctionWithHandle} from "../utils/types";
+import {GuardFunction} from "../utils/types";
 
 /**
  * @description Закрывает модальное окно по идентификатору
@@ -15,7 +15,7 @@ export default function closeById(id:number) {
 
     if (indexFoRemove === -1) return Promise.reject(ModalError.Undefined(id));    //Modal with id not found
 
-    const arr = guards.get(id, "close").map((guard:Function) => guardToPromiseFn(guard, id));
+    const arr = guards.get(id, "close").map((guard:GuardFunction) => guardToPromiseFn(guard, id));
 
     return runGuardQueue(arr)
         .then(() => {

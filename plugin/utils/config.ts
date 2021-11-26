@@ -4,14 +4,14 @@
 
 import ModalError from "./ModalError";
 
-export const configuration = {
+export const configuration:ConfigInterface = {
     scrollLock: true, // True - When modal was opened the page cannot be scrolled
     animation: "modal-list" // Animation name for transition-group
 }
 
 export interface ConfigInterface{
-    scrollLock: boolean,
-    animation : string
+    scrollLock?: boolean,
+    animation? : string
 }
 
 /**

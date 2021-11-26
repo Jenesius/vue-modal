@@ -20,13 +20,11 @@
 	import WidgetCode from "../WidgetCode";
 	import {App, Modal} from "./filesHtml";
 	import WidgetModalAlert from "../modals/WidgetModalAlert";
-	import {useModal} from "../../../../plugin";
+	import {openModal} from "../../../../plugin";
 	
 	export default {
 		
 		setup(){
-			
-			const {openModal} = useModal();
 
 			function openAlert(){
 				openModal(WidgetModalAlert, {

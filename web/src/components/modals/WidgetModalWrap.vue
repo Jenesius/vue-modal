@@ -12,15 +12,11 @@
 	</div>
 </template>
 
-<script>
-	
-	import {useModal} from "../../../../plugin";
+<script lang = "ts">
+	import {popModal} from "../../../../plugin";
 	
 	export default {
 		setup(){
-			
-			const {popModal} = useModal(); //sdf
-			
 			return {
 				popModal
 			}

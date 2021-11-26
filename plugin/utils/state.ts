@@ -17,10 +17,8 @@ watch(modalQueue.value, () => {
 
     if (!configuration.scrollLock) return;
 
-    try {
-        if (modalQueue.value.length) document.body.style.overflowY = "hidden";
-        else document.body.style.overflowY = "auto";
-    } catch (e) {}
+    if (modalQueue.value.length) document.body.style.overflowY = "hidden";
+    else document.body.style.overflowY = "auto";
 })
 
 export {

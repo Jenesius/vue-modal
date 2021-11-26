@@ -163,18 +163,18 @@ var guards = {
     }
 };
 function runGuardQueue(guards) {
-    return guards.reduce(function (promise, guard) { return promise.then(function () { return guard(); }); }, Promise.resolve());
+    return guards.reduce(function (promiseAccumulator, guard) { return promiseAccumulator.then(function () { return guard(); }); }, Promise.resolve());
 }
 /*
 * FUNCTION ONLY FOR ONE GUARD.
+* Возвращет промис для любой функции хука
 * */
 function guardToPromiseFn(guard, id) {
     return function () { return new Promise(function (resolve, reject) {
         var next = function (valid) {
+            if (valid === void 0) { valid = true; }
             if (valid === false)
-                return reject(ModalError.NextReject(id));
-            if (valid instanceof Error)
-                reject(valid);
+                reject(ModalError.NextReject(id));
             resolve();
         };
         //First params is function-warning: next now is not available
@@ -218,13 +218,10 @@ var state$1 = {
 vue.watch(modalQueue.value, function () {
     if (!configuration.scrollLock)
         return;
-    try {
-        if (modalQueue.value.length)
-            document.body.style.overflowY = "hidden";
-        else
-            document.body.style.overflowY = "auto";
-    }
-    catch (e) { }
+    if (modalQueue.value.length)
+        document.body.style.overflowY = "hidden";
+    else
+        document.body.style.overflowY = "auto";
 });
 
 /**

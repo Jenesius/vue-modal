@@ -12,7 +12,7 @@ module.exports = {
         },
 
         test: {
-            entry: "./web/src/pages/test/main.js"
+            entry: "./web/src/pages/test/main.ts"
         },
         stage: {
             entry: "./web/src/pages/stage/main.js"

@@ -11,5 +11,8 @@ export default class ModalError extends Error {
     static GuardDeclarationType(func: Function): ModalError;
     static ConfigurationType(config: object): ModalError;
     static ConfigurationUndefinedParam(param: string, availableParams: Array<string>): ModalError;
+    static QueueNoEmpty(): ModalError;
     static EmptyModalQueue(): ModalError;
+    static NotInitialized(): ModalError;
+    static ModalComponentNotProvided(): ModalError;
 }

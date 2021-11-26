@@ -22,7 +22,7 @@ export function config(data:ConfigInterface){
 
     const availableKeys:Array<string> = Object.keys(configuration);
 
-    for(let key in data) {
+    for(const key in data) {
 
         if (!availableKeys.includes(key)) {
             console.warn(ModalError.ConfigurationUndefinedParam(key, availableKeys));

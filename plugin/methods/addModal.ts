@@ -1,22 +1,13 @@
 import {modalQueue} from "../utils/state";
 import Modal from "../utils/Modal";
 import {state} from "../utils/state";
+import ModalError from "../utils/ModalError";
 
-export default function _addModal(component: Object, params: Object){
+export default function _addModal(component: any, params: any):Modal{
 
-	if (!state.initialized) {
-		let err = `Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.`;
-		
-		console.warn(err);
-		throw err;
-	}
+	if (!state.initialized) throw ModalError.NotInitialized();
 	
-	if (!component) {
-		let err = `The first parameter(Component) was not specified.`
-		console.warn(err)
-		
-		throw err;
-	}
+	if (!component) throw ModalError.ModalComponentNotProvided();
 	
 	
 	const modal = new Modal(component, params);

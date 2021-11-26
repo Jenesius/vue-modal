@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.3.1
+  * jenesius-vue-modal v1.4.0
   * (c) 2021 Jenesius
   * @license MIT
   */
@@ -109,8 +109,17 @@ var ModalError = /** @class */ (function (_super) {
     ModalError.ConfigurationUndefinedParam = function (param, availableParams) {
         return new ModalError("In configuration founded unknown parameter: ".concat(param, ". Available are ").concat(availableParams.join(", "), " "));
     };
+    ModalError.QueueNoEmpty = function () {
+        return new ModalError("Modal's queue is not empty. Probably some modal reject closing by onClose hook.");
+    };
     ModalError.EmptyModalQueue = function () {
         return new ModalError("Modal queue is empty.");
+    };
+    ModalError.NotInitialized = function () {
+        return new ModalError("Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.");
+    };
+    ModalError.ModalComponentNotProvided = function () {
+        return new ModalError("The first parameter(VueComponent) was not specified.");
     };
     return ModalError;
 }(Error));
@@ -218,12 +227,15 @@ vue.watch(modalQueue.value, function () {
     catch (e) { }
 });
 
+/**
+ * @description Try to close all modals windows. Throw error if some modal has onClose hook with returned false value.
+ * */
 function closeModal() {
     return runGuardQueue(modalQueue.value.map(function (modalObject) { return function () { return modalObject.close(); }; }));
 }
 
 /**
- * Function close a last modal
+ * @description Try to close the last opened modal window.
  * */
 function popModal() {
     if (modalQueue.value.length === 0)
@@ -291,16 +303,10 @@ var Modal = /** @class */ (function () {
 }());
 
 function _addModal(component, params) {
-    if (!state$1.initialized) {
-        var err = "Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.";
-        console.warn(err);
-        throw err;
-    }
-    if (!component) {
-        var err = "The first parameter(Component) was not specified.";
-        console.warn(err);
-        throw err;
-    }
+    if (!state$1.initialized)
+        throw ModalError.NotInitialized();
+    if (!component)
+        throw ModalError.ModalComponentNotProvided();
     var modal = new Modal(component, params);
     modalQueue.value.push(modal);
     return modal;
@@ -315,19 +321,19 @@ function pushModal(component, props) {
 }
 
 /**
- * Close all modals, if resolved -> open Modal
+ * @description OpenModal that was provided as component. Before opening try to close all previous modals.
+ * @param {Object} component Any Vue component
+ * @param {Object} props Props that will be passed to the component
  *
- * Get: NameOfComponent:VueComponent, params:Object
- *
- * @Return ModalObject
+ * @return {Promise<Modal>} ModalObject
  * */
 function openModal(component, props) {
     if (props === void 0) { props = {}; }
     return closeModal()
         .then(function () {
-        if (!modalQueue.value.length)
-            return pushModal(component, props);
-        return null;
+        if (modalQueue.value.length)
+            throw ModalError.QueueNoEmpty();
+        return pushModal(component, props);
     });
 }
 

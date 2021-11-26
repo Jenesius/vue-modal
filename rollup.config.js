@@ -51,7 +51,7 @@ function createConfig(format, output) {
 		plugins: [
 			peerDepsExternal(),
 			resolve(),
-			typescript({ tsconfig: './tsconfig.json' }),
+			typescript({ tsconfig: './plugin/tsconfig.json' }),
 			vuePlugin({
 				preprocessStyles: true
 			}),

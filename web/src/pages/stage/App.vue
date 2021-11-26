@@ -10,8 +10,9 @@ import {container, openModal} from "../../../../plugin";
 import ModalTest from "../../../../tests/unit/ModalTest";
 export default {
 	methods: {
-		open(){
-			openModal(ModalTest, {title: "test"});
+		async open(){
+			const a  = await openModal(ModalTest, {title: "test"});
+
 		}
 	},
 	components: {WidgetModalContainer: container},

@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
     import initialize from "../utils/initialize";
     import {h, onMounted, TransitionGroup} from "vue";

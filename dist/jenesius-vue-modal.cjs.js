@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.4.0
+  * jenesius-vue-modal v1.4.2
   * (c) 2021 Jenesius
   * @license MIT
   */

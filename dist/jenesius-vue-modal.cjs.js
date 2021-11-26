@@ -92,13 +92,13 @@ var ModalError = /** @class */ (function (_super) {
         return _this;
     }
     ModalError.Undefined = function (id) {
-        return new ModalError("Modal with id: ".concat(id, " not founded. The modal window may have been closed earlier."));
+        return new ModalError("Modal with id: " + id + " not founded. The modal window may have been closed earlier.");
     };
     ModalError.UndefinedGuardName = function (name) {
-        return new ModalError("Guard's name ".concat(name, " is not declaration."));
+        return new ModalError("Guard's name " + name + " is not declaration.");
     };
     ModalError.NextReject = function (id) {
-        return new ModalError("Guard returned false. Modal navigation was stopped. Modal id ".concat(id));
+        return new ModalError("Guard returned false. Modal navigation was stopped. Modal id " + id);
     };
     ModalError.GuardDeclarationType = function (func) {
         return new ModalError("Guard's type should be a function. Provided:", func);
@@ -107,7 +107,7 @@ var ModalError = /** @class */ (function (_super) {
         return new ModalError("Configuration type must be an Object. Provided", config);
     };
     ModalError.ConfigurationUndefinedParam = function (param, availableParams) {
-        return new ModalError("In configuration founded unknown parameter: ".concat(param, ". Available are ").concat(availableParams.join(", "), " "));
+        return new ModalError("In configuration founded unknown parameter: " + param + ". Available are " + availableParams.join(", ") + " ");
     };
     ModalError.QueueNoEmpty = function () {
         return new ModalError("Modal's queue is not empty. Probably some modal reject closing by onClose hook.");

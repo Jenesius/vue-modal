@@ -1,4 +1,4 @@
-import {modalQueue} from "../index";
+import {modalQueue} from "../utils/state";
 import Modal from "../utils/Modal";
 import {state} from "../utils/state";
 

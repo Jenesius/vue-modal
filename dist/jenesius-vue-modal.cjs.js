@@ -9,43 +9,116 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var vue = require('vue');
 
-/**
- * last change: 25.11.2021
- * */
-class ModalError extends Error {
-    constructor(message, details = null) {
-        super();
-        this.isModalError = true;
-        this.message = message;
-        this.details = details;
-    }
-    static Undefined(id) {
-        return new ModalError(`Modal with id: ${id} not founded. The modal window may have been closed earlier.`);
-    }
-    static UndefinedGuardName(name) {
-        return new ModalError(`Guard's name ${name} is not declaration.`);
-    }
-    static NextReject(id) {
-        return new ModalError(`Guard returned false. Modal navigation was stopped. Modal id ${id}`);
-    }
-    static GuardDeclarationType(func) {
-        return new ModalError("Guard's type should be a function. Provided:", func);
-    }
-    static ConfigurationType(config) {
-        return new ModalError("Configuration type must be an Object. Provided", config);
-    }
-    static ConfigurationUndefinedParam(param, availableParams) {
-        return new ModalError(`In configuration founded unknown parameter: ${param}. Available are ${availableParams.join(", ")} `);
-    }
-    static EmptyModalQueue() {
-        return new ModalError("Modal queue is empty.");
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 }
 
 /**
  * last change: 25.11.2021
  * */
-const instanceStorage = {};
+var ModalError = /** @class */ (function (_super) {
+    __extends(ModalError, _super);
+    function ModalError(message, details) {
+        if (details === void 0) { details = null; }
+        var _this = _super.call(this) || this;
+        _this.isModalError = true;
+        _this.message = message;
+        _this.details = details;
+        return _this;
+    }
+    ModalError.Undefined = function (id) {
+        return new ModalError("Modal with id: ".concat(id, " not founded. The modal window may have been closed earlier."));
+    };
+    ModalError.UndefinedGuardName = function (name) {
+        return new ModalError("Guard's name ".concat(name, " is not declaration."));
+    };
+    ModalError.NextReject = function (id) {
+        return new ModalError("Guard returned false. Modal navigation was stopped. Modal id ".concat(id));
+    };
+    ModalError.GuardDeclarationType = function (func) {
+        return new ModalError("Guard's type should be a function. Provided:", func);
+    };
+    ModalError.ConfigurationType = function (config) {
+        return new ModalError("Configuration type must be an Object. Provided", config);
+    };
+    ModalError.ConfigurationUndefinedParam = function (param, availableParams) {
+        return new ModalError("In configuration founded unknown parameter: ".concat(param, ". Available are ").concat(availableParams.join(", "), " "));
+    };
+    ModalError.EmptyModalQueue = function () {
+        return new ModalError("Modal queue is empty.");
+    };
+    return ModalError;
+}(Error));
+
+/**
+ * last change: 25.11.2021
+ * */
+var instanceStorage = {};
 function saveInstance(id, instance) {
     instanceStorage[id] = instance;
 }
@@ -53,10 +126,10 @@ function saveInstance(id, instance) {
 /**
  * last change: 25.11.2021
  * */
-const guards = {
+var guards = {
     store: {},
-    add(id, name, func) {
-        const availableNames = ["close"];
+    add: function (id, name, func) {
+        var availableNames = ["close"];
         if (!availableNames.includes(name))
             throw ModalError.UndefinedGuardName(name);
         if (!this.store[id])
@@ -67,28 +140,28 @@ const guards = {
             throw ModalError.GuardDeclarationType(func);
         this.store[id][name].push(func);
     },
-    get(id, name) {
+    get: function (id, name) {
         if (!(id in this.store))
             return [];
         if (!(name in this.store[id]))
             return [];
         return this.store[id][name];
     },
-    delete(id) {
+    delete: function (id) {
         if (!(id in this.store))
             return;
         delete this.store[id];
     }
 };
 function runGuardQueue(guards) {
-    return guards.reduce((promise, guard) => promise.then(() => guard()), Promise.resolve());
+    return guards.reduce(function (promise, guard) { return promise.then(function () { return guard(); }); }, Promise.resolve());
 }
 /*
 * FUNCTION ONLY FOR ONE GUARD.
 * */
 function guardToPromiseFn(guard, id) {
-    return () => new Promise((resolve, reject) => {
-        const next = (valid) => {
+    return function () { return new Promise(function (resolve, reject) {
+        var next = function (valid) {
             if (valid === false)
                 return reject(ModalError.NextReject(id));
             if (valid instanceof Error)
@@ -98,14 +171,14 @@ function guardToPromiseFn(guard, id) {
         //First params is function-warning: next now is not available
         Promise.resolve(guard.call(instanceStorage[id]))
             .then(next)
-            .catch(err => reject(err));
-    });
+            .catch(function (err) { return reject(err); });
+    }); };
 }
 
 /**
  * last change: 25.11.2021
  * */
-const configuration = {
+var configuration = {
     scrollLock: true,
     animation: "modal-list" // Animation name for transition-group
 };
@@ -115,8 +188,8 @@ const configuration = {
 function config(data) {
     if (typeof data !== "object")
         throw ModalError.ConfigurationType(data);
-    const availableKeys = Object.keys(configuration);
-    for (let key in data) {
+    var availableKeys = Object.keys(configuration);
+    for (var key in data) {
         if (!availableKeys.includes(key)) {
             console.warn(ModalError.ConfigurationUndefinedParam(key, availableKeys));
             continue;
@@ -129,11 +202,11 @@ function config(data) {
 /**
  * last change: 25.11.2021
  * */
-const modalQueue = vue.ref([]); //All modals that showing now
-const state$1 = {
+var modalQueue = vue.ref([]); //All modals that showing now
+var state$1 = {
     initialized: false,
 };
-vue.watch(modalQueue.value, () => {
+vue.watch(modalQueue.value, function () {
     if (!configuration.scrollLock)
         return;
     try {
@@ -146,7 +219,7 @@ vue.watch(modalQueue.value, () => {
 });
 
 function closeModal() {
-    return runGuardQueue(modalQueue.value.map((modalObject) => () => modalObject.close()));
+    return runGuardQueue(modalQueue.value.map(function (modalObject) { return function () { return modalObject.close(); }; }));
 }
 
 /**
@@ -155,7 +228,7 @@ function closeModal() {
 function popModal() {
     if (modalQueue.value.length === 0)
         return Promise.resolve();
-    let lastModal = modalQueue.value[modalQueue.value.length - 1];
+    var lastModal = modalQueue.value[modalQueue.value.length - 1];
     return lastModal.close();
 }
 
@@ -164,12 +237,12 @@ function popModal() {
  * ЕСЛИ МОДАЛЬНОЕ ОКНО БЫЛО НЕ НАХОДИТСЯ В АКТИВНЫХ ИНСТАНСАХ - ОШИБКА
  * */
 function closeById(id) {
-    const indexFoRemove = modalQueue.value.findIndex((item) => item.id === id);
+    var indexFoRemove = modalQueue.value.findIndex(function (item) { return item.id === id; });
     if (indexFoRemove === -1)
         return Promise.reject(ModalError.Undefined(id)); //Modal with id not found
-    const arr = guards.get(id, "close").map((guard) => guardToPromiseFn(guard, id));
+    var arr = guards.get(id, "close").map(function (guard) { return guardToPromiseFn(guard, id); });
     return runGuardQueue(arr)
-        .then(() => {
+        .then(function () {
         modalQueue.value.splice(indexFoRemove, 1);
         delete instanceStorage[id];
         guards.delete(id);
@@ -179,7 +252,7 @@ function closeById(id) {
 /**
  * last change: 25.11.2021
  * */
-class Modal {
+var Modal = /** @class */ (function () {
     /**
      * Создаёт объект управления модальным окном.
      * Для управления идентификатором используется статическое поле modalId.
@@ -188,41 +261,47 @@ class Modal {
      * @param {Object} component Any VueComponent that will be used like modal window
      * @param {Object} params Object of input params. Used like props.
      * */
-    constructor(component, params) {
+    function Modal(component, params) {
+        var _this = this;
         this.id = Modal.modalId++;
         this.component = vue.shallowRef(component);
         this.params = params;
-        this.closed = vue.computed(() => !modalQueue.value.includes(this));
+        this.closed = vue.computed(function () { return !modalQueue.value.includes(_this); });
         if (component.beforeModalClose)
             guards.add(this.id, "close", component.beforeModalClose);
     }
     /**
      * @description Method for closing the modal window
      * */
-    close() {
+    Modal.prototype.close = function () {
         return closeById(this.id);
-    }
-    /**
-     * @description Hook for handling modal closing
-     * */
-    set onclose(func) {
-        guards.add(this.id, "close", func);
-    }
-}
-Modal.modalId = 0;
+    };
+    Object.defineProperty(Modal.prototype, "onclose", {
+        /**
+         * @description Hook for handling modal closing
+         * */
+        set: function (func) {
+            guards.add(this.id, "close", func);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Modal.modalId = 0;
+    return Modal;
+}());
 
 function _addModal(component, params) {
     if (!state$1.initialized) {
-        let err = `Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.`;
+        var err = "Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.";
         console.warn(err);
         throw err;
     }
     if (!component) {
-        let err = `The first parameter(Component) was not specified.`;
+        var err = "The first parameter(Component) was not specified.";
         console.warn(err);
         throw err;
     }
-    const modal = new Modal(component, params);
+    var modal = new Modal(component, params);
     modalQueue.value.push(modal);
     return modal;
 }
@@ -230,7 +309,8 @@ function _addModal(component, params) {
 /**
  * @description Method push modal to queue. Using this method you can open multiple windows. For closing use popModal
  * */
-function pushModal(component, props = {}) {
+function pushModal(component, props) {
+    if (props === void 0) { props = {}; }
     return _addModal(component, props);
 }
 
@@ -241,9 +321,10 @@ function pushModal(component, props = {}) {
  *
  * @Return ModalObject
  * */
-function openModal(component, props = {}) {
+function openModal(component, props) {
+    if (props === void 0) { props = {}; }
     return closeModal()
-        .then(() => {
+        .then(function () {
         if (!modalQueue.value.length)
             return pushModal(component, props);
         return null;
@@ -252,9 +333,9 @@ function openModal(component, props = {}) {
 
 function onBeforeModalClose(callback) {
     var _a;
-    const a = vue.getCurrentInstance();
-    const attrModalId = String((_a = a === null || a === void 0 ? void 0 : a.attrs) === null || _a === void 0 ? void 0 : _a["modal-id"]);
-    let modalId = attrModalId.replace(/[^0-9]/g, "");
+    var a = vue.getCurrentInstance();
+    var attrModalId = String((_a = a === null || a === void 0 ? void 0 : a.attrs) === null || _a === void 0 ? void 0 : _a["modal-id"]);
+    var modalId = attrModalId.replace(/[^0-9]/g, "");
     guards.add(Number(modalId), "close", callback);
 }
 
@@ -299,12 +380,10 @@ var script$1 = {
     };
 
 function styleInject(css, ref) {
-  if (ref === void 0) ref = {};
+  if ( ref === void 0 ) ref = {};
   var insertAt = ref.insertAt;
 
-  if (!css || typeof document === 'undefined') {
-    return;
-  }
+  if (!css || typeof document === 'undefined') { return; }
 
   var head = document.head || document.getElementsByTagName('head')[0];
   var style = document.createElement('style');
@@ -340,7 +419,7 @@ function initialize() {
     /**
      * If user press Escape then close last opened modal
      * */
-    document.addEventListener("keyup", e => {
+    document.addEventListener("keyup", function (e) {
         if (e.key === "Escape" || e.code === "Escape")
             popModal();
     });
@@ -367,56 +446,11 @@ styleInject(css_248z);
 
 script.__file = "plugin/components/WidgetModalContainer.vue";
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-function __awaiter(thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-}
-
-const state = {
+var state = {
     router: null
 };
 function init(router) {
+    var _this = this;
     if (state.router)
         return console.warn("useModalRouter should escaped only once.");
     state.router = router;
@@ -426,10 +460,10 @@ function init(router) {
     function findModal(routerLocation) {
         if (!routerLocation.matched.length)
             return null;
-        for (let i = routerLocation.matched.length - 1; i >= 0; i--) {
-            let components = routerLocation.matched[i].components;
+        for (var i = routerLocation.matched.length - 1; i >= 0; i--) {
+            var components = routerLocation.matched[i].components;
             // @ts-ignore
-            let a = Object.values(components).find(route => route._isModal);
+            var a = Object.values(components).find(function (route) { return route._isModal; });
             if (a)
                 return a;
         }
@@ -438,53 +472,89 @@ function init(router) {
     /**
      * Hook only for closing
      * */
-    router.beforeEach((to, from) => __awaiter(this, void 0, void 0, function* () {
+    router.beforeEach(function (to, from) { return __awaiter(_this, void 0, void 0, function () {
+        var modal;
         var _a, _b;
-        try {
-            const modal = findModal(from);
-            if (modal && !((_b = (_a = modal.getModalObject()) === null || _a === void 0 ? void 0 : _a.closed) === null || _b === void 0 ? void 0 : _b.value))
-                yield modal.close(true);
-        }
-        catch (e) {
-            return false;
-        }
-    }));
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _c.trys.push([0, 3, , 4]);
+                    modal = findModal(from);
+                    if (!(modal && !((_b = (_a = modal.getModalObject()) === null || _a === void 0 ? void 0 : _a.closed) === null || _b === void 0 ? void 0 : _b.value))) return [3 /*break*/, 2];
+                    return [4 /*yield*/, modal.close(true)];
+                case 1:
+                    _c.sent();
+                    _c.label = 2;
+                case 2: return [3 /*break*/, 4];
+                case 3:
+                    _c.sent();
+                    return [2 /*return*/, false];
+                case 4: return [2 /*return*/];
+            }
+        });
+    }); });
     /**
      * Hook for opening modal
      * */
-    router.afterEach((to) => __awaiter(this, void 0, void 0, function* () {
-        const modal = findModal(to);
-        if (modal)
-            yield modal.initialize();
-    }));
+    router.afterEach(function (to) { return __awaiter(_this, void 0, void 0, function () {
+        var modal;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    modal = findModal(to);
+                    if (!modal) return [3 /*break*/, 2];
+                    return [4 /*yield*/, modal.initialize()];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/];
+            }
+        });
+    }); });
 }
 function useModalRouter(component) {
-    let modal = null;
-    let isNavigationClosingGuard = false;
+    var modal = null;
+    var isNavigationClosingGuard = false;
     function initialize() {
-        return __awaiter(this, void 0, void 0, function* () {
-            isNavigationClosingGuard = false;
-            modal = null;
-            modal = yield openModal(component, vue.computed(() => { var _a; return (_a = state.router) === null || _a === void 0 ? void 0 : _a.currentRoute.value.params; }));
-            modal.onclose = () => {
-                var _a;
-                if (!isNavigationClosingGuard)
-                    (_a = state.router) === null || _a === void 0 ? void 0 : _a.back();
-            };
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        isNavigationClosingGuard = false;
+                        modal = null;
+                        return [4 /*yield*/, openModal(component, vue.computed(function () { var _a; return (_a = state.router) === null || _a === void 0 ? void 0 : _a.currentRoute.value.params; }))];
+                    case 1:
+                        modal = _a.sent();
+                        modal.onclose = function () {
+                            var _a;
+                            if (!isNavigationClosingGuard)
+                                (_a = state.router) === null || _a === void 0 ? void 0 : _a.back();
+                        };
+                        return [2 /*return*/];
+                }
+            });
         });
     }
     return {
-        getModalObject: () => modal,
+        getModalObject: function () { return modal; },
         _isModal: true,
-        close(v = false) {
-            return __awaiter(this, void 0, void 0, function* () {
-                isNavigationClosingGuard = v;
-                if (modal)
-                    return yield modal.close();
+        close: function (v) {
+            if (v === void 0) { v = false; }
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            isNavigationClosingGuard = v;
+                            if (!modal) return [3 /*break*/, 2];
+                            return [4 /*yield*/, modal.close()];
+                        case 1: return [2 /*return*/, _a.sent()];
+                        case 2: return [2 /*return*/];
+                    }
+                });
             });
         },
-        initialize,
-        setup: () => () => null
+        initialize: initialize,
+        setup: function () { return function () { return null; }; }
     };
 }
 useModalRouter.init = init;

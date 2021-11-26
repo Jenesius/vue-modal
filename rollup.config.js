@@ -6,16 +6,18 @@ import commonjs from '@rollup/plugin-commonjs'
 import pkg from './package.json'
 import typescript from '@rollup/plugin-typescript';
 
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import resolve from "@rollup/plugin-node-resolve";
+import dts from 'rollup-plugin-dts'
+
+const NAME = pkg.name;
+const VERSION = pkg.version;
 
 const banner = `/*!
-  * ${pkg.name} v${pkg.version}
+  * ${NAME} v${VERSION}
   * (c) ${new Date().getFullYear()} Jenesius
   * @license MIT
   */`
-
-const name = pkg.name
-
-const outputDir = "dist/"
 
 const outputConfig = {
 	cjs: {
@@ -47,17 +49,16 @@ function createConfig(format, output) {
 		input: "./plugin/index.ts",
 		external,
 		plugins: [
-			
-			
+			peerDepsExternal(),
+			resolve(),
 			typescript({ tsconfig: './tsconfig.json' }),
 			vuePlugin({
 				preprocessStyles: true
 			}),
 			
-			postcss(),
-			babel({ babelHelpers: 'bundled' }),
+			//babel({ babelHelpers: 'bundled', extensions: [".js", ".ts"] }),
 			commonjs(),
-			
+			postcss(),
 		],
 		output,
 
@@ -65,9 +66,19 @@ function createConfig(format, output) {
 }
 
 
-
 const packageConfigs = Object.keys(outputConfig).map(format =>
 	createConfig(format, outputConfig[format])
 )
-export default packageConfigs
+
+
+function createDeclarationConfig(){
+	
+	return {
+		input: './dist/dts/index.d.ts',
+		output: [{ file: 'dist/index.d.ts', format: 'es' }],
+		plugins: [dts()],
+	}
+	
+}
+export default [...packageConfigs];
 

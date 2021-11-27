@@ -6,12 +6,14 @@ import ModalError from "./ModalError";
 
 export const configuration:ConfigInterface = {
     scrollLock: true, // True - When modal was opened the page cannot be scrolled
-    animation: "modal-list" // Animation name for transition-group
+    animation: "modal-list", // Animation name for transition-group
+    backClose: true, //Closing on lick back block
 }
 
 export interface ConfigInterface{
     scrollLock?: boolean,
-    animation? : string
+    animation? : string,
+    backClose? : boolean
 }
 
 /**

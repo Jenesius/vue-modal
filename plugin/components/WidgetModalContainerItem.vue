@@ -3,6 +3,7 @@
     import popModal from "../methods/popModal";
     import {saveInstance} from "../utils/instances";
     import {ref, watch, h} from "vue";
+    import {configuration} from "../utils/config";
 
 	export default {
         props: {
@@ -25,7 +26,7 @@
 				onClick: e => {
 					if (e.target !== containerRef.value) return;
 
-					return popModal().catch(() => {})
+                    if (configuration.backClose) return popModal().catch(() => {})
 				}
 			}, [
 				/*

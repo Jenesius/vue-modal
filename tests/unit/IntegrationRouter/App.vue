@@ -9,6 +9,7 @@
 
 import {container} from "../../../plugin";
 
+
 export default {
 	components: {WidgetModalContainer: container},
 	name: "App"

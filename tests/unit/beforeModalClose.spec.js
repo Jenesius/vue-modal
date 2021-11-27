@@ -113,7 +113,6 @@ describe("beforeModalClose", () => {
 		});
 		const a = await closeModal();
 
-		console.log(a);
 
 		expect(modalQueue.value.length).toBe(0);
 	})

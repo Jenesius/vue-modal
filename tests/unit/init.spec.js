@@ -60,9 +60,9 @@ describe('Init', () => {
 
     expect(modalQueue.value.length).toBe(0);
 
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-    pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
 
     await closeModal();
 
@@ -73,15 +73,15 @@ describe('Init', () => {
 
     const wrapper = await mount(App);
 
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-    pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
 
     expect(modalQueue.value.length).toBe(4);
 
-    pushModal(ModalTest);
-    pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
 
     await nextTick();
 
@@ -99,10 +99,10 @@ describe('Init', () => {
     expect(modalQueue.value.length).toBe(0);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(0);
 
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-    pushModal(ModalTest);
-    pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
+    await pushModal(ModalTest);
 
     await popModal();
 
@@ -154,7 +154,7 @@ describe('Init', () => {
 
   it("press escape", async () => {
 
-    openModal(ModalTest);
+    await openModal(ModalTest);
 
     await nextTick();
 

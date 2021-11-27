@@ -15,7 +15,6 @@ export default function openModal(component:any, props:any = {}):Promise<Modal>{
     return closeModal()
    .then(() => {
        if (modalQueue.value.length) throw ModalError.QueueNoEmpty();
-
-       return pushModal(component, props)
    })
+    .then(() => pushModal(component, props))
 }

@@ -13,7 +13,7 @@ import ModalUser from "./ModalUser";
 import {modalQueue, useModalRouter} from "../../../plugin";
 import Modalguard from "../../../web/src/pages/test/Modalguard";
 
-const waiter = (n) => {
+const waiter = (n = 10) => {
 
 	return new Promise(resolve => {
 
@@ -37,7 +37,6 @@ beforeEach(async () => {
 	await router.push("/");
 	await router.isReady();
 	await waiter(10);
-	console.log("Wait")
 })
 
 
@@ -125,7 +124,7 @@ describe("Integration with VueRouter", () => {
 		expect(wrapper.text()).toBe("Modal router");
 		await router.push("/");
 
-		await waiter(1000);
+		await waiter();
 
 		expect(wrapper.text()).toBe("Test");
 
@@ -149,7 +148,9 @@ describe("Integration with VueRouter", () => {
 		for(let i = 0; i < 5; i++) {
 			await router.push("/users/"+i);
 			await nextTick();
-
+			await waiter();
+			
+			
 			expect(wrapper.text()).toBe(`user-${i}`);
 		}
 
@@ -189,11 +190,11 @@ describe("Integration with VueRouter", () => {
 		await router.push("/users/3");
 
 		await nextTick();
-
+		await waiter()
 		expect(wrapper.text()).toBe("user-3");
 
 		await router.push("/");
-		await waiter(2000)
+		await waiter()
 
 		expect(wrapper.text()).toBe("Test");
 

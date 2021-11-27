@@ -1,3 +1,13 @@
+## 1.5.0
+
+### Broken
+- methods pushModal return **Promise -> Modal**
+- updated tests for pushModal
+
+## 1.4.5 (2021-11-27)
+
+- Fix peerDep of library
+
 ## 1.4.0 (2021-11-26)
 
 ### Features

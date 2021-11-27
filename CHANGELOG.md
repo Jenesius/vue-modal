@@ -2,6 +2,8 @@
 
 ### Broken
 - methods pushModal return **Promise -> Modal**
+### Features
+- backClose param in configuration
 - updated tests for pushModal
 
 ## 1.4.5 (2021-11-27)

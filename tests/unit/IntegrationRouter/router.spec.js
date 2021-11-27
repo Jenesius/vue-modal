@@ -1,17 +1,12 @@
 /*eslint-disable*/
 import {mount} from "@vue/test-utils";
-
-import { createRouter, createWebHistory } from 'vue-router';
+import router from "./router";
 
 
 
 import App from "./App";
-import ModalRoute from "./ModalRoute";
 import {nextTick} from "vue";
-import ContainerUsers from "./ContainerUsers";
-import ModalUser from "./ModalUser";
 import {modalQueue, useModalRouter} from "../../../plugin";
-import Modalguard from "../../../web/src/pages/test/Modalguard";
 
 const waiter = (n = 10) => {
 
@@ -40,56 +35,7 @@ beforeEach(async () => {
 })
 
 
-const router = createRouter({
-	history: createWebHistory(),
-	routes: [
 
-		{
-			path: "/simple-modal",
-			component: useModalRouter(ModalRoute)
-		},
-		{
-			path: "/users",
-			component: ContainerUsers,
-			children: [
-				{
-					path: ":id",
-					components: {
-						modal: useModalRouter(ModalUser)
-					}
-				}
-			]
-		},
-		{
-			path: '/a',
-			component: {
-				template: 'A'
-			}
-		},
-		{
-			path: '/b',
-			component: {
-				template: 'B'
-			}
-		},
-		{
-			path: '/c',
-			component: {
-				template: 'C'
-			}
-		},
-		{
-			path: '/',
-			component: {
-				template: 'Test'
-			}
-		},
-		{
-			path: "/guard",
-			component: useModalRouter(Modalguard)
-		}
-	]
-})
 
 useModalRouter.init(router);
 

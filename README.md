@@ -1,6 +1,9 @@
 # Jenesius Vue Modal
 
-Jenesius vue modal is simple library for **Vue 3** only . 
+Jenesius vue modal is simple modal system library for **Vue 3** only . 
+
+
+Using this library, you can simply show both one and several modal windows at the same time, integrate with vue-router
 
 - [Site](https://modal.jenesius.com/)
 - [Documentation](https://modal.jenesius.com/docs.html/installation#npm)
@@ -12,13 +15,13 @@ Jenesius vue modal is simple library for **Vue 3** only .
 
 ### Installation
 
-```markdown
+```shell
 npm i jenesius-vue-modal
 ```
 
 ----
 
-For add modals in your project you need to put the modal's container in the App component:
+For add modals in your project you need to put the modal's container where in the App(root) component:
 
 `App.vue`
 ```vue
@@ -35,7 +38,8 @@ For add modals in your project you need to put the modal's container in the App 
 </script>
 ```
 
-## OpenModal
+
+## Modal show
 
 Methods `openModal` and `pushModal` used to display modal windows. 
 - `openModal` - close all previous modals and then display provided component.
@@ -44,7 +48,7 @@ Methods `openModal` and `pushModal` used to display modal windows.
 ```js
     import {openModal} from "jenesius-vue-modal";
     import SomeVueComponent from "SomeVueComponent.vue";
-
+    
     openModal(SomeVueComponent, props);
 ```
 - props will provide in your component, [example](#example-vuemodalcomponent)
@@ -62,17 +66,16 @@ Methods return promise, in this case promise is resolved - [modalObject](https:/
 - `closeModal`- close all modals.
 - `popModal` - close last opened modal.
 
+```js 
+import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"
+```
 
 ## Lifecycle Hooks
 
-There are three ways to track the closing of a modal:
-
----
-
-Versions is higher than 1.2.0 **NOT support** 'next'. Now **All** hooks use only returned value(Boolean) for navigation hooks.
+**All** hooks use only returned value(Boolean) for navigation hooks.
 If function return **false** or throwing an Error modal window will not be closed.
 
----
+There are three ways to track the closing of a modal:
 
 - onclose
 ```js
@@ -90,8 +93,6 @@ modal.onclose = () => {
         props: {},
         data: () => ({isValidate: false}),
         beforeModalClose(){
-            console.log("Close");
-            
             if (!isValidate) return false; //modal will not be closed while isValidate === false
             
         }
@@ -99,6 +100,7 @@ modal.onclose = () => {
 ```
 - Composition style
 ```js
+    import {onBeforeModalClose} from "jenesius-vue-modal"
     export default{
         setup() {
             onBeforeModalClose(() => {
@@ -143,7 +145,7 @@ const router = createRouter({
     routes: [...],
 });
 
-useModalRouter.init(router);
+useModalRouter.init(router); //Saving router
 ```
 
 - Wrap your component in a route handler:
@@ -153,7 +155,7 @@ import Modal from "Modal.vue"
 const routes = [
     {
         path: "/any-route",
-        component: useModalRouter(Modal)
+        component: useModalRouter(Modal) // Wrap of your VueComponent
     }
 ]
 ```
@@ -161,7 +163,7 @@ const routes = [
 Now, when route will be */any-route* the Modal window will open.
 For more information see [Docs](https://modal.jenesius.com/docs.html/integration-vue-router).
 
-# Style and Animation [1.3.1+]
+# Style and Animation
 Please refer to the [documentation](https://modal.jenesius.com/docs.html/details#styles) to change the styles or animations of modals.
 
 # Example VueModalComponent

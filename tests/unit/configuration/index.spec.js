@@ -9,7 +9,8 @@ beforeEach(async () => {
 })
 /**
  * ТЕСТЫ ДЛЯ ФУНКЦИИ CONFIG
- * + backClose
+ * + backgroundClose
+ * + escClose
  * - scrollLock
  * ? animation - не знаю, как проверить этот параметр
  *
@@ -20,7 +21,7 @@ describe("Configuration function", () => {
 	 * Тест для проверки закрытия модального окна по клику на задний фон, в случае дефолтного значения параметра
 	 * backClose: true
 	 * */
-	test("backClose (true)", async () => {
+	test("backgroundClose (true)", async () => {
 		
 		const wrapper = await mount(container);
 		
@@ -38,9 +39,9 @@ describe("Configuration function", () => {
 	/**
 	 * В случае клика на заднюю область, и установлении параметра backClos
 	 * */
-	test("backClose (false)", async () => {
+	test("backgroundClose (false)", async () => {
 		const wrapper = await mount(container);
-		config({backClose: false});
+		config({backgroundClose: false});
 		
 		await openModal(ModalTest);
 		
@@ -54,9 +55,9 @@ describe("Configuration function", () => {
 	/**
 	 * BackClose: false, закрытие при помощи closeModal
 	 * */
-	test("backClose (false) => closeModal", async () => {
+	test("backgroundClose (false) => closeModal", async () => {
 		const wrapper = await mount(container);
-		config({backClose: false});
+		config({backgroundClose: false});
 		
 		await openModal(ModalTest);
 		
@@ -69,9 +70,9 @@ describe("Configuration function", () => {
 	/**
 	 * BackClose: false, закрытие при помощи popModal
 	 * */
-	test("backClose (false) => popModal", async () => {
+	test("backgroundClose (false) => popModal", async () => {
 		const wrapper = await mount(container);
-		config({backClose: false});
+		config({backgroundClose: false});
 		
 		await openModal(ModalTest);
 		
@@ -81,5 +82,49 @@ describe("Configuration function", () => {
 		
 		expect(modalQueue.value.length).toBe(0);
 	})
+	
+	/**
+	 * Неопознанный параметр в конфигурации
+	 * */
+	test("Undefined params in config function", () => {
+		expect(() =>config({backgroundClose___1: false})).toThrow()
+	})
+	
+	/**
+	 * Нажатие на ESC -> закрытие модального окна
+	 * */
+	test("escClose:true", async () => {
+		
+		await mount(container);
+		
+		await openModal(ModalTest);
+		
+		const event = new KeyboardEvent('keyup', {'key': "Escape"});
+		document.dispatchEvent(event);
+		await wait(10);
+		
+		expect(modalQueue.value.length).toBe(0);
+	})
+	/**
+	 * Нажатие на ESC в случае, когда escClose: false
+	 * Модальное окно не должно быть закрыто
+	 * */
+	
+	test("escClose: false", async () => {
+		await mount(container);
+		
+		config({
+			escClose: false
+		})
+		
+		await openModal(ModalTest);
+		
+		const event = new KeyboardEvent('keyup', {'key': "Escape"});
+		document.dispatchEvent(event);
+		await wait(10);
+		
+		expect(modalQueue.value.length).toBe(1);
+	})
+	
 	
 })

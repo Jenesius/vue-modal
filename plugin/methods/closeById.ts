@@ -1,7 +1,6 @@
-import {guards, modalQueue} from "../utils/state";
+import {guards, modalQueue, state} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {guardToPromiseFn, runGuardQueue} from "../utils/guards";
-import {instanceStorage} from "../utils/instances";
 import Modal from "../utils/Modal";
 import {GuardFunction} from "../utils/types";
 
@@ -21,7 +20,7 @@ export default function closeById(id:number) {
         .then(() => {
             modalQueue.value.splice(indexFoRemove, 1);
 
-            delete instanceStorage[id];
+            delete state.instanceStorage[id];
             guards.delete(id)
         })
 }

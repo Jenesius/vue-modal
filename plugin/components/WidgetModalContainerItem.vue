@@ -26,7 +26,7 @@
 				onClick: e => {
 					if (e.target !== containerRef.value) return;
 
-                    if (configuration.backClose) return popModal().catch(() => {})
+                    if (configuration.backgroundClose) return popModal().catch(() => {})
 				}
 			}, [
 				/*

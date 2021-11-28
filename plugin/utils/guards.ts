@@ -3,8 +3,8 @@
  * */
 
 import ModalError from "./ModalError";
-import {instanceStorage} from "./instances";
 import {GuardFunction, GuardFunctionPromisify} from "./types";
+import {state} from "./state";
 
 interface GuardsInterface{
     store: {
@@ -73,7 +73,7 @@ export function guardToPromiseFn(guard:GuardFunction, id:number): GuardFunctionP
         //First params is function-warning: next now is not available
 
 
-        Promise.resolve(guard.call(instanceStorage[id]))
+        Promise.resolve(guard.call(state.instanceStorage[id]))
             .then(next)
             .catch(err => reject(err));
     });

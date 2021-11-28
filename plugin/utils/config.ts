@@ -7,13 +7,15 @@ import ModalError from "./ModalError";
 export const configuration:ConfigInterface = {
     scrollLock: true, // True - When modal was opened the page cannot be scrolled
     animation: "modal-list", // Animation name for transition-group
-    backClose: true, //Closing on lick back block
+    backgroundClose: true, //Closing on click back block
+    escClose: true, //Closing on click ESC key
 }
 
 export interface ConfigInterface{
     scrollLock?: boolean,
     animation? : string,
-    backClose? : boolean
+    backgroundClose? : boolean,
+    escClose?   : boolean
 }
 
 /**
@@ -26,10 +28,7 @@ export function config(data:ConfigInterface){
 
     for(const key in data) {
 
-        if (!availableKeys.includes(key)) {
-            console.warn(ModalError.ConfigurationUndefinedParam(key, availableKeys));
-            continue;
-        }
+        if (!availableKeys.includes(key)) throw ModalError.ConfigurationUndefinedParam(key, availableKeys);
         // @ts-ignore
         configuration[key] = data[key];
     }

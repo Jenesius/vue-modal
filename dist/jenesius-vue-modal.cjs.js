@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.4.2
+  * jenesius-vue-modal v1.4.6
   * (c) 2021 Jenesius
   * @license MIT
   */
@@ -125,10 +125,50 @@ var ModalError = /** @class */ (function (_super) {
 /**
  * last change: 25.11.2021
  * */
-var instanceStorage = {};
-function saveInstance(id, instance) {
-    instanceStorage[id] = instance;
+var configuration = {
+    scrollLock: true,
+    animation: "modal-list",
+    backgroundClose: true,
+    escClose: true,
+};
+/**
+ * @description Method for changing default configuration.
+ * */
+function config(data) {
+    if (typeof data !== "object")
+        throw ModalError.ConfigurationType(data);
+    var availableKeys = Object.keys(configuration);
+    for (var key in data) {
+        if (!availableKeys.includes(key))
+            throw ModalError.ConfigurationUndefinedParam(key, availableKeys);
+        // @ts-ignore
+        configuration[key] = data[key];
+    }
 }
+
+/**
+ * last change: 25.11.2021
+ *
+ * STATE ПРЕДНАЗНАЧЕН ДЛЯ ВНУТРЕННЕГО ХРАНИЛИЩА ДАННЫХ
+ * НЕПУТАТЬ С КОНФИГУРАЦИЕЙ, ЕЁ ЗАДАЁТ ПОЛЬЗОВАТЕЛЬ
+ *
+ * initialized - параметра принимает true, когда приложение было проинициализировано, то есть WidgetModalContainer
+ * был добавлен на страницу
+ *
+ * */
+var modalQueue = vue.ref([]); //All modals that showing now
+var state$1 = {
+    initialized: false,
+    instanceStorage: {},
+};
+vue.watch(modalQueue.value, function () {
+    if (!configuration.scrollLock)
+        return;
+    if (modalQueue.value.length)
+        document.body.style.overflowY = "hidden";
+    else
+        document.body.style.overflowY = "auto";
+});
 
 /**
  * last change: 25.11.2021
@@ -176,51 +216,11 @@ function guardToPromiseFn(guard, id) {
             resolve();
         };
         //First params is function-warning: next now is not available
-        Promise.resolve(guard.call(instanceStorage[id]))
+        Promise.resolve(guard.call(state$1.instanceStorage[id]))
             .then(next)
             .catch(function (err) { return reject(err); });
     }); };
 }
-
-/**
- * last change: 25.11.2021
- * */
-var configuration = {
-    scrollLock: true,
-    animation: "modal-list" // Animation name for transition-group
-};
-/**
- * @description Method for changing default configuration.
- * */
-function config(data) {
-    if (typeof data !== "object")
-        throw ModalError.ConfigurationType(data);
-    var availableKeys = Object.keys(configuration);
-    for (var key in data) {
-        if (!availableKeys.includes(key)) {
-            console.warn(ModalError.ConfigurationUndefinedParam(key, availableKeys));
-            continue;
-        }
-        // @ts-ignore
-        configuration[key] = data[key];
-    }
-}
-
-/**
- * last change: 25.11.2021
- * */
-var modalQueue = vue.ref([]); //All modals that showing now
-var state$1 = {
-    initialized: false,
-};
-vue.watch(modalQueue.value, function () {
-    if (!configuration.scrollLock)
-        return;
-    if (modalQueue.value.length)
-        document.body.style.overflowY = "hidden";
-    else
-        document.body.style.overflowY = "auto";
-});
 
 /**
  * @description Try to close all modals windows. Throw error if some modal has onClose hook with returned false value.
@@ -251,7 +251,7 @@ function closeById(id) {
     return runGuardQueue(arr)
         .then(function () {
         modalQueue.value.splice(indexFoRemove, 1);
-        delete instanceStorage[id];
+        delete state$1.instanceStorage[id];
         guards.delete(id);
     });
 }
@@ -297,6 +297,12 @@ var Modal = /** @class */ (function () {
     return Modal;
 }());
 
+/**
+ * СИНХРОННАЯ ФУНКЦИЯ ДЛЯ ДОБАВЛЕНИЯ КОМПОНЕНТЫ
+ * ПРОВЕРКА ИДЁТ ТОЛЬКО НА ВХОДНЫЕ ПАРАМЕТРЫ:
+ * - ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ(СОЗДАНИЕ КОНТЕЙНЕРА В КОТОРОМ МОДАЛЬНЫЕ ОКНА ПОКАЗЫВАЮТСЯ)
+ * - ПЕРЕДАЧА КОМПОНЕНТЫ В КАЧЕСТВЕ ПАРАМЕТРА
+ * */
 function _addModal(component, params) {
     if (!state$1.initialized)
         throw ModalError.NotInitialized();
@@ -312,7 +318,7 @@ function _addModal(component, params) {
  * */
 function pushModal(component, props) {
     if (props === void 0) { props = {}; }
-    return _addModal(component, props);
+    return Promise.resolve().then(function () { return _addModal(component, props); });
 }
 
 /**
@@ -328,8 +334,8 @@ function openModal(component, props) {
         .then(function () {
         if (modalQueue.value.length)
             throw ModalError.QueueNoEmpty();
-        return pushModal(component, props);
-    });
+    })
+        .then(function () { return pushModal(component, props); });
 }
 
 function onBeforeModalClose(callback) {
@@ -338,6 +344,16 @@ function onBeforeModalClose(callback) {
     var attrModalId = String((_a = a === null || a === void 0 ? void 0 : a.attrs) === null || _a === void 0 ? void 0 : _a["modal-id"]);
     var modalId = attrModalId.replace(/[^0-9]/g, "");
     guards.add(Number(modalId), "close", callback);
+}
+
+/**
+ * last change: 29.11.2021
+ * МЕТОД ДЛЯ СОХРАНЕНИЯ ЭКЗЕМПЛЯРА МОДАЛЬНОГО ОКНА.
+ * ВЫЗЫВАЕТСЯ КАЖДЫЙ РАЗ В МОМЕНТ ИНИЦИАЛИЗАЦИИ.
+ *
+ * * */
+function saveInstance(id, instance) {
+    state$1.instanceStorage[id] = instance;
 }
 
 var script$1 = {
@@ -361,7 +377,7 @@ var script$1 = {
 				onClick: e => {
 					if (e.target !== containerRef.value) return;
 
-					return popModal().catch(() => {})
+                    if (configuration.backgroundClose) return popModal().catch(() => {})
 				}
 			}, [
 				/*
@@ -421,7 +437,7 @@ function initialize() {
      * If user press Escape then close last opened modal
      * */
     document.addEventListener("keyup", function (e) {
-        if (e.key === "Escape" || e.code === "Escape")
+        if (configuration.escClose && e.key === "Escape" || e.code === "Escape")
             popModal();
     });
 }
@@ -447,6 +463,22 @@ styleInject(css_248z);
 
 script.__file = "plugin/components/WidgetModalContainer.vue";
 
+/**
+ * ИНТЕГРАЦИЯ VUE-ROUTER С JENESIUS-VUE-MODAL
+ * ОСНОВНОЙ ПРИНЦЫП РАБОТЫ: МЫ ДАЁМ ОБРЁТКУ НАД МОДАЛЬНЫМ ОКНОМ, КОТОРУЮ ЗАПУМКАЕМ В ROUTE
+ * САМА ПО СЕБЕ ОБЁРТКА НИЧЕГО НЕ РИСУЕТ, И ЕЁ SETUP: () => () => NULL
+ * НО ПРИ ПОПЫТКЕ ОТРИСОВАТЬ ЕЁ, ВЫЗЫВАЕТСЯ ОТКРЫТИЕ ОКНА
+ *
+ * ЕСЛИ МЫ УЖЕ ПЕРЕШЛИ НА РОУТ, ТО ОКНО 100% ПОЖНО ОТРИСОВАТЬ И МЫ ЭТО ДЕЛАЕМ
+ * В ПРОТИВНОМ СЛУЧАЕ, ПЕРЕЙТИ НА РОУТ НЕТ ВОЗМОЖНОСТИ.
+ * ПРИМЕР: МЫ ОТКРЫЛИ МОДАЛЬНОЕ ОКНО, В КОТОРОМ СТОИТ ХУК, КОТОРЫЙ ЗАПРЕЩАЕТ ЕГО ЗАКРЫТИЕ
+ * В ДАННЫЙ МОМЕНТ, ЕСЛИ ПОПЫТАТЬСЯ ПЕРЕЙТИ НА МАРШРУТ НА КОТОРОМ ОТКРЫВАЕТСЯ МОДАЛЬНОЕ ОКНО МЫ ПОЛУЧИМ ОШИБКУ
+ *
+ * ПРЕДОСТАВЛЯЕТСЯ ФУНКЦИЯ useModalRouter, которая является обёрткой над обычной vue компонентой
+ * useModalRouter.init функция, которая принимает массив router
+ * передавать router необходимо, поскольку так мы не имеет доступ к текущему роуту и функции back
+ *
+ * */
 var state = {
     router: null
 };

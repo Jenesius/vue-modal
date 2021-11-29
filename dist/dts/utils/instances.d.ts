@@ -1,10 +1,8 @@
 /**
- * last change: 25.11.2021
- * */
+ * last change: 29.11.2021
+ * МЕТОД ДЛЯ СОХРАНЕНИЯ ЭКЗЕМПЛЯРА МОДАЛЬНОГО ОКНА.
+ * ВЫЗЫВАЕТСЯ КАЖДЫЙ РАЗ В МОМЕНТ ИНИЦИАЛИЗАЦИИ.
+ *
+ * * */
 import Modal from "./Modal";
-interface InstancesStorageInterface {
-    [index: number]: Modal;
-}
-export declare const instanceStorage: InstancesStorageInterface;
 export declare function saveInstance(id: number, instance: Modal): void;
-export {};

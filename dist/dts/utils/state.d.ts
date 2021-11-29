@@ -1,7 +1,15 @@
 /**
  * last change: 25.11.2021
+ *
+ * STATE ПРЕДНАЗНАЧЕН ДЛЯ ВНУТРЕННЕГО ХРАНИЛИЩА ДАННЫХ
+ * НЕПУТАТЬ С КОНФИГУРАЦИЕЙ, ЕЁ ЗАДАЁТ ПОЛЬЗОВАТЕЛЬ
+ *
+ * initialized - параметра принимает true, когда приложение было проинициализировано, то есть WidgetModalContainer
+ * был добавлен на страницу
+ *
  * */
 import guards from "./guards";
+import Modal from "./Modal";
 declare const modalQueue: import("vue").Ref<{
     id: number;
     component: any;
@@ -10,7 +18,12 @@ declare const modalQueue: import("vue").Ref<{
     close: () => Promise<void>;
     onclose: import("./types").GuardFunctionWithHandle;
 }[]>;
-declare const state: {
+interface InstancesStorageInterface {
+    [index: number]: Modal;
+}
+interface StateInterface {
     initialized: boolean;
-};
+    instanceStorage: InstancesStorageInterface;
+}
+declare const state: StateInterface;
 export { modalQueue, guards, state };

@@ -5,6 +5,8 @@ export declare const configuration: ConfigInterface;
 export interface ConfigInterface {
     scrollLock?: boolean;
     animation?: string;
+    backgroundClose?: boolean;
+    escClose?: boolean;
 }
 /**
  * @description Method for changing default configuration.

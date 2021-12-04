@@ -5,13 +5,15 @@ Jenesius vue modal is simple modal system library for **Vue 3** only .
 
 Using this library, you can simply show both one and several modal windows at the same time, integrate with vue-router
 
+- [Full Documentation](https://modal.jenesius.com/docs.html/installation#npm)
 - [Site](https://modal.jenesius.com/)
-- [Documentation](https://modal.jenesius.com/docs.html/installation#npm)
 
+
+![](https://img.shields.io/github/issues/Jenesius/vue-modal)
+![](https://img.shields.io/npm/dw/jenesius-vue-modal)
 ![](https://img.shields.io/github/stars/Jenesius/vue-modal)
 ![Greet everyone](https://github.com/Jenesius/vue-modal/actions/workflows/node.js.yml/badge.svg)
 ![](https://img.shields.io/npm/l/jenesius-vue-modal)
-![](https://img.shields.io/github/package-json/dependency-version/jenesius/vue-modal/vue)
 
 ### Installation
 
@@ -46,16 +48,17 @@ Methods `openModal` and `pushModal` used to display modal windows.
 - `pushModal` - display provided component
 
 ```js
-    import {openModal} from "jenesius-vue-modal";
-    import SomeVueComponent from "SomeVueComponent.vue";
+import {openModal} from "jenesius-vue-modal";
+import SomeVueComponent from "SomeVueComponent.vue";
     
-    openModal(SomeVueComponent, props);
+openModal(SomeVueComponent, props);
 ```
 - props will provide in your component, [example](#example-vuemodalcomponent)
 
-Methods return promise, in this case promise is resolved - [modalObject](https://modal.jenesius.com/docs.html/details#modal-object)
+Methods return promise, in this case promise is resolved **modalObject**.
+[More information](https://modal.jenesius.com/docs.html/details#modal-object)
 ```js
-    const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed}
+const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed, target}
 ```
 
 
@@ -65,6 +68,8 @@ Methods return promise, in this case promise is resolved - [modalObject](https:/
 - `pushModal` - add one more provided modal.
 - `closeModal`- close all modals.
 - `popModal` - close last opened modal.
+
+[More information](https://modal.jenesius.com/docs.html/methods)
 
 ```js 
 import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"
@@ -89,25 +94,25 @@ modal.onclose = () => {
 - default component
 
 ```js
-    export default {
-        props: {},
-        data: () => ({isValidate: false}),
-        beforeModalClose(){
-            if (!isValidate) return false; //modal will not be closed while isValidate === false
+export default {
+    props: {},
+    data: () => ({isValidate: false}),
+    beforeModalClose(){
+        if (!isValidate) return false; //modal will not be closed while isValidate === false
             
-        }
     }
+}
 ```
 - Composition style
 ```js
-    import {onBeforeModalClose} from "jenesius-vue-modal"
-    export default{
-        setup() {
-            onBeforeModalClose(() => {
-                console.log("Close");
-            });
-        }
+import {onBeforeModalClose} from "jenesius-vue-modal"
+export default{
+    setup() {
+        onBeforeModalClose(() => {
+            console.log("Close");
+        });
     }
+}
 ```
 
 
@@ -115,19 +120,19 @@ modal.onclose = () => {
 
 Hooks also can be asynchronous functions:
 ```js
-    async beforeModalClose(){
-        await doSome();
-        return false; // This modal can not be closed!
-    }
+async beforeModalClose(){
+    await doSome();
+    return false; // This modal can not be closed!
+}
 ```
 or
 
 ```js
-    beforeModalClose(){
-        return Promise(resolve => {
-            setTimeout(() => resolve(true), 2000); //Modal will closed after 2 second
-        })
-    }
+beforeModalClose(){
+    return Promise(resolve => {
+        setTimeout(() => resolve(true), 2000); //Modal will closed after 2 second
+    })
+}
 ```
 
 # Integration with VueRouter
@@ -170,25 +175,25 @@ Please refer to the [documentation](https://modal.jenesius.com/docs.html/details
 
 `WidgeTestModal.vue`
 ```vue 
-    <template>
-        <p>{{title}}</p>
-    </template>
-    <script>
-        export default {
-            props: {
-                title: String
-            }
+<template>
+    <p>{{title}}</p>
+</template>
+<script>
+    export default {
+        props: {
+            title: String
         }
-    </script>
+    }
+</script>
 ```
 To show this component
 ```js
-    import {openModal} from "jenesius-vue-modal"
-    import WidgeTestModal from "WidgeTestModal.vue";
+import {openModal} from "jenesius-vue-modal"
+import WidgeTestModal from "WidgeTestModal.vue";
 
-    openModal(WidgeTestModal, {
-        title: "Hello World!"
-    });
+openModal(WidgeTestModal, {
+    title: "Hello World!"
+});
 ```
 
 ---

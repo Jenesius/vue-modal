@@ -20,6 +20,7 @@ import openModal from "../methods/openModal";
 import {computed} from "vue";
 import {Router} from "vue-router";
 import Modal from "../utils/Modal";
+import ModalError from "../utils/ModalError";
 
 
 interface ModalRouterStateInterface{
@@ -91,6 +92,9 @@ function useModalRouter(component: any){
 	let isNavigationClosingGuard	= false;
 
 	async function initialize(): Promise<void>{
+
+		if (!state.router) throw ModalError.ModalRouterIntegrationNotInitialized();
+
 		isNavigationClosingGuard = false;
 		modal = null;
 

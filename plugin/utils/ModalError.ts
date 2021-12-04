@@ -50,4 +50,7 @@ export default class ModalError extends Error{
         return new ModalError("The first parameter(VueComponent) was not specified.");
     }
 
+    static ModalRouterIntegrationNotInitialized(){
+        return new ModalError("The integration was not initialized. Please, use useModalRouter.init(router). For more information: https://modal.jenesius.com/docs.html/integration-vue-router#installation")
+    }
 }

@@ -50,8 +50,13 @@
 			animationClick(){
 				openModal(PrettyModal);
 			},
-			openModal1(){
-				openModal(Modal)
+			async openModal1(){
+				const a = await openModal(Modal, {val: "qwerty"});
+                a.onclose = () => {
+                    console.log("This:", this);
+                }
+                console.log(a.target);
+                console.log(a.target.val);
 			},
 			test(){
 

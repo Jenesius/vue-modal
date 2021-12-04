@@ -1,9 +1,14 @@
 import {useVocabulary} from "../../../assets/js/Vocabulary";
 
 export const codeOnClose =
-`import {openModal} from "jenesius-vue-modal;
-const modal = await openModal(Modal);
+`import {openModal} from "jenesius-vue-modal";
+const modal = await openModal(Modal, {
+	message: "Welcome"
+});
 modal.onclose = () => false
+
+modal.target.message; // "Welcome"
+modal.closed.value; // true
 
 modal.close() // ${useVocabulary("modalWillNotBeClosed")}
 `;
@@ -16,5 +21,5 @@ modal.id; // ${useVocabulary.uniqueIdentity}
 modal.onclose = () => {
     if (${useVocabulary.weather} === "${useVocabulary.rainy}") return false;
 }
- 
+
 modal.close() // ${useVocabulary.closeModalIfWeatherIsRainy}`;

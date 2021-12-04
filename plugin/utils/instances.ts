@@ -11,3 +11,6 @@ import {state} from "./state";
 export function saveInstance(id:number, instance: Modal) {
     state.instanceStorage[id] = instance;
 }
+export function getInstance(id : number){
+    return state.instanceStorage[id];
+}

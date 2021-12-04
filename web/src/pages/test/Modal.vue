@@ -19,7 +19,8 @@
 
 export default {
 	props: {
-		id: String
+		id: String,
+        val: String
 	},
 
 

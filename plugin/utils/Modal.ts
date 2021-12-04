@@ -6,6 +6,7 @@ import {computed, ComputedRef, shallowRef} from "vue";
 import {guards, modalQueue} from "./state";
 import {GuardFunctionWithHandle} from "./types";
 import closeById from "../methods/closeById";
+import {getInstance} from "./instances";
 
 export default class Modal{
 
@@ -53,4 +54,11 @@ export default class Modal{
     set onclose(func: GuardFunctionWithHandle) {
         guards.add(this.id, "close", func);
     }
+    /**
+     * @description Return instance of modal component
+     * */
+    get target(){
+        return getInstance(this.id);
+    }
+
 }

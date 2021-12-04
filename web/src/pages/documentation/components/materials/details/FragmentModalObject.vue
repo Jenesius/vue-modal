@@ -4,6 +4,8 @@
 		<li><widget-vocabulary name = "modalObjectParamId"/></li>
 		<li><widget-vocabulary name = "modalObjectParamClose"/></li>
 		<li><widget-vocabulary name = "modalObjectParamOnclose"/></li>
+		<li><widget-vocabulary name = "modalObjectTarget"/></li>
+		<li><widget-vocabulary name = "modalObjectClosed"/></li>
 	</ul>
 
 	<widget-code>{{codeOnClose}}</widget-code>

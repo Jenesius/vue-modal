@@ -177,7 +177,7 @@ const store =  {
 		ru: "хуки внутри компонент"
 	},
 	modalObjectParamId: {
-		ru: "<b>id</b> - уникальныидентификатор модального окна.",
+		ru: "<b>id</b> - уникальный идентификатор модального окна.",
 		en: "<b> id </b> - unique identifier of the modal window.",
 	},
 	modalObjectParamClose: {
@@ -188,9 +188,17 @@ const store =  {
 		ru: "<b>onclose</b> - функция, которая выполняется при попытке закрыть окно. Данную функцию можно переопределить для контроля закрытия окна. Если <b>onclose</b> вернёт false, модальное окно не будет закрыто.",
 		en: "<b> onclose </b> is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If <b> onclose </b> returns false, the modal will not be closed.",
 	},
+	modalObjectTarget: {
+		ru: `<b>target</b> - экзмепляр открытого модального окна. Позволяет получить доступ к свойствам и методам модалього окна.`,
+		en: `<b>target</b> - an instance of an open modal window. Allows you to access the properties and methods of the modal window.`
+	},
+	modalObjectClosed: {
+		ru: `<b>closed</b> - computed переменная, true - если модально окно открыто`,
+		en: `<b>closed</b> - computed variable, true if the modal window is open`
+	},
 
 	methodsPushAndCloseReturnModalObject: {
-		ru: "Методы pushModal и openModal возвращают объект следующего типа:",
+		ru: "Методы pushModal и openModal возвращают объект следующей структуры:",
 		en: "The pushModal and openModal methods return an object of the following type:"
 	},
 	guardAsyncInfo: {

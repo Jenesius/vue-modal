@@ -1,5 +1,5 @@
 <template>
-	
+
 	<pre class = 'container-code'>
 		<div class = "filename" v-if = "name">{{name}}</div>
 		<code ref = "code" class = "code">
@@ -9,15 +9,15 @@
 </template>
 
 <script>
-	
+
 	import {onMounted, ref} from "vue";
-	
+
 	export default {
 		props: {
 			name: String
 		},
 		setup(props, {slots}){
-		
+
 			const code = ref(null);
 
 			/**
@@ -37,7 +37,7 @@
 					style: "color: yellow"
 				},
 				{
-					words: ["template", "script"],
+					words: ["template", "script", "this"],
 					style: "color: yellow"
 				},
 				{
@@ -66,40 +66,40 @@
 			text = slots.default()[0].children;
 
 			text = text.replace(/\t/g, '    ')
-			
 
-			
+
+
 			text = text.replace('<', "&lt;").replace('>', "&gt;");
-			
+
 			text = text.replaceAll('<', "&lt;").replaceAll('>', "&gt;");
-			
-			text = text.replace(/"([^"]*(?:''[^"]*)*)"/g, `<span style = "color: green">"$1"</span>`);
-			
-			
+
+			text = text.replace(/"([^"]*(?:''[^"]*)*)"/g, `<span style = "color: #31aa31">"$1"</span>`);
+
+
 			wordConfig.forEach(item => {
-				
-				
+
+
 				if (item.words) item.words.forEach(tagName => {
 					text = text.replaceAll(tagName, `<span style = "${item.style}">${tagName}</span>`)
 				})
-				
-				
+
+
 				if (item.reg) text = text.replace(item.reg, `<span style = "${item.style}">$1</span>`)
-				
-				
+
+
 			})
 
-			
+
 
 				code.value.innerHTML= text;
-				
+
 			})
-			
+
 			return {code}
-			
-		
+
+
 		},
-		
+
 		name: "WidgetCode"
 	}
 </script>
@@ -113,12 +113,12 @@
 		background-color: #1b062d;
 		color: white;
 		letter-spacing: 1px;
-		
+
 		border-radius: 6px;
 		margin: 13px 0;
-		
+
 		overflow-x: auto;
-		
+
 		padding: 0 20px;
 	}
 	.filename{

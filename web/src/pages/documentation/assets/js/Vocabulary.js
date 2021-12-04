@@ -196,7 +196,10 @@ const store =  {
 		ru: `<b>closed</b> - computed переменная, true - если модально окно открыто`,
 		en: `<b>closed</b> - computed variable, true if the modal window is open`
 	},
-
+	modalObjectOnCloseAccess: {
+		ru: "При использовании <b>onclose</b> мы можем также получить доступ к внутренним полям и методам модального окна, передав не анонимную функцию в качестве параметра:",
+		en: "When using <b>onclose</b>, we can also access the internal fields and methods of the modal by passing a non-anonymous function as a parameter:"
+	},
 	methodsPushAndCloseReturnModalObject: {
 		ru: "Методы pushModal и openModal возвращают объект следующей структуры:",
 		en: "The pushModal and openModal methods return an object of the following type:"

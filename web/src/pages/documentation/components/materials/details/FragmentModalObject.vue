@@ -8,8 +8,15 @@
 		<li><widget-vocabulary name = "modalObjectClosed"/></li>
 	</ul>
 
-	<widget-code>{{codeOnClose}}</widget-code>
-	<widget-code>{{codeModalObject}}</widget-code>
+    <widget-code>{{codeOnClose}}</widget-code>
+    <widget-code>{{codeModalObject}}</widget-code>
+
+    <widget-vocabulary name = "modalObjectOnCloseAccess"/>
+    <widget-code>{{codeModalExample}}</widget-code>
+
+    <widget-code>{{codeModalOnCloseAccess}}</widget-code>
+
+
 </template>
 
 <script>

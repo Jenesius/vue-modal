@@ -23,3 +23,21 @@ modal.onclose = () => {
 }
 
 modal.close() // ${useVocabulary.closeModalIfWeatherIsRainy}`;
+
+export const codeModalOnCloseAccess =
+`const modal = await openModal(Modal);
+modal.onclose = function(){
+	this.insideValue; // "Hello"
+}
+`
+
+export const codeModalExample =
+`//Modal.vue
+{
+	props: {},
+	data: () => {
+		return {
+			insideValue: "Hello"
+		}
+	}
+}`

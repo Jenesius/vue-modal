@@ -189,8 +189,8 @@ const store =  {
 		en: "<b> onclose </b> is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If <b> onclose </b> returns false, the modal will not be closed.",
 	},
 	modalObjectTarget: {
-		ru: `<b>target</b> - экзмепляр открытого модального окна. Позволяет получить доступ к свойствам и методам модалього окна.`,
-		en: `<b>target</b> - an instance of an open modal window. Allows you to access the properties and methods of the modal window.`
+		ru: `<b>instance</b> - экзмепляр открытого модального окна. Позволяет получить доступ к свойствам и методам модалього окна.`,
+		en: `<b>instance</b> - an instance of an open modal window. Allows you to access the properties and methods of the modal window.`
 	},
 	modalObjectClosed: {
 		ru: `<b>closed</b> - computed переменная, true - если модально окно открыто`,

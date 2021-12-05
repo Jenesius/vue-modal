@@ -7,7 +7,7 @@ const modal = await openModal(Modal, {
 });
 modal.onclose = () => false
 
-modal.target.message; // "Welcome"
+modal.instance.message; // "Welcome"
 modal.closed.value; // true
 
 modal.close() // ${useVocabulary("modalWillNotBeClosed")}
@@ -28,6 +28,7 @@ export const codeModalOnCloseAccess =
 `const modal = await openModal(Modal);
 modal.onclose = function(){
 	this.insideValue; // "Hello"
+	modal.instance.insideValue; // "Hello"
 }
 `
 

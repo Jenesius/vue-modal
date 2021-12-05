@@ -58,7 +58,7 @@ openModal(SomeVueComponent, props);
 Methods return promise, in this case promise is resolved **modalObject**.
 [More information](https://modal.jenesius.com/docs.html/details#modal-object)
 ```js
-const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed, target}
+const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed, instance}
 ```
 
 

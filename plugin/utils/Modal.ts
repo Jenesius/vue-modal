@@ -57,7 +57,7 @@ export default class Modal{
     /**
      * @description Return instance of modal component
      * */
-    get target(){
+    get instance(){
         return getInstance(this.id);
     }
 

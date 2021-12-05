@@ -10,7 +10,7 @@ describe("ModalObject test", () => {
 		
 		const modal = await openModal(ModalTest, {title: "Test", age: 15});
 		
-		expect(modal.target.title + modal.target.age).toBe("Test15");
+		expect(modal.instance.title + modal.instance.age).toBe("Test15");
 	})
 	test("target test, when modal closed", async () => {
 		
@@ -18,7 +18,7 @@ describe("ModalObject test", () => {
 		
 		const modal = await openModal(ModalTest, {title: "Test", age: 15});
 		await modal.close();
-		expect(modal.target).toBe(undefined);
+		expect(modal.instance).toBe(undefined);
 		
 	})
 })

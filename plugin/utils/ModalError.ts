@@ -53,4 +53,10 @@ export default class ModalError extends Error{
     static ModalRouterIntegrationNotInitialized(){
         return new ModalError("The integration was not initialized. Please, use useModalRouter.init(router). For more information: https://modal.jenesius.com/docs.html/integration-vue-router#installation")
     }
+
+    static ModalEventNameMustBeString(eventName: string) {
+        return new ModalError(
+            `Event name must be a string. Provided: ${eventName}`
+        )
+    }
 }

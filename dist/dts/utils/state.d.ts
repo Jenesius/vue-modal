@@ -9,7 +9,7 @@
  *
  * */
 import guards from "./guards";
-import Modal from "./Modal";
+import { ModalComponentInterface } from "./types";
 declare const modalQueue: import("vue").Ref<{
     id: number;
     component: any;
@@ -17,9 +17,12 @@ declare const modalQueue: import("vue").Ref<{
     closed: any;
     close: () => Promise<void>;
     onclose: import("./types").GuardFunctionWithHandle;
+    readonly instance: {
+        [x: string]: any;
+    };
 }[]>;
 interface InstancesStorageInterface {
-    [index: number]: Modal;
+    [index: number]: ModalComponentInterface;
 }
 interface StateInterface {
     initialized: boolean;

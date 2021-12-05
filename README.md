@@ -58,7 +58,8 @@ openModal(SomeVueComponent, props);
 Methods return promise, in this case promise is resolved **modalObject**.
 [More information](https://modal.jenesius.com/docs.html/details#modal-object)
 ```js
-const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed, instance}
+const modal = await openModal(SomeVueComponent);
+// modal {id, close, onclose, closed, instance, on}
 ```
 
 
@@ -73,6 +74,24 @@ const modal = await openModal(SomeVueComponent); // {id, close, onclose, closed,
 
 ```js 
 import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"
+```
+
+## Handle events
+
+Using modalObject you can handle any events:
+```vue
+
+// Modal.vue
+<template>
+    <button @click = "emit('update', value)"></button>
+</template>
+```
+When we click on the button we can handle event using `modal.on(eventName, callback)`
+```js
+const modal = await openModal(Modal, {value: 123});
+modal.on('update', v => {
+    console.log(v); // 123
+})
 ```
 
 ## Lifecycle Hooks

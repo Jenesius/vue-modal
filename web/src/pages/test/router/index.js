@@ -12,6 +12,7 @@ import {useModalRouter} from "./../../../../../plugin";
 import ViewUserList from "../ViewUserList";
 import Modalguard from "../Modalguard";
 import ModalTest from "../../../../../tests/unit/ModalTest";
+import ModalLogin from "../ModalLogin";
 
 /**
  * Maybe try to update to functional component
@@ -21,7 +22,7 @@ import ModalTest from "../../../../../tests/unit/ModalTest";
 const routes = [
     {
         path: "/a",
-        component: ViewA
+        
     },
     {
         path: "/modal-a",
@@ -84,7 +85,12 @@ const routes = [
         }
     },
     {
-        path: '/:pathMatch(.*)*', redirect: "/a"
+        path: '/:pathMatch(.*)*login',
+        component: useModalRouter(ModalLogin)
+
+    },
+    {
+        path: '/:pathMatch(.*)*', redirect: "/"
     },
 
 
@@ -94,6 +100,10 @@ const router = createRouter({
     history: createWebHistory("/test.html"),
     routes,
 });
+
+router.beforeEach(to => {
+    console.log(to);
+})
 
 useModalRouter.init(router);
 

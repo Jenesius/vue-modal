@@ -29,4 +29,8 @@ export default class Modal {
      * @description Hook for handling modal closing
      * */
     set onclose(func: GuardFunctionWithHandle);
+    /**
+     * @description Return instance of modal component
+     * */
+    get instance(): import("./types").ModalComponentInterface;
 }

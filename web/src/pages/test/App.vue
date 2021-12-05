@@ -19,13 +19,8 @@
 
 
 
-	<button @click = "add">Add</button>
-	<button @click = "add1">Add1</button>
 
-	<button @click = "show">show queue</button>
-	<button @click = "test">Start test</button>
-	<button @click = "openModal1">Open Modal</button>
-	<button @click = "openLevel">Level test</button>
+	<button @click = "openModal1">Open Modal +++</button>
 
 
 	<router-view/>
@@ -36,10 +31,7 @@
 
 <script>
 
-	/*eslint-disable*/
-	import TestModalComponent from "../../components/modals/TestModalComponent";
-	import {pushModal, container, openModal} from "./../../../../plugin/index";
-	import TestModalComponentComposition from "../../components/modals/TestModalComponentComposition";
+	import {container, openModal} from "./../../../../plugin/index";
 	import Modal from "./Modal";
 	import PrettyModal from "./PrettyModal";
 
@@ -52,43 +44,21 @@
 			},
 			async openModal1(){
 				const a = await openModal(Modal, {val: "qwerty"});
+
                 a.onclose = () => {
                     console.log("This:", this);
                 }
-                console.log(a.target);
-                console.log(a.target.val);
-			},
-			test(){
 
-				this.$router.push("/modal-a");
+                a.on('update', function (e){
 
-				setTimeout(() => {
-					this.$router.push("/a")
-				}, 2000);
+                })
 
+                console.log(a);
 
 			},
-			openLevel(){
-				this.$router.push("/level/test")
-			},
-			add(){
-				pushModal(TestModalComponentComposition, {title: "hi"});
-				pushModal(TestModalComponentComposition, {title: "hi2"});
-				pushModal(TestModalComponentComposition, {title: "hi3"});
-			},
-			add1(){
-				const m = pushModal(TestModalComponent, {title: "hi3"});
 
-				m.onclose = (next) => {
 
-					return new Promise((resolve, reject) => {
-						setTimeout(() => {
-							reject(false);
-						}, 2000);
-					})
 
-				}
-			},
 		},
 
         name: "App",

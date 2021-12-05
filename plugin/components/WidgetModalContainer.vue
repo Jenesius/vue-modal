@@ -13,7 +13,15 @@
 			return () => {
 				return h(TransitionGroup, {name: configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
-						return h(WidgetContainerModalItem, {component: modalObject.component, params: modalObject.params, key: modalObject.id, id: modalObject.id});
+						return h(WidgetContainerModalItem, {
+                            component: modalObject.component,
+                            params: modalObject.params,
+                            key: modalObject.id,
+                            id: modalObject.id,
+
+                            modal: modalObject // TEST
+
+                        });
 					})
 				})
 			}
@@ -40,11 +48,11 @@
 		opacity: 0 !important;
     }
 
-    
+
     .modal-list-enter-from .modal-item,
     .modal-list-leave-to   .modal-item{
 		transform: translateY(-60px);
     }
-    
+
 
 </style>

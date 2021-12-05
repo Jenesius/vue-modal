@@ -1,7 +1,12 @@
+# 1.5.0
+
+### Features
+- modal.on(eventName: string, callback: (v:any) => void)
+
 # 1.4.7
 
 ### Features
-- modal.target
+- modal.instance
 
 ## 1.4.6
 

@@ -10,6 +10,8 @@
             component: Object,
             params: Object,
 			id    : Number, // uniq identifier of modals
+
+            modal: Object // TEST
         },
         setup(props){
 
@@ -35,11 +37,15 @@
 
 				}),
 				 */
+
+
+
 				h(props.component, {
 					...props.params,
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
+                    ...props.modal.eventCallbacks
 				})
 			])
         },

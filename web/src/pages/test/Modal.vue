@@ -7,6 +7,7 @@
 			<router-link :to= "`/user-list/${Number(id)+1}`">next</router-link>
 
 			<button @click = "back">back</button>
+			<button @click = "em">emit update</button>
 			<button @click = "toA">to A</button>
 
 		</div>
@@ -25,6 +26,9 @@ export default {
 
 
 	methods: {
+        em(){
+            this.$emit('update', {value: true});
+        },
 		back(){
 			this.$router.go(-1);
 		},

@@ -84,10 +84,30 @@ There are three ways to track the closing of a modal:
 
 - onclose
 ```js
-const modal = await openModal(Modal);
+const modal = await openModal(Modal, {title: "welcome"});
 modal.onclose = () => {
     console.log("Close");
     return false; //Modal will not be closed
+}
+```
+or if using function declaration you have access to modal **Instance** by *this*.
+This declaration provide way to view data within the modal in the parent's onclose() method:
+
+```js
+//Modal.vue
+{
+    props: {title: String},
+    data: () => ({info: "Version x.x.x"}),
+    methods: {
+        update(){}
+    }
+}
+//...
+modal.onclose = function(){
+    // Has access to the context of the component instance this.
+    this.title; // "welcome"
+    this.info; // "Version x.x.x"
+    this.update();
 }
 ```
 
@@ -99,7 +119,6 @@ export default {
     data: () => ({isValidate: false}),
     beforeModalClose(){
         if (!isValidate) return false; //modal will not be closed while isValidate === false
-            
     }
 }
 ```

@@ -11,7 +11,6 @@ describe("ModalObject test", () => {
 		const modal = await openModal(ModalTest, {title: "Test", age: 15});
 		
 		expect(modal.target.title + modal.target.age).toBe("Test15");
-		
 	})
 	test("target test, when modal closed", async () => {
 		

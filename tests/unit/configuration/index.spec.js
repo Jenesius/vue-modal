@@ -29,8 +29,6 @@ describe("Configuration function", () => {
 		
 		expect(modalQueue.value.length).toBe(1);
 		
-		console.log(wrapper.find(".modal-container"))
-		
 		wrapper.find(".modal-container").trigger('click');
 		await wait();
 		

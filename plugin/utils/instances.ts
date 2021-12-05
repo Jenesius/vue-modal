@@ -1,14 +1,17 @@
 /**
- * last change: 29.11.2021
+ * last change: 05.12.2021
  * МЕТОД ДЛЯ СОХРАНЕНИЯ ЭКЗЕМПЛЯРА МОДАЛЬНОГО ОКНА.
  * ВЫЗЫВАЕТСЯ КАЖДЫЙ РАЗ В МОМЕНТ ИНИЦИАЛИЗАЦИИ.
  *
+ * INSTANCE это не ModalObject. INSTANCE - СБИЛДЕННАЯ VUE КОМПОНЕНТА, КОТОРУЮ ПЕРЕДАЛ
+ * ПОЛЬЗОВАТЕЛЬ
  * * */
 
-import Modal from "./Modal";
 import {state} from "./state";
+import {ModalComponentInterface} from "./types";
 
-export function saveInstance(id:number, instance: Modal) {
+
+export function saveInstance(id:number, instance: ModalComponentInterface) {
     state.instanceStorage[id] = instance;
 }
 export function getInstance(id : number){

@@ -15,4 +15,5 @@ export default class ModalError extends Error {
     static EmptyModalQueue(): ModalError;
     static NotInitialized(): ModalError;
     static ModalComponentNotProvided(): ModalError;
+    static ModalRouterIntegrationNotInitialized(): ModalError;
 }

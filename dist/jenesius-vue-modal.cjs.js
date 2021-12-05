@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.4.6
+  * jenesius-vue-modal v1.4.7
   * (c) 2021 Jenesius
   * @license MIT
   */
@@ -118,6 +118,9 @@ var ModalError = /** @class */ (function (_super) {
     };
     ModalError.ModalComponentNotProvided = function () {
         return new ModalError("The first parameter(VueComponent) was not specified.");
+    };
+    ModalError.ModalRouterIntegrationNotInitialized = function () {
+        return new ModalError("The integration was not initialized. Please, use useModalRouter.init(router). For more information: https://modal.jenesius.com/docs.html/integration-vue-router#installation");
     };
     return ModalError;
 }(Error));
@@ -257,6 +260,21 @@ function closeById(id) {
 }
 
 /**
+ * last change: 05.12.2021
+ * МЕТОД ДЛЯ СОХРАНЕНИЯ ЭКЗЕМПЛЯРА МОДАЛЬНОГО ОКНА.
+ * ВЫЗЫВАЕТСЯ КАЖДЫЙ РАЗ В МОМЕНТ ИНИЦИАЛИЗАЦИИ.
+ *
+ * INSTANCE это не ModalObject. INSTANCE - СБИЛДЕННАЯ VUE КОМПОНЕНТА, КОТОРУЮ ПЕРЕДАЛ
+ * ПОЛЬЗОВАТЕЛЬ
+ * * */
+function saveInstance(id, instance) {
+    state$1.instanceStorage[id] = instance;
+}
+function getInstance(id) {
+    return state$1.instanceStorage[id];
+}
+
+/**
  * last change: 25.11.2021
  * */
 var Modal = /** @class */ (function () {
@@ -289,6 +307,16 @@ var Modal = /** @class */ (function () {
          * */
         set: function (func) {
             guards.add(this.id, "close", func);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Modal.prototype, "instance", {
+        /**
+         * @description Return instance of modal component
+         * */
+        get: function () {
+            return getInstance(this.id);
         },
         enumerable: false,
         configurable: true
@@ -344,16 +372,6 @@ function onBeforeModalClose(callback) {
     var attrModalId = String((_a = a === null || a === void 0 ? void 0 : a.attrs) === null || _a === void 0 ? void 0 : _a["modal-id"]);
     var modalId = attrModalId.replace(/[^0-9]/g, "");
     guards.add(Number(modalId), "close", callback);
-}
-
-/**
- * last change: 29.11.2021
- * МЕТОД ДЛЯ СОХРАНЕНИЯ ЭКЗЕМПЛЯРА МОДАЛЬНОГО ОКНА.
- * ВЫЗЫВАЕТСЯ КАЖДЫЙ РАЗ В МОМЕНТ ИНИЦИАЛИЗАЦИИ.
- *
- * * */
-function saveInstance(id, instance) {
-    state$1.instanceStorage[id] = instance;
 }
 
 var script$1 = {
@@ -553,6 +571,8 @@ function useModalRouter(component) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (!state.router)
+                            throw ModalError.ModalRouterIntegrationNotInitialized();
                         isNavigationClosingGuard = false;
                         modal = null;
                         return [4 /*yield*/, openModal(component, vue.computed(function () { var _a; return (_a = state.router) === null || _a === void 0 ? void 0 : _a.currentRoute.value.params; }))];

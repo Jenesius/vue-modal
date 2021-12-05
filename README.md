@@ -97,7 +97,7 @@ This declaration provide way to view data within the modal in the parent's onclo
 //Modal.vue
 {
     props: {title: String},
-    data: () => ({info: "Version x.x.x"}),
+    data : () => ({info: "Version x.x.x"}),
     methods: {
         update(){}
     }
@@ -106,7 +106,7 @@ This declaration provide way to view data within the modal in the parent's onclo
 modal.onclose = function(){
     // Has access to the context of the component instance this.
     this.title; // "welcome"
-    this.info; // "Version x.x.x"
+    this.info;  // "Version x.x.x"
     this.update();
 }
 ```

@@ -1,6 +1,6 @@
 /*!
-  * jenesius-vue-modal v1.4.7
-  * (c) 2021 Jenesius
+  * jenesius-vue-modal v1.5.0
+  * (c) 2022 Jenesius
   * @license MIT
   */
 'use strict';
@@ -121,6 +121,9 @@ var ModalError = /** @class */ (function (_super) {
     };
     ModalError.ModalRouterIntegrationNotInitialized = function () {
         return new ModalError("The integration was not initialized. Please, use useModalRouter.init(router). For more information: https://modal.jenesius.com/docs.html/integration-vue-router#installation");
+    };
+    ModalError.ModalEventNameMustBeString = function (eventName) {
+        return new ModalError("Event name must be a string. Provided: " + eventName);
     };
     return ModalError;
 }(Error));
@@ -247,13 +250,13 @@ function popModal() {
  * ЕСЛИ МОДАЛЬНОЕ ОКНО БЫЛО НЕ НАХОДИТСЯ В АКТИВНЫХ ИНСТАНСАХ - ОШИБКА
  * */
 function closeById(id) {
-    var indexFoRemove = modalQueue.value.findIndex(function (item) { return item.id === id; });
-    if (indexFoRemove === -1)
+    var indexRemoveElement = modalQueue.value.findIndex(function (item) { return item.id === id; });
+    if (indexRemoveElement === -1)
         return Promise.reject(ModalError.Undefined(id)); //Modal with id not found
     var arr = guards.get(id, "close").map(function (guard) { return guardToPromiseFn(guard, id); });
     return runGuardQueue(arr)
         .then(function () {
-        modalQueue.value.splice(indexFoRemove, 1);
+        modalQueue.value.splice(indexRemoveElement, 1);
         delete state$1.instanceStorage[id];
         guards.delete(id);
     });
@@ -288,10 +291,21 @@ var Modal = /** @class */ (function () {
      * */
     function Modal(component, params) {
         var _this = this;
+        this.eventCallbacks = vue.reactive({});
         this.id = Modal.modalId++;
         this.component = vue.shallowRef(component);
         this.params = params;
-        this.closed = vue.computed(function () { return !modalQueue.value.includes(_this); });
+        /**
+         * БЛЯТЬ, ПОЧЕМУ ОНО ТАК?
+         * ОТВЕТ: ЭТОТ ЕБУЧИЙ ВЬЮ, ПРИ ДОБАВЛЕНИИ В modalQueue
+         * РАСКРЫВАЕТ COMPUTED(THIS.CLOSED) И КЛАДЁТ ТУДА ТУПО ЗНАЧЕНИЕ, А НЕ
+         * COMPUTED PROP {VALUE: BOOLEAN}
+         * ЧТО ЛОГИЧНО, НО ПО УЕБАНСКИ
+         *
+         * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
+         *
+         * */
+        this.closed = vue.computed(function () { return !modalQueue.value.find(function (item) { return item.id === _this.id; }); });
         if (component.beforeModalClose)
             guards.add(this.id, "close", component.beforeModalClose);
     }
@@ -321,6 +335,23 @@ var Modal = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    /**
+     * @description Event handler
+     * */
+    Modal.prototype.on = function (eventName, callback) {
+        if (typeof eventName !== 'string')
+            throw ModalError.ModalEventNameMustBeString(eventName);
+        eventName = 'on' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
+        // If eventName was added firstly
+        /*
+        if (!(eventName in this.eventCallbacks))
+            this.eventCallbacks[eventName] = []
+        */
+        this.eventCallbacks[eventName] = callback.bind(this.instance);
+    };
+    /**
+     * @description VueRef var. If modal was closed value is TRUE
+     * */
     Modal.modalId = 0;
     return Modal;
 }());
@@ -379,6 +410,8 @@ var script$1 = {
             component: Object,
             params: Object,
 			id    : Number, // uniq identifier of modals
+
+            modal: Object // TEST
         },
         setup(props){
 
@@ -404,11 +437,15 @@ var script$1 = {
 
 				}),
 				 */
+
+
+
 				vue.h(props.component, {
 					...props.params,
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
+                    ...props.modal.eventCallbacks
 				})
 			])
         },
@@ -468,7 +505,15 @@ var script = {
 			return () => {
 				return vue.h(vue.TransitionGroup, {name: configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
-						return vue.h(script$1, {component: modalObject.component, params: modalObject.params, key: modalObject.id, id: modalObject.id});
+						return vue.h(script$1, {
+                            component: modalObject.component,
+                            params: modalObject.params,
+                            key: modalObject.id,
+                            id: modalObject.id,
+
+                            modal: modalObject // TEST
+
+                        });
 					})
 				})
 			}
@@ -476,7 +521,7 @@ var script = {
         components: {WidgetContainerModalItem: script$1}
     };
 
-var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n    \r\n\r\n";
+var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n\r\n\r\n";
 styleInject(css_248z);
 
 script.__file = "plugin/components/WidgetModalContainer.vue";

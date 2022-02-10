@@ -16,4 +16,5 @@ export default class ModalError extends Error {
     static NotInitialized(): ModalError;
     static ModalComponentNotProvided(): ModalError;
     static ModalRouterIntegrationNotInitialized(): ModalError;
+    static ModalEventNameMustBeString(eventName: string): ModalError;
 }

@@ -12,14 +12,16 @@ import guards from "./guards";
 import { ModalComponentInterface } from "./types";
 declare const modalQueue: import("vue").Ref<{
     id: number;
-    component: any;
-    params: any;
     closed: any;
+    eventCallbacks: {
+        [x: string]: (data?: any) => any;
+    };
     close: () => Promise<void>;
     onclose: import("./types").GuardFunctionWithHandle;
     readonly instance: {
         [x: string]: any;
     };
+    on: (eventName: string, callback: (data?: any) => any) => void;
 }[]>;
 interface InstancesStorageInterface {
     [index: number]: ModalComponentInterface;

@@ -3,15 +3,24 @@
  * */
 import { ComputedRef } from "vue";
 import { GuardFunctionWithHandle } from "./types";
-export default class Modal {
+interface EventCallbacksStorage {
+    [name: string]: (data?: any) => any;
+}
+export interface ModalPublicInterface {
     id: number;
-    component: any;
-    params: any;
-    /**
-     * @description VueRef var. If modal was closed value is False
-     * */
+    closed: ComputedRef<boolean>;
+    close: () => Promise<void>;
+}
+export default class Modal implements ModalPublicInterface {
+    id: number;
     closed: ComputedRef;
-    static modalId: number;
+    protected component: any;
+    protected params: any;
+    /**
+     * @description VueRef var. If modal was closed value is TRUE
+     * */
+    protected static modalId: number;
+    eventCallbacks: EventCallbacksStorage;
     /**
      * Создаёт объект управления модальным окном.
      * Для управления идентификатором используется статическое поле modalId.
@@ -33,4 +42,9 @@ export default class Modal {
      * @description Return instance of modal component
      * */
     get instance(): import("./types").ModalComponentInterface;
+    /**
+     * @description Event handler
+     * */
+    on(eventName: string, callback: (data?: any) => any): void;
 }
+export {};

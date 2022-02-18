@@ -49,23 +49,22 @@
  *
  * */
 
-
 import openModal from "../methods/openModal";
 import {computed} from "vue";
-import {Router} from "vue-router";
+import {RouteLocationNormalized, Router, RouteComponent} from "vue-router";
 import Modal from "../utils/Modal";
 import ModalError from "../utils/ModalError";
 
 
-interface ModalRouterStateInterface{
-	router: Router | null
-}
 
-interface ModalRouterInterface{
+interface ModalRouterInterface {
 	initialize(): Promise<void>,
 	_isModal: boolean,
 	getModalObject():Modal,
 	close(v: boolean):Promise<void>
+}
+interface ModalRouterStateInterface{
+	router: Router | null
 }
 
 const state:ModalRouterStateInterface = {
@@ -73,11 +72,10 @@ const state:ModalRouterStateInterface = {
 }
 
 
-
 function init(router: Router){
-	if (state.router) return console.warn("useModalRouter should escaped only once.");
-	state.router = router;
+	if (state.router) throw ModalError.DuplicatedRouterIntegration();
 
+	state.router = router;
 	/**
 	 * @description Функция для поиска объекта, который интегрирован с модальным
 	 * окном. Если среди matched роутами и их находится компонента, которая явля
@@ -86,7 +84,7 @@ function init(router: Router){
 	 *
 	 * @Return ModalRoute | null
 	 * */
-	function findModal(routerLocation: any): ModalRouterInterface | null{
+	function findModal(routerLocation: RouteLocationNormalized): ModalRouterInterface | null{
 
 		if (!routerLocation.matched.length) return null;
 
@@ -95,7 +93,7 @@ function init(router: Router){
 			const components = routerLocation.matched[i].components;
 
 			// @ts-ignore
-			const a:ModalRouterInterface | null = Object.values(components).find(route => route._isModal);
+			const a:ModalRouterInterface | null = Object.values(components).find((route: RouteComponent) => route._isModal);
 
 			if (a) return a;
 		}
@@ -105,9 +103,9 @@ function init(router: Router){
 	}
 
 	/**
-	 * Hook only for closing
+	 * @description Hook only for closing
 	 * */
-	router.beforeEach(async (to:any, from:any) => {
+	router.beforeEach(async (to:RouteLocationNormalized, from:RouteLocationNormalized) => {
 		try {
 			const modal = findModal(from);
 			if (modal && !modal.getModalObject()?.closed?.value) await modal.close(true);
@@ -117,7 +115,7 @@ function init(router: Router){
 	})
 
 	/**
-	 * Hook for opening modal
+	 * @description Hook for opening modal
 	 * */
 	router.afterEach(async (to:any) => {
 		const modal:ModalRouterInterface | null = findModal(to);

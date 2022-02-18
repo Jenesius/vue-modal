@@ -101,9 +101,7 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(to => {
-    console.log(to);
-})
+
 
 useModalRouter.init(router);
 

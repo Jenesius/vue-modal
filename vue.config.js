@@ -18,6 +18,7 @@ module.exports = {
             entry: "./web/src/pages/stage/main.js"
         }
 
-    }
+    },
+
 };
 

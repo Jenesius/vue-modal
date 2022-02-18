@@ -1,17 +1,13 @@
-
 <script>
     import popModal from "../methods/popModal";
     import {saveInstance} from "../utils/instances";
     import {ref, watch, h} from "vue";
     import {configuration} from "../utils/config";
+    import {modalQueue} from "../index";
 
 	export default {
         props: {
-            component: Object,
-            params: Object,
-			id    : Number, // uniq identifier of modals
-
-            modal: Object // TEST
+			id    : Number, // uniq identifier of modals,
         },
         setup(props){
 
@@ -22,6 +18,12 @@
 				saveInstance(props.id, newValue);
 			})
 
+            function getModalById(id){
+                return modalQueue.value.find(elem => elem.id === id);
+            }
+            const modal = getModalById(props.id);
+
+
 			return () => h("div", {
 				class: ["widget__modal-container__item", "modal-container"],
 				ref: containerRef,
@@ -31,21 +33,13 @@
                     if (configuration.backgroundClose) return popModal().catch(() => {})
 				}
 			}, [
-				/*
-				h("div", {
-					class: ["modal-back", "widget__modal-container__item-back widget__modal-back"],
 
-				}),
-				 */
-
-
-
-				h(props.component, {
-					...props.params,
+				h(modal.component, {
+					...modal.props.value,
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
-                    ...props.modal.eventCallbacks
+                    ...modal.eventCallbacks
 				})
 			])
         },

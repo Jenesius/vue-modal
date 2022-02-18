@@ -1,25 +1,39 @@
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
  * */
-import { ComputedRef } from "vue";
+import { Component, ComputedRef, Ref } from "vue";
 import { GuardFunctionWithHandle } from "./types";
-interface EventCallbacksStorage {
-    [name: string]: (data?: any) => any;
+declare type EventCallback = (data?: any) => any;
+/**
+ * Value can be an EventCallback[]
+ * В Будущем можно обновить методы on и emit и сделать так, чтобы они работали
+ * с массивом эвентов.
+ * */
+export interface EventCallbacksStorage {
+    [name: string]: EventCallback;
 }
-export interface ModalPublicInterface {
-    id: number;
-    closed: ComputedRef<boolean>;
-    close: () => Promise<void>;
-}
-export default class Modal implements ModalPublicInterface {
-    id: number;
-    closed: ComputedRef;
-    protected component: any;
-    protected params: any;
+export default class Modal {
     /**
-     * @description VueRef var. If modal was closed value is TRUE
+     * @description Unique id of each modal window.
      * */
+    id: number;
+    /**
+     * @description Computed value. True - when the modal was closed.
+     * */
+    closed: ComputedRef;
+    /**
+     * @description VueComponent that will be mounted like modal.
+     * */
+    component: Component;
+    /**
+     * @description Props for VueComponent.
+     * */
+    props: Ref;
     protected static modalId: number;
+    /**
+     * @description Storage for events.
+     * modal.on(eventName, callback) will makeStorage: {eventName: callback}
+     * */
     eventCallbacks: EventCallbacksStorage;
     /**
      * Создаёт объект управления модальным окном.
@@ -27,9 +41,9 @@ export default class Modal implements ModalPublicInterface {
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards
      *
      * @param {Object} component Any VueComponent that will be used like modal window
-     * @param {Object} params Object of input params. Used like props.
+     * @param {Object} props Object of input params. Used like props.
      * */
-    constructor(component: any, params: any);
+    constructor(component: Component | any, props: any);
     /**
      * @description Method for closing the modal window
      * */
@@ -45,6 +59,6 @@ export default class Modal implements ModalPublicInterface {
     /**
      * @description Event handler
      * */
-    on(eventName: string, callback: (data?: any) => any): void;
+    on(eventName: string, callback: EventCallback): void;
 }
 export {};

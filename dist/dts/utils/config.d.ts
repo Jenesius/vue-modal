@@ -1,6 +1,3 @@
-/**
- * last change: 25.11.2021
- * */
 export declare const configuration: ConfigInterface;
 export interface ConfigInterface {
     scrollLock?: boolean;
@@ -10,5 +7,10 @@ export interface ConfigInterface {
 }
 /**
  * @description Method for changing default configuration.
+ * @param {object} options - The Configuration Options of Modal System.
+ * @param {boolean} options.scrollLock - if true: Disable scrolling in time when modal is open.
+ * @param {string} options.animation - Animation name for transition-group.
+ * @param {boolean} options.backgroundClose - Closing on click back area of modal.
+ * @param {boolean} options.escClose - Closing on press ESC key
  * */
-export declare function config(data: ConfigInterface): void;
+export declare function config(options: ConfigInterface): void;

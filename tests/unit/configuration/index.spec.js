@@ -83,11 +83,13 @@ describe("Configuration function", () => {
 	
 	/**
 	 * Неопознанный параметр в конфигурации
+	 * Нет необходимости в данном тесте.
 	 * */
+	/*
 	test("Undefined params in config function", () => {
 		expect(() =>config({backgroundClose___1: false})).toThrow()
 	})
-	
+	*/
 	/**
 	 * Нажатие на ESC -> закрытие модального окна
 	 * */

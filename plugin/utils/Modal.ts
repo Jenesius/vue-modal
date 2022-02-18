@@ -1,39 +1,64 @@
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
  * */
 
-import {computed, ComputedRef, reactive, shallowRef} from "vue";
+import {
+    Component,
+    computed,
+    ComputedRef,
+    reactive,
+    ref,
+    Ref,
+    shallowRef
+} from "vue";
 import {guards, modalQueue} from "./state";
 import {GuardFunctionWithHandle} from "./types";
 import closeById from "../methods/closeById";
 import {getInstance} from "./instances";
 import ModalError from "./ModalError";
 
-interface EventCallbacksStorage {
-    [name: string]: (data?: any) => any//Array
+
+type EventCallback = (data?: any) => any;
+
+/**
+ * Value can be an EventCallback[]
+ * В Будущем можно обновить методы on и emit и сделать так, чтобы они работали
+ * с массивом эвентов.
+ * */
+export interface EventCallbacksStorage {
+    [name: string]: EventCallback
 }
 
-export interface ModalPublicInterface{
-    id: number,
-    closed: ComputedRef<boolean>,
-    close : () => Promise<void>
-
-}
-
-export default class Modal implements ModalPublicInterface{
-
+export default class Modal{
+    /**
+     * @description Unique id of each modal window.
+     * */
     public id:number;
+
+    /**
+     * @description Computed value. True - when the modal was closed.
+     * */
     public closed: ComputedRef;
 
-
-    protected component:any;
-    protected params:any;
     /**
-     * @description VueRef var. If modal was closed value is TRUE
+     * @description VueComponent that will be mounted like modal.
      * */
+    public component: Component
+
+    /**
+     * @description Props for VueComponent.
+     * */
+    public props: Ref;
+
 
     protected static modalId = 0;
+
+    /**
+     * @description Storage for events.
+     * modal.on(eventName, callback) will makeStorage: {eventName: callback}
+     * */
     public eventCallbacks:EventCallbacksStorage = reactive({})
+
 
     /**
      * Создаёт объект управления модальным окном.
@@ -41,13 +66,13 @@ export default class Modal implements ModalPublicInterface{
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards
      *
      * @param {Object} component Any VueComponent that will be used like modal window
-     * @param {Object} params Object of input params. Used like props.
+     * @param {Object} props Object of input params. Used like props.
      * */
-    constructor(component: any, params: any) {
-        this.id = Modal.modalId++;
+    constructor(component: Component | any, props: any) {
+        this.id         = Modal.modalId++;
+        this.component  = component;
 
-        this.component = shallowRef(component);
-        this.params = params;
+        this.props     = ref(props);
 
         /**
          * БЛЯТЬ, ПОЧЕМУ ОНО ТАК?
@@ -55,19 +80,29 @@ export default class Modal implements ModalPublicInterface{
          * РАСКРЫВАЕТ COMPUTED(THIS.CLOSED) И КЛАДЁТ ТУДА ТУПО ЗНАЧЕНИЕ, А НЕ
          * COMPUTED PROP {VALUE: BOOLEAN}
          * ЧТО ЛОГИЧНО, НО ПО УЕБАНСКИ
+         * ----
+         * Более деликатное объяснение:
+         * Раньше в modalQueue ложили просто объект Modal.
+         * modalQueue.value.push(Modal)
+         * Т.к. modalQueue является реактивным объектом, оно автоматически делает
+         * реактивным и все свойства объекта, который кладётся в него. И у нас
+         * closed.value пропадало, оставалось лишь closed. Т.к. modalQueue и так
+         * полностью реактивно.
+         * Сейчас в modalQueue кладётся markRaw(помечаем, что не надо делать об
+         * ект реактивным). И close.value - остаётся
          *
          * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
-         *
          * */
+        this.closed = computed(() => !modalQueue.value.includes(this));
+
+        /*
         this.closed = computed(
             () => !modalQueue.value.find(item => item.id === this.id)
         );
-
-
-        if (component.beforeModalClose) guards.add(this.id, "close", component.beforeModalClose);
+*/
+        if (component.beforeModalClose)
+            guards.add(this.id, "close", component.beforeModalClose);
     }
-
-
 
     /**
      * @description Method for closing the modal window
@@ -92,7 +127,7 @@ export default class Modal implements ModalPublicInterface{
     /**
      * @description Event handler
      * */
-    public on(eventName: string, callback: (data?: any) => any) {
+    public on(eventName: string, callback: EventCallback) {
 
         if (typeof eventName !== 'string') throw ModalError.ModalEventNameMustBeString(eventName);
 

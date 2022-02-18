@@ -28,11 +28,13 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
 function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
     extendStatics(d, b);
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -129,7 +131,7 @@ var ModalError = /** @class */ (function (_super) {
 }(Error));
 
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
  * */
 var configuration = {
     scrollLock: true,
@@ -139,17 +141,16 @@ var configuration = {
 };
 /**
  * @description Method for changing default configuration.
+ * @param {object} options - The Configuration Options of Modal System.
+ * @param {boolean} options.scrollLock - if true: Disable scrolling in time when modal is open.
+ * @param {string} options.animation - Animation name for transition-group.
+ * @param {boolean} options.backgroundClose - Closing on click back area of modal.
+ * @param {boolean} options.escClose - Closing on press ESC key
  * */
-function config(data) {
-    if (typeof data !== "object")
-        throw ModalError.ConfigurationType(data);
-    var availableKeys = Object.keys(configuration);
-    for (var key in data) {
-        if (!availableKeys.includes(key))
-            throw ModalError.ConfigurationUndefinedParam(key, availableKeys);
-        // @ts-ignore
-        configuration[key] = data[key];
-    }
+function config(options) {
+    if (typeof options !== "object")
+        throw ModalError.ConfigurationType(options);
+    Object.assign(configuration, options);
 }
 
 /**
@@ -278,7 +279,7 @@ function getInstance(id) {
 }
 
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
  * */
 var Modal = /** @class */ (function () {
     /**
@@ -287,25 +288,43 @@ var Modal = /** @class */ (function () {
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards
      *
      * @param {Object} component Any VueComponent that will be used like modal window
-     * @param {Object} params Object of input params. Used like props.
+     * @param {Object} props Object of input params. Used like props.
      * */
-    function Modal(component, params) {
+    function Modal(component, props) {
         var _this = this;
+        /**
+         * @description Storage for events.
+         * modal.on(eventName, callback) will makeStorage: {eventName: callback}
+         * */
         this.eventCallbacks = vue.reactive({});
         this.id = Modal.modalId++;
-        this.component = vue.shallowRef(component);
-        this.params = params;
+        this.component = component;
+        this.props = vue.ref(props);
         /**
          * БЛЯТЬ, ПОЧЕМУ ОНО ТАК?
          * ОТВЕТ: ЭТОТ ЕБУЧИЙ ВЬЮ, ПРИ ДОБАВЛЕНИИ В modalQueue
          * РАСКРЫВАЕТ COMPUTED(THIS.CLOSED) И КЛАДЁТ ТУДА ТУПО ЗНАЧЕНИЕ, А НЕ
          * COMPUTED PROP {VALUE: BOOLEAN}
          * ЧТО ЛОГИЧНО, НО ПО УЕБАНСКИ
+         * ----
+         * Более деликатное объяснение:
+         * Раньше в modalQueue ложили просто объект Modal.
+         * modalQueue.value.push(Modal)
+         * Т.к. modalQueue является реактивным объектом, оно автоматически делает
+         * реактивным и все свойства объекта, который кладётся в него. И у нас
+         * closed.value пропадало, оставалось лишь closed. Т.к. modalQueue и так
+         * полностью реактивно.
+         * Сейчас в modalQueue кладётся markRaw(помечаем, что не надо делать об
+         * ект реактивным). И close.value - остаётся
          *
          * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
-         *
          * */
-        this.closed = vue.computed(function () { return !modalQueue.value.find(function (item) { return item.id === _this.id; }); });
+        this.closed = vue.computed(function () { return !modalQueue.value.includes(_this); });
+        /*
+        this.closed = computed(
+            () => !modalQueue.value.find(item => item.id === this.id)
+        );
+*/
         if (component.beforeModalClose)
             guards.add(this.id, "close", component.beforeModalClose);
     }
@@ -349,9 +368,6 @@ var Modal = /** @class */ (function () {
         */
         this.eventCallbacks[eventName] = callback.bind(this.instance);
     };
-    /**
-     * @description VueRef var. If modal was closed value is TRUE
-     * */
     Modal.modalId = 0;
     return Modal;
 }());
@@ -368,7 +384,16 @@ function _addModal(component, params) {
     if (!component)
         throw ModalError.ModalComponentNotProvided();
     var modal = new Modal(component, params);
-    modalQueue.value.push(modal);
+    /**
+     * modalQueue.value.push(Object.freeze(modal)) - фундаментальная ошибка!
+     * Таким способо мы запрещаем изменение любых свойст объекта - что является
+     * недопустим исключением, ведь объект может хранить, например, свойство
+     * `version`, которое по итогу будет не изменяемым.
+     *
+     * computed свойство 'closed' так-же потеряет реактивность в таком случае
+     * */
+    //modalQueue.value.push(modal);
+    modalQueue.value.push(vue.markRaw(modal));
     return modal;
 }
 
@@ -407,11 +432,7 @@ function onBeforeModalClose(callback) {
 
 var script$1 = {
         props: {
-            component: Object,
-            params: Object,
-			id    : Number, // uniq identifier of modals
-
-            modal: Object // TEST
+			id    : Number, // uniq identifier of modals,
         },
         setup(props){
 
@@ -422,6 +443,12 @@ var script$1 = {
 				saveInstance(props.id, newValue);
 			});
 
+            function getModalById(id){
+                return modalQueue.value.find(elem => elem.id === id);
+            }
+            const modal = getModalById(props.id);
+
+
 			return () => vue.h("div", {
 				class: ["widget__modal-container__item", "modal-container"],
 				ref: containerRef,
@@ -431,21 +458,13 @@ var script$1 = {
                     if (configuration.backgroundClose) return popModal().catch(() => {})
 				}
 			}, [
-				/*
-				h("div", {
-					class: ["modal-back", "widget__modal-container__item-back widget__modal-back"],
 
-				}),
-				 */
-
-
-
-				vue.h(props.component, {
-					...props.params,
+				vue.h(modal.component, {
+					...modal.props.value,
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
-                    ...props.modal.eventCallbacks
+                    ...modal.eventCallbacks
 				})
 			])
         },
@@ -484,14 +503,16 @@ styleInject(css_248z$1);
 script$1.__file = "plugin/components/WidgetModalContainerItem.vue";
 
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
+ * */
+/**
+ * @description Function run when ModalContainer was mounted in user's interface.
+ * Set the key 'initialized' to true and handle the 'keyup' event.
  * */
 function initialize() {
     state$1.initialized = true;
-    /**
-     * If user press Escape then close last opened modal
-     * */
     document.addEventListener("keyup", function (e) {
+        // Closing the last modal window when user pressed Escape
         if (configuration.escClose && e.key === "Escape" || e.code === "Escape")
             popModal();
     });
@@ -506,13 +527,8 @@ var script = {
 				return vue.h(vue.TransitionGroup, {name: configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
 						return vue.h(script$1, {
-                            component: modalObject.component,
-                            params: modalObject.params,
                             key: modalObject.id,
                             id: modalObject.id,
-
-                            modal: modalObject // TEST
-
                         });
 					})
 				})
@@ -521,7 +537,7 @@ var script = {
         components: {WidgetContainerModalItem: script$1}
     };
 
-var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n\r\n\r\n";
+var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n";
 styleInject(css_248z);
 
 script.__file = "plugin/components/WidgetModalContainer.vue";

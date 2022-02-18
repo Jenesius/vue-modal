@@ -143,11 +143,10 @@ describe('Init', () => {
   it("provide props", async () => {
     const wrapper = await mount(App);
 
-    await openModal(ModalTest, {
+    const modal = await openModal(ModalTest, {
       title: "Jenesius",
       age  : 22
     });
-
 
     expect(wrapper.text()).toBe("Jenesius 22");
   })

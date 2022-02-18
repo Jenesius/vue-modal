@@ -1,17 +1,51 @@
 /**
- * ИНТЕГРАЦИЯ VUE-ROUTER С JENESIUS-VUE-MODAL
- * ОСНОВНОЙ ПРИНЦЫП РАБОТЫ: МЫ ДАЁМ ОБРЁТКУ НАД МОДАЛЬНЫМ ОКНОМ, КОТОРУЮ ЗАПУМКАЕМ В ROUTE
- * САМА ПО СЕБЕ ОБЁРТКА НИЧЕГО НЕ РИСУЕТ, И ЕЁ SETUP: () => () => NULL
- * НО ПРИ ПОПЫТКЕ ОТРИСОВАТЬ ЕЁ, ВЫЗЫВАЕТСЯ ОТКРЫТИЕ ОКНА
+ * 18.02.2022
+ * Интеграция с vue-router.
  *
- * ЕСЛИ МЫ УЖЕ ПЕРЕШЛИ НА РОУТ, ТО ОКНО 100% ПОЖНО ОТРИСОВАТЬ И МЫ ЭТО ДЕЛАЕМ
- * В ПРОТИВНОМ СЛУЧАЕ, ПЕРЕЙТИ НА РОУТ НЕТ ВОЗМОЖНОСТИ.
- * ПРИМЕР: МЫ ОТКРЫЛИ МОДАЛЬНОЕ ОКНО, В КОТОРОМ СТОИТ ХУК, КОТОРЫЙ ЗАПРЕЩАЕТ ЕГО ЗАКРЫТИЕ
- * В ДАННЫЙ МОМЕНТ, ЕСЛИ ПОПЫТАТЬСЯ ПЕРЕЙТИ НА МАРШРУТ НА КОТОРОМ ОТКРЫВАЕТСЯ МОДАЛЬНОЕ ОКНО МЫ ПОЛУЧИМ ОШИБКУ
+ * Основной принцип работы: ма создаём обёртку над модальным окном, которую отда
+ * ём в Route. Сама по себе обёртка ничего не рисует и её setup:() => () => null
+ * Но в момент рендеринга(mount) вызывается открытие модального окна.
  *
- * ПРЕДОСТАВЛЯЕТСЯ ФУНКЦИЯ useModalRouter, которая является обёрткой над обычной vue компонентой
- * useModalRouter.init функция, которая принимает массив router
- * передавать router необходимо, поскольку так мы не имеет доступ к текущему роуту и функции back
+ * Если мы перешли на Route, которое интегрируемо с модальным окном - открытие
+ * модального окна на 100% возможно и этому ничего не может препядствовать.
+ *
+ * Пример: мы открыли модлаьное окно в котором стоит hook, который запрещает его
+ * закрытие в данный момент, если попытаться перейти на маршрут на котором откры
+ * вается модальное окно - мы получим ошибку.
+ *
+ * Для интеграции с VueRouter предоставляется функция useModalRouter, которая яв
+ * ляется обёрткой над обычной vue component.
+ *
+ * useModalRouter.init - функция, которая принимает массив router и сохраняет
+ * его в хранилище для последующего взаимодействия.
+ *
+ * Для чего неоходимо передать router? Т.к. мы не имеем доступ к текущему Route
+ * и функции back
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * HOW IS WORK * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * 1. We add hook route.afterEach in useModalRoute to handle each route.
+ * 2. [In afterEach] Opening modal window if current route is integrated route
+ * with modal.
+ *
+ * AfterEach:
+ *
+ * |------------|                                                 NO
+ * |currentRoute| -> is integrated route with modal's system?    ---> default
+ * |------------|                       |
+ * 										|
+ * 										↓
+ * 						Running modalRoute.initialize()
+ *
+ * 1. Provide Computed props from route.params to Modal
+ * 2. Add handler for onclose: () => router.back()
+ *
+ * Before leaving the route we check for opening modal's window. If there is one
+ * we try to close it. In case fail we don't leave to other route and modal
+ * continues to be open.
+ *
  *
  * */
 
@@ -45,7 +79,12 @@ function init(router: Router){
 	state.router = router;
 
 	/**
-	 * Return ModalRouter or null
+	 * @description Функция для поиска объекта, который интегрирован с модальным
+	 * окном. Если среди matched роутами и их находится компонента, которая явля
+	 * ется обёрткой(ModalRoute, которую возвращает useModalRoute), то поиск пре
+	 * кратится и вёрнтся ссылка на данный объект. Иначе null.
+	 *
+	 * @Return ModalRoute | null
 	 * */
 	function findModal(routerLocation: any): ModalRouterInterface | null{
 
@@ -87,8 +126,14 @@ function init(router: Router){
 
 }
 
+/**
+ * @description Wrap for ModalComponent
+ * @param {Object} component
+ * */
 function useModalRouter(component: any){
-	let modal:any					= null;
+
+	//Ссылка на modalObject
+	let modal: Modal | null			= null;
 	let isNavigationClosingGuard	= false;
 
 	async function initialize(): Promise<void>{

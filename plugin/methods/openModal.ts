@@ -5,7 +5,8 @@ import Modal from "../utils/Modal";
 import ModalError from "../utils/ModalError";
 
 /**
- * @description OpenModal that was provided as component. Before opening try to close all previous modals.
+ * @description OpenModal that was provided as component.
+ * Before opening try to close all previous modals.
  * @param {Object} component Any Vue component
  * @param {Object} props Props that will be passed to the component
  *

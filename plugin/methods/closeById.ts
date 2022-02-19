@@ -13,9 +13,13 @@ export default function closeById(id:number) {
     const indexRemoveElement: number
         = modalQueue.value.findIndex((item:Modal) => item.id === id);
 
-    if (indexRemoveElement === -1) return Promise.reject(ModalError.Undefined(id));    //Modal with id not found
+    //Modal with id not found
+    if (indexRemoveElement === -1)
+        return Promise.reject(ModalError.Undefined(id));
 
-    const arr = guards.get(id, "close").map((guard:GuardFunction) => guardToPromiseFn(guard, id));
+    const arr =
+        guards.get(id, "close")
+        .map((guard:GuardFunction) => guardToPromiseFn(guard, id));
 
     return runGuardQueue(arr)
         .then(() => {

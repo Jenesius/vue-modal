@@ -9,7 +9,7 @@
  *
  * */
 
-import {ref, shallowRef, watch} from "vue";
+import {ref, watch} from "vue";
 import guards from "./guards";
 import {configuration} from "./config";
 import Modal from "./Modal";

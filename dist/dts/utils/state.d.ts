@@ -184,6 +184,7 @@ declare const modalQueue: import("vue").Ref<{
     eventCallbacks: {
         [x: string]: (data?: any) => any;
     };
+    backgroundClose: boolean;
     close: () => Promise<void>;
     onclose: import("./types").GuardFunctionWithHandle;
     readonly instance: {

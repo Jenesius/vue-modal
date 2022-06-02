@@ -47,6 +47,8 @@
 
                 b = await openModal(Modal, {
                     title: computed(() => state.value.title)
+                }, {
+                    backgroundClose: false
                 });
 
 

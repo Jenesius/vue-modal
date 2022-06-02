@@ -16,6 +16,7 @@ import {GuardFunctionWithHandle} from "./types";
 import closeById from "../methods/closeById";
 import {getInstance} from "./instances";
 import ModalError from "./ModalError";
+import DtoModalOptions from "./dto-modal-options";
 
 
 type EventCallback = (data?: any) => any;
@@ -28,6 +29,11 @@ type EventCallback = (data?: any) => any;
 export interface EventCallbacksStorage {
     [name: string]: EventCallback
 }
+export interface ModalOptions {
+    backgroundClose?: boolean
+}
+
+
 
 export default class Modal{
     /**
@@ -59,6 +65,10 @@ export default class Modal{
      * */
     public eventCallbacks:EventCallbacksStorage = reactive({})
 
+    /**
+     * @description Click on the background will close modal windows.
+     * */
+    public backgroundClose:boolean = true;
 
     /**
      * Создаёт объект управления модальным окном.
@@ -68,7 +78,7 @@ export default class Modal{
      * @param {Object} component Any VueComponent that will be used like modal window
      * @param {Object} props Object of input params. Used like props.
      * */
-    constructor(component: Component | any, props: any) {
+    constructor(component: Component | any, props: any, options: ModalOptions) {
         this.id         = Modal.modalId++;
         this.component  = component;
 
@@ -99,9 +109,13 @@ export default class Modal{
         this.closed = computed(
             () => !modalQueue.value.find(item => item.id === this.id)
         );
-*/
+        */
         if (component.beforeModalClose)
             guards.add(this.id, "close", component.beforeModalClose);
+        
+        const dtoOptions = DtoModalOptions(options);
+        this.backgroundClose = dtoOptions.backgroundClose;
+        
     }
 
     /**

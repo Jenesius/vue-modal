@@ -12,6 +12,9 @@ declare type EventCallback = (data?: any) => any;
 export interface EventCallbacksStorage {
     [name: string]: EventCallback;
 }
+export interface ModalOptions {
+    backgroundClose?: boolean;
+}
 export default class Modal {
     /**
      * @description Unique id of each modal window.
@@ -36,6 +39,10 @@ export default class Modal {
      * */
     eventCallbacks: EventCallbacksStorage;
     /**
+     * @description Click on the background will close modal windows.
+     * */
+    backgroundClose: boolean;
+    /**
      * Создаёт объект управления модальным окном.
      * Для управления идентификатором используется статическое поле modalId.
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards
@@ -43,7 +50,7 @@ export default class Modal {
      * @param {Object} component Any VueComponent that will be used like modal window
      * @param {Object} props Object of input params. Used like props.
      * */
-    constructor(component: Component | any, props: any);
+    constructor(component: Component | any, props: any, options: ModalOptions);
     /**
      * @description Method for closing the modal window
      * */

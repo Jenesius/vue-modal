@@ -1,4 +1,9 @@
-export declare const configuration: ConfigInterface;
+export declare const configuration: {
+    scrollLock: boolean;
+    animation: string;
+    backgroundClose: boolean;
+    escClose: boolean;
+};
 export interface ConfigInterface {
     scrollLock?: boolean;
     animation?: string;

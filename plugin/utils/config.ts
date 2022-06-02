@@ -3,12 +3,13 @@
  * */
 import ModalError from "./ModalError";
 
-export const configuration:ConfigInterface = {
+export const configuration = {
     scrollLock: true,           // Disable scrolling in time when modal is open.
     animation: "modal-list",    // Animation name for transition-group.
     backgroundClose: true,      // Closing on click back area of modal.
     escClose: true,             // Closing on press ESC key
 }
+
 
 export interface ConfigInterface{
     scrollLock?: boolean,

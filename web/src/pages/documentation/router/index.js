@@ -4,6 +4,8 @@ import ViewDefaultDocumentation from "../view/ViewDefaultDocumentation";
 import ViewUserList from "../view/ViewUserList";
 import ModalUser from "../components/modal/ModalUser";
 import {useModalRouter} from "./../../../../../plugin";
+import ViewModalOptionsDocumentation
+    from "../view/ViewModalOptionsDocumentation";
 
 
 const routes = [
@@ -22,6 +24,10 @@ const routes = [
     {
         path: "/details",
         component: ViewDefaultDocumentation
+    },
+    {
+        path: '/modal-options',
+        component: ViewModalOptionsDocumentation
     },
     {
         path: "/best-practices",

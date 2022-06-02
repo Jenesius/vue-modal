@@ -1,5 +1,5 @@
 import {modalQueue} from "../utils/state";
-import Modal from "../utils/Modal";
+import Modal, {ModalOptions} from "../utils/Modal";
 import {state} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {markRaw} from "vue";
@@ -9,14 +9,14 @@ import {markRaw} from "vue";
  * - Application was initialized (ModalContainer was mounted).
  * - Component is required.
  * */
-export default function _addModal(component: any, params: any):Modal{
+export default function _addModal(component: any, params: any, options: ModalOptions):Modal{
 
 	if (!state.initialized) throw ModalError.NotInitialized();
 
 	if (!component) throw ModalError.ModalComponentNotProvided();
 
 
-	const modal = new Modal(component, params);
+	const modal = new Modal(component, params, options);
 
 	/**
 	 * modalQueue.value.push(Object.freeze(modal)) - фундаментальная ошибка!

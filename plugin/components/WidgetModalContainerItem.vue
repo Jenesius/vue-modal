@@ -30,7 +30,7 @@
 				onClick: e => {
 					if (e.target !== containerRef.value) return;
 
-                    if (configuration.backgroundClose) return popModal().catch(() => {})
+                    if (modal.backgroundClose) return popModal().catch(() => {})
 				}
 			}, [
 

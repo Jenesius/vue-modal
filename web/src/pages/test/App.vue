@@ -1,15 +1,10 @@
 <template>
 	<widget-modal-container/>
 
-	<div class = "">
-
-		<button @click = "animationClick">open</button>
-
-	</div>
 
 	<div class = "flex-column">
 		<router-link to = "/a">a</router-link>
-		<router-link to = "/b">b</router-link>
+		<router-link to = "/modal-a">modal a</router-link>
 		<router-link to = "/c">c</router-link>
 		<router-link to = "/d">d</router-link>
 		<router-link to = "/e">e</router-link>
@@ -20,7 +15,7 @@
 
 
 
-	<button @click = "openModal1">Open Modal +++</button>
+	<button @click = "open">Open Modal +++</button>
 
 
 	<router-view/>
@@ -32,34 +27,54 @@
 <script>
 
 	import {container, openModal} from "./../../../../plugin/index";
-	import Modal from "./Modal";
-	import PrettyModal from "./PrettyModal";
+	import Modal from "./ModalTitle";
+    import {computed, reactive, ref} from "vue";
 
 	export default {
+        setup() {
+
+            let id = 1;
+
+            const state = ref({
+                title: 'None - 1',
+                age  : 15
+            })
+
+            let b;
+
+            async function open(){
 
 
-		methods: {
-			animationClick(){
-				openModal(PrettyModal);
-			},
-			async openModal1(){
-				const a = await openModal(Modal, {val: "qwerty"});
+                b = await openModal(Modal, {
+                    title: computed(() => state.value.title)
+                }, {
+                    backgroundClose: false
+                });
 
-                a.onclose = () => {
-                    console.log("This:", this);
+
+            }
+
+            setInterval(() => {
+                try {
+                    state.value.title = `None - ${id}`;
+
+                } catch (e) {
+                    state.title =`None - ${id}`
                 }
 
-                a.on('update', function (e){
-
-                })
-
-                console.log(a);
-
-			},
+                id++;
 
 
+                console.log(b.closed.value);
 
-		},
+            }, 1000);
+
+            return {
+                state,
+                open
+            }
+
+        },
 
         name: "App",
 		components: {WidgetModalContainer: container}

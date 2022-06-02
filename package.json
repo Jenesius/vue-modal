@@ -1,6 +1,6 @@
 {
   "name": "jenesius-vue-modal",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": false,
   "description": "Simple modal plugin for Vue3",
   "author": "Jenesius",
@@ -21,15 +21,16 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "core-js": "^3.6.5",
-    "@rollup/plugin-commonjs": "^21.0.1",
     "@babel/preset-typescript": "^7.16.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-typescript": "^8.3.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "^4.5.15",
     "@vue/test-utils": "^2.0.0-rc.17",
+    "core-js": "^3.6.5",
     "jest": "26.6.3",
+    "metrohash": "^2.8.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-vue": "^6.0.0",
     "ts-jest": "^26.5.5",

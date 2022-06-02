@@ -9,13 +9,13 @@
  *
  * */
 
-import {ref, watch, UnwrapRef} from "vue";
+import {ref, watch} from "vue";
 import guards from "./guards";
 import {configuration} from "./config";
 import Modal from "./Modal";
 import {ModalComponentInterface} from "./types";
 
-const modalQueue = ref<UnwrapRef<Modal>[]>([]); //All modals that showing now
+const modalQueue = ref<Modal[]>([]); //All modals that showing now
 
 interface InstancesStorageInterface{
     [index: number]: ModalComponentInterface

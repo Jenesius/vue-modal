@@ -1,8 +1,8 @@
-import Modal from "../utils/Modal";
+import Modal, { ModalOptions } from "../utils/Modal";
 /**
- * СИНХРОННАЯ ФУНКЦИЯ ДЛЯ ДОБАВЛЕНИЯ КОМПОНЕНТЫ
- * ПРОВЕРКА ИДЁТ ТОЛЬКО НА ВХОДНЫЕ ПАРАМЕТРЫ:
- * - ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ(СОЗДАНИЕ КОНТЕЙНЕРА В КОТОРОМ МОДАЛЬНЫЕ ОКНА ПОКАЗЫВАЮТСЯ)
- * - ПЕРЕДАЧА КОМПОНЕНТЫ В КАЧЕСТВЕ ПАРАМЕТРА
+ * Sync function for adding modal window.
+ * Two check:
+ * - Application was initialized (ModalContainer was mounted).
+ * - Component is required.
  * */
-export default function _addModal(component: any, params: any): Modal;
+export default function _addModal(component: any, params: any, options: ModalOptions): Modal;

@@ -58,7 +58,10 @@ const store =  {
 		ru: "объект в котором находятся входные параметры, которые передаются в модальное окно и будут доступным из props.",
 		en: "the object that contains the input parameters that are passed to the modal and will be accessible from props."
 	},
-
+	addModalThirdParam: {
+		ru: 'конфигурационные параметры модального окна.',
+		en: 'configuration parameters of the modal window.'
+	},
 	addModalReturnValue: {
 		ru: `Promise, который в случае успеха вернёт объект <a>ModalObject</a>.`,
 		en: `Promise that, if successful, will return a <a> ModalObject </a>.`
@@ -324,6 +327,10 @@ const store =  {
 	infoAnimationExample: {
 		en: "For example, let's change the animation and the length of the appearance of the modal window:",
 		ru: "Для примера поменяем анимацию и протяженность появления модлаьного окна:"
+	},
+	moreInformation: {
+		en: 'More information.',
+		ru: 'Больше информации.'
 	}
 }
 

@@ -6,14 +6,15 @@ import ModalError from "./ModalError";
 import {GuardFunction, GuardFunctionPromisify} from "./types";
 import {state} from "./state";
 
+type AvailableKeys = 'close'
 interface GuardsInterface{
     store: {
         [index: number]: {
-            [index: string]: Array<GuardFunction>
+            [key in AvailableKeys]: Array<GuardFunction>
         }
     },
-    add(id: number, name: string, func: GuardFunction):void,
-    get(id: number, name: string): Array<GuardFunction>,
+    add(id: number, name: AvailableKeys, func: GuardFunction):void,
+    get(id: number, name: AvailableKeys): Array<GuardFunction>,
     delete(id: number):void
 }
 
@@ -21,18 +22,17 @@ const guards:GuardsInterface = {
 
     store: {},
 
-    add(id, name, func){
-        const availableNames = ["close"];
-
-        if (!availableNames.includes(name)) throw ModalError.UndefinedGuardName(name);
-
-        if (!this.store[id]) this.store[id] = {};
-
-        if (!this.store[id][name]) this.store[id][name] = [];
+    add(modalId, name, func){
 
         if (typeof func !== "function") throw ModalError.GuardDeclarationType(func);
 
-        this.store[id][name].push(func);
+        if (!this.store[modalId]) this.store[modalId] = {
+            [name]: []
+        };
+
+        if (!this.store[modalId][name]) this.store[modalId][name] = [];
+
+        this.store[modalId][name].push(func);
     },
 
     get(id, name) {
@@ -52,29 +52,36 @@ const guards:GuardsInterface = {
 
 export default guards
 
-
+/**
+ * Accumulator for guard queue
+ * */
 export function runGuardQueue(guards:Array<GuardFunctionPromisify>): Promise<void> {
-    return guards.reduce((promiseAccumulator, guard) => promiseAccumulator.then(() => guard()), Promise.resolve());
+    return guards.reduce(
+        (promiseAccumulator, guard) =>
+            promiseAccumulator.then(
+                () => guard()
+            ), Promise.resolve());
 }
-/*
-* FUNCTION ONLY FOR ONE GUARD.
-* Возвращет промис для любой функции хука
-* */
+
+/**
+ * @description Function just only for one guard.
+ * @return {Promise} promisify guard.
+ *
+ * If guard return void or true value - resolve.
+ * Otherwise reject(err)
+ * */
 export function guardToPromiseFn(guard:GuardFunction, id:number): GuardFunctionPromisify{
     return () => new Promise((resolve, reject) => {
-
+        /**
+         * Next - hook for returned value from guard.
+         * */
         const next = (valid:boolean | void = true):void => {
-
             if (valid === false) reject(ModalError.NextReject(id));
-
             resolve();
         };
 
-        //First params is function-warning: next now is not available
-
-
         Promise.resolve(guard.call(state.instanceStorage[id]))
-            .then(next)
-            .catch(err => reject(err));
+        .then(next)
+        .catch(err => reject(err));
     });
 }

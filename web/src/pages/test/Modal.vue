@@ -8,6 +8,8 @@
 
 			<button @click = "back">back</button>
 			<button @click = "em">emit update</button>
+			<button @click = "em1">emit update</button>
+			<button @click = "$emit('NEW', $event)">emit update</button>
 			<button @click = "toA">to A</button>
 
 		</div>
@@ -27,7 +29,10 @@ export default {
 
 	methods: {
         em(){
-            this.$emit('update', {value: true});
+            this.$emit('update', this.val);
+        },
+        em1(){
+            this.$emit('any-event', 'any-event');
         },
 		back(){
 			this.$router.go(-1);

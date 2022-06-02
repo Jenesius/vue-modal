@@ -1,5 +1,5 @@
 /*!
-  * jenesius-vue-modal v1.5.0
+  * jenesius-vue-modal v1.5.1
   * (c) 2022 Jenesius
   * @license MIT
   */
@@ -28,11 +28,13 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
 function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
     extendStatics(d, b);
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -119,6 +121,9 @@ var ModalError = /** @class */ (function (_super) {
     ModalError.ModalComponentNotProvided = function () {
         return new ModalError("The first parameter(VueComponent) was not specified.");
     };
+    ModalError.DuplicatedRouterIntegration = function () {
+        return new ModalError('useModalRouter.init should escaped only once.');
+    };
     ModalError.ModalRouterIntegrationNotInitialized = function () {
         return new ModalError("The integration was not initialized. Please, use useModalRouter.init(router). For more information: https://modal.jenesius.com/docs.html/integration-vue-router#installation");
     };
@@ -129,7 +134,7 @@ var ModalError = /** @class */ (function (_super) {
 }(Error));
 
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
  * */
 var configuration = {
     scrollLock: true,
@@ -139,17 +144,16 @@ var configuration = {
 };
 /**
  * @description Method for changing default configuration.
+ * @param {object} options - The Configuration Options of Modal System.
+ * @param {boolean} options.scrollLock - if true: Disable scrolling in time when modal is open.
+ * @param {string} options.animation - Animation name for transition-group.
+ * @param {boolean} options.backgroundClose - Closing on click back area of modal.
+ * @param {boolean} options.escClose - Closing on press ESC key
  * */
-function config(data) {
-    if (typeof data !== "object")
-        throw ModalError.ConfigurationType(data);
-    var availableKeys = Object.keys(configuration);
-    for (var key in data) {
-        if (!availableKeys.includes(key))
-            throw ModalError.ConfigurationUndefinedParam(key, availableKeys);
-        // @ts-ignore
-        configuration[key] = data[key];
-    }
+function config(options) {
+    if (typeof options !== "object")
+        throw ModalError.ConfigurationType(options);
+    Object.assign(configuration, options);
 }
 
 /**
@@ -181,17 +185,17 @@ vue.watch(modalQueue.value, function () {
  * */
 var guards = {
     store: {},
-    add: function (id, name, func) {
-        var availableNames = ["close"];
-        if (!availableNames.includes(name))
-            throw ModalError.UndefinedGuardName(name);
-        if (!this.store[id])
-            this.store[id] = {};
-        if (!this.store[id][name])
-            this.store[id][name] = [];
+    add: function (modalId, name, func) {
+        var _a;
         if (typeof func !== "function")
             throw ModalError.GuardDeclarationType(func);
-        this.store[id][name].push(func);
+        if (!this.store[modalId])
+            this.store[modalId] = (_a = {},
+                _a[name] = [],
+                _a);
+        if (!this.store[modalId][name])
+            this.store[modalId][name] = [];
+        this.store[modalId][name].push(func);
     },
     get: function (id, name) {
         if (!(id in this.store))
@@ -206,22 +210,32 @@ var guards = {
         delete this.store[id];
     }
 };
+/**
+ * Accumulator for guard queue
+ * */
 function runGuardQueue(guards) {
-    return guards.reduce(function (promiseAccumulator, guard) { return promiseAccumulator.then(function () { return guard(); }); }, Promise.resolve());
+    return guards.reduce(function (promiseAccumulator, guard) {
+        return promiseAccumulator.then(function () { return guard(); });
+    }, Promise.resolve());
 }
-/*
-* FUNCTION ONLY FOR ONE GUARD.
-* Возвращет промис для любой функции хука
-* */
+/**
+ * @description Function just only for one guard.
+ * @return {Promise} promisify guard.
+ *
+ * If guard return void or true value - resolve.
+ * Otherwise reject(err)
+ * */
 function guardToPromiseFn(guard, id) {
     return function () { return new Promise(function (resolve, reject) {
+        /**
+         * Next - hook for returned value from guard.
+         * */
         var next = function (valid) {
             if (valid === void 0) { valid = true; }
             if (valid === false)
                 reject(ModalError.NextReject(id));
             resolve();
         };
-        //First params is function-warning: next now is not available
         Promise.resolve(guard.call(state$1.instanceStorage[id]))
             .then(next)
             .catch(function (err) { return reject(err); });
@@ -251,9 +265,11 @@ function popModal() {
  * */
 function closeById(id) {
     var indexRemoveElement = modalQueue.value.findIndex(function (item) { return item.id === id; });
+    //Modal with id not found
     if (indexRemoveElement === -1)
-        return Promise.reject(ModalError.Undefined(id)); //Modal with id not found
-    var arr = guards.get(id, "close").map(function (guard) { return guardToPromiseFn(guard, id); });
+        return Promise.reject(ModalError.Undefined(id));
+    var arr = guards.get(id, "close")
+        .map(function (guard) { return guardToPromiseFn(guard, id); });
     return runGuardQueue(arr)
         .then(function () {
         modalQueue.value.splice(indexRemoveElement, 1);
@@ -277,8 +293,17 @@ function getInstance(id) {
     return state$1.instanceStorage[id];
 }
 
+function DtoModalOptions(options) {
+    var output = {
+        backgroundClose: configuration.backgroundClose
+    };
+    if (options.backgroundClose !== undefined)
+        output.backgroundClose = options.backgroundClose;
+    return output;
+}
+
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
  * */
 var Modal = /** @class */ (function () {
     /**
@@ -287,27 +312,51 @@ var Modal = /** @class */ (function () {
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards
      *
      * @param {Object} component Any VueComponent that will be used like modal window
-     * @param {Object} params Object of input params. Used like props.
+     * @param {Object} props Object of input params. Used like props.
      * */
-    function Modal(component, params) {
+    function Modal(component, props, options) {
         var _this = this;
+        /**
+         * @description Storage for events.
+         * modal.on(eventName, callback) will makeStorage: {eventName: callback}
+         * */
         this.eventCallbacks = vue.reactive({});
+        /**
+         * @description Click on the background will close modal windows.
+         * */
+        this.backgroundClose = true;
         this.id = Modal.modalId++;
-        this.component = vue.shallowRef(component);
-        this.params = params;
+        this.component = component;
+        this.props = vue.ref(props);
         /**
          * БЛЯТЬ, ПОЧЕМУ ОНО ТАК?
          * ОТВЕТ: ЭТОТ ЕБУЧИЙ ВЬЮ, ПРИ ДОБАВЛЕНИИ В modalQueue
          * РАСКРЫВАЕТ COMPUTED(THIS.CLOSED) И КЛАДЁТ ТУДА ТУПО ЗНАЧЕНИЕ, А НЕ
          * COMPUTED PROP {VALUE: BOOLEAN}
          * ЧТО ЛОГИЧНО, НО ПО УЕБАНСКИ
+         * ----
+         * Более деликатное объяснение:
+         * Раньше в modalQueue ложили просто объект Modal.
+         * modalQueue.value.push(Modal)
+         * Т.к. modalQueue является реактивным объектом, оно автоматически делает
+         * реактивным и все свойства объекта, который кладётся в него. И у нас
+         * closed.value пропадало, оставалось лишь closed. Т.к. modalQueue и так
+         * полностью реактивно.
+         * Сейчас в modalQueue кладётся markRaw(помечаем, что не надо делать об
+         * ект реактивным). И close.value - остаётся
          *
          * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
-         *
          * */
-        this.closed = vue.computed(function () { return !modalQueue.value.find(function (item) { return item.id === _this.id; }); });
+        this.closed = vue.computed(function () { return !modalQueue.value.includes(_this); });
+        /*
+        this.closed = computed(
+            () => !modalQueue.value.find(item => item.id === this.id)
+        );
+        */
         if (component.beforeModalClose)
             guards.add(this.id, "close", component.beforeModalClose);
+        var dtoOptions = DtoModalOptions(options);
+        this.backgroundClose = dtoOptions.backgroundClose;
     }
     /**
      * @description Method for closing the modal window
@@ -349,52 +398,71 @@ var Modal = /** @class */ (function () {
         */
         this.eventCallbacks[eventName] = callback.bind(this.instance);
     };
-    /**
-     * @description VueRef var. If modal was closed value is TRUE
-     * */
     Modal.modalId = 0;
     return Modal;
 }());
 
 /**
- * СИНХРОННАЯ ФУНКЦИЯ ДЛЯ ДОБАВЛЕНИЯ КОМПОНЕНТЫ
- * ПРОВЕРКА ИДЁТ ТОЛЬКО НА ВХОДНЫЕ ПАРАМЕТРЫ:
- * - ИНИЦИАЛИЗАЦИЯ ПРИЛОЖЕНИЯ(СОЗДАНИЕ КОНТЕЙНЕРА В КОТОРОМ МОДАЛЬНЫЕ ОКНА ПОКАЗЫВАЮТСЯ)
- * - ПЕРЕДАЧА КОМПОНЕНТЫ В КАЧЕСТВЕ ПАРАМЕТРА
+ * Sync function for adding modal window.
+ * Two check:
+ * - Application was initialized (ModalContainer was mounted).
+ * - Component is required.
  * */
-function _addModal(component, params) {
+function _addModal(component, params, options) {
     if (!state$1.initialized)
         throw ModalError.NotInitialized();
     if (!component)
         throw ModalError.ModalComponentNotProvided();
-    var modal = new Modal(component, params);
-    modalQueue.value.push(modal);
+    var modal = new Modal(component, params, options);
+    /**
+     * modalQueue.value.push(Object.freeze(modal)) - фундаментальная ошибка!
+     * Таким способо мы запрещаем изменение любых свойст объекта - что является
+     * недопустим исключением, ведь объект может хранить, например, свойство
+     * `version`, которое по итогу будет не изменяемым.
+     *
+     * computed свойство 'closed' так-же потеряет реактивность в таком случае
+     *
+     * modalQueue.value.push(modal) - ошибка!
+     * Т.к. modalQueue является реактивным объектом и создаётся при помощи ref.
+     * В итоге все элементы, добавленные в  неё, становятся реактивными полностью.
+     * Так же получим небольшие проблемы с computed свойствами, поскольку они
+     * И так уже находятся в реактивном объекте и разложаться.
+     *
+     * markRaw - пометка для vue, что к данному элементу не надо добавлять никак
+     * ой реактивности.
+     *
+     * */
+    //modalQueue.value.push(modal);
+    modalQueue.value.push(vue.markRaw(modal));
     return modal;
 }
 
 /**
  * @description Method push modal to queue. Using this method you can open multiple windows. For closing use popModal
  * */
-function pushModal(component, props) {
+function pushModal(component, props, options) {
     if (props === void 0) { props = {}; }
-    return Promise.resolve().then(function () { return _addModal(component, props); });
+    if (options === void 0) { options = {}; }
+    return Promise.resolve().then(function () { return _addModal(component, props, options); });
 }
 
 /**
- * @description OpenModal that was provided as component. Before opening try to close all previous modals.
+ * @description OpenModal that was provided as component.
+ * Before opening try to close all previous modals.
  * @param {Object} component Any Vue component
  * @param {Object} props Props that will be passed to the component
+ * @param {Object} options Params for Modal. Like backgroundClose and other
  *
  * @return {Promise<Modal>} ModalObject
  * */
-function openModal(component, props) {
+function openModal(component, props, options) {
     if (props === void 0) { props = {}; }
     return closeModal()
         .then(function () {
         if (modalQueue.value.length)
             throw ModalError.QueueNoEmpty();
     })
-        .then(function () { return pushModal(component, props); });
+        .then(function () { return pushModal(component, props, options); });
 }
 
 function onBeforeModalClose(callback) {
@@ -407,11 +475,7 @@ function onBeforeModalClose(callback) {
 
 var script$1 = {
         props: {
-            component: Object,
-            params: Object,
-			id    : Number, // uniq identifier of modals
-
-            modal: Object // TEST
+			id    : Number, // uniq identifier of modals,
         },
         setup(props){
 
@@ -422,30 +486,28 @@ var script$1 = {
 				saveInstance(props.id, newValue);
 			});
 
+            function getModalById(id){
+                return modalQueue.value.find(elem => elem.id === id);
+            }
+            const modal = getModalById(props.id);
+
+
 			return () => vue.h("div", {
 				class: ["widget__modal-container__item", "modal-container"],
 				ref: containerRef,
 				onClick: e => {
 					if (e.target !== containerRef.value) return;
 
-                    if (configuration.backgroundClose) return popModal().catch(() => {})
+                    if (modal.backgroundClose) return popModal().catch(() => {})
 				}
 			}, [
-				/*
-				h("div", {
-					class: ["modal-back", "widget__modal-container__item-back widget__modal-back"],
 
-				}),
-				 */
-
-
-
-				vue.h(props.component, {
-					...props.params,
+				vue.h(modal.component, {
+					...modal.props.value,
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
-                    ...props.modal.eventCallbacks
+                    ...modal.eventCallbacks
 				})
 			])
         },
@@ -484,14 +546,16 @@ styleInject(css_248z$1);
 script$1.__file = "plugin/components/WidgetModalContainerItem.vue";
 
 /**
- * last change: 25.11.2021
+ * last change: 18.02.2022
+ * */
+/**
+ * @description Function run when ModalContainer was mounted in user's interface.
+ * Set the key 'initialized' to true and handle the 'keyup' event.
  * */
 function initialize() {
     state$1.initialized = true;
-    /**
-     * If user press Escape then close last opened modal
-     * */
     document.addEventListener("keyup", function (e) {
+        // Closing the last modal window when user pressed Escape
         if (configuration.escClose && e.key === "Escape" || e.code === "Escape")
             popModal();
     });
@@ -506,13 +570,8 @@ var script = {
 				return vue.h(vue.TransitionGroup, {name: configuration.animation}, {
 					default: () =>modalQueue.value.map(modalObject => {
 						return vue.h(script$1, {
-                            component: modalObject.component,
-                            params: modalObject.params,
                             key: modalObject.id,
                             id: modalObject.id,
-
-                            modal: modalObject // TEST
-
                         });
 					})
 				})
@@ -521,25 +580,59 @@ var script = {
         components: {WidgetContainerModalItem: script$1}
     };
 
-var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n\r\n\r\n";
+var css_248z = "\n.modal-list-enter-active,\r\n    .modal-list-leave-active,\r\n    .modal-list-enter-active .modal-item,\r\n    .modal-list-leave-active .modal-item\r\n    {\r\n        transition: all 0.2s ease;\n}\n.modal-list-enter-from,\r\n    .modal-list-leave-to{\r\n\t\topacity: 0 !important;\n}\n.modal-list-enter-from .modal-item,\r\n    .modal-list-leave-to   .modal-item{\r\n\t\ttransform: translateY(-60px);\n}\r\n";
 styleInject(css_248z);
 
 script.__file = "plugin/components/WidgetModalContainer.vue";
 
 /**
- * ИНТЕГРАЦИЯ VUE-ROUTER С JENESIUS-VUE-MODAL
- * ОСНОВНОЙ ПРИНЦЫП РАБОТЫ: МЫ ДАЁМ ОБРЁТКУ НАД МОДАЛЬНЫМ ОКНОМ, КОТОРУЮ ЗАПУМКАЕМ В ROUTE
- * САМА ПО СЕБЕ ОБЁРТКА НИЧЕГО НЕ РИСУЕТ, И ЕЁ SETUP: () => () => NULL
- * НО ПРИ ПОПЫТКЕ ОТРИСОВАТЬ ЕЁ, ВЫЗЫВАЕТСЯ ОТКРЫТИЕ ОКНА
+ * 18.02.2022
+ * Интеграция с vue-router.
  *
- * ЕСЛИ МЫ УЖЕ ПЕРЕШЛИ НА РОУТ, ТО ОКНО 100% ПОЖНО ОТРИСОВАТЬ И МЫ ЭТО ДЕЛАЕМ
- * В ПРОТИВНОМ СЛУЧАЕ, ПЕРЕЙТИ НА РОУТ НЕТ ВОЗМОЖНОСТИ.
- * ПРИМЕР: МЫ ОТКРЫЛИ МОДАЛЬНОЕ ОКНО, В КОТОРОМ СТОИТ ХУК, КОТОРЫЙ ЗАПРЕЩАЕТ ЕГО ЗАКРЫТИЕ
- * В ДАННЫЙ МОМЕНТ, ЕСЛИ ПОПЫТАТЬСЯ ПЕРЕЙТИ НА МАРШРУТ НА КОТОРОМ ОТКРЫВАЕТСЯ МОДАЛЬНОЕ ОКНО МЫ ПОЛУЧИМ ОШИБКУ
+ * Основной принцип работы: ма создаём обёртку над модальным окном, которую отда
+ * ём в Route. Сама по себе обёртка ничего не рисует и её setup:() => () => null
+ * Но в момент рендеринга(mount) вызывается открытие модального окна.
  *
- * ПРЕДОСТАВЛЯЕТСЯ ФУНКЦИЯ useModalRouter, которая является обёрткой над обычной vue компонентой
- * useModalRouter.init функция, которая принимает массив router
- * передавать router необходимо, поскольку так мы не имеет доступ к текущему роуту и функции back
+ * Если мы перешли на Route, которое интегрируемо с модальным окном - открытие
+ * модального окна на 100% возможно и этому ничего не может препядствовать.
+ *
+ * Пример: мы открыли модлаьное окно в котором стоит hook, который запрещает его
+ * закрытие в данный момент, если попытаться перейти на маршрут на котором откры
+ * вается модальное окно - мы получим ошибку.
+ *
+ * Для интеграции с VueRouter предоставляется функция useModalRouter, которая яв
+ * ляется обёрткой над обычной vue component.
+ *
+ * useModalRouter.init - функция, которая принимает массив router и сохраняет
+ * его в хранилище для последующего взаимодействия.
+ *
+ * Для чего неоходимо передать router? Т.к. мы не имеем доступ к текущему Route
+ * и функции back
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * HOW IS WORK * * * * * * * * * * * * * * * * *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * 1. We add hook route.afterEach in useModalRoute to handle each route.
+ * 2. [In afterEach] Opening modal window if current route is integrated route
+ * with modal.
+ *
+ * AfterEach:
+ *
+ * |------------|                                                 NO
+ * |currentRoute| -> is integrated route with modal's system?    ---> default
+ * |------------|                       |
+ * 										|
+ * 										↓
+ * 						Running modalRoute.initialize()
+ *
+ * 1. Provide Computed props from route.params to Modal
+ * 2. Add handler for onclose: () => router.back()
+ *
+ * Before leaving the route we check for opening modal's window. If there is one
+ * we try to close it. In case fail we don't leave to other route and modal
+ * continues to be open.
+ *
  *
  * */
 var state = {
@@ -548,16 +641,26 @@ var state = {
 function init(router) {
     var _this = this;
     if (state.router)
-        return console.warn("useModalRouter should escaped only once.");
+        throw ModalError.DuplicatedRouterIntegration();
     state.router = router;
     /**
-     * Return ModalRouter or null
+     * @description Функция для поиска объекта, который интегрирован с модальным
+     * окном. Если среди matched роутами и их находится компонента, которая явля
+     * ется обёрткой(ModalRoute, которую возвращает useModalRoute), то поиск пре
+     * кратится и вёрнтся ссылка на данный объект. Иначе null.
+     *
+     * @Return ModalRoute | null
      * */
     function findModal(routerLocation) {
-        if (!routerLocation.matched.length)
-            return null;
         for (var i = routerLocation.matched.length - 1; i >= 0; i--) {
             var components = routerLocation.matched[i].components;
+            /**
+             * Problem:
+             * Object.values(components)
+             * return (RouteComponent | ModalRouterInterface)[]
+             *
+             * How to do it in TypeScript
+             * */
             // @ts-ignore
             var a = Object.values(components).find(function (route) { return route._isModal; });
             if (a)
@@ -566,18 +669,18 @@ function init(router) {
         return null;
     }
     /**
-     * Hook only for closing
+     * @description Hook only for closing #1
      * */
     router.beforeEach(function (to, from) { return __awaiter(_this, void 0, void 0, function () {
-        var modal;
+        var modalRoute;
         var _a, _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 3, , 4]);
-                    modal = findModal(from);
-                    if (!(modal && !((_b = (_a = modal.getModalObject()) === null || _a === void 0 ? void 0 : _a.closed) === null || _b === void 0 ? void 0 : _b.value))) return [3 /*break*/, 2];
-                    return [4 /*yield*/, modal.close(true)];
+                    modalRoute = findModal(from);
+                    if (!(modalRoute && !((_b = (_a = modalRoute.getModalObject()) === null || _a === void 0 ? void 0 : _a.closed) === null || _b === void 0 ? void 0 : _b.value))) return [3 /*break*/, 2];
+                    return [4 /*yield*/, modalRoute.close(true)];
                 case 1:
                     _c.sent();
                     _c.label = 2;
@@ -590,7 +693,7 @@ function init(router) {
         });
     }); });
     /**
-     * Hook for opening modal
+     * @description Hook for opening modal #2
      * */
     router.afterEach(function (to) { return __awaiter(_this, void 0, void 0, function () {
         var modal;
@@ -608,8 +711,25 @@ function init(router) {
         });
     }); });
 }
+/**
+ * @description Wrap for ModalComponent
+ * @param {Object} component
+ * */
 function useModalRouter(component) {
+    //Ссылка на modalObject
     var modal = null;
+    /**
+     * isNavigationClosingGuard используется в качестве реле при закрытии модаль
+     * ного окна. Т.к. мы подписываемся на закрытии модального окна и вызываем
+     * переход на шаг назад в router, мы можем перейти сразу на два шага назад:
+     * При управляемом переходе(при нажатии на предыдущую страницу, кнопку назад)
+     * происходит сперва обычный переход на предыдущий route, а затем ещё один
+     * переход назад: в onclose модального окна.
+     *
+     * Именно по этому, в onclose стоит проверка на isNavigationClosingGuard, а
+     * в обработчике #1 передаётся true, указывающее на то, что при закрытии мод
+     * ального кона не надо возвращаться на шаг назад в route.
+     * */
     var isNavigationClosingGuard = false;
     function initialize() {
         return __awaiter(this, void 0, void 0, function () {
@@ -635,6 +755,10 @@ function useModalRouter(component) {
     }
     return {
         getModalObject: function () { return modal; },
+        /**
+         Флаг, использующийся для определения того, что данная компонента -
+         обёртка модального окна
+         */
         _isModal: true,
         close: function (v) {
             if (v === void 0) { v = false; }
@@ -652,6 +776,13 @@ function useModalRouter(component) {
             });
         },
         initialize: initialize,
+        /**
+         * Мнимая обёртка. Для того, чтобы рендеринг запускался.
+         * -----
+         * (19.02.2022)
+         * Try to change null to RouterView, using this way we can use children
+         * in router configuration.
+         * */
         setup: function () { return function () { return null; }; }
     };
 }

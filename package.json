@@ -1,6 +1,6 @@
 {
   "name": "jenesius-vue-modal",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "private": false,
   "description": "Simple modal plugin for Vue3",
   "author": "Jenesius",
@@ -10,6 +10,7 @@
     "lint": "vue-cli-service lint",
     "rollup": "rollup -c ./rollup.config.js --environment BABEL_ENV:production",
     "test": "jest",
+    "full": "npm run rollup && npm publish",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"

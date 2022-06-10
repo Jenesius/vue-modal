@@ -13,7 +13,7 @@ Jenesius Vue Modal provides three ways to catch closures:
 ## Onclose
 The [openModal](/guide/guide-methods#open-modal) and [pushModal](/guide/guide-methods#push-modal)
 methods return Promise, which, if successful,
-will return the [modalObject](/guide/details-modal-object) object. In order to catch the closing of
+will return the [modalObject](/guide/modal-object) object. In order to catch the closing of
 a modal window, you need to add an event **onclose** to this object:
 ```ts
 import {openModal} from "jenesius-vue-modal";

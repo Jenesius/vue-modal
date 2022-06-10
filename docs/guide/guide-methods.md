@@ -26,7 +26,7 @@ openModal(VueComponent, props)
     }
 </script>
 ```
-**Return value**: Promise that, if successful, will return a [ModalObject](/guide/modal-obejct).
+**Return value**: Promise that, if successful, will return a [ModalObject](/guide/modal-object).
 ```ts
 //{id, close, onclose, closed, instance}
 const modal = await openModal(VueComponent);
@@ -70,7 +70,7 @@ pushModal(VueComponent)
 </script>
 ```
 EXAMPLE
-**Return value**: Promise that, if successful, will return a [ModalObject](/guide/modal-obejct).
+**Return value**: Promise that, if successful, will return a [ModalObject](/guide/modal-object).
 ```ts
 //{id, close, onclose, closed, instance}
 const modal = await pushModal(VueComponent); 

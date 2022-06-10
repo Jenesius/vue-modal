@@ -31,7 +31,7 @@ function sidebar() {
 		{
 			text: 'Details',
 			items: [
-				{ text: 'ModalObject', link: '/guide/details-modal-object'},
+				{ text: 'ModalObject', link: '/guide/modal-object'},
 				{ text: 'Styles', link: '/guide/details-styles'},
 				{ text: 'Animation', link: '/guide/details-animation'},
 			]

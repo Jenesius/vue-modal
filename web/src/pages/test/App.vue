@@ -14,9 +14,8 @@
 
 
 
-
-	<button @click = "open">Open Modal +++</button>
-
+	<button @click = openModalButton>open</button>
+	<modal-button v-on = "handle"/>
 
 	<router-view/>
 
@@ -24,61 +23,26 @@
 
 </template>
 
-<script>
+<script setup>
 
-	import {container, openModal} from "./../../../../plugin/index";
-	import Modal from "./ModalTitle";
-    import {computed, reactive, ref} from "vue";
-
-	export default {
-        setup() {
-
-            let id = 1;
-
-            const state = ref({
-                title: 'None - 1',
-                age  : 15
-            })
-
-            let b;
-
-            async function open(){
-
-
-                b = await openModal(Modal, {
-                    title: computed(() => state.value.title)
-                }, {
-                    backgroundClose: false
-                });
-
-
-            }
-
-            setInterval(() => {
-                try {
-                    state.value.title = `None - ${id}`;
-
-                } catch (e) {
-                    state.title =`None - ${id}`
-                }
-
-                id++;
-
-
-                console.log(b.closed.value);
-
-            }, 1000);
-
-            return {
-                state,
-                open
-            }
-
-        },
-
-        name: "App",
-		components: {WidgetModalContainer: container}
+	import {container as WidgetModalContainer, openModal} from "./../../../../plugin/index";
+	import ModalButton from "./modal-button";
+	async function openModalButton() {
+		const modal = await openModal(ModalButton);
+		modal.on("test", v => {
+			console.log(v);
+		})
 	}
+	const handle = {
+		test: [(...atr) => {
+			console.log("test", ...atr)
+		}, () => {
+			console.log('ttt')
+		}]
+	}
+
+	
+	let b;
 </script>
 
 <style>

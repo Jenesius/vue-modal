@@ -40,7 +40,7 @@ function createConfig(format, output) {
 	
 	if (isGlobalBuild) output.name = 'JenesiusVueModal'
 
-	const external = ['vue']
+	const external = ['vue', 'jenesius-event-emitter']
 
 	return {
 		input: "./plugin/index.ts",
@@ -66,14 +66,6 @@ const packageConfigs = Object.keys(outputConfig).map(format =>
 )
 
 
-function createDeclarationConfig(){
-	
-	return {
-		input: './dist/dts/index.d.ts',
-		output: [{ file: 'dist/index.d.ts', format: 'es' }],
-		plugins: [dts()],
-	}
-	
-}
+
 export default [...packageConfigs];
 

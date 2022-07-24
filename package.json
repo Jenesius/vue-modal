@@ -71,5 +71,8 @@
     "url": "https://github.com/Jenesius/vue-modal.git"
   },
   "types": "dist/dts/index.d.ts",
-  "url": "https://github.com/Jenesius/vue-modal/issues"
+  "url": "https://github.com/Jenesius/vue-modal/issues",
+  "dependencies": {
+    "jenesius-event-emitter": "^1.0.4"
+  }
 }

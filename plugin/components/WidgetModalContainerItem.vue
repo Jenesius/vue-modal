@@ -9,8 +9,7 @@
         props: {
 			id    : Number, // uniq identifier of modals,
         },
-        setup(props){
-
+        setup(props, ctx){
 			const modalRef = ref(null);
 			const containerRef = ref(null);
 
@@ -23,6 +22,10 @@
             }
             const modal = getModalById(props.id);
 
+			function test(...atr) {
+				console.log("test", ...atr)
+			}
+			
 
 			return () => h("div", {
 				class: ["widget__modal-container__item", "modal-container"],
@@ -39,7 +42,7 @@
 					class: ["modal-item", "widget__modal-wrap"],//Save for compatibility
 					"modal-id": `_modal_${props.id}`,
 					ref: modalRef,
-                    ...modal.eventCallbacks
+                    on: test
 				})
 			])
         },

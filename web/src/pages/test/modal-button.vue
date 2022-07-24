@@ -1,6 +1,8 @@
 <template>
-	<p>event</p>
-	<button @click = "$emit('test', 5)">emit test</button>
+	<div>
+		<p>event</p>
+		<button @click = "$emit('test', 5)">emit test</button>
+	</div>
 </template>
 
 <script>

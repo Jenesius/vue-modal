@@ -5,7 +5,7 @@
 import {
     Component,
     computed,
-    ComputedRef,
+    ComputedRef, reactive,
     ref,
     Ref,
 } from "vue";
@@ -27,7 +27,7 @@ export default class Modal extends EventEmitter{
      * @description Unique id of each modal window.
      * */
     public id:number;
-
+    events = reactive({})
     /**
      * @description Computed value. True - when the modal was closed.
      * */

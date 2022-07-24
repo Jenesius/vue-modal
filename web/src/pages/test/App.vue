@@ -15,7 +15,6 @@
 
 
 	<button @click = openModalButton>open</button>
-	<modal-button v-on = "handle"/>
 
 	<router-view/>
 
@@ -32,14 +31,9 @@
 		modal.on("test", v => {
 			console.log(v);
 		})
+		
 	}
-	const handle = {
-		test: [(...atr) => {
-			console.log("test", ...atr)
-		}, () => {
-			console.log('ttt')
-		}]
-	}
+
 
 	
 	let b;

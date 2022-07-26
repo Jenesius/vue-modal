@@ -26,7 +26,7 @@ const outputConfig = {
 
 function createConfig(format, output) {
 	if (!output) {
-		console.log(require('chalk').yellow(`invalid format: "${format}"`))
+		console.log(`invalid format: "${format}"`)
 		process.exit(1)
 	}
 

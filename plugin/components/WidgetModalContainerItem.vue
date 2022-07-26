@@ -14,7 +14,7 @@
     import popModal from "../methods/popModal";
     import {saveInstance} from "../utils/instances";
     import {ref, watch} from "vue";
-    import {modalQueue} from "../index";
+    import {modalQueue} from "../utils/state";
 
 	const modalRef = ref(null);
 	const containerRef = ref(null);

@@ -1,8 +1,9 @@
-import {guards, modalQueue, state} from "../utils/state";
+import {modalQueue, state} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {guardToPromiseFn, runGuardQueue} from "../utils/guards";
 import Modal from "../utils/Modal";
 import {GuardFunction} from "../utils/types";
+import guards from "../utils/guards"
 
 /**
  * @description Закрывает модальное окно по идентификатору

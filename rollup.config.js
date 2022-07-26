@@ -1,7 +1,7 @@
 /*eslint-disable*/
 
 import pkg from './package.json'
-import vuePlugin from 'rollup-plugin-vue';
+import vuePlugin from '@vitejs/plugin-vue'
 import postcss from 'rollup-plugin-postcss';
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript';
@@ -26,7 +26,7 @@ const outputConfig = {
 
 function createConfig(format, output) {
 	if (!output) {
-		console.log(require('chalk').yellow(`invalid format: "${format}"`))
+		console.log(`invalid format: "${format}"`)
 		process.exit(1)
 	}
 
@@ -40,7 +40,7 @@ function createConfig(format, output) {
 	
 	if (isGlobalBuild) output.name = 'JenesiusVueModal'
 
-	const external = ['vue']
+	const external = ['vue', 'jenesius-event-emitter']
 
 	return {
 		input: "./plugin/index.ts",
@@ -48,10 +48,8 @@ function createConfig(format, output) {
 		plugins: [
 			typescript({ tsconfig: './plugin/tsconfig.json' }),
 			vuePlugin({
-				preprocessStyles: true
+				isProduction: true
 			}),
-			
-			//babel({ babelHelpers: 'bundled', extensions: [".js", ".ts"] }),
 			commonjs(),
 			postcss(),
 		],
@@ -66,14 +64,6 @@ const packageConfigs = Object.keys(outputConfig).map(format =>
 )
 
 
-function createDeclarationConfig(){
-	
-	return {
-		input: './dist/dts/index.d.ts',
-		output: [{ file: 'dist/index.d.ts', format: 'es' }],
-		plugins: [dts()],
-	}
-	
-}
+
 export default [...packageConfigs];
 

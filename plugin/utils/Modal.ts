@@ -5,42 +5,29 @@
 import {
     Component,
     computed,
-    ComputedRef,
-    reactive,
+    ComputedRef, reactive,
     ref,
     Ref,
-    shallowRef
 } from "vue";
 import {guards, modalQueue} from "./state";
 import {GuardFunctionWithHandle} from "./types";
 import closeById from "../methods/closeById";
 import {getInstance} from "./instances";
-import ModalError from "./ModalError";
 import DtoModalOptions from "./dto-modal-options";
+import EventEmitter from "jenesius-event-emitter";
 
-
-type EventCallback = (data?: any) => any;
-
-/**
- * Value can be an EventCallback[]
- * В Будущем можно обновить методы on и emit и сделать так, чтобы они работали
- * с массивом эвентов.
- * */
-export interface EventCallbacksStorage {
-    [name: string]: EventCallback
-}
 export interface ModalOptions {
     backgroundClose?: boolean
 }
 
 
 
-export default class Modal{
+export default class Modal extends EventEmitter{
     /**
      * @description Unique id of each modal window.
      * */
     public id:number;
-
+    events = reactive({})
     /**
      * @description Computed value. True - when the modal was closed.
      * */
@@ -60,12 +47,6 @@ export default class Modal{
     protected static modalId = 0;
 
     /**
-     * @description Storage for events.
-     * modal.on(eventName, callback) will makeStorage: {eventName: callback}
-     * */
-    public eventCallbacks:EventCallbacksStorage = reactive({})
-
-    /**
      * @description Click on the background will close modal windows.
      * */
     public backgroundClose:boolean = true;
@@ -79,6 +60,7 @@ export default class Modal{
      * @param {Object} props Object of input params. Used like props.
      * */
     constructor(component: Component | any, props: any, options: ModalOptions) {
+        super()
         this.id         = Modal.modalId++;
         this.component  = component;
 
@@ -136,24 +118,6 @@ export default class Modal{
      * */
     public get instance(){
         return getInstance(this.id);
-    }
-
-    /**
-     * @description Event handler
-     * */
-    public on(eventName: string, callback: EventCallback) {
-
-        if (typeof eventName !== 'string') throw ModalError.ModalEventNameMustBeString(eventName);
-
-        eventName = 'on' + eventName.charAt(0).toUpperCase() + eventName.slice(1);
-
-        // If eventName was added firstly
-        /*
-        if (!(eventName in this.eventCallbacks))
-            this.eventCallbacks[eventName] = []
-        */
-        this.eventCallbacks[eventName] = callback.bind(this.instance);
-
     }
 
 }

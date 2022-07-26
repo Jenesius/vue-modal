@@ -11,7 +11,6 @@ import Modal from "../Modal";
 import {useModalRouter} from "./../../../../../plugin";
 import ViewUserList from "../ViewUserList";
 import Modalguard from "../Modalguard";
-import ModalTest from "../../../../../tests/unit/ModalTest";
 import ModalLogin from "../ModalLogin";
 
 /**
@@ -24,10 +23,7 @@ const routes = [
         path: "/a",
         
     },
-    {
-        path: "/modal-a",
-        component: useModalRouter(ModalTest)
-    },
+
     {
         path: "/b",
         component: ViewB

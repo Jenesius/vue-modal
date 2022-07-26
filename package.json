@@ -1,6 +1,6 @@
 {
   "name": "jenesius-vue-modal",
-  "version": "1.5.5",
+  "version": "1.6.0",
   "private": false,
   "description": "Simple modal plugin for Vue3",
   "author": "Jenesius",
@@ -33,24 +33,25 @@
     "@babel/preset-typescript": "^7.16.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-typescript": "^8.3.0",
+    "@testing-library/vue": "^6.6.1",
+    "@types/jest": "^26.0.24",
+    "@vitejs/plugin-vue": "^3.0.1",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "^4.5.15",
-    "@vue/test-utils": "^2.0.0-rc.17",
+    "@vue/test-utils": "^2.0.2",
     "core-js": "^3.6.5",
     "jest": "26.6.3",
-    "metrohash": "^2.8.0",
+    "jest-environment-jsdom": "^26.6.2",
     "rollup": "^2.75.7",
     "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-vue": "^6.0.0",
-    "ts-jest": "^26.5.5",
-    "tslib": "^2.4.0",
-    "typescript": "~4.1.5",
+    "ts-jest": "^26.5.6",
+    "ts-node": "^10.9.1",
+    "typescript": "~4.7.4",
     "vitepress": "^1.0.0-alpha.1",
-    "vue-jest": "^5.0.0-alpha.10",
     "vue-router": "^4.0.12",
-    "vue-template-compiler": "2.6.14",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "@vue/vue3-jest": "^26.0.1"
   },
   "browserslist": [
     "> 1%",
@@ -71,5 +72,8 @@
     "url": "https://github.com/Jenesius/vue-modal.git"
   },
   "types": "dist/dts/index.d.ts",
-  "url": "https://github.com/Jenesius/vue-modal/issues"
+  "url": "https://github.com/Jenesius/vue-modal/issues",
+  "dependencies": {
+    "jenesius-event-emitter": "^1.0.4"
+  }
 }

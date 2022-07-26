@@ -1,7 +1,7 @@
 /*eslint-disable*/
 
 import pkg from './package.json'
-import vuePlugin from 'rollup-plugin-vue';
+import vuePlugin from '@vitejs/plugin-vue'
 import postcss from 'rollup-plugin-postcss';
 import commonjs from '@rollup/plugin-commonjs'
 import typescript from '@rollup/plugin-typescript';
@@ -48,10 +48,8 @@ function createConfig(format, output) {
 		plugins: [
 			typescript({ tsconfig: './plugin/tsconfig.json' }),
 			vuePlugin({
-				preprocessStyles: true
+				isProduction: true
 			}),
-			
-			//babel({ babelHelpers: 'bundled', extensions: [".js", ".ts"] }),
 			commonjs(),
 			postcss(),
 		],

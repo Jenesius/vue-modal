@@ -18,6 +18,7 @@
 
 	const modalRef = ref(null);
 	const containerRef = ref(null);
+	
 	const props = defineProps({
 		id: Number
 	})

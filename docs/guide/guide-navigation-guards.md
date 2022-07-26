@@ -86,3 +86,17 @@ modal.onclose = () => {
     })
 }
 ```
+
+## Close event
+Each handler receives an EventClose parameter that allows you to:
+- **background** - Will be set to true if the modal window was closed by clicking on the background.
+
+## Handle background closing
+This example demonstrates how to cancel the closing of the modal window on clicking on the background (darkened) background:
+```ts
+const modal = await openModal(SomeComponent);
+modal.onclose = (v) => {
+    if (v.background) return false;
+    // ...
+}
+```

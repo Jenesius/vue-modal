@@ -16,7 +16,6 @@
 
 	<button @click = openModalButton>open</button>
 
-	<router-view/>
 
 
 
@@ -31,10 +30,11 @@
 		modal.on("test", v => {
 			console.log(v);
 		})
-		
+		modal.onclose = (v) => {
+			console.log(v)
+			if (v.background) return false;
+		}
 	}
-
-
 	
 	let b;
 </script>

@@ -11,7 +11,7 @@ import {
 } from "vue";
 import {modalQueue} from "./state";
 import guards from "./guards";
-import {GuardFunctionWithHandle} from "./types";
+import {GuardFunction} from "./types";
 import closeById from "../methods/closeById";
 import {getInstance} from "./instances";
 import DtoModalOptions from "./dto-modal-options";
@@ -112,7 +112,7 @@ export default class Modal extends EventEmitter{
     /**
      * @description Hook for handling modal closing
      * */
-    public set onclose(func: GuardFunctionWithHandle) {
+    public set onclose(func: GuardFunction) {
         guards.add(this.id, "close", func);
     }
     /**

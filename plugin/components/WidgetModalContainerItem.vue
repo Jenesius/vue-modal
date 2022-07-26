@@ -11,10 +11,10 @@
 	</div>
 </template>
 <script setup>
-    import popModal from "../methods/popModal";
     import {saveInstance} from "../utils/instances";
     import {ref, watch} from "vue";
     import {modalQueue} from "../utils/state";
+	import closeById from "../methods/closeById";
 
 	const modalRef = ref(null);
 	const containerRef = ref(null);
@@ -30,7 +30,7 @@
 	function handelClick(e	) {
 		if (e.target !== containerRef.value) return;
 		
-		if (modal.backgroundClose) return popModal().catch(() => {})
+		if (modal.backgroundClose) return closeById(modal.id, {background: true}).catch(() => {})
 	}
 
 	watch(() => modalRef.value, newValue => {

@@ -1,6 +1,9 @@
-export type GuardFunctionWithHandle = () => void | boolean | Promise<boolean>
-export type GuardFunction = () => void | boolean | Promise<boolean>
-export type GuardFunctionPromisify = () => Promise<void>
+import {IEventClose} from "./event-close";
+
+export type GuardFunction           = (e: IEventClose) => void | boolean | Promise<boolean>
+export type GuardFunctionPromisify  = () => Promise<void>
+
+
 export interface ModalComponentInterface{
     [name: string]: any
 }

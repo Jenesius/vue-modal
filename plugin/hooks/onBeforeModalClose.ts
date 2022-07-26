@@ -1,8 +1,8 @@
 import {getCurrentInstance} from "vue";
 import guards from "../utils/guards";
-import {GuardFunctionWithHandle} from "../utils/types";
+import {GuardFunction} from "../utils/types";
 
-export default function onBeforeModalClose(callback: GuardFunctionWithHandle){
+export default function onBeforeModalClose(callback: GuardFunction){
 
     const a = getCurrentInstance();
     const attrModalId = String(a?.props?.modalId || a?.props?.["modal-id"] || a?.attrs?.modalId);

@@ -4,12 +4,12 @@ import {guardToPromiseFn, runGuardQueue} from "../utils/guards";
 import Modal from "../utils/Modal";
 import {GuardFunction} from "../utils/types";
 import guards from "../utils/guards"
+import {DtoEventClose, IEventClose} from "../utils/event-close";
 
 /**
- * @description Закрывает модальное окно по идентификатору
- * ЕСЛИ МОДАЛЬНОЕ ОКНО БЫЛО НЕ НАХОДИТСЯ В АКТИВНЫХ ИНСТАНСАХ - ОШИБКА
+ * @description Closing modal window by id. Is local methods (Not for export in index file)
  * */
-export default function closeById(id:number) {
+export default function closeById(id:number, options: Partial<IEventClose> = {}) {
 
     const indexRemoveElement: number
         = modalQueue.value.findIndex((item:Modal) => item.id === id);
@@ -20,7 +20,7 @@ export default function closeById(id:number) {
 
     const arr =
         guards.get(id, "close")
-        .map((guard:GuardFunction) => guardToPromiseFn(guard, id));
+        .map((guard:GuardFunction) => guardToPromiseFn(guard, id, DtoEventClose(options)));
 
     return runGuardQueue(arr)
         .then(() => {

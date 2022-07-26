@@ -70,7 +70,7 @@ export function runGuardQueue(guards:Array<GuardFunctionPromisify>): Promise<voi
  * If guard return void or true value - resolve.
  * Otherwise reject(err)
  * */
-export function guardToPromiseFn(guard:GuardFunction, id:number): GuardFunctionPromisify{
+export function guardToPromiseFn(guard:GuardFunction, id:number, props?: any): GuardFunctionPromisify{
     return () => new Promise((resolve, reject) => {
         /**
          * Next - hook for returned value from guard.
@@ -80,7 +80,7 @@ export function guardToPromiseFn(guard:GuardFunction, id:number): GuardFunctionP
             resolve();
         };
 
-        Promise.resolve(guard.call(state.instanceStorage[id]))
+        Promise.resolve(guard.call(state.instanceStorage[id], props))
         .then(next)
         .catch(err => reject(err));
     });

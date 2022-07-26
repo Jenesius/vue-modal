@@ -1,5 +1,5 @@
 import {getCurrentInstance} from "vue";
-import {guards} from "../utils/state";
+import guards from "../utils/guards";
 import {GuardFunctionWithHandle} from "../utils/types";
 
 export default function onBeforeModalClose(callback: GuardFunctionWithHandle){

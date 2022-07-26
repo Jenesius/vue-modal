@@ -9,7 +9,8 @@ import {
     ref,
     Ref,
 } from "vue";
-import {guards, modalQueue} from "./state";
+import {modalQueue} from "./state";
+import guards from "./guards";
 import {GuardFunctionWithHandle} from "./types";
 import closeById from "../methods/closeById";
 import {getInstance} from "./instances";
@@ -58,6 +59,7 @@ export default class Modal extends EventEmitter{
      *
      * @param {Object} component Any VueComponent that will be used like modal window
      * @param {Object} props Object of input params. Used like props.
+     * @param {Object} options
      * */
     constructor(component: Component | any, props: any, options: ModalOptions) {
         super()

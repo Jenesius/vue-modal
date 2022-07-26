@@ -10,7 +10,6 @@
  * */
 
 import {ref, watch} from "vue";
-import guards from "./guards";
 import {configuration} from "./config";
 import Modal from "./Modal";
 import {ModalComponentInterface} from "./types";
@@ -41,6 +40,5 @@ watch(modalQueue.value, () => {
 
 export {
     modalQueue,
-    guards,
     state
 }

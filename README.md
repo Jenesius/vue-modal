@@ -22,7 +22,8 @@ npm i jenesius-vue-modal
 
 ----
 
-For add modals in your project you need to put the modal's container where in the App(root) component:
+
+The main condition for library initialization is adding a **container** inside your App.vue file. Note that this container only needs to be **mounted once** in the main parent component. Opened **modals** will be shown inside this container.
 
 `App.vue`
 ```vue

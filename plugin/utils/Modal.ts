@@ -15,7 +15,6 @@ import {GuardFunction} from "./types";
 import closeById from "../methods/closeById";
 import {getInstance} from "./instances";
 import DtoModalOptions from "./dto-modal-options";
-import EventEmitter from "jenesius-event-emitter";
 
 export interface ModalOptions {
     backgroundClose?: boolean
@@ -23,12 +22,12 @@ export interface ModalOptions {
 
 
 
-export default class Modal extends EventEmitter{
+export default class Modal{
     /**
      * @description Unique id of each modal window.
      * */
     public id:number;
-    events = reactive({})
+    events = reactive<Record<string, EventCallback[]>>({})
     /**
      * @description Computed value. True - when the modal was closed.
      * */
@@ -62,7 +61,6 @@ export default class Modal extends EventEmitter{
      * @param {Object} options
      * */
     constructor(component: Component | any, props: any, options: ModalOptions) {
-        super()
         this.id         = Modal.modalId++;
         this.component  = component;
 
@@ -122,4 +120,21 @@ export default class Modal extends EventEmitter{
         return getInstance(this.id);
     }
 
+    /**
+     * @description Method for handle default events from VueComponent.
+     * */
+    public on(eventName: string, callback: EventCallback) {
+        if (!Array.isArray(this.events[eventName])) this.events[eventName] = [];
+
+        this.events[eventName].push(callback);
+
+        return () => {
+            const index = this.events[eventName].indexOf(callback);
+            if (index === -1) return; // Callback not founded
+            this.events[eventName].splice(index, 1);
+        }
+    }
+
 }
+
+export type EventCallback = (v: any) => any

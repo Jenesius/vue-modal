@@ -40,7 +40,7 @@ function createConfig(format, output) {
 	
 	if (isGlobalBuild) output.name = 'JenesiusVueModal'
 
-	const external = ['vue', 'jenesius-event-emitter']
+	const external = ['vue']
 
 	return {
 		input: "./plugin/index.ts",

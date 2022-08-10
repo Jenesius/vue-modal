@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from "vue-router";
-import {useModalRouter} from "../../../plugin/index";
-import ModalRoute from "./ModalRoute";
-import ContainerUsers from "./ContainerUsers";
-import ModalUser from "./ModalUser";
-import Modalguard from "../../../web/src/pages/test/Modalguard";
+import {useModalRouter} from "../../plugin/index";
+import ModalRoute from "./ModalRoute.vue";
+import ContainerUsers from "./ContainerUsers.vue";
+import ModalUser from "./ModalUser.vue";
+import Modalguard from "../../web/src/pages/test/Modalguard.vue";
 
 const router = createRouter({
 	history: createWebHistory(),

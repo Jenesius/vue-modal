@@ -1,41 +1,15 @@
-/*eslint-disable*/
 import {mount} from "@vue/test-utils";
 import router from "./router";
-
-
-
-import App from "./App";
 import {nextTick} from "vue";
-import {modalQueue, useModalRouter} from "../../../plugin";
+import {container, modalQueue, useModalRouter} from "../../plugin/index";
+import wait from "../wait";
 
-const waiter = (n = 10) => {
-
-	return new Promise(resolve => {
-
-		setTimeout(() => {
-			resolve();
-		}, n);
-
-	})
-
-}
-let wrapper = null;
-
-beforeAll(async () => {
-	wrapper = await mount(App);
-})
-afterAll(() => {
-	modalQueue.value = [];
-});
 beforeEach(async () => {
 	modalQueue.value = [];
 	await router.push("/");
 	await router.isReady();
-	await waiter(10);
+	await wait()
 })
-
-
-
 
 useModalRouter.init(router);
 
@@ -46,7 +20,7 @@ describe("Integration with VueRouter", () => {
 		// After this line, router is ready
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 
 		expect(wrapper.text()).toBe("Test");
 	})
@@ -54,7 +28,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/simple-modal");
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 
 		await nextTick();
 
@@ -65,12 +39,12 @@ describe("Integration with VueRouter", () => {
 		await router.push("/simple-modal");
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 		await nextTick();
 		expect(wrapper.text()).toBe("Modal router");
 		await router.push("/");
 
-		await waiter();
+		await wait()
 
 		expect(wrapper.text()).toBe("Test");
 
@@ -79,7 +53,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/users/3");
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 
 		await nextTick();
 
@@ -89,17 +63,16 @@ describe("Integration with VueRouter", () => {
 		await router.push("/users/3");
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 
 		for(let i = 0; i < 5; i++) {
 			await router.push("/users/"+i);
 			await nextTick();
-			await waiter();
+			await wait();
 			
 			
 			expect(wrapper.text()).toBe(`user-${i}`);
 		}
-
 	})
 	it("Closing modal with guard", async () => {
 		await router.push("/guard");
@@ -118,11 +91,10 @@ describe("Integration with VueRouter", () => {
 		expect(router.currentRoute.value.path).toBe("/guard");
 	})
 	it("Push", async () => {
-
 		await router.push("/");
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 
 		await router.push("/a");
 		await nextTick();
@@ -130,42 +102,34 @@ describe("Integration with VueRouter", () => {
 		await router.push("/b");
 		await nextTick();
 
-
-
 		await nextTick();
 		await router.push("/users/3");
 
 		await nextTick();
-		await waiter()
+		await wait();
 		expect(wrapper.text()).toBe("user-3");
 
 		await router.push("/");
-		await waiter()
+		await wait();
 
 		expect(wrapper.text()).toBe("Test");
-
-
 	})
 	it("Back", async () => {
-
-
 		await router.push("/");
 		await router.isReady();
 
-
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 
 		await nextTick();
 		await router.push("/users/3");
 
 		await nextTick();
-		await waiter(1000)
+		await wait();
 
 		expect(wrapper.text()).toBe("user-3");
 
 		await router.go(-1);
-		await waiter(1000)
-
+		await wait();
 
 		expect(wrapper.text()).toBe("Test");
 	})

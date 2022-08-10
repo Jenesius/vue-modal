@@ -7,7 +7,7 @@
 
 <script>
 
-import {container} from "../../../plugin";
+import {container} from "../../plugin/index";
 
 
 export default {

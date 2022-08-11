@@ -3,7 +3,7 @@ import {useModalRouter} from "../../plugin/index";
 import ModalRoute from "./ModalRoute.vue";
 import ContainerUsers from "./ContainerUsers.vue";
 import ModalUser from "./ModalUser.vue";
-import ModalGuard from "../../web/src/pages/test/Modalguard.vue";
+import ModalGuard from "./ModalGuard.vue";
 
 const router = createRouter({
 	history: createWebHistory(),

@@ -1,13 +1,15 @@
 <template>
-	<p>test</p>
+	<p>123</p>
 </template>
 
 <script>
 export default {
-	name: "ModalWithGuard"
+	beforeModalClose(){
+		return false;
+	},
+	name: "ModalGuard"
 }
 </script>
 
 <style scoped>
-
 </style>

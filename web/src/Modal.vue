@@ -1,12 +1,10 @@
 <template>
-	<p>d</p>
+	<p>Modal</p>
 </template>
 
 <script>
-
 export default {
-
-	name: "ViewD"
+	name: "Modal"
 }
 </script>
 

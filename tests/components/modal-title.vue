@@ -9,5 +9,4 @@ export default {
 		age: Number
 	}
 }
-
 </script>

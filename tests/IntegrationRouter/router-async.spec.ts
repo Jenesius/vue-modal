@@ -5,21 +5,18 @@
  * */
 import router from "./router";
 import {mount} from "@vue/test-utils";
-import App from "./App";
-import {modalQueue, useModalRouter} from "../../../plugin/index";
-import wait from "../../wait";
+import {modalQueue, useModalRouter, container} from "../../plugin/index";
+import wait from "../wait";
 
 beforeEach(async () => {
 	modalQueue.value = [];
-	await wait();
 })
 useModalRouter.init(router);
-
 
 describe("Router async", () => {
 	
 	test("Changing modalQueue length", async () => {
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		await mount(container, {global: {plugins: [router]}});
 		
 		await router.push('/');
 		// After this line, router is ready
@@ -32,7 +29,7 @@ describe("Router async", () => {
 	})
 	
 	test("Entering modal", async () => {
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(container, {global: {plugins: [router]}});
 		
 		await router.push('/');
 		// After this line, router is ready

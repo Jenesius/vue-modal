@@ -1,19 +1,12 @@
 <template>
 	<div>
-		<widget-modal-container/>
+		<container/>
 		<router-view/>
 	</div>
 </template>
 
-<script>
-
+<script setup>
 import {container} from "../../plugin/index";
-
-
-export default {
-	components: {WidgetModalContainer: container},
-	name: "App"
-}
 </script>
 
 <style scoped>

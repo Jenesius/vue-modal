@@ -3,7 +3,7 @@ import {useModalRouter} from "../../plugin/index";
 import ModalRoute from "./ModalRoute.vue";
 import ContainerUsers from "./ContainerUsers.vue";
 import ModalUser from "./ModalUser.vue";
-import Modalguard from "../../web/src/pages/test/Modalguard.vue";
+import ModalGuard from "../../web/src/pages/test/Modalguard.vue";
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -54,7 +54,7 @@ const router = createRouter({
 		},
 		{
 			path: "/guard",
-			component: useModalRouter(Modalguard)
+			component: useModalRouter(ModalGuard)
 		}
 	]
 })

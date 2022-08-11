@@ -1,8 +1,9 @@
 import {mount} from "@vue/test-utils";
 import router from "./router";
 import {nextTick} from "vue";
-import {container, modalQueue, useModalRouter} from "../../plugin/index";
+import {modalQueue, useModalRouter} from "../../plugin/index";
 import wait from "../wait";
+import App from "./App.vue";
 
 beforeEach(async () => {
 	modalQueue.value = [];
@@ -20,7 +21,7 @@ describe("Integration with VueRouter", () => {
 		// After this line, router is ready
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		expect(wrapper.text()).toBe("Test");
 	})
@@ -28,7 +29,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/simple-modal");
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		await nextTick();
 
@@ -39,7 +40,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/simple-modal");
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 		await nextTick();
 		expect(wrapper.text()).toBe("Modal router");
 		await router.push("/");
@@ -53,7 +54,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/users/3");
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		await nextTick();
 
@@ -63,7 +64,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/users/3");
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		for(let i = 0; i < 5; i++) {
 			await router.push("/users/"+i);
@@ -94,7 +95,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/");
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		await router.push("/a");
 		await nextTick();
@@ -118,7 +119,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/");
 		await router.isReady();
 
-		const wrapper = await mount(container, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		await nextTick();
 		await router.push("/users/3");

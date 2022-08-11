@@ -4,7 +4,7 @@
 
 <script>
 export default {
-	name: "ModalWithGurad"
+	name: "ModalWithGuard"
 }
 </script>
 

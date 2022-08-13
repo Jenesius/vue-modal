@@ -7,9 +7,10 @@
 </template>
 
 <script setup lang="ts">
-    import {container as ModalContainer, openModal} from "../../plugin/index";
+    import {container as ModalContainer, openModal, config} from "../../plugin/index";
 	import Modal from "./Modal.vue"
     function open(){
         openModal(Modal);
     }
+
 </script>

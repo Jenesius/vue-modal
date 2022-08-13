@@ -1,9 +1,8 @@
 /**
- * last change: 18.02.2022
+ * last change: 13.08.2022
  * */
 
 import {state} from "./state";
-import popModal from "../methods/popModal";
 import {configuration} from "./config";
 import getCurrentModal from "../methods/getCurrentModal";
 import closeById from "../methods/closeById";

@@ -34,6 +34,7 @@ function sidebar() {
 				{ text: 'ModalObject', link: '/guide/modal-object'},
 				{ text: 'Styles', link: '/guide/details-styles'},
 				{ text: 'Animation', link: '/guide/details-animation'},
+				{ text: 'Config', link: '/guide/config.md'}
 			]
 		},
 		{

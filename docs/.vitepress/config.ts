@@ -33,8 +33,9 @@ function sidebar() {
 			items: [
 				{ text: 'ModalObject', link: '/guide/modal-object'},
 				{ text: 'Styles', link: '/guide/details-styles'},
+				{ text: 'Config', link: '/guide/config.md'},
+				{ text: 'Event close', link: '/guide/event-close' },
 				{ text: 'Animation', link: '/guide/details-animation'},
-				{ text: 'Config', link: '/guide/config.md'}
 			]
 		},
 		{

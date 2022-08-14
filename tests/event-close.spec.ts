@@ -9,18 +9,25 @@ describe("Testing event close", () => {
 	test("event.background should be true, after background click", async () => {
 		const wrap = mount(container);
 		const modal = await openModal(ModalTitle);
+		let backgroundValue = null;
 		modal.onclose = (v) => {
-			expect(v.background).toBeFalsy()
+			backgroundValue = v.background;
 		}
+
 		await wrap.find(".modal-container").trigger("click");
+		await wait();
+		expect(backgroundValue).toBe(true)
 	})
 	test("event.background should be false by default", async () => {
 		mount(container);
 		const modal = await openModal(ModalTitle);
+		let backgroundValue = null;
 		modal.onclose = (v) => {
-			expect(v.background).toBeFalsy()
+			backgroundValue = v.background;
 		}
 		await modal.close()
+		await wait()
+		expect(backgroundValue).toBe(false);
 	})
 	test("event.esc should be false by default", async () => {
 		const wrap = await mount(container);

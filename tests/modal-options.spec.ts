@@ -48,5 +48,10 @@ describe("Testing modal options", () => {
 		
 		expect(modal.closed.value).toBe(true)
 	})
-	
+	test('Modal.isRoute should be false by default', async () => {
+		const modal = await openModal(ModalTitle);
+		expect(modal.isRoute).toBe(false);
+	})
+
+
 })

@@ -21,6 +21,5 @@ export default function initialize(){
             if (!modal) return;
             closeById(modal.id, {esc: true})
         }
-
     })
 }

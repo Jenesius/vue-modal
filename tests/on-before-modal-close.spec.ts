@@ -34,7 +34,6 @@ describe("onBeforeModalClose", () => {
 			template: "<p>Test</p>",
 			setup() {
 				onBeforeModalClose(() => {
-					console.log("Return false")
 					return false;
 				})
 			}
@@ -42,9 +41,6 @@ describe("onBeforeModalClose", () => {
 
 		await openModal(component);
 		await closeModal()
-		.then(() => {
-			console.log("Easy close")
-		})
 		.catch(() => {
 			console.log(modalQueue.value.length)
 		})

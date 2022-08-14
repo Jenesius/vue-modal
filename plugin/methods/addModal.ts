@@ -9,7 +9,7 @@ import {markRaw} from "vue";
  * - Application was initialized (ModalContainer was mounted).
  * - Component is required.
  * */
-export default function _addModal(component: any, params: any, options: ModalOptions):Modal{
+export default function _addModal(component: any, params: any, options: Partial<ModalOptions>):Modal{
 
 	if (!state.initialized) throw ModalError.NotInitialized();
 

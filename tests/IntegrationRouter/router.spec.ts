@@ -1,9 +1,11 @@
 import {mount} from "@vue/test-utils";
 import router from "./router";
 import {nextTick} from "vue";
-import {modalQueue, useModalRouter} from "../../plugin/index";
+import {getCurrentModal, modalQueue, useModalRouter} from "../../plugin/index";
 import wait from "../wait";
 import App from "./App.vue";
+import Modal from "../../plugin/utils/Modal";
+import {render} from "@testing-library/vue";
 
 beforeEach(async () => {
 	modalQueue.value = [];
@@ -116,23 +118,34 @@ describe("Integration with VueRouter", () => {
 		expect(wrapper.text()).toBe("Test");
 	})
 	it("Back", async () => {
-		await router.push("/");
-		await router.isReady();
-
-		const wrapper = await mount(App, {global: {plugins: [router]}});
-
-		await nextTick();
+		const wrapper = await render(App, {global: {plugins: [router]}})
+		//console.log("Start", router.currentRoute.value.path);
 		await router.push("/users/3");
 
+		await wait();
+		// console.log(".", router.currentRoute.value.path);
+
+		expect(wrapper.container.textContent).toBe("user-3");
+
+		await router.back()
+		await wait();
+
+		// console.log("..", router.currentRoute.value.path);
+
+		expect(wrapper.container.textContent).toBe("Test");
+	})
+
+	it("Modal.isRoute should be true, when modal was opened by RouterIntegration", async () => {
+		await router.push("/");
+		await router.isReady();
+		const wrapper = await mount(App, {global: {plugins: [router]}});
 		await nextTick();
 		await wait();
 
-		expect(wrapper.text()).toBe("user-3");
-
-		await router.go(-1);
+		await router.push("/router-simple-modal");
 		await wait();
-
-		expect(wrapper.text()).toBe("Test");
+		const modal = getCurrentModal() as Modal;
+		expect(modal.isRoute).toBe(true);
 	})
 
 });

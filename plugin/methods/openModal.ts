@@ -13,7 +13,7 @@ import ModalError from "../utils/ModalError";
  *
  * @return {Promise<Modal>} ModalObject
  * */
-export default function openModal(component:any, props:any = {}, options?: Partial<ModalOptions>):Promise<Modal>{
+export default function openModal(component:any, props:any = {}, options: Partial<ModalOptions> = {}):Promise<Modal>{
     return closeModal()
    .then(() => {
        if (modalQueue.value.length) throw ModalError.QueueNoEmpty();

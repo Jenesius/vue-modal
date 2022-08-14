@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHashHistory} from "vue-router";
 import {useModalRouter} from "../../plugin/index";
 import ModalRoute from "./ModalRoute.vue";
 import ContainerUsers from "./ContainerUsers.vue";
@@ -6,7 +6,7 @@ import ModalUser from "./ModalUser.vue";
 import ModalGuard from "./ModalGuard.vue";
 
 const router = createRouter({
-	history: createWebHistory(),
+	history: createWebHashHistory(),
 	routes: [
 		{
 			path: "/router-simple-modal",

@@ -17,7 +17,8 @@ import {getInstance} from "./instances";
 import DtoModalOptions from "./dto-modal-options";
 
 export interface ModalOptions {
-    backgroundClose?: boolean
+    backgroundClose: boolean,
+    isRoute: boolean
 }
 
 
@@ -52,6 +53,11 @@ export default class Modal{
     public backgroundClose:boolean = true;
 
     /**
+     * @description If modal was opened like Route instance (useModalRouter) the value is true, otherwise false.
+     */
+    public readonly isRoute: boolean = false;
+
+    /**
      * Создаёт объект управления модальным окном.
      * Для управления идентификатором используется статическое поле modalId.
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards
@@ -60,7 +66,7 @@ export default class Modal{
      * @param {Object} props Object of input params. Used like props.
      * @param {Object} options
      * */
-    constructor(component: Component | any, props: any, options: ModalOptions) {
+    constructor(component: Component | any, props: any, options: Partial<ModalOptions>) {
         this.id         = Modal.modalId++;
         this.component  = component;
 
@@ -97,7 +103,7 @@ export default class Modal{
         
         const dtoOptions = DtoModalOptions(options);
         this.backgroundClose = dtoOptions.backgroundClose;
-        
+        this.isRoute = dtoOptions.isRoute;
     }
 
     /**

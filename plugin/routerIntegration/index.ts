@@ -153,7 +153,7 @@ function useModalRouter(component: any){
 		isNavigationClosingGuard = false;
 		modal = null;
 
-		modal = await openModal(component, computed(() => state.router?.currentRoute.value.params));
+		modal = await openModal(component, computed(() => state.router?.currentRoute.value.params), { isRoute: true });
 		modal.onclose = () => {
 			if (!isNavigationClosingGuard) state.router?.back();
 		};

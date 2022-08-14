@@ -4,6 +4,7 @@
 		<button @click = "open">open</button>
 		<modal-container />
 		<button @click = "add">add</button>
+		<router-view/>
 	</div>
 </template>
 
@@ -21,16 +22,8 @@
     	modal.onclose = (event) => {
 			console.log(event);
 		}
-		
 
-		
-		const val = {
-			a: computed(() => "test"),
-			b: computed(() => ref1.value + 1)
-		}
-		
-		const a = reactive(val);
-		console.log(a);
+		console.log(modal);
 		
 	}
 

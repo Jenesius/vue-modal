@@ -5,6 +5,8 @@ import openModal from "./methods/openModal";
 import {modalQueue} from "./utils/state";
 import {config} from "./utils/config";
 import onBeforeModalClose from "./hooks/onBeforeModalClose";
+import getCurrentModal from "./methods/getCurrentModal";
+import closeById from "./methods/closeById";
 // @ts-ignore
 import WidgetModalContainer from "./components/WidgetModalContainer.vue";
 import useModalRouter from "./routerIntegration"
@@ -17,5 +19,7 @@ export {
     config,
     WidgetModalContainer as container,
     onBeforeModalClose,
-    useModalRouter
+    useModalRouter,
+    getCurrentModal,
+    closeById
 }

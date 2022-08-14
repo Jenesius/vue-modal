@@ -1,8 +1,8 @@
 # Event close
-**Каждый хук закрытия** модального окна принимает один параметр *event-close*. Данный объект предоставляет информацию о
-закрытии модального окна. На данный момент имеет следующие свойства:
-- background (*boolean*) Принимает значение true, если модальное окно закрывается кликом на задний фон.
-- esc (*esc*) Принимает значение true, если процесс закрытия модального окна начался с нажатия клавиши *Escape*
+**Each close hook** of a modal accepts one *event-close* parameter. This object provides information about
+closing the modal window. It currently has the following properties:
+- background (*boolean*) Set to true if the modal is closed by clicking on the background.
+- esc (*boolean*) Set to true if the modal close process started with *Escape*
 
 ```ts
 {

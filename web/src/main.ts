@@ -1,11 +1,7 @@
 import {createApp} from "vue"
 import App from "./App.vue";
 import {config, getCurrentModal, closeById} from "../../plugin";
-import router from "./router";
 
-config({
-	escClose: false
-})
 
 document.addEventListener("keyup", e => {
 	if (e.key === "Escape" || e.code === "Escape") {
@@ -19,5 +15,4 @@ document.addEventListener("keyup", e => {
 
 
 createApp(App)
-.use(router)
 .mount("#app")

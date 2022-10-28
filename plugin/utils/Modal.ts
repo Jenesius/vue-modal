@@ -58,6 +58,10 @@ export default class Modal{
     public readonly isRoute: boolean = false;
 
     /**
+     * @description Event using for promptModal.
+     */
+     public static readonly EVENT_PROMPT = 'jenesius-vue-modal:____P____R____O____M____P____T'
+    /**
      * Создаёт объект управления модальным окном.
      * Для управления идентификатором используется статическое поле modalId.
      * ЕСЛИ В КОМПОНЕНТЕ ЕСТЬ beforeModalClose параметр, то добавляем его в guards

@@ -69,8 +69,9 @@ const modal = await openModal(SomeVueComponent);
 - `pushModal` - add one more provided modal.
 - `closeModal`- close all modals.
 - `popModal` - close last opened modal.
+- `promptModal` - opening a modal window and waiting for a value to be returned. [More information](https://modal.jenesius.com/guide/guide-methods.html#prompt-modal)
 
-[More information](https://modal.jenesius.com/docs.html/methods)
+For detailed information about existing methods, follow the [link](https://modal.jenesius.com/docs.html/methods)
 
 ```js 
 import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"

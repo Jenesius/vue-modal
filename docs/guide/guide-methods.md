@@ -91,3 +91,37 @@ using the pushModal method, use the popModal method:
 import {popModal} from "jenesius-vue-modal"
 popModal()
 ```
+
+## Prompt Modal
+Sometimes there is a request in a modal window that will return some data. It could be
+a modal window for a one-time request that will return the value of the input.
+The *prompt-modal* method is a synonym for pushModal, but increases the eavesdropping detection even further.
+for **Modal.EVENT_PROMPT** upon execution of which the modal window will be closed and the data will be transferred
+with the event will be the execution of *promptModal*:
+```ts
+import {promptModal} from "jenesius-vue-modal"
+const code = await promptModal(ModalCode);
+```
+Файл *ModalCode.vue*
+
+```vue
+
+<template>
+  <button @click="handleClick">Click</button>
+</template>
+<script>
+import Modal from "jenesius-vue-modal";
+
+export default {
+  methods: {
+    handleClick() {
+      // Current emit will close the modal and provided Meth.random() 
+      // result to Promise returned by promptModal
+      this.$emit(Modal.EVENT_PROMPT, Math.random());
+    }
+  }
+}
+
+</script>
+
+```

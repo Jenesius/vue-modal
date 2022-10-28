@@ -117,6 +117,9 @@ describe("Integration with VueRouter", () => {
 
 		expect(wrapper.text()).toBe("Test");
 	})
+	/**
+	 * Sometimes on this test start throwing error. Check that before each new test you add modalQueue.value = []
+	 * */
 	it("Back", async () => {
 		const wrapper = await render(App, {global: {plugins: [router]}})
 		//console.log("Start", router.currentRoute.value.path);

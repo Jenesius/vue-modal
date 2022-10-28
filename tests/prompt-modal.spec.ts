@@ -1,7 +1,12 @@
 import {mount} from "@vue/test-utils";
-import {container, promptModal} from "../plugin/index";
+import {container, modalQueue, promptModal} from "../plugin/index";
 import ModalPromptValue from "./components/modal-prompt-value.vue";
 import wait from "./wait";
+
+beforeEach(async () => {
+    modalQueue.value = [];
+    await wait()
+})
 
 describe("Testing prompt-modal", () => {
     it('Test for opened modal window', async function () {

@@ -12,11 +12,13 @@ describe("Testing prompt-modal", () => {
     it('Test for opened modal window', async function () {
         const wrap = await mount(container);
 
-        promptModal(ModalPromptValue, {value: '123'})
+        const value = '123';
 
-        await wait();
+        promptModal(ModalPromptValue, {value})
 
-        expect(wrap.text()).toEqual('123');
+        await wait(1);
+
+        expect(wrap.text()).toEqual(value);
     });
     it("Should be returned with provided value", async function () {
         await mount(container);

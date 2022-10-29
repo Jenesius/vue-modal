@@ -1,4 +1,4 @@
-button {
+button, input {
     border: 1px solid #e3e3e3;
     padding: 4px 8px;
     cursor: pointer;
@@ -11,4 +11,21 @@ button:hover {
     padding: 10px;
     background-color: white;
     border-radius: 4px;
+}
+.modal-title{
+    transition: 0.1s;
+}
+.modal-title:hover {
+    color: #42b883;
+}
+.button_active{
+    background-color: #42b883;
+    color: white;
+}
+input {
+    padding: 7px 10px;
+}
+input:focus {
+    outline: none;
+    border: 1px solid #42b883;
 }

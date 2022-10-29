@@ -2,3 +2,4 @@
 - [Prompt modal](prompt-modal.md)
 - [Multi modal](multi-modals.md)
 - [VueRouter with Modals](vue-router-with-modals.md)
+- [Demo](demo.md)

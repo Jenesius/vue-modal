@@ -14,6 +14,9 @@ module.exports = {
 		},
 		"vue-router-with-modal": {
 			entry: "examples/vue-router-with-modal/main.ts"
+		},
+		"demo": {
+			entry: "examples/pretty-modal/main.ts"
 		}
 	}
 }

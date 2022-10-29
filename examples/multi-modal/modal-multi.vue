@@ -1,0 +1,25 @@
+<template>
+  <div class = "modal-multi">
+    <h3>Is Multi modal</h3>
+
+    <button @click = "pushModal(ModalMultiDuplicate)">Open one more</button>
+    <button @click = "openModal(ModalMultiDuplicate)">Open only one</button>
+    <button @click = "closeModal()">Close all</button>
+
+  </div>
+</template>
+
+<script setup>
+import {openModal, pushModal, closeModal} from "../../plugin/index";
+import ModalMultiDuplicate from "./modal-multi-duplicate.vue";
+
+</script>
+
+<style scoped>
+  .modal-multi{
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+  }
+
+</style>

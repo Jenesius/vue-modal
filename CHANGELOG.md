@@ -1,3 +1,9 @@
+# 1.8.0
+
+### Features
+- Added new method **promptModal**
+- Added new event for return and close prompted modal: Form.EVENT_PROMPT
+
 # 1.5.0
 
 ### Features

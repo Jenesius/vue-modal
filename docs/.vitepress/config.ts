@@ -16,6 +16,7 @@ export default {
 function nav() {
 	return [
 		{ text: 'Guide', link: '/guide/getting-started', activeMatch: '/guide/' },
+		{ text: 'Examples', link: '/examples/list', activeMatch: '/examples/' }
 	]
 }
 function sidebar() {

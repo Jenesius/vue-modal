@@ -5,6 +5,7 @@
     <p ><a href = "/open-modal" class = "example-link">Open Modal</a></p>
     <p><a href = "/multi-modals" class = "example-link">Multi Modals</a></p>
     <p><a href = "/vue-router-with-modal" class = "example-link">Modals with VueRouter</a></p>
+    <p><a href = "/demo" class = "example-link">Demo Example</a></p>
 	</div>
 </template>
 

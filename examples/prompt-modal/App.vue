@@ -24,13 +24,5 @@ import {onMounted, ref} from "vue";
 
 </script>
 <style>
-button {
-  border: 1px solid #e3e3e3;
-  padding: 4px 8px;
-  cursor: pointer;
-  transition: 0.1s;
-}
-button:hover {
-  transform: scale(0.96);
-}
+@import "./../../web/default-style.css";
 </style>

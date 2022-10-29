@@ -1,0 +1,14 @@
+button {
+    border: 1px solid #e3e3e3;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+button:hover {
+    transform: scale(0.96);
+}
+.modal-window{
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+}

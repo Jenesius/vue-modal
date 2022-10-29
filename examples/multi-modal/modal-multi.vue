@@ -1,5 +1,5 @@
 <template>
-  <div class = "modal-multi">
+  <div class = "modal-window">
     <h3>Is Multi modal</h3>
 
     <button @click = "pushModal(ModalMultiDuplicate)">Open one more</button>
@@ -16,10 +16,5 @@ import ModalMultiDuplicate from "./modal-multi-duplicate.vue";
 </script>
 
 <style scoped>
-  .modal-multi{
-    padding: 10px;
-    background-color: white;
-    border-radius: 4px;
-  }
 
 </style>

@@ -1,2 +1,3 @@
+- [Simple modal](simple-modal.md) 
 - [Prompt modal](prompt-modal.md)
 - [Multi modal](multi-modals.md)

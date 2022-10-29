@@ -1,5 +1,5 @@
 <template>
-  <div class = "prompt-modal">
+  <div class = "prompt-modal modal-window">
     <div>
       <input class = "modal-input" type = "text" v-model = "code" @keyup.enter = "handleClick"/>
     </div>
@@ -29,9 +29,6 @@ export default {
 
 }
 .prompt-modal {
-  background-color: white;
-  border-radius: 4px;
-  padding: 10px;
   display: grid;
   gap: 10px;
 }

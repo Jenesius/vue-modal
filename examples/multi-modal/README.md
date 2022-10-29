@@ -1,11 +1,11 @@
 # Multi modals
 
-Одним из преимуществ данной библиотеки является возможность открытие несолькхи модальных окон друг на друге. Данный подход
-не является распространённым, однако позволяет проектировать сложную логику при помощи простых средств.
+One of the advantages of this library is the ability to open multiple modal windows on top of each other. This approach
+is not common, but allows you to design complex logic using simple tools.
 
-В данном примере рассмотрим, как это делается:
+In this example, let's see how this is done:
 
-1. Создадим модальное окно, которое будет открывать свой дубликат, открывать начальное окно и закрывать все оставшиеся:
+1. Let's create a modal window that will open its duplicate, open the initial window and close all the remaining ones:
 ```vue
 <template>
   <div>
@@ -23,5 +23,6 @@ import ModalMultiDuplicate from "./modal-multi-duplicate.vue";
 
 </script>
 ```
-В данном примере на одну из кнопок повешен обработчик открытия другого модального окна используя `pushModal`. Данная 
-функция открывает новое модальное окно поверх существующих без их закрытия.
+
+In this example, one of the buttons has a handler for opening another modal window using `pushModal`. This
+the function opens a new modal window on top of the existing ones without closing them.

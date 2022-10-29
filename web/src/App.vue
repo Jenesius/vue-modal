@@ -1,9 +1,10 @@
 <template>
 	<div>
-    <a href = "/prompt-modal">Prompt Modal</a>
-    <a href = "/open-modal">Open Modal</a>
-    <a href = "/multi-modals">Multi Modals</a>
-    <a href = "/vue-router-with-modal">Modals with VueRouter</a>
+    <h3 class = "container-examples-title">Examples:</h3>
+    <p><a href = "/prompt-modal" class = "example-link">Prompt Modal</a></p>
+    <p ><a href = "/open-modal" class = "example-link">Open Modal</a></p>
+    <p><a href = "/multi-modals" class = "example-link">Multi Modals</a></p>
+    <p><a href = "/vue-router-with-modal" class = "example-link">Modals with VueRouter</a></p>
 	</div>
 </template>
 
@@ -11,3 +12,8 @@
 
 
 </script>
+<style>
+.example-link {
+  color: blue;
+}
+</style>

@@ -11,7 +11,7 @@
 
 <script setup>
 import {closeModal, pushModal} from "./../../../plugin"
-import ModalConfirm from "./modal-confirm";
+import ModalConfirm from "./modal-confirm.vue";
 import {ref} from "vue";
 
 const input = ref('');

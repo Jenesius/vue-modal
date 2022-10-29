@@ -1,9 +1,9 @@
 <template>
 	<div class = "container-buttons">
-    <button>Person Profile</button>
+    <button @click = "openModal(ModalProfile)">Person Profile</button>
     <button ref = "refButtonConfirm" @click = "openModal(ModalConfirm, { label: 'Do you love modals?', text: textConfirm, resolve: resolveConfirm })">Confirm</button>
     <button @click = "openModal(ModalAlert, { text: textAlert })">Alert</button>
-    <button>Auto context</button>
+    <button @click = "openModal(ModalAutoContext, { text: textAlert })">Auto context</button>
     <button @click = "openModal(ModalQuestion)">Question</button>
 	</div>
   <modal-container/>
@@ -12,8 +12,10 @@
 <script setup lang="ts">
 import {container as ModalContainer, openModal, popModal} from "../../plugin/index";
 import ModalAlert from "./modals/modal-alert.vue";
-import ModalConfirm from "./modals/modal-confirm";
-import ModalQuestion from "./modals/modal-question";
+import ModalConfirm from "./modals/modal-confirm.vue";
+import ModalQuestion from "./modals/modal-question.vue";
+import ModalAutoContext from "./modals/modal-auto-height.vue";
+import ModalProfile from "./modals/modal-profile.vue";
 import {ref} from "vue";
 
 const refButtonConfirm = ref(null);

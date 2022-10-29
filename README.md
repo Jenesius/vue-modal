@@ -21,6 +21,8 @@ Using this library, you can simply show both one and several modal windows at th
 npm i jenesius-vue-modal
 ```
 
+![Alt Text](./demo-gif.gif)
+
 ----
 
 

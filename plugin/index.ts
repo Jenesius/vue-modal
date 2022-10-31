@@ -8,10 +8,12 @@ import onBeforeModalClose from "./hooks/onBeforeModalClose";
 import getCurrentModal from "./methods/getCurrentModal";
 import closeById from "./methods/closeById";
 import promptModal from "./methods/prompt-modal";
+import Modal from "./utils/Modal";
 // @ts-ignore
 import WidgetModalContainer from "./components/WidgetModalContainer.vue";
 import useModalRouter from "./routerIntegration"
 export {
+    Modal,
     closeModal,
     popModal,
     pushModal,

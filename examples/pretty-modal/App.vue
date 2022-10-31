@@ -30,7 +30,7 @@ function resolveConfirm() {
 }
 
 </script>
-<style>
+<style scoped>
 @import "./../../web/default-style.css";
 * {
   font-family: sans-serif;

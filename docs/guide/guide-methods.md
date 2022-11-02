@@ -109,7 +109,7 @@ File *ModalCode.vue*
   <button @click="handleClick">Click</button>
 </template>
 <script>
-import Modal from "jenesius-vue-modal";
+import {Modal} from "jenesius-vue-modal";
 
 export default {
   methods: {

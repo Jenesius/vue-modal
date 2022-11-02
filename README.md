@@ -80,6 +80,10 @@ For detailed information about existing methods, follow the [link](https://modal
 import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"
 ```
 
+## How to return value?
+
+Sometimes a modal needs to return a value. This case is described in detail in the [following article](https://modal.jenesius.com/guide/guide-returned-value).
+
 ## Handle events
 
 Using modalObject you can handle any events:

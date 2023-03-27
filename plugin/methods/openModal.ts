@@ -3,6 +3,7 @@ import closeModal from "./closeModal";
 import pushModal from "./pushModal";
 import Modal, {ModalOptions} from "../utils/Modal";
 import ModalError from "../utils/ModalError";
+import {Component, UnwrapRef, ExtractPropTypes, Ref, ComputedRef} from "vue";
 
 /**
  * @description OpenModal that was provided as component.
@@ -12,11 +13,20 @@ import ModalError from "../utils/ModalError";
  * @param {Object} options Params for Modal. Like backgroundClose and other
  *
  * @return {Promise<Modal>} ModalObject
- * */
-export default function openModal(component:any, props:any = {}, options: Partial<ModalOptions> = {}):Promise<Modal>{
+ */
+type PartialModalOptions = Partial<ModalOptions>;
+
+type SimpleComponent<T = {}> = Component & {
+    props?: T,
+}
+type ProvidedProps<T extends SimpleComponent>
+    = T | ExtractPropTypes<T> | UnwrapRef<T>
+
+
+export default function openModal<P extends SimpleComponent>(component: P, props: ProvidedProps<P["props"]> = {}, options: PartialModalOptions = {}):Promise<Modal> {
     return closeModal()
-   .then(() => {
-       if (modalQueue.value.length) throw ModalError.QueueNoEmpty();
-   })
+    .then(() => {
+        if (modalQueue.value.length) throw ModalError.QueueNoEmpty();
+    })
     .then(() => pushModal(component, props, options))
 }

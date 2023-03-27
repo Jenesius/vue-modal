@@ -121,20 +121,19 @@ describe("Integration with VueRouter", () => {
 	 * Sometimes on this test start throwing error. Check that before each new test you add modalQueue.value = []
 	 * */
 	it("Back", async () => {
+		/**
+		 * Shallow: create and test component only (no children)
+		 * Mount: same as shallow but mounts with children and parent/host component, allows lifecycle methods
+		 * Render: outputs the html given by the component, including children
+		 * */
 		const wrapper = await render(App, {global: {plugins: [router]}})
-		//console.log("Start", router.currentRoute.value.path);
 		await router.push("/users/3");
 
 		await wait();
-		// console.log(".", router.currentRoute.value.path);
 
 		expect(wrapper.container.textContent).toBe("user-3");
-
-		await router.back()
-		await wait();
-
-		// console.log("..", router.currentRoute.value.path);
-
+		await router.back();
+		await wait(100);
 		expect(wrapper.container.textContent).toBe("Test");
 	})
 

@@ -53,3 +53,8 @@ modal.onclose = function(){
     modal.instance.insideValue; // "Hello"
 }
 ```
+
+## Instance
+If you are tagging **instance** in your project together in `<script setup>`, you need to remember that in this case
+the component will be closed. In order to open some properties, you need to resort to [**defineExpose**]
+(https://vuejs.org/api/sfc-script-setup.html#defineexpose).

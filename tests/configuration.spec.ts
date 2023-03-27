@@ -24,7 +24,9 @@ describe("Configuration function", () => {
 		
 		const wrapper = await mount(container);
 		
-		await openModal(ModalTitle);
+		await openModal(ModalTitle, {
+
+		});
 		
 		expect(modalQueue.value.length).toBe(1);
 		

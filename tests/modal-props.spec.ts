@@ -78,10 +78,10 @@ describe('Props of Modal', () => {
 	 * Передача props, одно из свойств которого является вычисляемое значение
 	 * */
 	test('Computed prop in object', async () => {
-		const modal = await openModal(ModalTitle, {
-			title: "123",
-			age: 1,
 
+		const modal = await openModal(ModalTitle, {
+			title: "Hello",
+			age: 1
 		})
 		expect(modal.instance.title).toBe('Hello')
 	})

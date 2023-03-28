@@ -37,7 +37,7 @@ function resolveConfirm() {
 function _test() {
 	openModal(ModalProfile)
 	openModal(ModalAlert, {
-		text: "1",
+		text: "1"
 	})
 }
 
@@ -46,7 +46,7 @@ type a = typeof ModalProfile;
 
 </script>
 <style scoped>
-@import "./../../web/default-style.css";
+@import "./../web/default-style.css";
 
 * {
 	font-family: sans-serif;

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, openModal, popModal} from "../../plugin/index";
+import {container as ModalContainer, openModal, popModal, pushModal} from "../../plugin/index";
 import ModalAlert from "./modals/modal-alert.vue";
 import ModalConfirm from "./modals/modal-confirm.vue";
 import ModalQuestion from "./modals/modal-question.vue";
@@ -36,9 +36,6 @@ function resolveConfirm() {
 
 function _test() {
 	openModal(ModalProfile)
-	openModal(ModalAlert, {
-		text: "1"
-	})
 }
 
 

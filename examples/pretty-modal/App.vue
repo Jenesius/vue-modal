@@ -20,6 +20,8 @@ import ModalQuestion from "./modals/modal-question.vue";
 import ModalAutoContext from "./modals/modal-auto-height.vue";
 import ModalProfile from "./modals/modal-profile.vue";
 import {ref} from "vue";
+import ModalInfo from "./modals/modal-info.vue";
+import ModalTitle from "../../tests/components/modal-title.vue";
 
 const refButtonConfirm = ref(null);
 const textAlert = `Jenesius Vue Modal is a lightweight and simple library for working with modal windows in Vue3. It integrates deeply with Vue.js and allows you to create modals of any complexity.`
@@ -34,8 +36,17 @@ function resolveConfirm() {
 }
 
 
+
 function _test() {
 	openModal(ModalProfile)
+	openModal(ModalInfo, {
+
+	})
+	openModal(ModalTitle, {
+
+	})
+
+
 }
 
 
@@ -43,7 +54,7 @@ type a = typeof ModalProfile;
 
 </script>
 <style scoped>
-@import "./../web/default-style.css";
+@import "./../../web/default-style.css";
 
 * {
 	font-family: sans-serif;

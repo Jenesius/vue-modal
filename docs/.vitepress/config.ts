@@ -46,7 +46,7 @@ function sidebar() {
 				{ text: 'Introduction', link: '/guide/integration-introduction'},
 				{ text: 'Installation', link: '/guide/integration-installation'},
 				{ text: 'Practical', link: '/guide/integration-practical'},
-				
+				{ text: 'Closing Modal with Router', link: '/vue-router-integration/close-after-route-changed' }
 			]
 		}
 	]

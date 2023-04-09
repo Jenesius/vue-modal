@@ -1,6 +1,7 @@
 <template>
   <div class = "modal-window">
     <p>Opened modal for user[{{id}}]</p>
+	  <button @click = "$router.back()">Back</button>
   </div>
 </template>
 

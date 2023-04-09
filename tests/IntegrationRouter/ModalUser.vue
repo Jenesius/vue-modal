@@ -7,7 +7,7 @@ export default {
 	props: {
 		id: String
 	},
-	name: "ModalUser"
+	name: "ModalUser",
 }
 </script>
 

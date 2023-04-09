@@ -7,7 +7,9 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-
+  "env": {
+    "vue/setup-compiler-macros": true
+  },
   "overrides": [
     {
       "files": ".{ts,tsx}", // only parse `.ts` and `.tsx` files as TypeScript

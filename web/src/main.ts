@@ -1,6 +1,7 @@
-import {createApp} from "vue"
+import {computed, createApp} from "vue"
 import App from "./App.vue";
-import {config, getCurrentModal, closeById} from "../../plugin";
+import {config, getCurrentModal, closeById, openModal} from "../../plugin";
+import ModalConfirm from "./../../examples/pretty-modal/modals/modal-confirm.vue"
 
 
 document.addEventListener("keyup", e => {
@@ -12,6 +13,7 @@ document.addEventListener("keyup", e => {
 		closeById(modal.id, {esc: true})
 	}
 })
+
 
 
 createApp(App)

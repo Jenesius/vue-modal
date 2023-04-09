@@ -6,7 +6,10 @@
 export default {
 	props: {
 		title: String,
-		age: Number
+		age: {
+			type: Number,
+			required: false
+		}
 	}
 }
 </script>

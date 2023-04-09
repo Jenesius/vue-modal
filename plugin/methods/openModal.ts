@@ -3,6 +3,7 @@ import closeModal from "./closeModal";
 import pushModal from "./pushModal";
 import Modal, {ModalOptions} from "../utils/Modal";
 import ModalError from "../utils/ModalError";
+import {WrapComponent} from "../types/types";
 
 /**
  * @description OpenModal that was provided as component.
@@ -12,8 +13,9 @@ import ModalError from "../utils/ModalError";
  * @param {Object} options Params for Modal. Like backgroundClose and other
  *
  * @return {Promise<Modal>} ModalObject
- * */
-export default function openModal(component:any, props:any = {}, options: Partial<ModalOptions> = {}):Promise<Modal>{
+ */
+export default function openModal< P extends WrapComponent>(component: P, props: P["props"] = {}, options: Partial<ModalOptions> = {}):Promise<Modal>
+{
     return closeModal()
    .then(() => {
        if (modalQueue.value.length) throw ModalError.QueueNoEmpty();

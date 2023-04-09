@@ -3,7 +3,7 @@ import closeModal from "./closeModal";
 import pushModal from "./pushModal";
 import Modal, {ModalOptions} from "../utils/Modal";
 import ModalError from "../utils/ModalError";
-import {WrapComponent, WrapComponentProps} from "../types/types";
+import {WrapComponent} from "../types/types";
 
 /**
  * @description OpenModal that was provided as component.
@@ -14,7 +14,7 @@ import {WrapComponent, WrapComponentProps} from "../types/types";
  *
  * @return {Promise<Modal>} ModalObject
  */
-export default function openModal<P extends WrapComponent>(component: P, props: WrapComponentProps<P> = {}, options: Partial<ModalOptions> = {}):Promise<Modal>
+export default function openModal< P extends WrapComponent>(component: P, props: P["props"] = {}, options: Partial<ModalOptions> = {}):Promise<Modal>
 {
     return closeModal()
    .then(() => {

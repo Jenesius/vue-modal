@@ -2,7 +2,8 @@
 
 ## Open Modal
 The openModal method is used to display a component in a modal window container. Before showing the modal window, the method will close all open modal windows, if it succeeds, it will open a new one. Two parameters are accepted as input:
-- **VueComponent** - a component object that will be rendered as a modal window.
+- **VueComponent** - a component object that will be rendered as a modal window. Also you can use **string** the name
+that was previously stored in the repository. [Read more](/guide/store) about it.
 
 - **props** - the object that contains the input parameters that are passed to the modal and will be accessible from props.
 ```ts

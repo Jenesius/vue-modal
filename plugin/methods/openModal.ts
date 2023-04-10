@@ -14,7 +14,7 @@ import {WrapComponent} from "../types/types";
  *
  * @return {Promise<Modal>} ModalObject
  */
-export default function openModal< P extends WrapComponent>(component: P, props: any = {}, options: Partial<ModalOptions> = {}):Promise<Modal>
+export default function openModal< P extends WrapComponent>(component: P | string, props: any = {}, options: Partial<ModalOptions> = {}):Promise<Modal>
 {
     return closeModal()
    .then(() => {

@@ -9,6 +9,7 @@ import {modalQueue, closeModal, openModal, popModal, pushModal, container} from 
 import WidgetModalContainerItem from "../plugin/components/WidgetModalContainerItem.vue";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
+import ModalError from "../plugin/utils/ModalError";
 
 beforeEach(async () => {
   modalQueue.value = [];
@@ -20,7 +21,9 @@ afterAll(() => {
 
 
 describe('Init', () => {
-
+	it('Run without container, must throw the error', async function () {
+		await expect(() => pushModal(ModalTitle)).rejects.toThrowError(ModalError.NotInitialized());
+	});
 
   it ("Initialized", async () => {
     await mount(container);
@@ -191,5 +194,7 @@ describe('Init', () => {
     expect(modalQueue.value.map(item => item.id)).toEqual([modal1.id,modal3.id]);
 
   })
+
+
 
 })

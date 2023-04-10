@@ -27,7 +27,8 @@ function sidebar() {
 				{ text: 'Getting started', link: '/guide/getting-started' },
 				{ text: 'Methods', link: '/guide/guide-methods' },
 				{ text: 'Navigation Guards', link: '/guide/guide-navigation-guards' },
-				{ text: 'Returned value', link: '/guide/guide-returned-value' }
+				{ text: 'Returned value', link: '/guide/guide-returned-value' },
+				{ text: 'Store', link: "/guide/store" }
 			]
 		},
 		{

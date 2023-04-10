@@ -8,7 +8,7 @@ import {WrapComponent} from "../types/types";
  * @warning In new version I will change declaration of current method. Type declaration will be added for returned value.
  */
 
-export default async function promptModal<P extends WrapComponent>(component: P, props: P["props"] = {}, options: Partial<ModalOptions> = {}) {
+export default async function promptModal<P extends WrapComponent>(component: P | string, props: any = {}, options: Partial<ModalOptions> = {}) {
     const modal = await pushModal(component, props, options);
 
     return new Promise(resolve => {

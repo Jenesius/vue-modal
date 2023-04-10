@@ -9,6 +9,7 @@ import getCurrentModal from "./methods/getCurrentModal";
 import closeById from "./methods/closeById";
 import promptModal from "./methods/prompt-modal";
 import Modal from "./utils/Modal";
+import getComponentFromStore from "./methods/get-component-from-store";
 // @ts-ignore
 import WidgetModalContainer from "./components/WidgetModalContainer.vue";
 import useModalRouter from "./routerIntegration"
@@ -25,5 +26,6 @@ export {
     onBeforeModalClose,
     useModalRouter,
     getCurrentModal,
-    closeById
+    closeById,
+    getComponentFromStore
 }

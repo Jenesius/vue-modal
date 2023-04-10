@@ -3,3 +3,4 @@
 - [Multi modal](multi-modals.md)
 - [VueRouter with Modals](vue-router-with-modals.md)
 - [Demo](demo.md)
+- [Animation](animation.md)

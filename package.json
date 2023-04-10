@@ -5,7 +5,7 @@
   "description": "Simple modal plugin for Vue3",
   "author": "Jenesius",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "npm run rollup",
     "lint": "vue-cli-service lint",
     "rollup": "rollup -c ./rollup.config.js --environment BABEL_ENV:production",

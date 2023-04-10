@@ -63,4 +63,9 @@ export default class ModalError extends Error{
             `Event name must be a string. Provided: ${eventName}`
         )
     }
+    static ModalNotExistsInStore(modalName: string) {
+        return new ModalError(
+            `Provided name(${modalName}) don't exist in the store. Has the given name been added to the store?`
+        )
+    }
 }

@@ -2,16 +2,26 @@ import {modalQueue} from "../utils/state";
 import Modal, {ModalOptions} from "../utils/Modal";
 import {state} from "../utils/state";
 import ModalError from "../utils/ModalError";
-import {markRaw} from "vue";
+import {Component, markRaw} from "vue";
+import {getComponentFromStore} from "../index";
+
 /**
  * Sync function for adding modal window.
  * Two check:
  * - Application was initialized (ModalContainer was mounted).
  * - Component is required.
  * */
-export default function _addModal(component: any, params: any, options: Partial<ModalOptions>):Modal{
+
+export default function _addModal(component: string | Component, params: any, options: Partial<ModalOptions>):Modal{
 
 	if (!state.initialized) throw ModalError.NotInitialized();
+
+	// If component is string. In this case we get the component from store.
+	if (typeof component === "string") {
+		const refComponent = getComponentFromStore(component);
+		if (!refComponent) throw ModalError.ModalNotExistsInStore(component);
+		component = refComponent;
+	}
 
 	if (!component) throw ModalError.ModalComponentNotProvided();
 
@@ -41,3 +51,4 @@ export default function _addModal(component: any, params: any, options: Partial<
 
 	return modal;
 }
+

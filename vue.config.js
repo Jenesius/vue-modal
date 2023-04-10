@@ -17,6 +17,9 @@ module.exports = {
 		},
 		"demo": {
 			entry: "examples/pretty-modal/main.ts"
+		},
+		"simple-animation": {
+			entry: "examples/simple-animation/main.ts"
 		}
 	}
 }

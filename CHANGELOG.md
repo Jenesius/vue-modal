@@ -1,55 +1,18 @@
-# 1.8.0
+### 1.9.0 (2023-04-10)
 
-### Features
-- Added new method **promptModal**
-- Added new event for return and close prompted modal: Form.EVENT_PROMPT
+##### Documentation Changes
 
-# 1.5.0
+*  add information about store. ([51fd468a](https://github.com/Jenesius/vue-modal/commit/51fd468aa1df8aaa875f4447c109ab9e2e20ed1e))
+*  add new page-example for animation. ([07dd725f](https://github.com/Jenesius/vue-modal/commit/07dd725f7fc836b82eb5f67a5883b4ff4a37cd02))
+*  update information about closing modal with route. ([00e21b48](https://github.com/Jenesius/vue-modal/commit/00e21b486a0c434abcee468d047d936743b5dfd1))
 
-### Features
-- modal.on(eventName: string, callback: (v:any) => void)
+##### New Features
 
-# 1.4.7
+*  update pushModal, add string name for modal component, add test ([231b7356](https://github.com/Jenesius/vue-modal/commit/231b7356fb7be909fb6ee585265240dcf2625678))
+*  add new method getComponentFromStore, add test, add store to config.ts ([1844100d](https://github.com/Jenesius/vue-modal/commit/1844100d5d154f20900217f457cb52d10974e38d))
+*  add type declaration for props. Add options to prompt-modal.ts ([0a2c771e](https://github.com/Jenesius/vue-modal/commit/0a2c771e70a7d5e11e2e77e199fbf33f2d0d4046))
 
-### Features
-- modal.instance
+##### Tests
 
-## 1.4.6
+*  add new tests for opening modal from the store. ([5550c4a1](https://github.com/Jenesius/vue-modal/commit/5550c4a193e4cbdff3775c61df8f438306fa12ba))
 
-### Broken
-- methods pushModal return **Promise -> Modal**
-### Features
-- backClose param in configuration
-- updated tests for pushModal
-
-## 1.4.5 (2021-11-27)
-
-- Fix peerDep of library
-
-## 1.4.0 (2021-11-26)
-
-### Features
-
-- Add TS types, closes #[#33](https://github.com/Jenesius/vue-modal/issues/33)
-
-## 1.3.1 (2021-08-29)
-
-### Features
-
-- Add styles and animation, closes [#3](https://github.com/Jenesius/vue-modal/issues/3)
-
-### Docs
-
-- Add page for styles, [link](https://modal.jenesius.com/docs.html/details#styles)
-- Add page for animation, [link](https://modal.jenesius.com/docs.html/details#animation)
-
-## 1.3.0 (2021-08-15)
-
-### Features
-
-- Integration with VueRouter, closes [#20](https://github.com/Jenesius/vue-modal/issues/20)
-
-### Docs
-
-- Add page about integration, [link](https://modal.jenesius.com/docs.html/example/user-list)
-- Add useModalRouter example, [link](https://modal.jenesius.com/docs.html/integration-vue-router)

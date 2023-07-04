@@ -20,6 +20,9 @@ module.exports = {
 		},
 		"simple-animation": {
 			entry: "examples/simple-animation/main.ts"
+		},
+		"example-router": {
+			entry: "examples/vue-router-with-modal/main.ts"
 		}
 	}
 }

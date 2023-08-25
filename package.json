@@ -6,11 +6,10 @@
   "author": "Jenesius",
   "scripts": {
     "serve": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "npm run rollup",
+    "build": "vite build --config vite.config.mjs",
     "lint": "vue-cli-service lint",
-    "rollup": "rollup -c ./rollup.config.js --environment BABEL_ENV:production",
     "test": "jest",
-    "full": "npm run rollup && npm publish",
+    "full": "npm run build && npm publish",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs"

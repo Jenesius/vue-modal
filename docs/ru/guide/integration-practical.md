@@ -1,5 +1,5 @@
-# Particular Qualities
-You can use **props** to get input parameters.
+# Особые качества
+Вы можете использовать **props** для получения входных параметров.
 ```ts
 // user/5
 {
@@ -8,6 +8,7 @@ You can use **props** to get input parameters.
     }
 }
 ```
-Using **beforeRouteEnter** , **beforeRouteUpdate** , **beforeRouteLeave** is not 
-possible at this stage. I will try to fix this problem shortly.
-BeforeModalClose can be used as a temporary solution.
+Использование **beforeRouteEnter** , **beforeRouteUpdate** , **beforeRouteLeave** не является
+возможно на данном этапе. Я постараюсь исправить эту проблему в ближайшее время.
+BeforeModalClose можно использовать как временное решение.
+

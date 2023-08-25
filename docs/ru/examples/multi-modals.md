@@ -1,7 +1,7 @@
 <script setup>
-import App from '../../examples/multi-modal/App.vue';
+import App from '../../../examples/multi-modal/App.vue';
 </script>
 
-# Multi Modal
+# Множественные модальные окна
 
 <App/>

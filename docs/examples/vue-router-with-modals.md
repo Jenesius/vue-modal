@@ -10,7 +10,7 @@ component. It is with the help of it that our components will be wrapped in moda
 config file for vue-router:
 ```ts
 import {createRouter, createWebHashHistory} from "vue-router"
-import {useModalRouter} from "../../plugin/routerIntegration";
+import {useModalRouter} from "jenesius-vue-mdoal";
 import Modal from "./any-modal.vue";
 
 const routes = [

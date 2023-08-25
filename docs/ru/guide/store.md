@@ -1,14 +1,14 @@
-# Modal storage
+# Модальное хранилище
 
-In older versions of this library, opening a modal window was only possible by passing a component.
-The approach remains the main one and sow the day, because. gives you more control and order in your code. However, there is
-many situations where this approach is not convenient. For example, when developing a library, the question arises:
-how to override the opening of modal windows (how to replace the modal window). This is where storage comes in.
+В старых версиях этой библиотеки открытие модального окна было возможно только путем передачи компонента.
+Подход остаётся основным и на текущий день, т.к. дает вам больше контроля и порядка в вашем коде. Однако существует
+много ситуаций, когда этот подход не удобен. Например, при разработке библиотеки возникает вопрос:
+как переопределить открытие модальных окон (как заменить модальное окно). Здесь на помощь приходит хранилище.
 
-## Initialization
+## Инициализация
 
-To get started, you need to initialize the storage (save the modal windows we need in it). All
-this is done using the configuration function:
+Для начала необходимо инициализировать хранилище (сохранить в нем нужные нам модальные окна). Все
+это делается с помощью функции конфигурации:
 
 ```ts
 import {config} from "jenesius-vue-modal";
@@ -20,19 +20,17 @@ config({
     }
 })
 ```
-In this example, we have added one modal window to the store. Now it can be opened by name by passing the key there:
-
+В этом примере мы добавили в магазин одно модальное окно. Теперь его можно открыть по имени, передав туда ключ:
 ```ts
 openModal('confirm');
 ```
-Of course, *pushModal* and *promptModal* methods also support this functionality.
+Конечно, методы *pushModal* и *promptModal* также поддерживают эту функциональность.
 
-## Checking for a Modal Window
-If you are writing a library, for better interoperability, a function has been added that checks for the presence of a modal
-windows in storage:
+## Проверка модального окна
+Если вы пишете библиотеку, для лучшей совместимости добавлена функция, проверяющая наличие модального окна в хранилище:
 ```ts
 import {getComponentFromStore} from "jenesius-vue-modal";
 getComponentFromStore('alert') // undefined
 getComponentFromStore('confirm') // Component
 ```
-**Returns** the VueComponent if it was previously initialized in the store, *undefined* otherwise.
+**Возвращает** компонент VueComponent, если он был ранее инициализирован в хранилище, в противном случае *undefined*.

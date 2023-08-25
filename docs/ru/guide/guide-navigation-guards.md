@@ -1,20 +1,19 @@
-# Navigation Guards
+# Навигационные хуки
 
-## Information
-Sometimes it is necessary to catch the closing of a modal and manage 
-this state. This can be useful to prevent the user from closing the 
-modal until they have entered input, or to send a request to the server.
+## Информация
+Иногда необходимо отловить закрытие модального кона. Это может быть полезно для предотвращения закрытия пользователем
+модально, пока они не введут данные или не отправят запрос на сервер.
 
-If the handler returns **false** or **throws an error** , closing 
-the modal window will be interrupted.
+Если обработчик возвращает **false** или **выдает ошибку**, закрытие
+модальное окно будет прервано.
 
-Jenesius Vue Modal provides three ways to catch closures:
+Jenesius Vue Modal предоставляет три способа перехвата закрытия:
 
 ## Onclose
-The [openModal](/guide/guide-methods#open-modal) and [pushModal](/guide/guide-methods#push-modal)
-methods return Promise, which, if successful,
-will return the [modalObject](/guide/modal-object) object. In order to catch the closing of
-a modal window, you need to add an event **onclose** to this object:
+Методы [openModal](./guide-methods#open-modal) and [pushModal](./guide-methods#push-modal)
+возвращают Promise, который в случае успеха
+вернет объект [modalObject](./modal-object). Чтобы поймать закрытие
+модальное окно, вам нужно добавить событие **onclose** к этому объекту:
 ```ts
 import {openModal} from "jenesius-vue-modal";
 const modal = await openModal(VueComponent);
@@ -23,11 +22,14 @@ let count = 5;
 
 modal.onclose = () => {
     count--;
-    if (count > 0 ) return false; //The modal window will be closed after five attempts.
+    if (count > 0 ) return false; // Модальное окно закроется после пяти попыток.
 }
 ```
-EXAMPLE
-If several modal windows are open, and one of them will have an onclose handler that returns false, you can close only those modal windows that were opened after it.
+### Пример
+
+Если открыто несколько модальных окон и у одного из них будет обработчик onclose, возвращающий false, вы сможете
+закрыть только те модальные окна, которые были открыты после него.
+
 ```ts
 import {pushModal, closeModal} from "jenesius-vue-modal";
 
@@ -37,22 +39,22 @@ const modal3 = await pushModal(VueComponent);
 
 modal2.onclose = () => false;
 
-closeModal(); // close only modal3
+closeModal(); // закроется только modal3
 ```
 
-## In-Component Guards
-Finally, the navigation hook can be specified directly in the component using the following options:
+## Хук внутри компоненты
+Наконец, навигационный хук можно указать непосредственно в компоненте, используя следующие параметры:
 - beforeModalClose
 ```ts
 const Foo = {
 	template: "...",
 	beforeModalClose() {
-		// has access to the context of the component instance this.
+		// имеет доступ к контексту экземпляра компонента this.
 	}
 } 
 ```
 ## Composition Api
-While you can still use built-in functions, Jenesius Vue Modal provides functions for the Composition API:
+Хотя вы по-прежнему можете использовать встроенные функции, Jenesius Vue Modal предоставляет функции для Composition API:
 ```ts
 import {onBeforeModalClose} from "jenesius-vue-modal"
 
@@ -60,7 +62,7 @@ export default {
   setup() {
     onBeforeModalClose(() => {
       const answer = window.confirm(
-        "Do you really want to leave? You have unsaved changes!"
+        "Вы действительно хочешь уйти? У вас есть несохраненные изменения!"
       )
       if (!answer) return false
     })
@@ -68,8 +70,8 @@ export default {
 }
 ```
 
-## Async Guards
-The navigation hook can be asynchronous. The modal window will be closed only when it finishes its work:
+## Асинхронный хук
+Навигационный хук может быть асинхронным. Модальное окно закроется только тогда, когда завершит свою работу:
 ```ts
 {
     async beforeModalClose(){
@@ -82,17 +84,17 @@ const modal = await openModal(Modal);
     
 modal.onclose = () => {
     return new Promise(resolve => {
-        setTimeout(resolve, 1000); // The modal will be closed after one second.
+        setTimeout(resolve, 1000); // Модальное окно закроется через одну секунду.
     })
 }
 ```
 
-## Close event
-Each modal close handler get window parameter: event-close
+## Событие close
+Каждый обработчик модального закрытия получает параметр окна: event-close
 ```ts
 modal.onclose = (event) => {
 	// ...
 }
 ```
-This *event* stores information about how the modal window is closed. Detailed information about it, about the way to prevent
-Closing a modal window by background or by pressing the Esc key can be read [here](/guide/event-close).
+Это *событие* хранит информацию о том, как закрывается модальное окно. Подробная информация о нем, о способах предотвращения
+закрытия модального окна при нажатии на фон или по нажатию клавиши Esc можно прочитать [здесь](./event-close).

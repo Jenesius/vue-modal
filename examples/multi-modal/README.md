@@ -18,7 +18,7 @@ In this example, let's see how this is done:
 </template>
 
 <script setup>
-import {pushModal, closeModal} from "../../plugin/index";
+import {pushModal, closeModal} from "jenesius-vue-modal";
 import ModalMultiDuplicate from "./modal-multi-duplicate.vue";
 
 </script>

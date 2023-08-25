@@ -1,15 +1,16 @@
 # ModalObject
-The pushModal and openModal methods return an object of the following type:
+Методы pushModal и openModal возвращают объект, содержащий следующие свойства:
 
-- **id** - unique identifier of the modal window.
+- **id** - уникальный идентификатор модального окна.
 
-- **close** - a method that allows you to close the created modal window.
+- **close** - метод, позволяющий закрыть созданное модальное окно.
 
-- **onclose** is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If **onclose** returns false, the modal will not be closed.
+- **onclose** - это функция, которая выполняется при попытке закрыть окно. Эту функцию можно переопределить для
+управления закрытием окна. Если **onclose** возвращает false, модальное окно не закроется.
 
-- **instance** - an instance of an open modal window. Allows you to access the properties and methods of the modal window.
+- **instance** - экземпляр открытого модального окна. Позволяет получить доступ к свойствам и методам модального окна.
 
-- **closed** - computed variable, true if the modal window is open.
+- **closed** - `computed` переменная. Имеет значение **true**, если модальное окно открыто.
 
 ```ts
 import {openModal} from "jenesius-vue-modal";
@@ -19,9 +20,9 @@ const modal = await openModal(Modal, {
 modal.onclose = () => false
 
 modal.instance.message; // "Welcome"
-modal.closed.value; // true
+modal.closed.value; // false
 
-modal.close() // The modal will not be closed
+modal.close() // Модальное окно не закроется
 ```
 ```ts
 const modal = await openModal(Modal);
@@ -34,7 +35,9 @@ modal.onclose = () => {
 
 modal.close() // Close modal if the weather is rainy
 ```
-When using **onclose**, we can also access the internal fields and methods of the modal by passing a non-anonymous function as a parameter:
+При использовании **onclose** мы также можем получить доступ к внутренним полям и методам модального окна, передав
+неанонимную функцию в качестве параметра:
+
 ```vue
 // ./modal.vue
 {
@@ -55,6 +58,6 @@ modal.onclose = function(){
 ```
 
 ## Instance
-If you are tagging **instance** in your project together in `<script setup>`, you need to remember that in this case
-the component will be closed. In order to open some properties, you need to resort to [**defineExpose**]
+Если вы получаете **instance** в своем проекте вместе в `<script setup>`, вам нужно помнить, что в этом случае
+компонент будет закрыт. Чтобы открыть некоторые свойства, вам нужно прибегнуть к [**defineExpose**]
 (https://vuejs.org/api/sfc-script-setup.html#defineexpose).

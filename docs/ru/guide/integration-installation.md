@@ -1,21 +1,21 @@
-# Installation
+# Установка
 
-- Don't forget to [initialize](/guide/getting-started) Jenesius Vue Modal
-- When creating router add modal integration:
+- Не забудьте [проинициализировать](./getting-start) Jenesius Vue Modal
+- При создании роутера добавьте модальную интеграцию:
 ```ts
 import { createWebHistory, createRouter} from "vue-router";
 import {useModalRouter} from "jenesius-vue-modal";
 
 const routes = [...];
 const router = createRouter({
-	history: createWebHistory(), // Or any other
+	history: createWebHistory(),
 	routes,
 });
 
-useModalRouter.init(router); 
+useModalRouter.init(router); // !
 ```
-Now the modal handler will react to navigation changes.
-- Add new route:
+Теперь модальный обработчик будет реагировать на изменения навигации.
+- Добавьте новый маршрут обёрнутый в `useModalRouter`:
 ```ts
 import Modal from "Modal.vue"
 
@@ -26,5 +26,5 @@ const routes = [
     }
 ]
 ```
-Now, when switching to **/any-route**, the window that was passed to
-**useModalRouter** will be shown modally
+Теперь при переключении на **/any-route** окно, переданное в
+**useModalRouter** будет отображаться модальное окно.

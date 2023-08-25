@@ -1,13 +1,9 @@
-# Introduction
+# Введение
 
-Sometimes it becomes necessary to link vue-router to show a modal window. To 
-do this, you need to write your own handler for router and integrate it with 
-opening/closing a modal window. One in Jenesius Vue Modal already has it all,
-you just need to connect it.
+Иногда возникает необходимость связать vue-router для отображения модального окна. Чтобы сделать это, вам нужно написать
+собственный обработчик для маршрутизатора и интегрировать его с открытием/закрытием модального окна. В 
+Jenesius Vue Modal уже есть все это, вам просто нужно подключить его.
 
-For example, a table of users was created, on the route **/users**. A modal handler
-has been added to the route **/users/:id**. Now, when switching to **/users/3**, a 
-modal window will open into which the input parameters from route, available 
-in props, will be passed.
-
-Go to example
+Например, была создана таблица пользователей по маршруту **/users**. Модальный обработчик
+был добавлен в маршрут **/users/:id**. Теперь при переключении на **/users/3**
+откроется модальное окно, в котором доступны входные параметры из маршрута. Они будут переданы в качестве `props`.

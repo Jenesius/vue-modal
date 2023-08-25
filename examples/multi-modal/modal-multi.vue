@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {openModal, pushModal, closeModal} from "../../plugin/index";
+import {openModal, pushModal, closeModal} from "../../src/index.js";
 import ModalMultiDuplicate from "./modal-multi-duplicate.vue";
 
 </script>

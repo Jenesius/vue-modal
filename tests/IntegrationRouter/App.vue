@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import {container} from "../../plugin/index";
+import {container} from "../../src/index";
 </script>
 
 <style scoped>

@@ -1,14 +1,20 @@
 export default {
 	title: 'JenesiusVueModal',
 	description: "Modal system for Vue.",
-	
+	head: [
+		['link', { rel: 'icon', href: `/images/logo.png` }]
+	],
 	themeConfig: {
 		nav: nav(),
 		sidebar: sidebar(),
 		logo: './../images/logo.svg',
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/Jenesius/vue-modal' },
-		]
+		],
+		footer: {
+			message: "Released under the MIT License.",
+			copyright: "Copyright © 2022-present Jenesius",
+		},
 	},
 	
 }
@@ -16,7 +22,8 @@ export default {
 function nav() {
 	return [
 		{ text: 'Guide', link: '/guide/getting-started', activeMatch: '/guide/' },
-		{ text: 'Examples', link: '/examples/list', activeMatch: '/examples/' }
+		{ text: 'Examples', link: '/examples/list', activeMatch: '/examples/' },
+		{ text: 'Found mistake?', link: 'https://github.com/Jenesius/vue-modal/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=[BUG]'},
 	]
 }
 function sidebar() {

@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import Modal from "./../../plugin/utils/Modal";
+import Modal from "../../src/utils/Modal";
 
 export default {
   data: () => ({

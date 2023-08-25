@@ -1,5 +1,5 @@
 import {mount} from "@vue/test-utils";
-import {container, modalQueue, promptModal} from "../plugin/index";
+import {container, modalQueue, promptModal} from "../src/index";
 import ModalPromptValue from "./components/modal-prompt-value.vue";
 import wait from "./wait";
 

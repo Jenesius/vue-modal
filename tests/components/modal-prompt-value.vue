@@ -4,7 +4,7 @@
 
 <script setup lang = "ts">
 import {defineEmits, defineProps, onMounted} from "vue";
-import Modal from "../../plugin/utils/Modal";
+import Modal from "../../src/utils/Modal";
 
 interface IProps {
   value: any,

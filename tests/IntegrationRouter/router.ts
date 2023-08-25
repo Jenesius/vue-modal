@@ -1,5 +1,5 @@
 import {createRouter, createWebHashHistory} from "vue-router";
-import {useModalRouter} from "../../plugin/index";
+import {useModalRouter} from "../../src/index";
 import ModalRoute from "./ModalRoute.vue";
 import ContainerUsers from "./ContainerUsers.vue";
 import ModalUser from "./ModalUser.vue";

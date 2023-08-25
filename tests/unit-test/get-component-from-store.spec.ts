@@ -1,5 +1,5 @@
-import {config, configuration} from "../../plugin/utils/config";
-import getComponentFromStore from "../../plugin/methods/get-component-from-store";
+import {config, configuration} from "../../src/utils/config";
+import getComponentFromStore from "../../src/methods/get-component-from-store";
 import ModalTitle from "../components/modal-title.vue";
 
 // Clean store

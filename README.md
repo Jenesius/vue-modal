@@ -1,3 +1,13 @@
+<p align="center"><a href="https://modal.jenesius.com/" target="_blank" rel="noopener noreferrer"><img height="100" src="https://modal.jenesius.com/images/logo.svg" alt="Vue logo"></a></p>
+
+<p align="center">
+  <a href="https://img.shields.io/github/issues/Jenesius/vue-modal"><img src="https://img.shields.io/github/issues/Jenesius/vue-modal" alt="Downloads"></a>
+  <a href="https://img.shields.io/npm/dw/jenesius-vue-modal"><img src="https://img.shields.io/npm/dw/jenesius-vue-modal" alt="Downloads"></a>
+  <a href="https://img.shields.io/github/stars/Jenesius/vue-modal"><img src="https://img.shields.io/github/stars/Jenesius/vue-modal" ></a>
+  <a href="https://github.com/Jenesius/vue-modal/actions/workflows/node.js.yml/badge.svg"><img src="https://github.com/Jenesius/vue-modal/actions/workflows/node.js.yml/badge.svg" alt="Issue"></a>
+  <a href="https://img.shields.io/npm/l/jenesius-vue-modal"><img src="https://img.shields.io/npm/l/jenesius-vue-modal" alt="Stars"></a>
+</p>
+
 # Jenesius Vue Modal
 
 Jenesius vue modal is simple modal system library for **Vue 3** only . 
@@ -7,13 +17,6 @@ Using this library, you can simply show both one and several modal windows at th
 
 - [Full Documentation](https://modal.jenesius.com)
 - [Examples](https://modal.jenesius.com/examples/list.html)
-
-
-![](https://img.shields.io/github/issues/Jenesius/vue-modal)
-![](https://img.shields.io/npm/dw/jenesius-vue-modal)
-![](https://img.shields.io/github/stars/Jenesius/vue-modal)
-![Greet everyone](https://github.com/Jenesius/vue-modal/actions/workflows/node.js.yml/badge.svg)
-![](https://img.shields.io/npm/l/jenesius-vue-modal)
 
 ### Installation
 

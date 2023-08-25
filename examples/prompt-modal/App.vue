@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, promptModal} from "../../plugin/index";
+import {container as ModalContainer, promptModal} from "../../src/index";
 import {onMounted, ref} from "vue";
   import ModalCode from "./modal-code.vue";
 

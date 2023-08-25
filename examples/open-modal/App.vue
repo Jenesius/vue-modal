@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, openModal} from "../../plugin/index";
+import {container as ModalContainer, openModal} from "../../src/index";
 import Modal from "./modal.vue";
 
 </script>

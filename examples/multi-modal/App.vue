@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, openModal} from "../../plugin/index";
+import {container as ModalContainer, openModal} from "../../src/index";
 import ModalMulti from "./modal-multi.vue";
 
   async function openModalDuplicate() {

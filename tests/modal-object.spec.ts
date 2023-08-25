@@ -1,4 +1,4 @@
-import {container, modalQueue, openModal} from "../plugin/index";
+import {container, modalQueue, openModal} from "../src/index";
 import ModalTitle from "./components/modal-title.vue";
 import {mount} from "@vue/test-utils";
 import wait from "./wait";

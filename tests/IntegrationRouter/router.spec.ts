@@ -1,10 +1,10 @@
 import {mount} from "@vue/test-utils";
 import router from "./router";
 import {nextTick} from "vue";
-import {getCurrentModal, modalQueue, useModalRouter} from "../../plugin/index";
+import {getCurrentModal, modalQueue, useModalRouter} from "../../src/index";
 import wait from "../wait";
 import App from "./App.vue";
-import Modal from "../../plugin/utils/Modal";
+import Modal from "../../src/utils/Modal";
 import {render} from "@testing-library/vue";
 
 beforeEach(async () => {

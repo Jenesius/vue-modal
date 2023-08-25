@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer} from "../../plugin/index";
+import {container as ModalContainer} from "../../src/index";
 </script>
 <style>
 @import "./../../web/default-style.css";

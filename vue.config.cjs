@@ -1,7 +1,7 @@
 module.exports = {
 	pages: {
 		index: {
-			entry: 'web/src/main.ts'
+			entry: 'project/src/main.ts'
 		},
 		"prompt-modal": {
 			entry: "examples/prompt-modal/main.ts"

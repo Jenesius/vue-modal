@@ -1,6 +1,6 @@
 import {createRouter, RouterView, createMemoryHistory} from "vue-router"
 
-import useModalRouter from "../../plugin/routerIntegration";
+import useModalRouter from "../../src/routerIntegration";
 import Modal from "./Modal.vue";
 
 const routes = [

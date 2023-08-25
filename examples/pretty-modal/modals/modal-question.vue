@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {closeModal, pushModal} from "./../../../plugin"
+import {closeModal, pushModal} from "../../../src/index.js"
 import ModalConfirm from "./modal-confirm.vue";
 import {ref} from "vue";
 

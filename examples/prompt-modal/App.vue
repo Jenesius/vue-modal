@@ -15,7 +15,7 @@ import {onMounted, ref} from "vue";
   const code = ref("")
 
   async function openCodeModal() {
-    code.value = await promptModal(ModalCode)
+    code.value = await promptModal(ModalCode) as string
   }
 
   onMounted( () => {
@@ -24,5 +24,5 @@ import {onMounted, ref} from "vue";
 
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 </style>

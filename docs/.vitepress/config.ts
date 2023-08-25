@@ -7,7 +7,7 @@ export default {
 	themeConfig: {
 		nav: nav(),
 		sidebar: sidebar(),
-		logo: './../images/logo.svg',
+		logo: '/images/logo.svg',
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/Jenesius/vue-modal' },
 		],
@@ -16,46 +16,158 @@ export default {
 			copyright: "Copyright © 2022-present Jenesius",
 		},
 	},
-	
-}
+	locales: {
+		root: {
+			dir: "en",
+			label: "English",
+		},
+		ru: {
 
-function nav() {
+			label: "Русский",
+			lang: "ru",
+			description: "Система форм для Vue",
+			themeConfig: {
+				nav: nav('ru'),
+				sidebar: sidebar('ru'),
+				outline: {
+					label: "На этой странице",
+				},
+				docFooter: {
+					prev: 'Предыдущая страница',
+					next: 'Следующая страница',
+				},
+				sidebarMenuLabel: 'Меню',
+				returnToTopLabel: 'Вернуться наверх',
+				langMenuLabel: 'Изменить язык',
+				darkModeSwitchLabel: 'Изменить тему'
+			},
+
+		},
+
+	},
+}
+const defaultLang = 'en';
+type Lang = 'ru' | 'en'
+function nav(lang: Lang = defaultLang) {
+	const getLink = getLinkHandler(lang);
+	const getLabel = getLabelHandler(lang);
 	return [
-		{ text: 'Guide', link: '/guide/getting-started', activeMatch: '/guide/' },
-		{ text: 'Examples', link: '/examples/list', activeMatch: '/examples/' },
-		{ text: 'Found mistake?', link: 'https://github.com/Jenesius/vue-modal/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=[BUG]'},
+		{ text: getLabel('guide'), link: getLink('/guide/getting-started'), activeMatch: getLink('/guide/') },
+		{ text: getLabel('examples'), link: getLink('/examples/list'), activeMatch: getLink('/examples/') },
+		{ text: getLabel('found mistake?'), link: 'https://github.com/Jenesius/vue-modal/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=[BUG]'},
 	]
 }
-function sidebar() {
+function sidebar(lang: Lang = defaultLang) {
+	const getLink = getLinkHandler(lang);
+	const getLabel = getLabelHandler(lang);
 	return [
 		{
-			text: 'Guide',
+			text: getLabel('guide'),
 			items: [
-				{ text: 'Getting started', link: '/guide/getting-started' },
-				{ text: 'Methods', link: '/guide/guide-methods' },
-				{ text: 'Navigation Guards', link: '/guide/guide-navigation-guards' },
-				{ text: 'Returned value', link: '/guide/guide-returned-value' },
-				{ text: 'Store', link: "/guide/store" }
+				{ text: getLabel('get started!'), link: getLink('/guide/getting-started') },
+				{ text: getLabel('methods'), link: getLink('/guide/guide-methods') },
+				{ text: getLabel('navigation guards'), link: getLink('/guide/guide-navigation-guards') },
+				{ text: getLabel('returned value'), link: getLink('/guide/guide-returned-value') },
+				{ text: getLabel('store'), link: getLink("/guide/store") }
 			]
 		},
 		{
-			text: 'Details',
+			text: getLabel('details'),
 			items: [
-				{ text: 'ModalObject', link: '/guide/modal-object'},
-				{ text: 'Styles', link: '/guide/details-styles'},
-				{ text: 'Config', link: '/guide/config.md'},
-				{ text: 'Event close', link: '/guide/event-close' },
-				{ text: 'Animation', link: '/guide/details-animation'},
+				{ text: getLabel('modalObject'), link: getLink('/guide/modal-object')},
+				{ text: getLabel('styles'), link: getLink('/guide/details-styles')},
+				{ text: getLabel('config'), link: getLink('/guide/config.md')},
+				{ text: getLabel('event close'), link: getLink('/guide/event-close') },
+				{ text: getLabel('animation'), link: getLink('/guide/details-animation')},
 			]
 		},
 		{
-			text: 'Integration With VueRouter',
+			text: getLabel('integration With VueRouter'),
 			items: [
-				{ text: 'Introduction', link: '/guide/integration-introduction'},
-				{ text: 'Installation', link: '/guide/integration-installation'},
-				{ text: 'Practical', link: '/guide/integration-practical'},
-				{ text: 'Closing Modal with Router', link: '/vue-router-integration/close-after-route-changed' }
+				{ text: getLabel('introduction'), link: getLink('/guide/integration-introduction')},
+				{ text: getLabel('installation'), link: getLink('/guide/integration-installation')},
+				{ text: getLabel('practical'), link: getLink('/guide/integration-practical')},
+				{ text: getLabel('closing Modal with Router'), link: getLink('/vue-router-integration/close-after-route-changed') }
 			]
 		}
 	]
+}
+
+
+
+
+function getLabelHandler(lang: Lang) {
+	const labelStore = {
+		'details': {
+			ru: 'детали'
+		},
+		'modalObject': {
+			ru: 'modalObject'
+		},
+		'styles': {
+			ru: 'стили'
+		},
+		'event close': {
+			ru: 'Событие закрытия'
+		},
+		animation: {
+			ru: 'анимация'
+		},
+		'integration With VueRouter': {
+			ru: 'интеграция с VueRouter'
+		},
+		'introduction': {
+			ru: 'введение'
+		},
+		'installation': {
+			ru: 'установка'
+		},
+		'practical': {
+			ru: 'передача параметров'
+		},
+		'closing Modal with Router': {
+			ru: 'закрытие модального окна через маршрут'
+		},
+		'store': {
+			ru: 'хранилище'
+		},
+		'returned value': {
+			ru: 'возвращаемое значение'
+		},
+		'navigation guards': {
+			ru: 'навигационные хуки'
+		},
+		'methods': {
+			ru: 'методы'
+		},
+		'guide': {
+			ru: 'руководство'
+		},
+		'examples': {
+			ru: 'примеры'
+		},
+		'found mistake?': {
+			ru: 'нашли ошибку?'
+		},
+		'get started!': {
+			ru: 'приступим!'
+		},
+		'config': {
+			ru: 'конфигурация'
+		}
+	}
+	return function getLabel(label: keyof typeof labelStore) {
+		function upper(str: string) {
+			if (!str) return '---- -- -----'
+			return str[0].toUpperCase() + str.slice(1);
+		}
+		if (lang === defaultLang) return upper(label);
+		return upper(labelStore[label][lang])
+	}
+}
+function getLinkHandler(lang: Lang) {
+	return function getLink(link: string) {
+		if (lang === defaultLang) return link;
+		return [lang, link].join('/');
+	}
 }

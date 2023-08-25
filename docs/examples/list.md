@@ -1,6 +1,6 @@
 - [Simple modal](simple-modal.md) 
 - [Prompt modal](prompt-modal.md)
 - [Multi modal](multi-modals.md)
-- [VueRouter with Modals](vue-router-with-modals.md)
+- [VueRouter with Modals](../ru/examples/vue-router-with-modals.md)
 - [Demo](demo.md)
 - [Animation](animation.md)

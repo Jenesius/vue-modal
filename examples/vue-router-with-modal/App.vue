@@ -14,5 +14,5 @@
 import {container as ModalContainer} from "../../src/index";
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 </style>

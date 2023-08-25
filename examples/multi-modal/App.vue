@@ -17,5 +17,6 @@ import ModalMulti from "./modal-multi.vue";
 
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
+
 </style>

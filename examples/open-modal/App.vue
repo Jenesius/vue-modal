@@ -11,5 +11,5 @@ import Modal from "./modal.vue";
 
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 </style>

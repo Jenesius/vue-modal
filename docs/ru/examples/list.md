@@ -1,0 +1,6 @@
+- [Простое модальное окно](simple-modal.md) 
+- [Возращение значение из модального окна](prompt-modal.md)
+- [Множественные модальные окна](multi-modals.md)
+- [vue-router с модальными окнами](../ru/examples/vue-router-with-modals.md)
+- [Демо](demo.md)
+- [Анимации](animation.md)

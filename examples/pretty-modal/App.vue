@@ -54,7 +54,7 @@ type a = typeof ModalProfile;
 
 </script>
 <style scoped>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 
 * {
 	font-family: sans-serif;

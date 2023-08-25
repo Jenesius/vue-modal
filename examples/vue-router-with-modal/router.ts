@@ -1,4 +1,4 @@
-import {createRouter, RouterView, createMemoryHistory} from "vue-router"
+import {createRouter, RouterView, createWebHistory} from "vue-router"
 
 import useModalRouter from "../../src/routerIntegration";
 import Modal from "./Modal.vue";
@@ -16,7 +16,7 @@ const routes = [
 
 const router =  createRouter({
     routes,
-    history: createMemoryHistory()
+    history: createWebHistory("/vue-router-with-modal")
 })
 
 useModalRouter.init(router);

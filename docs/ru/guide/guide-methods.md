@@ -1,11 +1,13 @@
-# Methods
+# Методы
 
-## Open Modal
-The openModal method is used to display a component in a modal window container. Before showing the modal window, the method will close all open modal windows, if it succeeds, it will open a new one. Two parameters are accepted as input:
-- **VueComponent** - a component object that will be rendered as a modal window. Also you can use **string** the name
-that was previously stored in the repository. [Read more](/guide/store) about it.
+## Открытие окна
+Метод openModal используется для отображения компоненты в контейнере модального окна. Перед показом модального окна 
+метод закроет все открытые модальные окна и в случае успеха откроет новое. В качестве входных принимаются два параметра:
+- **VueComponent** — объект-компонент, который будет отображаться как модальное окно. Также вы можете использовать
+**строку** - текстовая метка модального окна, которая ранее была добавлена в [хранилище](./store).
 
-- **props** - the object that contains the input parameters that are passed to the modal and will be accessible from props.
+- **props** — объект, содержащий входные параметры, которые передаются в модальное окно и будут доступны из `props`.
+
 ```ts
 import {openModal} from "jenesius-vue-modal";
 import VueComponent from "AnyVueComponent.vue";
@@ -27,31 +29,35 @@ openModal(VueComponent, props)
     }
 </script>
 ```
-**Return value**: Promise that, if successful, will return a [ModalObject](/guide/modal-object).
+
+**Возвращаемое значение**: `Promise`, который в случае успеха открытия модального окна вернет
+[ModalObject](./modal-object).
+
 ```ts
 //{id, close, onclose, closed, instance}
 const modal = await openModal(VueComponent);
 ```
-## Push Modal
-The pushModal method is used to show a modal window, but, unlike openModal, it does not close previously opened modals, but shows the new one on top of the rest. Two parameters are accepted as input:
-- **VueComponent** - a component object that will be rendered as a modal window.
+## Добавления модального окна
+Метод pushModal используется для показа модального окна, но, в отличие от openModal, он не закрывает ранее открытые
+модальные окна, а показывает новое поверх остальных. В качестве входных принимаются два параметра:
+- **VueComponent** — объект-компонент, который будет отображаться как модальное окно.
 
-- **props** - the object that contains the input parameters that are passed to the modal and will be accessible from props.
-
+- **props** — объект, содержащий входные параметры, которые передаются в модальное окно и будут доступны из `props`.
 ```ts
 import {pushModal} from "jenesius-vue-modal"
 pushModal(VueComponent)
 ```
 ```vue
 <template>
-    <button @click = "add">Push second</button>
+    <button @click = "add">Добавить следующее</button>
 </template>
 <script setup>
     import {pushModal} from "jenesius-vue-modal";
-    import ModalSecond from "ModalSecond";
+    import ModalSecond from "ModalSecond.vue";
+    
 	function add() {
 		pushModal(ModalSecond);
-	}
+    }
 </script>
 ```
 ```vue

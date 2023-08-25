@@ -42,7 +42,7 @@ onUnmounted(() => {
 
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 
 .custom-fade-enter-active,
 .custom-fade-leave-active,

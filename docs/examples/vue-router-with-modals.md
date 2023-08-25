@@ -1,7 +1,7 @@
 # VueRouter with Modals
 
 It turned out to be problematic on the site to display an example for working with vue-router, but you can familiarize yourself with it by running
-`npm run serve` and go to **/vue-router**.
+`npm run serve` and go to **/vue-router-with-modal**.
 
 In this example, we'll look at how vue-router integration works and how to use it.
 

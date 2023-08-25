@@ -30,7 +30,10 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.11",
     "@babel/plugin-transform-runtime": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
     "@babel/preset-typescript": "^7.16.0",
     "@rollup/plugin-typescript": "^8.3.0",
     "@testing-library/vue": "^6.6.1",

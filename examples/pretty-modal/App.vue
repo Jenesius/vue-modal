@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, openModal, popModal, pushModal} from "../../plugin/index";
+import {container as ModalContainer, openModal, popModal, pushModal} from "../../src/index";
 import ModalAlert from "./modals/modal-alert.vue";
 import ModalConfirm from "./modals/modal-confirm.vue";
 import ModalQuestion from "./modals/modal-question.vue";
@@ -54,7 +54,7 @@ type a = typeof ModalProfile;
 
 </script>
 <style scoped>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 
 * {
 	font-family: sans-serif;

@@ -31,9 +31,9 @@
     ]
   },
   "include": [
-    "web/**/*.ts",
-    "web/**/*.tsx",
-    "web/**/*.vue",
+    "project/**/*.ts",
+    "project/**/*.tsx",
+    "project/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

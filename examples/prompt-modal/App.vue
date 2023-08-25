@@ -8,14 +8,14 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, promptModal} from "../../plugin/index";
+import {container as ModalContainer, promptModal} from "../../src/index";
 import {onMounted, ref} from "vue";
   import ModalCode from "./modal-code.vue";
 
   const code = ref("")
 
   async function openCodeModal() {
-    code.value = await promptModal(ModalCode)
+    code.value = await promptModal(ModalCode) as string
   }
 
   onMounted( () => {
@@ -24,5 +24,5 @@ import {onMounted, ref} from "vue";
 
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 </style>

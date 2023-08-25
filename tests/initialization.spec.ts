@@ -1,4 +1,4 @@
-import {container, openModal} from "../plugin/index";
+import {container, openModal} from "../src/index";
 import ModalTitle from "./components/modal-title.vue";
 import {render} from "@testing-library/vue";
 

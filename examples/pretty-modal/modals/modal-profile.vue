@@ -18,7 +18,7 @@
 
 <script setup>
 import {Form, InputField} from "jenesius-vue-form";
-import {closeModal} from "./../../../plugin"
+import {closeModal} from "../../../src/index"
 const genders = {
   'f': 'Female',
   'm': 'Male'

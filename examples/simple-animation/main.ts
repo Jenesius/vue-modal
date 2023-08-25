@@ -1,6 +1,6 @@
 import {createApp} from "vue"
 import App from "./App.vue";
-import {config} from "../../plugin/utils/config";
+import {config} from "../../src/utils/config";
 
 config({
 	animation: "custom-fade"

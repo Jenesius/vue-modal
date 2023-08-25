@@ -1,4 +1,4 @@
-import {container, openModal} from "../plugin/index";
+import {container, openModal} from "../src/index";
 import {fireEvent, render} from "@testing-library/vue";
 import ModalButton from "./components/modal-button.vue";
 

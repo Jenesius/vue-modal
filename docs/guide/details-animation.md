@@ -4,7 +4,7 @@ to override some properties and styles. Default for animating modal windows uses
 **modal-list** as the animation name. To override the animation name, you need
 to specify a new one in the configuration:
 ```ts
-import {config} from "../../../../plugin";
+import {config} from "jenesius-vue-modal";
 
 config({
     animation: "fade" // Any name

@@ -1,7 +1,7 @@
 import {mount} from "@vue/test-utils";
-import {container, modalQueue, openModal} from "../plugin/index";
-import Modal from "../plugin/utils/Modal";
-import pushModal from "../plugin/methods/pushModal";
+import {container, modalQueue, openModal} from "../src/index";
+import Modal from "../src/utils/Modal";
+import pushModal from "../src/methods/pushModal";
 import ModalTitle from "./components/modal-title.vue";
 beforeEach(async () => {
 	modalQueue.value = [];

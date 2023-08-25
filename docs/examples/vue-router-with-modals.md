@@ -1,7 +1,7 @@
 # VueRouter with Modals
 
 It turned out to be problematic on the site to display an example for working with vue-router, but you can familiarize yourself with it by running
-`npm run serve` and go to **/vue-router**.
+`npm run serve` and go to **/vue-router-with-modal**.
 
 In this example, we'll look at how vue-router integration works and how to use it.
 
@@ -10,7 +10,7 @@ component. It is with the help of it that our components will be wrapped in moda
 config file for vue-router:
 ```ts
 import {createRouter, createWebHashHistory} from "vue-router"
-import {useModalRouter} from "../../plugin/routerIntegration";
+import {useModalRouter} from "jenesius-vue-mdoal";
 import Modal from "./any-modal.vue";
 
 const routes = [

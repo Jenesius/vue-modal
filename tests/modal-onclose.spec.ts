@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import {mount} from "@vue/test-utils";
-import {closeModal, container, modalQueue, openModal} from "../plugin";
+import {closeModal, container, modalQueue, openModal} from "../src/index";
 import {nextTick} from "vue";
 import ModalTitle from "./components/modal-title.vue";
 let wrapper:any = null;

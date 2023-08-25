@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import {config, container as ModalContainer, openModal} from "../../plugin/index";
+import {config, container as ModalContainer, openModal} from "../../src/index";
 import ModalProfile from "../pretty-modal/modals/modal-profile.vue";
 import {onBeforeMount, onUnmounted} from "vue";
 
@@ -42,7 +42,7 @@ onUnmounted(() => {
 
 </script>
 <style>
-@import "./../../web/default-style.css";
+@import "./../../project/default-style.css";
 
 .custom-fade-enter-active,
 .custom-fade-leave-active,

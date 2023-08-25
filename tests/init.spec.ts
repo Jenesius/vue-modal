@@ -4,12 +4,12 @@ import { mount } from '@vue/test-utils'
 import {nextTick} from "vue";
 
 
-import {modalQueue, closeModal, openModal, popModal, pushModal, container} from "../plugin/index";
+import {modalQueue, closeModal, openModal, popModal, pushModal, container} from "../src/index";
 
-import WidgetModalContainerItem from "../plugin/components/WidgetModalContainerItem.vue";
+import WidgetModalContainerItem from "../src/components/WidgetModalContainerItem.vue";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
-import ModalError from "../plugin/utils/ModalError";
+import ModalError from "../src/utils/ModalError";
 
 beforeEach(async () => {
   modalQueue.value = [];

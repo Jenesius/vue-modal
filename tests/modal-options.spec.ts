@@ -4,7 +4,7 @@ import {
 	container,
 	modalQueue,
 	openModal,
-} from "../plugin/index";
+} from "../src/index";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 

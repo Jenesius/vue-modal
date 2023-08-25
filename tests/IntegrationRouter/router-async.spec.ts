@@ -5,7 +5,7 @@
  * */
 import router from "./router";
 import {mount} from "@vue/test-utils";
-import {modalQueue, useModalRouter, container} from "../../plugin/index";
+import {modalQueue, useModalRouter, container} from "./../../src/index";
 import wait from "../wait";
 
 beforeEach(async () => {

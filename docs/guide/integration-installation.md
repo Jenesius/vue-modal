@@ -1,6 +1,6 @@
 # Installation
 
-- Don't forget to [initialize](/guide/getting-started) Jenesius Vue Modal
+- Don't forget to [initialize](./getting-started) Jenesius Vue Modal
 - When creating router add modal integration:
 ```ts
 import { createWebHistory, createRouter} from "vue-router";

@@ -19,7 +19,7 @@ const modal = await openModal(Modal, {
 modal.onclose = () => false
 
 modal.instance.message; // "Welcome"
-modal.closed.value; // true
+modal.closed.value; // false
 
 modal.close() // The modal will not be closed
 ```

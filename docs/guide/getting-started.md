@@ -4,7 +4,7 @@ Jenesius Vue Modal is a lightweight and simple library for working with modal wi
 
 ## Installation
 Npm is recommended for installing a package.
-```
+```shell
 npm i jenesius-vue-modal
 ```
 

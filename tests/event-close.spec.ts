@@ -1,7 +1,6 @@
 import {mount} from "@vue/test-utils";
 import {fireEvent, render} from "@testing-library/vue";
-import {container} from "../plugin/index";
-import openModal from "../plugin/methods/openModal";
+import {container, openModal} from "../src/index";
 import ModalTitle from "./components/modal-title.vue";
 import wait from "./wait";
 

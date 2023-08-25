@@ -1,5 +1,5 @@
 import {mount} from "@vue/test-utils";
-import {closeModal, config, container, modalQueue, openModal, popModal} from "../plugin/index";
+import {closeModal, config, container, modalQueue, openModal, popModal} from "../src/index";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 beforeEach(async () => {

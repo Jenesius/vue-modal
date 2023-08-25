@@ -1,7 +1,7 @@
-import {config, configuration} from "../../plugin/utils/config";
-import {container, modalQueue, openModal, promptModal, pushModal} from "../../plugin/index";
+import { configuration} from "../../src/utils/config";
+import {container, modalQueue, openModal, promptModal, pushModal, config} from "../../src/index";
 import {mount} from "@vue/test-utils";
-import ModalError from "../../plugin/utils/ModalError";
+import ModalError from "../../src/utils/ModalError";
 import ModalTitle from "../components/modal-title.vue";
 import wait from "../wait";
 

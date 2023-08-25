@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {popModal} from "./../../../plugin"
+import {popModal} from "../../../src/index"
 export default {
   props: {
     text: String,

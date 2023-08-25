@@ -44,18 +44,14 @@ pushModal(VueComponent)
 ```
 ```vue
 <template>
-    <button @click = "pushModal">Push second</button>
+    <button @click = "add">Push second</button>
 </template>
-<script>
+<script setup>
     import {pushModal} from "jenesius-vue-modal";
     import ModalSecond from "ModalSecond";
-    export default {
-        setup(){
-            return {
-                pushModal: () => pushModal(ModalSecond)
-            }
-        },
-    }
+	function add() {
+		pushModal(ModalSecond);
+	}
 </script>
 ```
 ```vue

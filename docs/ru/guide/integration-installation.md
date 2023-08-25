@@ -1,6 +1,6 @@
 # Установка
 
-- Не забудьте [проинициализировать](./getting-start) Jenesius Vue Modal
+- Не забудьте [проинициализировать](./getting-started) Jenesius Vue Modal
 - При создании роутера добавьте модальную интеграцию:
 ```ts
 import { createWebHistory, createRouter} from "vue-router";

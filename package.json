@@ -15,12 +15,11 @@
     "docs:serve": "vitepress serve docs"
   },
   "main": "dist/jenesius-vue-modal.cjs.js",
-  "type": "module",
+  "module": "dist/jenesius-vue-modal.es.js",
   "files": [
-    "dist/jenesius-vue-modal.cjs.js",
     "README.MD",
-    "dist/**/*.ts",
-    ".eslintrc",
+    "dist",
+    ".eslintrc.cjs",
     "babel.config.cjs",
     "jest.config.cjs",
     "LICENSE",

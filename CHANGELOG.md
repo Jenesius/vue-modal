@@ -1,3 +1,20 @@
+#### 1.9.1 (2023-08-28)
+
+##### Documentation Changes
+
+*  end ru translate ([3a9838f3](https://github.com/Jenesius/vue-modal/commit/3a9838f385d8da589bf57f3b7e8c2e274d0e3e8a))
+*  add ru Language ([a64ceaa8](https://github.com/Jenesius/vue-modal/commit/a64ceaa8b117c08af39dad2fb57003e8c7ef3638))
+
+##### New Features
+
+*  move from plugin to src ([25492c24](https://github.com/Jenesius/vue-modal/commit/25492c24522dd1ecce10d42c2a80f1e33017b32e))
+*  add example for router-integration ([af156a4a](https://github.com/Jenesius/vue-modal/commit/af156a4a0263084499b791e5e5d6e69e8eb5a7e6))
+
+##### Other Changes
+
+*  remove babel lib ([a4cd95b5](https://github.com/Jenesius/vue-modal/commit/a4cd95b58f5a3d6b640726cab68e6798564fe1cd))
+*  remove died link ([2e9bdba1](https://github.com/Jenesius/vue-modal/commit/2e9bdba161c590837cbc4f3c5a4ac8b32c1d7a6b))
+
 ### 1.9.0 (2023-04-10)
 
 ##### Documentation Changes

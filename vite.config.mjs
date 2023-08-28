@@ -22,16 +22,16 @@ export default defineConfig({
         },
         cssInjectedByJsPlugin(),
         vue(),
-
     ],
     build: {
-
         outDir: resolve( "dist"),
         lib: {
             entry: resolve(__dirname, srcFolder, "index.ts"),
             name: "JenesiusVueModal",
             formats: [`cjs`, 'umd', 'es'],
-
+            fileName(format) {
+                return [NAME, format, 'js'].join('.')
+            }
         },
         rollupOptions: {
             external: ["vue"],

@@ -7,6 +7,7 @@
     <p><a href = "/vue-router-with-modal" class = "example-link">Modals with VueRouter</a></p>
     <p><a href = "/demo" class = "example-link">Demo Example</a></p>
     <p><a href = "/simple-animation" class = "example-link">Animation Example</a></p>
+    <p><a href = "/sidebar-modal" class = "example-link">Sidebar modal Example</a></p>
 	</div>
 </template>
 

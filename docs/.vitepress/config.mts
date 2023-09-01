@@ -4,6 +4,9 @@ export default {
 	head: [
 		['link', { rel: 'icon', href: `/images/logo.png` }]
 	],
+	sitemap: {
+		hostname: "https://modal.jenesius.com"
+	},
 	themeConfig: {
 		nav: nav(),
 		sidebar: sidebar(),

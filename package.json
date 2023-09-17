@@ -25,6 +25,7 @@
     "LICENSE",
     "tests"
   ],
+  "types": "dist/types/index.d.ts",
   "peerDependencies": {
     "vue": "^3.0.0"
   },
@@ -73,6 +74,5 @@
     "type": "git",
     "url": "https://github.com/Jenesius/vue-modal.git"
   },
-  "types": "dist/dts/index.d.ts",
   "url": "https://github.com/Jenesius/vue-modal/issues"
 }

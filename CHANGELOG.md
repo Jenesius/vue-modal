@@ -1,3 +1,13 @@
+#### 1.9.2 (2023-09-17)
+
+##### New Features
+
+*  add example for sidebar-modal, issue [#88](https://github.com/Jenesius/vue-modal/pull/88) ([4eaa39d4](https://github.com/Jenesius/vue-modal/commit/4eaa39d47ec2c58270d93c3d0e6f6fcebb15e2ae))
+
+##### Bug Fixes
+
+*  change src to types. ([3c5add4f](https://github.com/Jenesius/vue-modal/commit/3c5add4fa7326ef33da2148f1dea58ee176bfcee))
+
 #### 1.9.1 (2023-08-28)
 
 ##### Documentation Changes

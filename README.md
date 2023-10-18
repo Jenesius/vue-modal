@@ -62,7 +62,7 @@ openModal(SomeVueComponent, props);
 - props will provide in your component, [example](#example-vuemodalcomponent)
 
 Methods return promise, in this case promise is resolved **modalObject**.
-[More information](https://modal.jenesius.com/docs.html/details#modal-object)
+[More information](https://modal.jenesius.com/guide/modal-object.html)
 ```js
 const modal = await openModal(SomeVueComponent);
 // modal {id, close, onclose, closed, instance, on}
@@ -77,7 +77,7 @@ const modal = await openModal(SomeVueComponent);
 - `popModal` - close last opened modal.
 - `promptModal` - opening a modal window and waiting for a value to be returned. [More information](https://modal.jenesius.com/guide/guide-methods.html#prompt-modal)
 
-For detailed information about existing methods, follow the [link](https://modal.jenesius.com/docs.html/methods)
+For detailed information about existing methods, follow the [link](https://modal.jenesius.com/guide/guide-methods.html)
 
 ```js 
 import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"
@@ -85,7 +85,7 @@ import {openModal, pushModal, closeModal, popModal} from "jenesius-vue-modal"
 
 ## How to return value?
 
-Sometimes a modal needs to return a value. This case is described in detail in the [following article](https://modal.jenesius.com/guide/guide-returned-value).
+Sometimes a modal needs to return a value. This case is described in detail in the [following article](https://modal.jenesius.com/guide/guide-returned-value.html).
 
 ## Handle events
 
@@ -215,10 +215,10 @@ const routes = [
 ```
 
 Now, when route will be */any-route* the Modal window will open.
-For more information see [Docs](https://modal.jenesius.com/docs.html/integration-vue-router).
+For more information see [Docs](https://modal.jenesius.com/guide/integration-introduction.html).
 
 # Style and Animation
-Please refer to the [documentation](https://modal.jenesius.com/docs.html/details#styles) to change the styles or animations of modals.
+Please refer to the [documentation](https://modal.jenesius.com/guide/details-styles.html) to change the styles or animations of modals.
 
 # Example VueModalComponent
 

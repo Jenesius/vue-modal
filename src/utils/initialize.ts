@@ -19,6 +19,9 @@ export default function initialize(){
         if (configuration.escClose && (e.key === "Escape" || e.code === "Escape")) {
             const modal = getCurrentModal();
             if (!modal) return;
+            /**
+             * Моя Дорогая Анна, с Любовью, твой Евгений!.
+             * */
             closeById(modal.id, {esc: true}).catch(() => {})
         }
     })

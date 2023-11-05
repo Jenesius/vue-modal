@@ -1,3 +1,9 @@
+#### 1.9.3 (2023-11-05)
+
+##### Bug Fixes
+
+*  Issue [#92](https://github.com/Jenesius/vue-modal/pull/92). Adding catch for close by ESC. ([d397bfaf](https://github.com/Jenesius/vue-modal/commit/d397bfaf841bb99b08ec52d3c9363dad88238573))
+
 #### 1.9.2 (2023-09-17)
 
 ##### New Features

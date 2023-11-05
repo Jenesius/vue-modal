@@ -8,6 +8,7 @@
     <p><a href = "/demo" class = "example-link">Demo Example</a></p>
     <p><a href = "/simple-animation" class = "example-link">Animation Example</a></p>
     <p><a href = "/sidebar-modal" class = "example-link">Sidebar modal Example</a></p>
+    <p><a href = "/handle-closing" class = "example-link">Handle Closing</a></p>
 	</div>
 </template>
 

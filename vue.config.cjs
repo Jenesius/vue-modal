@@ -26,6 +26,9 @@ module.exports = {
         },
         "sidebar-modal": {
             entry: "examples/side-modal/main.ts"
+        },
+        "handle-closing": {
+            entry: "examples/handle-closing/main.ts"
         }
     }
 }

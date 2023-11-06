@@ -1,6 +1,7 @@
 /**
  * last change: 25.11.2021
  * */
+import {ModalID} from "./Modal";
 
 export default class ModalError extends Error{
     readonly isModalError:boolean = true;
@@ -42,8 +43,8 @@ export default class ModalError extends Error{
         return new ModalError("Modal queue is empty.");
     }
 
-    static NotInitialized(){
-        return new ModalError("Modal Container not found. Put container from jenesius-vue-modal in App's template. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.");
+    static NotInitialized(namespace: string){
+        return new ModalError(`Modal Container not found. Put container from jenesius-vue-modal in App's template. Namespace: ${namespace}. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.`);
     }
 
     static ModalComponentNotProvided(){
@@ -62,6 +63,9 @@ export default class ModalError extends Error{
         return new ModalError(
             `Event name must be a string. Provided: ${eventName}`
         )
+    }
+    static ModalNotFoundByID(id: ModalID) {
+        return new ModalError(`Modal with ID ${id} was not found.`)
     }
     static ModalNotExistsInStore(modalName: string) {
         return new ModalError(

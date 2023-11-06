@@ -19,17 +19,19 @@
 	const containerRef = ref(null);
 	
 	const props = defineProps({
-		id: Number
+		id: Number,
+		namespace: String
 	})
 	
 	const modal = getModalById(props.id);
 	function getModalById(id){
-		return modalState.modalQueue.value.find(elem => elem.id === id);
+
+		return modalState.getNamespace(props.namespace).queue.value.find(elem => elem.id === id);
 	}
 	function handelClick(e	) {
 		if (e.target !== containerRef.value) return;
 		
-		if (modal.backgroundClose) return closeById(modal.id, {background: true}).catch(() => {})
+		if (modal.backgroundClose) return closeById(modal.id, {background: true, namespace: props.namespace}).catch(() => {})
 	}
 
 	watch(() => modalRef.value, newValue => {

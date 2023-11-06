@@ -3,6 +3,8 @@ import moduleState from "./state"
 import {IModalCloseOptions} from "./types";
 import NamespaceStore from "./NamespaceStore";
 
+
+
 export function DTOModalOptions(options: Partial<ModalOptions>): ModalOptions {
 	const output: ModalOptions = {
 		backgroundClose: moduleState.configuration.backgroundClose,
@@ -22,7 +24,6 @@ export function DTOEventClose(obj: Partial<IEventClose> = {}): IEventClose{
 	const defaultValues: IEventClose = {
 		background: false,
 		esc: false,
-		namespace: NamespaceStore.DEFAULT_NAMESPACE
 	}
 
 	return Object.assign(defaultValues, obj);
@@ -34,12 +35,12 @@ export function DTOModalCloseOptions(options?: Partial<IModalCloseOptions>) {
 	return options;
 }
 /**
- * background - Attempt to close modal by clicking on the background.
- *
+ * @param background - Attempt to close modal by clicking on the background.
+ * @param esc - Modal was closed by pressed `Esc`
+ * @param namespace -
  */
 export interface IEventClose {
 	background: boolean,
-	esc: boolean,
-	namespace: string
+	esc: boolean
 }
 

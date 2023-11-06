@@ -22,7 +22,7 @@ afterAll(() => {
 
 describe('Init', () => {
 	it('Run without container, must throw the error', async function () {
-		await expect(() => pushModal(ModalTitle)).rejects.toThrowError(ModalError.NotInitialized());
+		await expect(() => pushModal(ModalTitle)).rejects.toThrowError(ModalError.NotInitialized("default"));
 	});
 
   it ("Initialized", async () => {

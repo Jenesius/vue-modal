@@ -20,19 +20,25 @@ export interface ModalOptions {
     isRoute: boolean,
     namespace: string
 }
-
+export type ModalID = number;
 
 
 export default class Modal{
     /**
      * @description Unique id of each modal window.
      * */
-    public id:number;
+    public id:ModalID;
     events = reactive<Record<string, EventCallback[]>>({})
     /**
      * @description Computed value. True - when the modal was closed.
      * */
     public closed: ComputedRef;
+
+    static readonly STORE= new Map<ModalID, Modal>()
+    /**
+     * @description The text name of namespace which owns the modal windows.
+     * */
+    public readonly namespace: string
 
     /**
      * @description VueComponent that will be mounted like modal.
@@ -108,6 +114,9 @@ export default class Modal{
         const dtoOptions = DTOModalOptions(options);
         this.backgroundClose = dtoOptions.backgroundClose;
         this.isRoute = dtoOptions.isRoute;
+        this.namespace = dtoOptions.namespace;
+
+        Modal.STORE.set(this.id, this);
     }
 
     /**

@@ -29,6 +29,9 @@ module.exports = {
         },
         "handle-closing": {
             entry: "examples/handle-closing/main.ts"
+        },
+        "namespace": {
+            entry: "examples/use-namespace/main.ts"
         }
     }
 }

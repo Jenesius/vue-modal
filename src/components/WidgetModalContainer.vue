@@ -21,6 +21,7 @@
 						return h(WidgetContainerModalItem, {
                             key: modalObject.id,
                             id: modalObject.id,
+							namespace: props.namespace
                         });
 					})
 				})

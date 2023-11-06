@@ -3,6 +3,8 @@ import moduleState from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {Component, markRaw} from "vue";
 import {getComponentFromStore} from "../index";
+import NamespaceStore from "../utils/NamespaceStore";
+import {DTOModalOptions} from "../utils/dto";
 
 /**
  * Sync function for adding modal window.
@@ -11,11 +13,17 @@ import {getComponentFromStore} from "../index";
  * - Component is required.
  * */
 
-export default function _addModal(component: string | Component, params: any, options: Partial<ModalOptions>):Modal{
+export default function _addModal(component: string | Component, params: any, modalOptions: Partial<ModalOptions>):Modal{
 
+	const options = DTOModalOptions(modalOptions);
 	const namespaceState = moduleState.getNamespace(options.namespace);
 
-	if (!namespaceState.initialized) throw ModalError.NotInitialized();
+	/**
+	 * @description Проверка только для namespace по умолчанию. Это сделано из-за того, что дополнительные namespace
+	 * подлежат инициализации. Однако пользователю намеренно не доступен этот метод.
+	 * */
+	if (options.namespace === NamespaceStore.DEFAULT_NAMESPACE && !namespaceState.initialized)
+		throw ModalError.NotInitialized(options.namespace);
 
 	// If component is string. In this case we get the component from store.
 	if (typeof component === "string") {
@@ -23,7 +31,6 @@ export default function _addModal(component: string | Component, params: any, op
 		if (!refComponent) throw ModalError.ModalNotExistsInStore(component);
 		component = refComponent;
 	}
-
 	if (!component) throw ModalError.ModalComponentNotProvided();
 
 

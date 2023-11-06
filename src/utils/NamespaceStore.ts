@@ -18,11 +18,13 @@ export default class NamespaceStore {
 	 * @param {String} namespace - Имя namespace, если значение не передано, оно устанавливается как "default"
 	 * */
 	getByName(namespace: string = NamespaceStore.DEFAULT_NAMESPACE) {
-		if (!this.state.has(namespace))
+		if (!this.state.has(namespace)) {
 			this.state.set(namespace, {
 				queue: ref([]),
 				initialized: false
 			})
+			console.log('+', namespace)
+		}
 
 		return this.state.get(namespace) as INamespaceState;
 	}

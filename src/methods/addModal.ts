@@ -1,5 +1,5 @@
 import Modal, {ModalOptions} from "../utils/Modal";
-import moduleState from "../utils/state";
+import {getNamespace} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {Component, markRaw} from "vue";
 import {getComponentFromStore} from "../index";
@@ -16,7 +16,7 @@ import {DTOModalOptions} from "../utils/dto";
 export default function _addModal(component: string | Component, params: any, modalOptions: Partial<ModalOptions>):Modal{
 
 	const options = DTOModalOptions(modalOptions);
-	const namespaceState = moduleState.getNamespace(options.namespace);
+	const namespaceState = getNamespace(options.namespace);
 
 	/**
 	 * @description Проверка только для namespace по умолчанию. Это сделано из-за того, что дополнительные namespace
@@ -38,7 +38,7 @@ export default function _addModal(component: string | Component, params: any, mo
 
 	/**
 	 * modalQueue.value.push(Object.freeze(modal)) - фундаментальная ошибка!
-	 * Таким способо мы запрещаем изменение любых свойст объекта - что является
+	 * Таким способом мы запрещаем изменение любых свойств объекта - что является
 	 * недопустим исключением, ведь объект может хранить, например, свойство
 	 * `version`, которое по итогу будет не изменяемым.
 	 *
@@ -46,9 +46,9 @@ export default function _addModal(component: string | Component, params: any, mo
 	 *
 	 * modalQueue.value.push(modal) - ошибка!
 	 * Т.к. modalQueue является реактивным объектом и создаётся при помощи ref.
-	 * В итоге все элементы, добавленные в  неё, становятся реактивными полностью.
+	 * В итоге все элементы, добавленные в неё, становятся реактивными полностью.
 	 * Так же получим небольшие проблемы с computed свойствами, поскольку они
-	 * И так уже находятся в реактивном объекте и разложаться.
+	 * И так уже находятся в реактивном объекте и разложатся.
 	 *
 	 * markRaw - пометка для vue, что к данному элементу не надо добавлять никак
 	 * ой реактивности.

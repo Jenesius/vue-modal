@@ -10,13 +10,11 @@
  * */
 
 import {Component, watch} from "vue";
-import {ModalComponentInterface} from "./types";
-import NamespaceStore from "./NamespaceStore";
+import NamespaceStore, {INamespaceKey} from "./NamespaceStore";
 
-export default (function stateModule() {
+const modalState = (function () {
 
     const namespaceStore = new NamespaceStore();
-    const instanceStore: InstancesStorageInterface = {}
     const configuration: ConfigInterface = {
         scrollLock: true,           // Disable scrolling in time when modal is open.
         animation: "modal-list",    // Animation name for transition-group.
@@ -25,27 +23,8 @@ export default (function stateModule() {
         store: {}
     }
 
-
     // Default queue.
-    const modalQueue = getQueueByNamespace()
-    /**
-     * @description The function returns a reactive array of modal windows. The array will be created if it does not
-     * exist for the passed namespace to the store.
-     *
-     * @param {String} namespace - name of  namespace. Default value: "default"
-     */
-    function getQueueByNamespace(namespace: string = "default") {
-        return namespaceStore.getByName(namespace).queue;
-    }
-    function saveInstance(id:number, instance: ModalComponentInterface) {
-        instanceStore[id] = instance;
-    }
-    function getInstance(id : number){
-        return instanceStore[id];
-    }
-    function deleteInstance(id: number) {
-        delete instanceStore[id];
-    }
+    const modalQueue = namespaceStore.getByName().queue;
 
     watch(() => modalQueue.value, () => {
 
@@ -56,15 +35,20 @@ export default (function stateModule() {
     }, {deep: true})
 
     return {
-        getQueueByNamespace,
-        modalQueue,
-        saveInstance,
-        getInstance,
-        deleteInstance,
+        namespaceStore,
         configuration,
-        getNamespace: (name?: string) => namespaceStore.getByName(name)
     }
 })()
+
+/**
+ * @description Метод для получения Namespace.
+ * */
+export function getNamespace(name?: INamespaceKey) {
+    return modalState.namespaceStore.getByName(name);
+}
+
+
+export const configuration = modalState.configuration;
 
 export interface ConfigInterface{
     scrollLock: boolean,
@@ -74,9 +58,3 @@ export interface ConfigInterface{
     store: Record<string, Component>
 }
 
-
-
-
-interface InstancesStorageInterface{
-    [index: number]: ModalComponentInterface
-}

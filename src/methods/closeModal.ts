@@ -1,5 +1,5 @@
 import {runGuardQueue} from "../utils/guards";
-import modalState from "../utils/state";
+import {getNamespace} from "../utils/state";
 import Modal from "../utils/Modal";
 import {IModalCloseOptions} from "../utils/types";
 import {DTOModalCloseOptions} from "../utils/dto";
@@ -10,5 +10,5 @@ import {DTOModalCloseOptions} from "../utils/dto";
 export default function closeModal(options?: Partial<IModalCloseOptions>):Promise<void>{
     options = DTOModalCloseOptions(options);
 
-    return runGuardQueue(modalState.getNamespace(options.namespace).queue.value.map((modalObject:Modal) => () => modalObject.close()))
+    return runGuardQueue(getNamespace(options.namespace).queue.value.map((modalObject:Modal) => () => modalObject.close()))
 }

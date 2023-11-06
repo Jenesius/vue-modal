@@ -1,16 +1,13 @@
 import {IEventClose} from "./dto";
 import {Component, ComputedRef, ExtractPropTypes, Ref, UnwrapRef} from "vue";
+import {INamespaceKey} from "./NamespaceStore";
 
 export type GuardFunction           = (e: IEventClose) => void | boolean | Promise<boolean>
 export type GuardFunctionPromisify  = () => Promise<void>
 
 export interface IModalCloseOptions {
-    namespace?: string
+    namespace?: INamespaceKey
 }
-export interface ModalComponentInterface{
-    [name: string]: any
-}
-
 
 export type WrapComponent<T = {}> = Component &  {
     props?: T,

@@ -2,7 +2,7 @@
  * last change: 18.02.2022
  * */
 import ModalError from "./ModalError";
-import moduleState from "./state";
+import {configuration} from "./state";
 import {ConfigInterface} from "./state";
 
 /**
@@ -16,5 +16,5 @@ import {ConfigInterface} from "./state";
 export function config (options: Partial<ConfigInterface>){
     if (typeof options !== "object") throw ModalError.ConfigurationType(options);
 
-    Object.assign(moduleState.configuration, options)
+    Object.assign(configuration, options)
 }

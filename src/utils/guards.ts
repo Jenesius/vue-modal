@@ -4,7 +4,7 @@
 
 import ModalError from "./ModalError";
 import {GuardFunction, GuardFunctionPromisify} from "./types";
-import moduleState from "./state";
+import {getModalById, ModalID} from "./Modal";
 
 type AvailableKeys = 'close'
 interface GuardsInterface{
@@ -70,7 +70,7 @@ export function runGuardQueue(guards:Array<GuardFunctionPromisify>): Promise<voi
  * If guard return void or true value - resolve.
  * Otherwise reject(err)
  * */
-export function guardToPromiseFn(guard:GuardFunction, id:number, props?: any): GuardFunctionPromisify{
+export function guardToPromiseFn(guard:GuardFunction, id: ModalID, props?: any): GuardFunctionPromisify{
     return () => new Promise((resolve, reject) => {
         /**
          * Next - hook for returned value from guard.
@@ -80,7 +80,7 @@ export function guardToPromiseFn(guard:GuardFunction, id:number, props?: any): G
             resolve();
         };
 
-        Promise.resolve(guard.call(moduleState.getInstance(id), props))
+        Promise.resolve(guard.call(getModalById(id)?.instance, props))
         .then(next)
         .catch(err => reject(err));
     });

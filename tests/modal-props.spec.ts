@@ -118,7 +118,6 @@ describe('Props of Modal', () => {
 		
 		refState.value.title = 'New value';
 		await wait();
-		
 		expect(modal.instance.title).toBe('New value');
 	})
 

@@ -2,14 +2,14 @@ import Modal from "./Modal";
 import {ref, Ref} from "vue";
 
 export default class NamespaceStore {
-	static readonly DEFAULT_NAMESPACE = "default"
+	static readonly DEFAULT_NAMESPACE: INamespaceKey = "default"
 	static instance: NamespaceStore
 
 	constructor() {
 		NamespaceStore.instance = this
 	}
 
-	state = new Map<string, INamespaceState>();
+	state = new Map<INamespaceKey, INamespaceState>();
 
 	/**
 	 * @description Метод возвращает состояние для переданного namespace. Если для переданного namespace состояния не
@@ -17,13 +17,12 @@ export default class NamespaceStore {
 	 *
 	 * @param {String} namespace - Имя namespace, если значение не передано, оно устанавливается как "default"
 	 * */
-	getByName(namespace: string = NamespaceStore.DEFAULT_NAMESPACE) {
+	getByName(namespace: INamespaceKey = NamespaceStore.DEFAULT_NAMESPACE) {
 		if (!this.state.has(namespace)) {
 			this.state.set(namespace, {
 				queue: ref([]),
 				initialized: false
 			})
-			console.log('+', namespace)
 		}
 
 		return this.state.get(namespace) as INamespaceState;
@@ -34,3 +33,4 @@ export interface INamespaceState {
 	queue: Ref<Modal[]>,
 	initialized: boolean
 }
+export type INamespaceKey = number | string;

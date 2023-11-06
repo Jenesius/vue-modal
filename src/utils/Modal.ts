@@ -1,7 +1,3 @@
-/**
- * last change: 18.02.2022
- * */
-
 import {
     Component,
     computed,
@@ -9,21 +5,25 @@ import {
     ref,
     Ref,
 } from "vue";
-import modalState from "./state";
 import guards from "./guards";
 import {GuardFunction} from "./types";
 import closeById from "../methods/closeById";
 import {DTOModalOptions} from "./dto";
+import {getNamespace} from "./state";
+import {INamespaceKey} from "./NamespaceStore";
 
 export interface ModalOptions {
     backgroundClose: boolean,
     isRoute: boolean,
-    namespace: string
+    namespace: Modal['namespace']
 }
 export type ModalID = number;
 
 
 export default class Modal{
+    static readonly STORE= new Map<ModalID, Modal>()
+    protected static modalId = 0;
+
     /**
      * @description Unique id of each modal window.
      * */
@@ -33,12 +33,15 @@ export default class Modal{
      * @description Computed value. True - when the modal was closed.
      * */
     public closed: ComputedRef;
-
-    static readonly STORE= new Map<ModalID, Modal>()
+    /**
+     * @description Ссылка на VueComponent. Используется для получения состояния модального окна. Доступ к data, props,
+     * methods and other.
+     * */
+    public instance?: any
     /**
      * @description The text name of namespace which owns the modal windows.
      * */
-    public readonly namespace: string
+    public readonly namespace: INamespaceKey
 
     /**
      * @description VueComponent that will be mounted like modal.
@@ -49,9 +52,6 @@ export default class Modal{
      * @description Props for VueComponent.
      * */
     public props: Ref;
-
-
-    protected static modalId = 0;
 
     /**
      * @description Click on the background will close modal windows.
@@ -90,7 +90,7 @@ export default class Modal{
          * ЧТО ЛОГИЧНО, НО ПО УЕБАНСКИ
          * ----
          * Более деликатное объяснение:
-         * Раньше в modalQueue ложили просто объект Modal.
+         * Раньше в modalQueue клали просто объект Modal.
          * modalQueue.value.push(Modal)
          * Т.к. modalQueue является реактивным объектом, оно автоматически делает
          * реактивным и все свойства объекта, который кладётся в него. И у нас
@@ -101,7 +101,7 @@ export default class Modal{
          *
          * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
          * */
-        this.closed = computed(() => !modalState.modalQueue.value.includes(this));
+        this.closed = computed(() => !getNamespace(options.namespace).queue.value.includes(this));
 
         /*
         this.closed = computed(
@@ -132,12 +132,7 @@ export default class Modal{
     public set onclose(func: GuardFunction) {
         guards.add(this.id, "close", func);
     }
-    /**
-     * @description Return instance of modal component
-     * */
-    public get instance(){
-        return modalState.getInstance(this.id);
-    }
+
 
     /**
      * @description Method for handle default events from VueComponent.
@@ -154,6 +149,10 @@ export default class Modal{
         }
     }
 
+}
+
+export function getModalById(id: ModalID) {
+    return Modal.STORE.get(id);
 }
 
 export type EventCallback = (v: any) => any

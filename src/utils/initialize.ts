@@ -2,7 +2,7 @@
  * last change: 13.08.2022
  * */
 
-import moduleState from "./state";
+import {configuration} from "./state";
 import getCurrentModal from "../methods/getCurrentModal";
 import closeById from "../methods/closeById";
 import NamespaceStore from "./NamespaceStore";
@@ -20,7 +20,7 @@ export default function initialize(namespace = NamespaceStore.DEFAULT_NAMESPACE)
 
     document.addEventListener("keyup", e => {
         // Closing the last modal window when user pressed Escape
-        if (moduleState.configuration.escClose && (e.key === "Escape" || e.code === "Escape")) {
+        if (configuration.escClose && (e.key === "Escape" || e.code === "Escape")) {
             const modal = getCurrentModal();
             if (!modal) return;
             /**

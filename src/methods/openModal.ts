@@ -1,4 +1,4 @@
-import moduleState from "../utils/state";
+import {getNamespace} from "../utils/state";
 import closeModal from "./closeModal";
 import pushModal from "./pushModal";
 import Modal, {ModalOptions} from "../utils/Modal";
@@ -18,7 +18,7 @@ export default function openModal< P extends WrapComponent>(component: P | strin
 {
     return closeModal()
    .then(() => {
-       const namespaceState = moduleState.getNamespace(options.namespace);
+       const namespaceState = getNamespace(options.namespace);
        if (namespaceState.queue.value.length) throw ModalError.QueueNoEmpty();
    })
     .then(() => pushModal(component, props, options))

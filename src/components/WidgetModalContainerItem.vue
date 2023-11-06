@@ -10,32 +10,27 @@
 		/>
 	</div>
 </template>
-<script setup>
-    import modalState from "../utils/state";
+<script setup >
     import {ref, watch} from "vue";
 	import closeById from "../methods/closeById";
+	import {getModalById} from "../utils/Modal";
 
 	const modalRef = ref(null);
 	const containerRef = ref(null);
 	
 	const props = defineProps({
 		id: Number,
-		namespace: String
 	})
 	
 	const modal = getModalById(props.id);
-	function getModalById(id){
 
-		return modalState.getNamespace(props.namespace).queue.value.find(elem => elem.id === id);
-	}
 	function handelClick(e	) {
 		if (e.target !== containerRef.value) return;
-		
-		if (modal.backgroundClose) return closeById(modal.id, {background: true, namespace: props.namespace}).catch(() => {})
+		if (modal.backgroundClose) return closeById(modal.id, {background: true}).catch(() => {})
 	}
 
 	watch(() => modalRef.value, newValue => {
-		modalState.saveInstance(props.id, newValue);
+		modal.instance = newValue;
 	})
 </script>
 <style>

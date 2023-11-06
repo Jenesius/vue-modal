@@ -2,7 +2,7 @@
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
     import initialize from "../utils/initialize";
     import {h, onMounted, TransitionGroup} from "vue";
-    import moduleState from "../utils/state";
+    import {getNamespace, configuration} from "../utils/state";
 
     export default {
 		props: {
@@ -14,14 +14,13 @@
 			})
 
 			return () => {
-				const namespaceState = moduleState.getNamespace(props.namespace);
+				const namespaceState = getNamespace(props.namespace);
 
-				return h(TransitionGroup, {name: moduleState.configuration.animation}, {
+				return h(TransitionGroup, {name: configuration.animation}, {
 					default: () => namespaceState.queue.value.map(modalObject => {
 						return h(WidgetContainerModalItem, {
                             key: modalObject.id,
-                            id: modalObject.id,
-							namespace: props.namespace
+                            id: modalObject.id
                         });
 					})
 				})

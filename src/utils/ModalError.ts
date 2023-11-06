@@ -2,6 +2,7 @@
  * last change: 25.11.2021
  * */
 import {ModalID} from "./Modal";
+import {INamespaceKey} from "./NamespaceStore";
 
 export default class ModalError extends Error{
     readonly isModalError:boolean = true;
@@ -43,7 +44,7 @@ export default class ModalError extends Error{
         return new ModalError("Modal queue is empty.");
     }
 
-    static NotInitialized(namespace: string){
+    static NotInitialized(namespace: INamespaceKey){
         return new ModalError(`Modal Container not found. Put container from jenesius-vue-modal in App's template. Namespace: ${namespace}. Check documentation for more information https://modal.jenesius.com/docs.html/installation#getting-started.`);
     }
 

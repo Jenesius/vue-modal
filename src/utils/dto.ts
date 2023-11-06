@@ -1,5 +1,5 @@
 import {ModalOptions} from "./Modal";
-import moduleState from "./state"
+import {configuration} from "./state"
 import {IModalCloseOptions} from "./types";
 import NamespaceStore from "./NamespaceStore";
 
@@ -7,7 +7,7 @@ import NamespaceStore from "./NamespaceStore";
 
 export function DTOModalOptions(options: Partial<ModalOptions>): ModalOptions {
 	const output: ModalOptions = {
-		backgroundClose: moduleState.configuration.backgroundClose,
+		backgroundClose: configuration.backgroundClose,
 		isRoute: false,
 		namespace: NamespaceStore.DEFAULT_NAMESPACE
 	};
@@ -30,7 +30,6 @@ export function DTOEventClose(obj: Partial<IEventClose> = {}): IEventClose{
 }
 export function DTOModalCloseOptions(options?: Partial<IModalCloseOptions>) {
 	if (!options) options = {};
-	if (!options.namespace) options.namespace = NamespaceStore.DEFAULT_NAMESPACE;
 
 	return options;
 }

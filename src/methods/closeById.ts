@@ -29,6 +29,7 @@ export default function closeById(id: number, options: Partial<IEventClose> = {}
 
 	return runGuardQueue(arr)
 	.then(() => {
+
 		namespaceState.queue.value.splice(indexRemoveElement, 1);
 
 		guards.delete(id)

@@ -16,7 +16,9 @@ import {WrapComponent} from "../utils/types";
  */
 export default function openModal< P extends WrapComponent>(component: P | string, props: any = {}, options: Partial<ModalOptions> = {}):Promise<Modal>
 {
-    return closeModal()
+    return closeModal({
+        namespace: options.namespace
+    })
    .then(() => {
        const namespaceState = getNamespace(options.namespace);
        if (namespaceState.queue.value.length) throw ModalError.QueueNoEmpty();

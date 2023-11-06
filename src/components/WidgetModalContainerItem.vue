@@ -11,9 +11,8 @@
 	</div>
 </template>
 <script setup>
-    import {saveInstance} from "../utils/instances";
+    import modalState from "../utils/state";
     import {ref, watch} from "vue";
-    import {modalQueue} from "../utils/state";
 	import closeById from "../methods/closeById";
 
 	const modalRef = ref(null);
@@ -25,7 +24,7 @@
 	
 	const modal = getModalById(props.id);
 	function getModalById(id){
-		return modalQueue.value.find(elem => elem.id === id);
+		return modalState.modalQueue.value.find(elem => elem.id === id);
 	}
 	function handelClick(e	) {
 		if (e.target !== containerRef.value) return;
@@ -34,7 +33,7 @@
 	}
 
 	watch(() => modalRef.value, newValue => {
-		saveInstance(props.id, newValue);
+		modalState.saveInstance(props.id, newValue);
 	})
 </script>
 <style>

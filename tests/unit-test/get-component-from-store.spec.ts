@@ -1,10 +1,12 @@
-import {config, configuration} from "../../src/utils/config";
+import {config} from "../../src/index";
 import getComponentFromStore from "../../src/methods/get-component-from-store";
 import ModalTitle from "../components/modal-title.vue";
 
 // Clean store
 beforeEach(() => {
-	configuration.store = {};
+	config({
+		store: {}
+	})
 })
 
 describe("Checking modal in the store", () => {

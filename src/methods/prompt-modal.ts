@@ -1,6 +1,6 @@
 import pushModal from "./pushModal";
 import Modal, {ModalOptions} from "../utils/Modal";
-import {WrapComponent} from "../types/types";
+import {WrapComponent} from "../utils/types";
 
 /**
  * @description Method push modalComponent with provided options and then wait until current component will trigger event

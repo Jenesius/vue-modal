@@ -4,7 +4,7 @@
 
 import ModalError from "./ModalError";
 import {GuardFunction, GuardFunctionPromisify} from "./types";
-import {state} from "./state";
+import moduleState from "./state";
 
 type AvailableKeys = 'close'
 interface GuardsInterface{
@@ -80,7 +80,7 @@ export function guardToPromiseFn(guard:GuardFunction, id:number, props?: any): G
             resolve();
         };
 
-        Promise.resolve(guard.call(state.instanceStorage[id], props))
+        Promise.resolve(guard.call(moduleState.getInstance(id), props))
         .then(next)
         .catch(err => reject(err));
     });

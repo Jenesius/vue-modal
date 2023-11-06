@@ -1,4 +1,3 @@
-import { configuration} from "../../src/utils/config";
 import {container, modalQueue, openModal, promptModal, pushModal, config} from "../../src/index";
 import {mount} from "@vue/test-utils";
 import ModalError from "../../src/utils/ModalError";
@@ -6,7 +5,9 @@ import ModalTitle from "../components/modal-title.vue";
 import wait from "../wait";
 
 beforeEach(() => {
-	configuration.store = {};
+	config({
+		store: {}
+	})
 	modalQueue.value = []
 })
 describe("Add modal by name", () => {

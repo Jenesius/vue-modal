@@ -9,16 +9,16 @@ import {
     ref,
     Ref,
 } from "vue";
-import {modalQueue} from "./state";
+import modalState from "./state";
 import guards from "./guards";
 import {GuardFunction} from "./types";
 import closeById from "../methods/closeById";
-import {getInstance} from "./instances";
-import DtoModalOptions from "./dto-modal-options";
+import {DTOModalOptions} from "./dto";
 
 export interface ModalOptions {
     backgroundClose: boolean,
-    isRoute: boolean
+    isRoute: boolean,
+    namespace: string
 }
 
 
@@ -95,7 +95,7 @@ export default class Modal{
          *
          * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
          * */
-        this.closed = computed(() => !modalQueue.value.includes(this));
+        this.closed = computed(() => !modalState.modalQueue.value.includes(this));
 
         /*
         this.closed = computed(
@@ -105,7 +105,7 @@ export default class Modal{
         if (component.beforeModalClose)
             guards.add(this.id, "close", component.beforeModalClose);
         
-        const dtoOptions = DtoModalOptions(options);
+        const dtoOptions = DTOModalOptions(options);
         this.backgroundClose = dtoOptions.backgroundClose;
         this.isRoute = dtoOptions.isRoute;
     }
@@ -127,7 +127,7 @@ export default class Modal{
      * @description Return instance of modal component
      * */
     public get instance(){
-        return getInstance(this.id);
+        return modalState.getInstance(this.id);
     }
 
     /**

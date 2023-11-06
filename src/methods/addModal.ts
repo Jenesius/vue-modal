@@ -1,6 +1,5 @@
-import {modalQueue} from "../utils/state";
 import Modal, {ModalOptions} from "../utils/Modal";
-import {state} from "../utils/state";
+import moduleState from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {Component, markRaw} from "vue";
 import {getComponentFromStore} from "../index";
@@ -14,7 +13,9 @@ import {getComponentFromStore} from "../index";
 
 export default function _addModal(component: string | Component, params: any, options: Partial<ModalOptions>):Modal{
 
-	if (!state.initialized) throw ModalError.NotInitialized();
+	const namespaceState = moduleState.getNamespace(options.namespace);
+
+	if (!namespaceState.initialized) throw ModalError.NotInitialized();
 
 	// If component is string. In this case we get the component from store.
 	if (typeof component === "string") {
@@ -47,7 +48,7 @@ export default function _addModal(component: string | Component, params: any, op
 	 *
 	 * */
 	//modalQueue.value.push(modal);
-	modalQueue.value.push(markRaw(modal));
+	namespaceState.queue.value.push(markRaw(modal));
 
 	return modal;
 }

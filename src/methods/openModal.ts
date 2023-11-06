@@ -1,9 +1,9 @@
-import {modalQueue} from "../utils/state";
+import moduleState from "../utils/state";
 import closeModal from "./closeModal";
 import pushModal from "./pushModal";
 import Modal, {ModalOptions} from "../utils/Modal";
 import ModalError from "../utils/ModalError";
-import {WrapComponent} from "../types/types";
+import {WrapComponent} from "../utils/types";
 
 /**
  * @description OpenModal that was provided as component.
@@ -18,7 +18,8 @@ export default function openModal< P extends WrapComponent>(component: P | strin
 {
     return closeModal()
    .then(() => {
-       if (modalQueue.value.length) throw ModalError.QueueNoEmpty();
+       const namespaceState = moduleState.getNamespace(options.namespace);
+       if (namespaceState.queue.value.length) throw ModalError.QueueNoEmpty();
    })
     .then(() => pushModal(component, props, options))
 }

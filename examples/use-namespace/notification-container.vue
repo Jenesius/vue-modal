@@ -8,7 +8,6 @@
 	</div>
 </template>
 
-
 <script setup>
 import {getQueueByNamespace} from "@/index";
 const notificationQueue = getQueueByNamespace("notification");

@@ -82,6 +82,7 @@ function sidebar(lang: Lang = defaultLang) {
 				{ text: getLabel('config'), link: getLink('/guide/config.md')},
 				{ text: getLabel('event close'), link: getLink('/guide/event-close') },
 				{ text: getLabel('animation'), link: getLink('/guide/details-animation')},
+				{ text: getLabel('namespace'), link: getLink('/guide/namespace') }
 			]
 		},
 		{
@@ -101,6 +102,7 @@ function sidebar(lang: Lang = defaultLang) {
 
 function getLabelHandler(lang: Lang) {
 	const labelStore = {
+		'namespace': {},
 		'details': {
 			ru: 'детали'
 		},

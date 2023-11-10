@@ -21,7 +21,7 @@ export default function initialize(namespace = NamespaceStore.DEFAULT_NAMESPACE)
     document.addEventListener("keyup", e => {
         // Closing the last modal window when user pressed Escape
         if (configuration.escClose && (e.key === "Escape" || e.code === "Escape")) {
-            const modal = getCurrentModal();
+            const modal = getCurrentModal(namespace);
             if (!modal) return;
             /**
              * Моя Дорогая Анна, с Любовью, твой Евгений!.

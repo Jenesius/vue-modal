@@ -1,10 +1,12 @@
 import {mount} from "@vue/test-utils";
-import {closeModal, config, container, modalQueue, openModal, popModal} from "../src/index";
+import {closeModal, config, container, getQueueByNamespace, openModal, popModal} from "../src/index";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
+import NamespaceStore from "../src/utils/NamespaceStore";
+
+const modalQueue = getQueueByNamespace();
 beforeEach(async () => {
-	modalQueue.value = [];
-	await wait();
+	NamespaceStore.instance.forceClean()
 })
 /**
  * ТЕСТЫ ДЛЯ ФУНКЦИИ CONFIG
@@ -28,11 +30,11 @@ describe("Configuration function", () => {
 
 		});
 		
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 		
 		await wrapper.find(".modal-container").trigger('click');
 
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 	/**
 	 * В случае клика на заднюю область, и установлении параметра backClos
@@ -43,11 +45,11 @@ describe("Configuration function", () => {
 		
 		await openModal(ModalTitle);
 		
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 		
 		await wrapper.find(".modal-container").trigger('click');
 
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 	})
 	/**
 	 * BackClose: false, закрытие при помощи closeModal
@@ -58,11 +60,11 @@ describe("Configuration function", () => {
 		
 		await openModal(ModalTitle);
 		
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 		
 		await closeModal();
 		
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 	/**
 	 * BackClose: false, закрытие при помощи popModal
@@ -73,11 +75,11 @@ describe("Configuration function", () => {
 		
 		await openModal(ModalTitle);
 		
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 		
 		await popModal();
 		
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 	
 	/**
@@ -102,7 +104,7 @@ describe("Configuration function", () => {
 		document.dispatchEvent(event);
 		await wait(10);
 		
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 	/**
 	 * Нажатие на ESC в случае, когда escClose: false
@@ -122,7 +124,7 @@ describe("Configuration function", () => {
 		document.dispatchEvent(event);
 		await wait(10);
 		
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 	})
 	
 	

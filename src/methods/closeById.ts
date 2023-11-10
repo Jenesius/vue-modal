@@ -17,7 +17,7 @@ export default function closeById(id: number, options: Partial<IEventClose> = {}
 	const namespaceState = getNamespace(modal.namespace);
 
 	const indexRemoveElement: number
-		= namespaceState.queue.value.findIndex((item: Modal) => item.id === id);
+		= namespaceState.queue.findIndex((item: Modal) => item.id === id);
 
 	//Modal with id not found
 	if (indexRemoveElement === -1)
@@ -30,7 +30,7 @@ export default function closeById(id: number, options: Partial<IEventClose> = {}
 	return runGuardQueue(arr)
 	.then(() => {
 
-		namespaceState.queue.value.splice(indexRemoveElement, 1);
+		namespaceState.queue.splice(indexRemoveElement, 1);
 
 		guards.delete(id)
 	})

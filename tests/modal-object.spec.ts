@@ -1,7 +1,8 @@
-import {container, modalQueue, openModal} from "../src/index";
+import {container, openModal} from "../src/index";
 import ModalTitle from "./components/modal-title.vue";
 import {mount} from "@vue/test-utils";
 import wait from "./wait";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 
 let wrapper = null;
 
@@ -9,8 +10,7 @@ beforeAll(async () => {
 	wrapper = await mount(container);
 })
 beforeEach(async () => {
-	modalQueue.value = [];
-	await wait()
+	NamespaceStore.instance.forceClean()
 })
 
 describe("ModalObject test", () => {

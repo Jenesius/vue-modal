@@ -21,7 +21,7 @@ export default function openModal< P extends WrapComponent>(component: P | strin
     })
    .then(() => {
        const namespaceState = getNamespace(options.namespace);
-       if (namespaceState.queue.value.length) throw ModalError.QueueNoEmpty();
+       if (namespaceState.queue.length) throw ModalError.QueueNoEmpty();
    })
     .then(() => pushModal(component, props, options))
 }

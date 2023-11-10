@@ -5,11 +5,13 @@
  * */
 import router from "./router";
 import {mount} from "@vue/test-utils";
-import {modalQueue, useModalRouter, container} from "./../../src/index";
+import {useModalRouter, container, getQueueByNamespace} from "./../../src/index";
 import wait from "../wait";
+import NamespaceStore from "../../src/utils/NamespaceStore";
 
+const modalQueue = getQueueByNamespace();
 beforeEach(async () => {
-	modalQueue.value = [];
+	NamespaceStore.instance.forceClean()
 })
 useModalRouter.init(router);
 
@@ -25,7 +27,7 @@ describe("Router async", () => {
 		await router.push("/router-simple-modal");
 		await wait();
 		
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 	})
 	
 	test("Entering modal", async () => {

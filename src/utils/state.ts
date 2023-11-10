@@ -26,11 +26,12 @@ const modalState = (function () {
     // Default queue.
     const modalQueue = namespaceStore.getByName().queue;
 
-    watch(() => modalQueue.value, () => {
+    watch(() => modalQueue, () => {
+
 
         if (!configuration.scrollLock) return;
 
-        if (modalQueue.value.length) document.body.style.overflowY = "hidden";
+        if (modalQueue.length) document.body.style.overflowY = "hidden";
         else document.body.style.overflowY = "auto";
     }, {deep: true})
 

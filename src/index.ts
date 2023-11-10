@@ -27,16 +27,16 @@ function getQueueByNamespace(namespace?: string) {
 }
 
 export {
+    WidgetModalContainer as container,
     Modal,
     closeModal,
     popModal,
     pushModal,
     openModal,
     promptModal,
+    config,
     modalQueue,
     getQueueByNamespace,
-    config,
-    WidgetModalContainer as container,
     onBeforeModalClose,
     useModalRouter,
     getCurrentModal,

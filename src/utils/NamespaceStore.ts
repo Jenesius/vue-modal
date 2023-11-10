@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-import {ref, Ref} from "vue";
+import {reactive} from "vue";
 
 export default class NamespaceStore {
 	static readonly DEFAULT_NAMESPACE: INamespaceKey = "default"
@@ -20,17 +20,26 @@ export default class NamespaceStore {
 	getByName(namespace: INamespaceKey = NamespaceStore.DEFAULT_NAMESPACE) {
 		if (!this.state.has(namespace)) {
 			this.state.set(namespace, {
-				queue: ref([]),
+				queue: reactive([]),
 				initialized: false
 			})
 		}
 
 		return this.state.get(namespace) as INamespaceState;
 	}
+
+	/**
+	 * @description Is Dev method. Using for cleaning all namespace without run quards.
+	 * */
+	forceClean() {
+		this.state.forEach(item => {
+			item.queue.splice(0, item.queue.length)
+		})
+	}
 }
 
 export interface INamespaceState {
-	queue: Ref<Modal[]>,
+	queue: Modal[],
 	initialized: boolean
 }
 export type INamespaceKey = number | string;

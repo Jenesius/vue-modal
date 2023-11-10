@@ -1,10 +1,11 @@
 import {mount} from "@vue/test-utils";
-import {container, modalQueue, openModal} from "../src/index";
+import {container, openModal} from "../src/index";
 import Modal from "../src/utils/Modal";
 import pushModal from "../src/methods/pushModal";
 import ModalTitle from "./components/modal-title.vue";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 beforeEach(async () => {
-	modalQueue.value = [];
+	NamespaceStore.instance.forceClean()
 })
 
 describe("ModalClass", () => {

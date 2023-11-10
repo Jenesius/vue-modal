@@ -55,7 +55,7 @@ export default function _addModal(component: string | Component, params: any, mo
 	 *
 	 * */
 	//modalQueue.value.push(modal);
-	namespaceState.queue.value.push(markRaw(modal));
+	namespaceState.queue.push(markRaw(modal));
 
 	return modal;
 }

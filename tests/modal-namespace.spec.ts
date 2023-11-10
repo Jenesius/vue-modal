@@ -31,32 +31,32 @@ describe("Namespace tests", () => {
 	test("Two separate namespace should display only bind modals", async () => {
 
 		await openModal(ModalTitle);
-		expect(getQueueByNamespace().value.length).toBe(1)
-		expect(getQueueByNamespace(space).value.length).toBe(0)
+		expect(getQueueByNamespace().length).toBe(1)
+		expect(getQueueByNamespace(space).length).toBe(0)
 
 		const t = await pushModal(ModalTitle);
-		expect(getQueueByNamespace().value.length).toBe(2)
-		expect(getQueueByNamespace(space).value.length).toBe(0)
+		expect(getQueueByNamespace().length).toBe(2)
+		expect(getQueueByNamespace(space).length).toBe(0)
 
 		await openModal(ModalTitle, {msg: "test"}, {namespace: space});
-		expect(getQueueByNamespace().value.length).toBe(2)
-		expect(getQueueByNamespace(space).value.length).toBe(1)
+		expect(getQueueByNamespace().length).toBe(2)
+		expect(getQueueByNamespace(space).length).toBe(1)
 	})
 	test("Method closeModal must close only modals for passed namespace", async () => {
 		await pushModal(ModalTitle);
-		expect(getQueueByNamespace().value.length).toBe(1)
+		expect(getQueueByNamespace().length).toBe(1)
 
 		await pushModal(ModalTitle);
-		expect(getQueueByNamespace().value.length).toBe(2)
-		expect(getQueueByNamespace(space).value.length).toBe(0)
+		expect(getQueueByNamespace().length).toBe(2)
+		expect(getQueueByNamespace(space).length).toBe(0)
 
 		await closeModal({namespace: space});
-		expect(getQueueByNamespace().value.length).toBe(2)
-		expect(getQueueByNamespace(space).value.length).toBe(0)
+		expect(getQueueByNamespace().length).toBe(2)
+		expect(getQueueByNamespace(space).length).toBe(0)
 
 		await closeModal();
-		expect(getQueueByNamespace().value.length).toBe(0)
-		expect(getQueueByNamespace(space).value.length).toBe(0)
+		expect(getQueueByNamespace().length).toBe(0)
+		expect(getQueueByNamespace(space).length).toBe(0)
 	})
 	test("Get current modal for namespace", async () => {
 		const modalMain_1 = await pushModal(ModalTitle, {}, {})
@@ -73,8 +73,8 @@ describe("Namespace tests", () => {
 		const modalMain_2 = await pushModal(ModalTitle, {}, {})
 		const modalSub_1 = await pushModal(ModalTitle, {}, {namespace: space})
 
-		expect(getQueueByNamespace().value.map(i => i.id)).toEqual([modalMain_1.id, modalMain_2.id])
-		expect(getQueueByNamespace(space).value.map(i => i.id)).toEqual([modalSub_1.id])
+		expect(getQueueByNamespace().map(i => i.id)).toEqual([modalMain_1.id, modalMain_2.id])
+		expect(getQueueByNamespace(space).map(i => i.id)).toEqual([modalSub_1.id])
 	})
 	test("CloseById should close modal from right namespace", async () => {
 		const modalMain_1 = await pushModal(ModalTitle, {}, {})
@@ -84,8 +84,8 @@ describe("Namespace tests", () => {
 
 		await closeById(modalSub_1.id)
 
-		expect(getQueueByNamespace().value.map(i => i.id)).toEqual([modalMain_1.id, modalMain_2.id])
-		expect(getQueueByNamespace(space).value.map(i => i.id)).toEqual([modalSub_2.id])
+		expect(getQueueByNamespace().map(i => i.id)).toEqual([modalMain_1.id, modalMain_2.id])
+		expect(getQueueByNamespace(space).map(i => i.id)).toEqual([modalSub_2.id])
 	})
 	test("Namespace should be set right", async () => {
 		const modalMain_1 = await pushModal(ModalTitle, {}, {})
@@ -109,4 +109,6 @@ describe("Namespace tests", () => {
 		expect(modalSub_2.closed.value).toBe(true);
 
 	})
+	test("Modal.namespace must be set correctly.", async () => {})
+	test("Modal.closed should return right values from corresponding namespace", async () => {})
 })

@@ -101,7 +101,7 @@ export default class Modal{
          *
          * 10.02.2022 @ЖЕНЯ, КОТОРЫЙ ЕЩЁ ПЛОХО ЗНАЕТ TS.
          * */
-        this.closed = computed(() => !getNamespace(options.namespace).queue.value.includes(this));
+        this.closed = computed(() => !getNamespace(options.namespace).queue.includes(this));
 
         /*
         this.closed = computed(

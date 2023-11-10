@@ -102,7 +102,9 @@ function sidebar(lang: Lang = defaultLang) {
 
 function getLabelHandler(lang: Lang) {
 	const labelStore = {
-		'namespace': {},
+		'namespace': {
+			ru: 'namespace'
+		},
 		'details': {
 			ru: 'детали'
 		},

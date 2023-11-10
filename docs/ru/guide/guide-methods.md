@@ -37,7 +37,7 @@ openModal(VueComponent, props)
 //{id, close, onclose, closed, instance}
 const modal = await openModal(VueComponent);
 ```
-## Добавления модального окна
+## Добавления модального окна {#push-modal}
 Метод pushModal используется для показа модального окна, но, в отличие от openModal, он не закрывает ранее открытые
 модальные окна, а показывает новое поверх остальных. В качестве входных принимаются два параметра:
 - **VueComponent** — объект-компонент, который будет отображаться как модальное окно.
@@ -80,14 +80,14 @@ const modal = await pushModal(VueComponent);
 ```
 To close only the last window, you need to use the [popModal](#pop-modal) method
 
-## Close Modal
+## Close Modal {#close-modal}
 To close **all** modals, use the closeModal method:
 ```ts
 import {closeModal} from "jenesius-vue-modal"
 closeModal()
 ```
 
-## Pop Modal
+## Pop Modal {#pop-modal}
 To close **only the last** modal window, if several were opened 
 using the pushModal method, use the popModal method:
 ```ts
@@ -95,7 +95,7 @@ import {popModal} from "jenesius-vue-modal"
 popModal()
 ```
 
-## Prompt Modal
+## Prompt Modal {#prompt-modal}
 Sometimes there is a request in a modal window that will return some data. It could be
 a modal window for a one-time request that will return the value of the input.
 The *prompt-modal* method is a synonym for pushModal, but increases the eavesdropping detection even further

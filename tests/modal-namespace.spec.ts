@@ -109,6 +109,28 @@ describe("Namespace tests", () => {
 		expect(modalSub_2.closed.value).toBe(true);
 
 	})
-	test("Modal.namespace must be set correctly.", async () => {})
-	test("Modal.closed should return right values from corresponding namespace", async () => {})
+	test("Modal.namespace must be set correctly.", async () => {
+		const modal_default = await openModal(ModalTitle);
+		const modal_notification = await openModal(ModalTitle, {}, { namespace: space });
+
+		expect(modal_default.namespace).toBe(NamespaceStore.DEFAULT_NAMESPACE)
+		expect(modal_notification.namespace).toBe(space)
+	})
+	test("Modal.closed should return right values from corresponding namespace", async () => {
+		const modal_default = await openModal(ModalTitle);
+		const modal_notification = await openModal(ModalTitle, {}, { namespace: space });
+
+		expect(modal_default.closed.value).toBe(false)
+		expect(modal_notification.closed.value).toBe(false)
+
+		await closeModal()
+
+		expect(modal_default.closed.value).toBe(true)
+		expect(modal_notification.closed.value).toBe(false)
+
+		await closeModal({namespace: space})
+
+		expect(modal_default.closed.value).toBe(true)
+		expect(modal_notification.closed.value).toBe(true)
+	})
 })

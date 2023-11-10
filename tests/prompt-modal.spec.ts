@@ -2,7 +2,7 @@ import {mount} from "@vue/test-utils";
 import {container, promptModal} from "../src/index";
 import ModalPromptValue from "./components/modal-prompt-value.vue";
 import wait from "./wait";
-import NamespaceStore from "@/utils/NamespaceStore";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 
 beforeEach(async () => {
     NamespaceStore.instance.forceClean()

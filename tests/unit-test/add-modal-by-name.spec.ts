@@ -3,7 +3,7 @@ import {mount} from "@vue/test-utils";
 import ModalError from "../../src/utils/ModalError";
 import ModalTitle from "../components/modal-title.vue";
 import wait from "../wait";
-import NamespaceStore from "@/utils/NamespaceStore";
+import NamespaceStore from "./../../src/utils/NamespaceStore";
 
 beforeEach(() => {
 	config({

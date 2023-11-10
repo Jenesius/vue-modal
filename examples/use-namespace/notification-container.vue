@@ -11,6 +11,9 @@
 <script setup>
 import {getQueueByNamespace} from "@/index";
 const notificationQueue = getQueueByNamespace("notification");
+
+const queue = getQueueByNamespace('notification');
+
 </script>
 
 <style scoped>

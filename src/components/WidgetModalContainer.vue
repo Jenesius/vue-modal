@@ -2,20 +2,25 @@
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
     import initialize from "../utils/initialize";
     import {h, onMounted, TransitionGroup} from "vue";
-    import {modalQueue} from "../utils/state";
-    import {configuration} from "../utils/config";
+    import {getNamespace, configuration} from "../utils/state";
 
     export default {
-        setup(){
-
-			onMounted(initialize)
+		props: {
+			namespace: String
+		},
+        setup(props){
+			onMounted(() => {
+				initialize(props.namespace)
+			})
 
 			return () => {
+				const namespaceState = getNamespace(props.namespace);
+
 				return h(TransitionGroup, {name: configuration.animation}, {
-					default: () =>modalQueue.value.map(modalObject => {
+					default: () => namespaceState.queue.map(modalObject => {
 						return h(WidgetContainerModalItem, {
                             key: modalObject.id,
-                            id: modalObject.id,
+                            id: modalObject.id
                         });
 					})
 				})

@@ -1,16 +1,17 @@
-/*eslint-disable*/
 import {mount} from "@vue/test-utils";
-import {closeModal, container, modalQueue, openModal} from "../src/index";
+import {closeModal, container, getQueueByNamespace, openModal} from "../src/index";
 import {nextTick} from "vue";
 import ModalTitle from "./components/modal-title.vue";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 let wrapper:any = null;
 
+const modalQueue = getQueueByNamespace();
 beforeAll(async () => {
 	wrapper = await mount(container);
 })
 
 beforeEach(() => {
-	modalQueue.value = [];
+	NamespaceStore.instance.forceClean()
 })
 
 describe("onclose test", () => {
@@ -22,7 +23,7 @@ describe("onclose test", () => {
 
 		await closeModal();
 
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	});
 
 	it("With onclose without return", async () => {
@@ -36,7 +37,7 @@ describe("onclose test", () => {
 		await modal.close();
 
 		expect(testValue).toBe(5);
-		expect(modalQueue.value.length).toBe(0)
+		expect(modalQueue.length).toBe(0)
 	})
 
 	it("With onclose returned false", async() => {
@@ -46,7 +47,7 @@ describe("onclose test", () => {
 
 		await (expect(modal.close())).rejects.toThrow()
 
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 		expect(wrapper.text()).toBe("test-2");
 	})
 
@@ -58,7 +59,7 @@ describe("onclose test", () => {
 
 		await nextTick();
 
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 		expect(wrapper.text()).toBe("");
 	})
 
@@ -76,10 +77,10 @@ describe("onclose test", () => {
 		await closeModal().catch(() => {})
 		await closeModal().catch(() => {})
 
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 
 		await closeModal();
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 	it("Opening modal, before prev window can't be closed", async () => {
 		const modal = await openModal(ModalTitle, {title: "1"});
@@ -105,7 +106,7 @@ describe("onclose test", () => {
 
 		await modal.close();
 
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 
 		expect(count).toBe(3);
 

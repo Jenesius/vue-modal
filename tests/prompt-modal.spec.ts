@@ -1,10 +1,11 @@
 import {mount} from "@vue/test-utils";
-import {container, modalQueue, promptModal} from "../src/index";
+import {container, promptModal} from "../src/index";
 import ModalPromptValue from "./components/modal-prompt-value.vue";
 import wait from "./wait";
+import NamespaceStore from "@/utils/NamespaceStore";
 
 beforeEach(async () => {
-    modalQueue.value = [];
+    NamespaceStore.instance.forceClean()
     await wait()
 })
 

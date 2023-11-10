@@ -1,9 +1,10 @@
-import {modalQueue} from "../utils/state";
 import Modal, {ModalOptions} from "../utils/Modal";
-import {state} from "../utils/state";
+import {getNamespace} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {Component, markRaw} from "vue";
 import {getComponentFromStore} from "../index";
+import NamespaceStore from "../utils/NamespaceStore";
+import {DTOModalOptions} from "../utils/dto";
 
 /**
  * Sync function for adding modal window.
@@ -12,9 +13,17 @@ import {getComponentFromStore} from "../index";
  * - Component is required.
  * */
 
-export default function _addModal(component: string | Component, params: any, options: Partial<ModalOptions>):Modal{
+export default function _addModal(component: string | Component, params: any, modalOptions: Partial<ModalOptions>):Modal{
 
-	if (!state.initialized) throw ModalError.NotInitialized();
+	const options = DTOModalOptions(modalOptions);
+	const namespaceState = getNamespace(options.namespace);
+
+	/**
+	 * @description Проверка только для namespace по умолчанию. Это сделано из-за того, что дополнительные namespace
+	 * подлежат инициализации. Однако пользователю намеренно не доступен этот метод.
+	 * */
+	if (options.namespace === NamespaceStore.DEFAULT_NAMESPACE && !namespaceState.initialized)
+		throw ModalError.NotInitialized(options.namespace);
 
 	// If component is string. In this case we get the component from store.
 	if (typeof component === "string") {
@@ -22,7 +31,6 @@ export default function _addModal(component: string | Component, params: any, op
 		if (!refComponent) throw ModalError.ModalNotExistsInStore(component);
 		component = refComponent;
 	}
-
 	if (!component) throw ModalError.ModalComponentNotProvided();
 
 
@@ -30,7 +38,7 @@ export default function _addModal(component: string | Component, params: any, op
 
 	/**
 	 * modalQueue.value.push(Object.freeze(modal)) - фундаментальная ошибка!
-	 * Таким способо мы запрещаем изменение любых свойст объекта - что является
+	 * Таким способом мы запрещаем изменение любых свойств объекта - что является
 	 * недопустим исключением, ведь объект может хранить, например, свойство
 	 * `version`, которое по итогу будет не изменяемым.
 	 *
@@ -38,16 +46,16 @@ export default function _addModal(component: string | Component, params: any, op
 	 *
 	 * modalQueue.value.push(modal) - ошибка!
 	 * Т.к. modalQueue является реактивным объектом и создаётся при помощи ref.
-	 * В итоге все элементы, добавленные в  неё, становятся реактивными полностью.
+	 * В итоге все элементы, добавленные в неё, становятся реактивными полностью.
 	 * Так же получим небольшие проблемы с computed свойствами, поскольку они
-	 * И так уже находятся в реактивном объекте и разложаться.
+	 * И так уже находятся в реактивном объекте и разложатся.
 	 *
 	 * markRaw - пометка для vue, что к данному элементу не надо добавлять никак
 	 * ой реактивности.
 	 *
 	 * */
 	//modalQueue.value.push(modal);
-	modalQueue.value.push(markRaw(modal));
+	namespaceState.queue.push(markRaw(modal));
 
 	return modal;
 }

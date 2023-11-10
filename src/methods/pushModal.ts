@@ -1,6 +1,6 @@
 import _addModal from "./addModal";
 import Modal, {ModalOptions} from "../utils/Modal";
-import {WrapComponent} from "../types/types";
+import {WrapComponent} from "../utils/types";
 
 /**
  * @description Method push modal to queue. Using this method you can open multiple windows. For closing use popModal

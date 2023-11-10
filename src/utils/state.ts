@@ -9,36 +9,53 @@
  *
  * */
 
-import {ref, watch} from "vue";
-import {configuration} from "./config";
-import Modal from "./Modal";
-import {ModalComponentInterface} from "./types";
+import {Component, watch} from "vue";
+import NamespaceStore, {INamespaceKey} from "./NamespaceStore";
 
-const modalQueue = ref<Modal[]>([]); //All modals that showing now
+const modalState = (function () {
 
-interface InstancesStorageInterface{
-    [index: number]: ModalComponentInterface
+    const namespaceStore = new NamespaceStore();
+    const configuration: ConfigInterface = {
+        scrollLock: true,           // Disable scrolling in time when modal is open.
+        animation: "modal-list",    // Animation name for transition-group.
+        backgroundClose: true,      // Closing on click back area of modal.
+        escClose: true,             // Closing on press ESC key
+        store: {}
+    }
+
+    // Default queue.
+    const modalQueue = namespaceStore.getByName().queue;
+
+    watch(() => modalQueue, () => {
+
+
+        if (!configuration.scrollLock) return;
+
+        if (modalQueue.length) document.body.style.overflowY = "hidden";
+        else document.body.style.overflowY = "auto";
+    }, {deep: true})
+
+    return {
+        namespaceStore,
+        configuration,
+    }
+})()
+
+/**
+ * @description Метод для получения Namespace.
+ * */
+export function getNamespace(name?: INamespaceKey) {
+    return modalState.namespaceStore.getByName(name);
 }
 
-interface StateInterface {
-    initialized: boolean,
-    instanceStorage: InstancesStorageInterface
+
+export const configuration = modalState.configuration;
+
+export interface ConfigInterface{
+    scrollLock: boolean,
+    animation : string,
+    backgroundClose : boolean,
+    escClose   : boolean,
+    store: Record<string, Component>
 }
 
-const state:StateInterface = {
-    initialized: false,
-    instanceStorage: {},
-}
-
-watch(modalQueue.value, () => {
-
-    if (!configuration.scrollLock) return;
-
-    if (modalQueue.value.length) document.body.style.overflowY = "hidden";
-    else document.body.style.overflowY = "auto";
-})
-
-export {
-    modalQueue,
-    state
-}

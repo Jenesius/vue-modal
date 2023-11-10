@@ -1,28 +1,25 @@
-/*eslint-disable*/
-
 import { mount } from '@vue/test-utils'
 import {nextTick} from "vue";
 
 
-import {modalQueue, closeModal, openModal, popModal, pushModal, container} from "../src/index";
+import {closeModal, openModal, popModal, pushModal, container, getQueueByNamespace} from "../src/index";
 
 import WidgetModalContainerItem from "../src/components/WidgetModalContainerItem.vue";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 import ModalError from "../src/utils/ModalError";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 
+const modalQueue = getQueueByNamespace();
 beforeEach(async () => {
-  modalQueue.value = [];
+  NamespaceStore.instance.forceClean()
   await wait();
 })
-afterAll(() => {
-  modalQueue.value = [];
-});
 
 
 describe('Init', () => {
 	it('Run without container, must throw the error', async function () {
-		await expect(() => pushModal(ModalTitle)).rejects.toThrowError(ModalError.NotInitialized());
+		await expect(() => pushModal(ModalTitle)).rejects.toThrowError(ModalError.NotInitialized("default"));
 	});
 
   it ("Initialized", async () => {
@@ -36,16 +33,16 @@ describe('Init', () => {
     const wrap = await mount(container);
 
     await openModal(ModalTitle, {title: "Modal-1"});
-    expect(modalQueue.value.length).toBe(1);
+    expect(modalQueue.length).toBe(1);
 
     //Повторное открытие окна, должно заменить предыдущее
     const modalObject2 = await openModal(ModalTitle, {title: "Modal-2"});
-    expect(modalQueue.value.length).toBe(1);
+    expect(modalQueue.length).toBe(1);
 
 
     expect(wrap.text()).toEqual("Modal-2");
     await modalObject2.close();
-    expect(modalQueue.value.length).toBe(0);
+    expect(modalQueue.length).toBe(0);
 
   })
 
@@ -55,7 +52,7 @@ describe('Init', () => {
     await openModal(ModalTitle);
     await closeModal();
 
-    expect(modalQueue.value.length).toBe(0);
+    expect(modalQueue.length).toBe(0);
 
     await pushModal(ModalTitle);
     await pushModal(ModalTitle);
@@ -63,7 +60,7 @@ describe('Init', () => {
 
     await closeModal();
 
-    expect(modalQueue.value.length).toBe(0);
+    expect(modalQueue.length).toBe(0);
   })
 
   it("pushModal", async () => {
@@ -75,14 +72,14 @@ describe('Init', () => {
     await pushModal(ModalTitle);
     await pushModal(ModalTitle);
 
-    expect(modalQueue.value.length).toBe(4);
+    expect(modalQueue.length).toBe(4);
 
     await pushModal(ModalTitle);
     await pushModal(ModalTitle);
 
     await nextTick();
 
-    expect(modalQueue.value.length).toBe(6);
+    expect(modalQueue.length).toBe(6);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(6);
 
   })
@@ -93,7 +90,7 @@ describe('Init', () => {
     await openModal(ModalTitle);
     await popModal();
 
-    expect(modalQueue.value.length).toBe(0);
+    expect(modalQueue.length).toBe(0);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(0);
 
     await pushModal(ModalTitle);
@@ -103,13 +100,13 @@ describe('Init', () => {
 
     await popModal();
 
-    expect(modalQueue.value.length).toBe(3);
+    expect(modalQueue.length).toBe(3);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(3);
 
     await popModal();
     await popModal();
 
-    expect(modalQueue.value.length).toBe(1);
+    expect(modalQueue.length).toBe(1);
     expect(wrapper.findAll(".widget__modal-container__item").length).toBe(1);
   })
 
@@ -152,14 +149,14 @@ describe('Init', () => {
 
     await nextTick();
 
-    expect(modalQueue.value.length).toBe(1);
+    expect(modalQueue.length).toBe(1);
 
     const event = new KeyboardEvent('keyup', {key: 'Escape'});
     document.dispatchEvent(event);
 
     await nextTick();
 
-    expect(modalQueue.value.length).toBe(0);
+    expect(modalQueue.length).toBe(0);
 
   })
 
@@ -176,7 +173,7 @@ describe('Init', () => {
 
     } catch (e){}
 
-    expect(modalQueue.value.length).toBe(0);
+    expect(modalQueue.length).toBe(0);
 
   })
 
@@ -191,7 +188,7 @@ describe('Init', () => {
       await modal2.close()
     } catch (e) {}
 
-    expect(modalQueue.value.map(item => item.id)).toEqual([modal1.id,modal3.id]);
+    expect(modalQueue.map(item => item.id)).toEqual([modal1.id,modal3.id]);
 
   })
 

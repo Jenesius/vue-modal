@@ -1,14 +1,15 @@
 import {mount} from "@vue/test-utils";
 import router from "./router";
 import {nextTick} from "vue";
-import {getCurrentModal, modalQueue, useModalRouter} from "../../src/index";
+import {getCurrentModal, useModalRouter} from "../../src/index";
 import wait from "../wait";
 import App from "./App.vue";
 import Modal from "../../src/utils/Modal";
 import {render} from "@testing-library/vue";
+import NamespaceStore from "../../src/utils/NamespaceStore";
 
 beforeEach(async () => {
-	modalQueue.value = [];
+	NamespaceStore.instance.forceClean()
 	await router.push("/");
 	await router.isReady();
 	await wait()

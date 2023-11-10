@@ -1,8 +1,9 @@
 import {mount} from "@vue/test-utils";
-import {container, modalQueue, openModal, pushModal} from "../src/index";
+import {container, openModal, pushModal} from "../src/index";
 import ModalTitle from "./components/modal-title.vue"
 import {computed, reactive, ref} from "vue";
 import wait from "./wait";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 
 let wrapper = null;
 
@@ -10,7 +11,7 @@ beforeAll(async () => {
 	wrapper = await mount(container);
 })
 beforeEach(async () => {
-	modalQueue.value = [];
+	NamespaceStore.instance.forceClean()
 	await wait()
 })
 
@@ -118,7 +119,6 @@ describe('Props of Modal', () => {
 		
 		refState.value.title = 'New value';
 		await wait();
-		
 		expect(modal.instance.title).toBe('New value');
 	})
 

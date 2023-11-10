@@ -10,31 +10,27 @@
 		/>
 	</div>
 </template>
-<script setup>
-    import {saveInstance} from "../utils/instances";
+<script setup >
     import {ref, watch} from "vue";
-    import {modalQueue} from "../utils/state";
 	import closeById from "../methods/closeById";
+	import {getModalById} from "../utils/Modal";
 
 	const modalRef = ref(null);
 	const containerRef = ref(null);
 	
 	const props = defineProps({
-		id: Number
+		id: Number,
 	})
 	
 	const modal = getModalById(props.id);
-	function getModalById(id){
-		return modalQueue.value.find(elem => elem.id === id);
-	}
+
 	function handelClick(e	) {
 		if (e.target !== containerRef.value) return;
-		
 		if (modal.backgroundClose) return closeById(modal.id, {background: true}).catch(() => {})
 	}
 
 	watch(() => modalRef.value, newValue => {
-		saveInstance(props.id, newValue);
+		modal.instance = newValue;
 	})
 </script>
 <style>

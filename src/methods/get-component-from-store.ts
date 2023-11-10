@@ -1,4 +1,4 @@
-import {configuration} from "../utils/config";
+import {configuration} from "../utils/state";
 import {Component} from "vue";
 
 /**

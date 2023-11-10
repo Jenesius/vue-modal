@@ -1,32 +1,37 @@
-import {modalQueue, state} from "../utils/state";
+import {getNamespace} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {guardToPromiseFn, runGuardQueue} from "../utils/guards";
 import Modal from "../utils/Modal";
 import {GuardFunction} from "../utils/types";
 import guards from "../utils/guards"
-import {DtoEventClose, IEventClose} from "../utils/event-close";
+import {DTOEventClose, IEventClose} from "../utils/dto";
 
 /**
  * @description Closing modal window by id. Only this method allows you to change the properties of the event-close.
  * */
-export default function closeById(id:number, options: Partial<IEventClose> = {}) {
+export default function closeById(id: number, options: Partial<IEventClose> = {}) {
+	const modal = Modal.STORE.get(id);
 
-    const indexRemoveElement: number
-        = modalQueue.value.findIndex((item:Modal) => item.id === id);
+	if (!modal) return Promise.reject(ModalError.ModalNotFoundByID(id));
 
-    //Modal with id not found
-    if (indexRemoveElement === -1)
-        return Promise.reject(ModalError.Undefined(id));
+	const namespaceState = getNamespace(modal.namespace);
 
-    const arr =
-        guards.get(id, "close")
-        .map((guard:GuardFunction) => guardToPromiseFn(guard, id, DtoEventClose(options)));
+	const indexRemoveElement: number
+		= namespaceState.queue.findIndex((item: Modal) => item.id === id);
 
-    return runGuardQueue(arr)
-        .then(() => {
-            modalQueue.value.splice(indexRemoveElement, 1);
+	//Modal with id not found
+	if (indexRemoveElement === -1)
+		return Promise.reject(ModalError.Undefined(id));
 
-            delete state.instanceStorage[id];
-            guards.delete(id)
-        })
+	const arr =
+		guards.get(id, "close")
+		.map((guard: GuardFunction) => guardToPromiseFn(guard, id, DTOEventClose(options)));
+
+	return runGuardQueue(arr)
+	.then(() => {
+
+		namespaceState.queue.splice(indexRemoveElement, 1);
+
+		guards.delete(id)
+	})
 }

@@ -1,13 +1,15 @@
 import {mount} from "@vue/test-utils";
-import {closeModal, container, modalQueue, onBeforeModalClose, openModal} from "../src/index";
+import {closeModal, container, getQueueByNamespace, onBeforeModalClose, openModal} from "../src/index";
 import wait from "./wait";
+import NamespaceStore from "./../src/utils/NamespaceStore";
 
 let wrap;
+const modalQueue = getQueueByNamespace();
 beforeAll(async () => {
 	wrap = await mount(container);
 })
 beforeEach(async () => {
-	modalQueue.value = [];
+	NamespaceStore.instance.forceClean()
 })
 
 describe("onBeforeModalClose", () => {
@@ -42,10 +44,9 @@ describe("onBeforeModalClose", () => {
 		await openModal(component);
 		await closeModal()
 		.catch(() => {
-			console.log(modalQueue.value.length)
 		})
 
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 	})
 	test("onBeforeModalClose next(true)", async () => {
 		const component = {
@@ -59,7 +60,7 @@ describe("onBeforeModalClose", () => {
 		await openModal(component);
 		await closeModal();
 
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 
 	test("onBeforeModalClose async next(false)", async () => {
@@ -82,7 +83,7 @@ describe("onBeforeModalClose", () => {
 
 		}
 
-		expect(modalQueue.value.length).toBe(1);
+		expect(modalQueue.length).toBe(1);
 	})
 	test("onBeforeModalClose async next(true)", async () => {
 
@@ -99,7 +100,7 @@ describe("onBeforeModalClose", () => {
 		await openModal(component);
 		await closeModal();
 
-		expect(modalQueue.value.length).toBe(0);
+		expect(modalQueue.length).toBe(0);
 	})
 
 

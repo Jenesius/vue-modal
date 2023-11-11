@@ -1,12 +1,41 @@
 # Методы
 
-## Открытие окна {#open-modal}
-Метод openModal используется для отображения компоненты в контейнере модального окна. Перед показом модального окна 
-метод закроет все открытые модальные окна и в случае успеха откроет новое. В качестве входных принимаются два параметра:
-- **VueComponent** — объект-компонент, который будет отображаться как модальное окно. Также вы можете использовать
-**строку** - текстовая метка модального окна, которая ранее была добавлена в [хранилище](./store).
+Данная статья будет поделена на два блока: способы закрытия и способы закрятия ё
+модальных окон.
 
-- **props** — объект, содержащий входные параметры, которые передаются в модальное окно и будут доступны из `props`.
+## Открытие окна
+
+Для открытия модальных окон используется один из следующих методов:
+[openModal](#openModal), [pushModal](#pushModal), [promptModal](#promptModal).
+Каждый из этих методов будет расмотрен по отдельности. Однако общими для этих
+методов являются параметры, которые туда передаются:
+
+- **VueComponent** или **String**. Первый обязательный параметр, в котором мы указываем
+компоненту, которая будет отображаться. В случае, если переда>тся строка то
+компонента будет браться из хранилища. Подробную информацию о хранилище можно
+ознакомиться [злесь](./store).
+- **props**. Второй не обязательные параметр/ Представляет собой набор параметров,
+которые будут переданы в компоненту в качестве `props`.
+- **options**. Третий необязательный параметр. в нём можно указать дополнительные
+параметры, которые будут влиять на поведение модальных окон. Имеет тип `Object`
+со следующими свойствами:
+    - **namespace**. Необязательный параметр с типом `string`. Указывает к какому
+`namespace` будет относится модальное окно. Если данный параметр не указан
+то модальное окно будет открыто в стандартном контейнере. Подробнее про namespace
+можно прочитать [здесь](./namespace).
+
+
+
+## openModal {#open-modal}
+Метод `openModal` используется для отображения компоненты в контейнере
+модального окна. Перед показом модального окна метод закроет все открытые окна и
+в случае успеха откроет новое.
+
+### Возвращаемое значение
+
+Метод вернёт`Promise`, который в случае успеха открытия модального окна вернет
+[ModalObject](./modal-object).
+
 
 ```ts
 import {openModal} from "jenesius-vue-modal";
@@ -14,7 +43,7 @@ import VueComponent from "AnyVueComponent.vue";
 
 const props = {title: "Hello"};
 
-openModal(VueComponent, props)
+openModal(VueComponent, props) // Promise<ModalObject>
 ```
 ```vue
 // anyComponent.vue
@@ -30,55 +59,68 @@ openModal(VueComponent, props)
 </script>
 ```
 
-**Возвращаемое значение**: `Promise`, который в случае успеха открытия модального окна вернет
-[ModalObject](./modal-object).
+## pushModal {#push-modal}
+Метод `pushModal` используется для показа модального окна, но, в отличие от
+`openModal`, он не закрывает ранее открытые модальные окна, а показывает новое 
+поверх остальных. Иными словами данный метод просто добавляет новое окно в очередь.
 
-```ts
-//{id, close, onclose, closed, instance}
-const modal = await openModal(VueComponent);
-```
-## Добавления модального окна {#push-modal}
-Метод pushModal используется для показа модального окна, но, в отличие от openModal, он не закрывает ранее открытые
-модальные окна, а показывает новое поверх остальных. В качестве входных принимаются два параметра:
-- **VueComponent** — объект-компонент, который будет отображаться как модальное окно.
-
-- **props** — объект, содержащий входные параметры, которые передаются в модальное окно и будут доступны из `props`.
 ```ts
 import {pushModal} from "jenesius-vue-modal"
-pushModal(VueComponent)
+pushModal(VueComponent) // Promise<ModalObject>
 ```
-```vue
-<template>
-    <button @click = "add">Добавить следующее</button>
-</template>
-<script setup>
-    import {pushModal} from "jenesius-vue-modal";
-    import ModalSecond from "ModalSecond.vue";
-    
-	function add() {
-		pushModal(ModalSecond);
-    }
-</script>
+
+:::warning
+Чтобы закрыть только последнее открытое модальное окно - воспользуйтесь методом
+[popModal](#pop-modal).
+:::
+
+
+## promptModal {#prompt-modal}
+Иногда основной задачей модального окна является возвращение данных. В таком
+случае модальное окно выступает в качесте некой ступени вашего интерфейса. Именно
+для таких случаев был разработан метод `promptModal`.
+
+Главное его отличие от двух предыдущих методов - он не возвращает объект 
+`ModalObject`. Возвращаемое значение - `Promise`, в случае успешного выполненения
+вернёт результат, которые вы решили вернуть из вашего модального окна. По сути
+данные модальные окна можно рассматривать, как функции. Вы в них передали значения,
+они вернули результат.
+
+Также данная функция не закрывает открытые ранее окна, а добавляет новое поверх.
+
+Чтобы вернуть значение их модального окна воспользуйтесь событием 
+`Modal.EVENT_PROMPT`:
+
+```ts
+import ModalCode from "./ModalCode.vue"
+import {promptModal} from "jenesius-vue-modal"
+const code = await promptModal(ModalCode);
 ```
+
 ```vue
+<!--ModalCode.vue-->
 <template>
-    <button @click = "pushModal">Push first</button>
+  <button @click="handleClick">Click</button>
 </template>
 <script>
-    import {pushModal} from "jenesius-vue-modal";
-    import ModalFirst from "ModalFirst";
-    export default {
-        setup: () => ({pushModal: () => pushModal(ModalFirst)}),
+import {Modal} from "jenesius-vue-modal";
+
+export default {
+  methods: {
+    handleClick() {
+      // Данное событие закроет модальное окно и вернёт Math.random()
+      // в качестве результата Promise
+      this.$emit(Modal.EVENT_PROMPT, Math.random());
     }
+  }
+}
 </script>
 ```
-EXAMPLE
-**Return value**: Promise that, if successful, will return a [ModalObject](/guide/modal-object).
-```ts
-//{id, close, onclose, closed, instance}
-const modal = await pushModal(VueComponent); 
-```
-To close only the last window, you need to use the [popModal](#pop-modal) method
+:::warning
+Не нужно вызывать метод закрытия модального окна, когда вы пользуетесь механизмом
+`Modal.EVENT_PROMPT`. Библиотека сделает это за вас.
+:::
+
 
 ## Close Modal {#close-modal}
 To close **all** modals, use the closeModal method:
@@ -93,36 +135,4 @@ using the pushModal method, use the popModal method:
 ```ts
 import {popModal} from "jenesius-vue-modal"
 popModal()
-```
-
-## Prompt Modal {#prompt-modal}
-Sometimes there is a request in a modal window that will return some data. It could be
-a modal window for a one-time request that will return the value of the input.
-The *prompt-modal* method is a synonym for pushModal, but increases the eavesdropping detection even further
-for **Modal.EVENT_PROMPT** upon execution of which the modal window will be closed and the data will be transferred
-with the event will be the execution of *promptModal*:
-```ts
-import {promptModal} from "jenesius-vue-modal"
-const code = await promptModal(ModalCode);
-```
-File *ModalCode.vue*
-
-```vue
-<template>
-  <button @click="handleClick">Click</button>
-</template>
-<script>
-import {Modal} from "jenesius-vue-modal";
-
-export default {
-  methods: {
-    handleClick() {
-      // Current emit will close the modal and provided Meth.random() 
-      // result to Promise returned by promptModal
-      this.$emit(Modal.EVENT_PROMPT, Math.random());
-    }
-  }
-}
-</script>
-
 ```

@@ -8,6 +8,7 @@ export default {
 		hostname: "https://modal.jenesius.com"
 	},
 	themeConfig: {
+		lastUpdated: true,
 		nav: nav(),
 		sidebar: sidebar(),
 		logo: '/images/logo.svg',

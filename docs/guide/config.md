@@ -23,3 +23,6 @@ interface Config{
 - animation (Default value **modal-list**). Animation name for transition-group.
 - backgroundClose (Default value **true**). Closing on click back area of modal.
 - escClose (Default value **true**). Closing on press ESC key.
+- **disableInitializationCheck**. Default value `false`. If you open a
+modal window after creating a modal-container you need to set this
+property to `true`. Otherwise, you will receive a `NotInitialized` error.

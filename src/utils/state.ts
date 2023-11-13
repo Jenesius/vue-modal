@@ -20,7 +20,8 @@ const modalState = (function () {
         animation: "modal-list",    // Animation name for transition-group.
         backgroundClose: true,      // Closing on click back area of modal.
         escClose: true,             // Closing on press ESC key
-        store: {}
+        store: {},
+        disableInitializationCheck: false
     }
 
     // Default queue.
@@ -51,10 +52,26 @@ export function getNamespace(name?: INamespaceKey) {
 export const configuration = modalState.configuration;
 
 export interface ConfigInterface{
+    /**
+     * @description Disable scrolling in time when modal is open.
+     * */
     scrollLock: boolean,
+    /**
+     * @description Animation name for transition-group.
+     * */
     animation : string,
+    /**
+     * @description Closing on click back area of modal.
+     * */
     backgroundClose : boolean,
+    /**
+     * @description Closing on press ESC key
+     * */
     escClose   : boolean,
+    /**
+     * @description Disable throwing the error when the container has not been initialized.
+     * */
+    disableInitializationCheck: boolean,
     store: Record<string, Component>
 }
 

@@ -1,3 +1,9 @@
+#### 1.10.1 (2023-11-13)
+
+##### New Features
+
+*  add options `disableInitializationCheck`. Issue [#100](https://github.com/Jenesius/vue-modal/pull/100). ([fdacb06c](https://github.com/Jenesius/vue-modal/commit/fdacb06c2e1308a7961194a8f331d9d72962db6f))
+
 ### 1.10.0 (2023-11-13)
 
 ##### Breaking Changes

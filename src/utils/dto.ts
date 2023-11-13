@@ -36,7 +36,6 @@ export function DTOModalCloseOptions(options?: Partial<IModalCloseOptions>) {
 /**
  * @param background - Attempt to close modal by clicking on the background.
  * @param esc - Modal was closed by pressed `Esc`
- * @param namespace -
  */
 export interface IEventClose {
 	background: boolean,

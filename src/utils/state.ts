@@ -28,7 +28,6 @@ const modalState = (function () {
 
     watch(() => modalQueue, () => {
 
-
         if (!configuration.scrollLock) return;
 
         if (modalQueue.length) document.body.style.overflowY = "hidden";

@@ -1,3 +1,32 @@
+### 1.10.0 (2023-11-13)
+
+##### Breaking Changes
+
+*  namespaceQueue moved from `ref` to `reactive`. ([37bc7852](https://github.com/Jenesius/vue-modal/commit/37bc7852e847bc7c5fdac9210bc1ad27be29da34))
+
+##### Documentation Changes
+
+*  update information about methods. ([135b0a19](https://github.com/Jenesius/vue-modal/commit/135b0a199aa48a4e5a230f08d73b6bb559aba0c9))
+*  update information about open modals. ([3cfca5f5](https://github.com/Jenesius/vue-modal/commit/3cfca5f5be5433d1bbb76388bc7468652ce971bc))
+*  add namespace example ([882391e6](https://github.com/Jenesius/vue-modal/commit/882391e68c8859262b2b81d15185fea7c5bd5b1b))
+*  add en version of namespace ([81c76fd5](https://github.com/Jenesius/vue-modal/commit/81c76fd539dc9d1aa05a37aad965e263485458ea))
+*  add information about namespace. ([365834ad](https://github.com/Jenesius/vue-modal/commit/365834ad7ab25ce0fed67245d47188185b638393))
+
+##### Bug Fixes
+
+*  add `--force` for vue installation. ([dc2491c1](https://github.com/Jenesius/vue-modal/commit/dc2491c1a5f877d437602584e1aaac57c2dc6235))
+*  update package.json with fixed version. ([a7727c67](https://github.com/Jenesius/vue-modal/commit/a7727c678c395649a2c56c19fff7aab005847d92))
+
+##### Other Changes
+
+*  prettify namespace example ([30019368](https://github.com/Jenesius/vue-modal/commit/3001936830c03ae2653282e15957c4af3999afec))
+*  use namespace ([28b13b09](https://github.com/Jenesius/vue-modal/commit/28b13b09208f83f744b64f954022e9d6a0c7eafa))
+
+##### Tests
+
+*  add modal closed value and namespace. ([c43aaaf5](https://github.com/Jenesius/vue-modal/commit/c43aaaf5ec6024292599eca62eb2f1cc2a86c0a3))
+*  namespace testing. ([90883573](https://github.com/Jenesius/vue-modal/commit/90883573ea36da7ce35edb89e9ef20f2a6c0a86b))
+
 #### 1.9.3 (2023-11-05)
 
 ##### Bug Fixes

@@ -10,7 +10,8 @@
 
 # Jenesius Vue Modal
 
-Jenesius vue modal is simple modal system library for **Vue 3** only . 
+Jenesius vue modal is a progressive and simple modal system 
+for **Vue 3** only . 
 
 
 Using this library, you can simply show both one and several modal windows at the same time, integrate with vue-router

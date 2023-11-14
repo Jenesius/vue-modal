@@ -1,3 +1,20 @@
+#### 1.10.2 (2023-11-14)
+
+##### Breaking Changes
+
+*  rename disableInitializationCheck to skipInitCheck ([e627df4c](https://github.com/Jenesius/vue-modal/commit/e627df4c73114b2b81f369e802a9b3928b26b56f))
+
+##### Documentation Changes
+
+*  update information about Modal Instance ([4a37a79b](https://github.com/Jenesius/vue-modal/commit/4a37a79bfda333b195a375aa9e1359788a8a29d5))
+*  update information about integration with vue-router ([99dd8f81](https://github.com/Jenesius/vue-modal/commit/99dd8f816a08f143ea3e31184129d103d4c8cd55))
+*  update documentation about config. ([7a9fa239](https://github.com/Jenesius/vue-modal/commit/7a9fa23916bb0225ccaa4a94ea8eb8583368ec90))
+
+##### Other Changes
+
+*  update vue-router integration example ([7dee6339](https://github.com/Jenesius/vue-modal/commit/7dee6339255875ad4529614ec5dcefcbcbd5baef))
+*  update vue-router integration example ([b7d48803](https://github.com/Jenesius/vue-modal/commit/b7d48803f7f6f72ecaeb42ef72bd5ef8874941d4))
+
 #### 1.10.1 (2023-11-13)
 
 ##### New Features

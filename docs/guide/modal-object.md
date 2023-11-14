@@ -1,43 +1,35 @@
-# ModalObject
-The pushModal and openModal methods return an object of the following type:
+# Modal
 
-- **id** - unique identifier of the modal window.
+Methods [openModal](./guide-methods#open-modal),
+[pushModal](./guide-methods#push-modal) return `Promise` which
+is successful, will return a `Modal` object. This object is a class
+modal window and serves to receive or manage the current
+condition. This page will list all available methods
+and properties.
 
-- **close** - a method that allows you to close the created modal window.
+## Properties
 
-- **onclose** is a function that is executed when an attempt is made to close a window. This function can be overridden to control the closing of the window. If **onclose** returns false, the modal will not be closed.
+### `id`
 
-- **instance** - an instance of an open modal window. Allows you to access the properties and methods of the modal window.
+The field is a unique identifier for the modal window.
+Assigned at the time of opening.
 
-- **closed** - computed variable, true if the modal window is open.
+### `instance`
 
+An instance of a modal window component. Used to
+access `$data`, `$props` and other modal window properties.
+
+::: warning
+If you get **instance** in your project together in
+`<script setup>`, you need to remember that in this case the component
+will closed. To open some properties you need to resort to
+[**defineExpose**](https://vuejs.org/api/sfc-script-setup.html#defineexpose).
+:::
+
+If the modal component looks like this:
 ```ts
-import {openModal} from "jenesius-vue-modal";
-const modal = await openModal(Modal, {
-    message: "Welcome"
-});
-modal.onclose = () => false
-
-modal.instance.message; // "Welcome"
-modal.closed.value; // false
-
-modal.close() // The modal will not be closed
-```
-```ts
-const modal = await openModal(Modal);
-
-modal.id; // Unique identity
-
-modal.onclose = () => {
-    if (weather === "rainy") return false;
-}
-
-modal.close() // Close modal if the weather is rainy
-```
-When using **onclose**, we can also access the internal fields and methods of the modal by passing a non-anonymous function as a parameter:
-```vue
-// ./modal.vue
-{
+// modal-component.vue
+export default {
     props: {},
     data: () => {
         return {
@@ -46,15 +38,93 @@ When using **onclose**, we can also access the internal fields and methods of th
     }
 }
 ```
+Then to get the value `insideValue` you need to access
+`instance`:
+
 ```ts
 const modal = await openModal(Modal);
-modal.onclose = function(){
-    this.insideValue; // "Hello"
-    modal.instance.insideValue; // "Hello"
-}
+modal.instance.insideValue; // "Hello"
 ```
 
-## Instance
-If you are tagging **instance** in your project together in `<script setup>`, you need to remember that in this case
-the component will be closed. In order to open some properties, you need to resort to [**defineExpose**]
-(https://vuejs.org/api/sfc-script-setup.html#defineexpose).
+### `isRoute`
+
+Set to `true` if the modal window was open
+by means of integration with `vue-router`.
+
+### `namespace`
+
+The string value of the space to which the modal window belongs.
+The value of this option is set in accordance with the value passed
+in `options` in methods for opening a modal window.
+
+```ts
+openModal(ModalComponent, {}, { namespace: "notification" })
+```
+
+### `component`
+
+Link to the component that will be used as a modal
+window.
+
+### `closed`
+
+`ComputedRef` variable that stores the reactive state of the window.
+Set to `false` if the modal window was open and
+displayed on the page.
+
+### `props`
+
+`Ref` property that stores parameters passed as `props`.
+In the modal window itself, they are also obtained through `props`.
+
+### `backgroundClose`
+
+Sets whether the modal window can be closed by clicking on the background.
+The default value is `true`.
+
+### `onclose`
+
+Sets the modal window close handler. More details can be
+read [here](./guide-methods#onclose).
+
+## Methods
+
+### `close`
+
+The method is used to close the modal window. Returns `Promise`.
+
+### `on`
+
+The method is used to listen to an event from a component. In the open
+in the modal window, events transmitted via `emits` will be intercepted
+and passed to the `on` event:
+
+```ts
+const modal = await openModal(ModalComponent);
+modal.on("update", () => {
+	// ...
+})
+
+```
+
+## Static
+
+Static fields and methods of the `Modal` class.
+
+### `EVENT_PROMPT`
+
+The name of the event that is processed when the modal is opened
+windows via [`promptModal`](./guide-methods#prompt-modal). In such
+case, having initialized this event, the value passed to it
+will be returned to `promptModal` and the modal window will be closed:
+
+```ts
+emits(Modal.EVENT_PROMPT, 100);
+```
+
+You can read more details [here](./guide-returned-value).
+
+### `STORE`
+
+Properties of type `Map<ModalId, Modal>`. When opening any
+modal window, it will be saved in this storage.

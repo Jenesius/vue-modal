@@ -21,7 +21,7 @@ const modalState = (function () {
         backgroundClose: true,      // Closing on click back area of modal.
         escClose: true,             // Closing on press ESC key
         store: {},
-        disableInitializationCheck: false
+        skipInitCheck: false
     }
 
     // Default queue.
@@ -71,7 +71,7 @@ export interface ConfigInterface{
     /**
      * @description Disable throwing the error when the container has not been initialized.
      * */
-    disableInitializationCheck: boolean,
+    skipInitCheck: boolean,
     store: Record<string, Component>
 }
 

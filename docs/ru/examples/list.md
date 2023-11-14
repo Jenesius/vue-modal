@@ -4,3 +4,4 @@
 - [vue-router с модальными окнами](vue-router-with-modals.md)
 - [Демо](demo.md)
 - [Анимации](animation.md)
+- [Боковое модальное окно](sidebar.md)

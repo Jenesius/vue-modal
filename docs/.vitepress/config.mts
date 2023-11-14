@@ -83,7 +83,8 @@ function sidebar(lang: Lang = defaultLang) {
 				{ text: getLabel('config'), link: getLink('/guide/config.md')},
 				{ text: getLabel('event close'), link: getLink('/guide/event-close') },
 				{ text: getLabel('animation'), link: getLink('/guide/details-animation')},
-				{ text: getLabel('namespace'), link: getLink('/guide/namespace') }
+				{ text: getLabel('namespace'), link: getLink('/guide/namespace') },
+				{ text: getLabel('sidebar modal'), link: getLink('/examples/sidebar') },
 			]
 		},
 		{
@@ -162,6 +163,9 @@ function getLabelHandler(lang: Lang) {
 		},
 		'config': {
 			ru: 'конфигурация'
+		},
+		'sidebar modal': {
+			ru: "боковое окно"
 		}
 	}
 	return function getLabel(label: keyof typeof labelStore) {

@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import {closeModal} from "../../src/index";
+import {closeModal} from "../../../src/index";
 
 </script>
 
@@ -19,7 +19,7 @@ import {closeModal} from "../../src/index";
 
 
 		/*not important, just design*/
-		background-color: #d7d7d7;
+		background-color: white;
 		border-radius: 4px;
 		border: 1px solid #b7b7b7;
 		padding: 20px;

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div >
 		Other Modal
 	</div>
 </template>

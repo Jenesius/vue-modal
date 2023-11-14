@@ -1,16 +1,31 @@
 import {createRouter, RouterView, createWebHistory} from "vue-router"
-
+import FlowersList from "./components/FlowersList.vue"
 import useModalRouter from "../../src/routerIntegration";
-import Modal from "./Modal.vue";
+import Modal from "./components/modals/Modal.vue";
+import FlowersModal from "./components/modals/FlowersModal.vue";
+import UserList from "./components/UserList.vue"
 
 const routes = [
+
     {
-        path: "/",
-        component: RouterView
+        path: "/users",
+        component: UserList,
+        children: [
+            {
+                path: "/users/:id",
+                component: useModalRouter(Modal)
+            }
+        ]
     },
     {
-        path: "/users/:id",
-        component: useModalRouter(Modal)
+        path: "/flowers",
+        component: FlowersList,
+        children: [
+            {
+                path: ":id",
+                component: useModalRouter(FlowersModal)
+            }
+        ]
     }
 ]
 

@@ -27,4 +27,10 @@ const routes = [
 ]
 ```
 Now, when switching to **/any-route**, the window that was passed to
-**useModalRouter** will be shown modally
+**useModalRouter** the modal window will be displayed.
+
+:::warning router-view
+To display modal windows integrated with `vue-router` is not necessary
+create `router-view`, because modal windows are displayed in their own
+container.
+:::

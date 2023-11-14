@@ -1,5 +1,5 @@
 import {mount} from "@vue/test-utils";
-import {closeModal, config, container, getQueueByNamespace, openModal, popModal, pushModal} from "../src/index";
+import {closeModal, config, container, getQueueByNamespace, openModal, popModal} from "../src/index";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 import NamespaceStore from "../src/utils/NamespaceStore";
@@ -132,7 +132,7 @@ describe("Configuration function", () => {
 	test("disableInitializationCheck should provide way to addModal without container", async () => {
 		await expect(openModal(ModalTitle)).rejects.toThrowError(ModalError.NotInitialized(NamespaceStore.DEFAULT_NAMESPACE));
 		config({
-			disableInitializationCheck: true
+			skipInitCheck: true
 		})
 		await expect(openModal(ModalTitle)).resolves.not.toThrow();
 	})

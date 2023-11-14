@@ -22,7 +22,7 @@ export default function _addModal(component: string | Component, params: any, mo
 	 * @description Проверка только для namespace по умолчанию. Это сделано из-за того, что дополнительные namespace
 	 * подлежат инициализации. Однако пользователю намеренно не доступен этот метод.
 	 * */
-	if (options.namespace === NamespaceStore.DEFAULT_NAMESPACE && !namespaceState.initialized && !configuration.disableInitializationCheck)
+	if (options.namespace === NamespaceStore.DEFAULT_NAMESPACE && !namespaceState.initialized && !configuration.skipInitCheck)
 		throw ModalError.NotInitialized(options.namespace);
 
 	// If component is string. In this case we get the component from store.

@@ -9,6 +9,7 @@ import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 import ModalError from "../src/utils/ModalError";
 import NamespaceStore from "./../src/utils/NamespaceStore";
+import triggerClickClose from "./assets/trigger-click-close";
 
 const modalQueue = getQueueByNamespace();
 beforeEach(async () => {
@@ -114,7 +115,7 @@ describe('Init', () => {
     const wrapper = await mount(container);
 
     await openModal(ModalTitle, {title: "test"});
-    await wrapper.find(".modal-item").trigger("click");
+    await wrapper.find(".modal-item").trigger("pointerdown");
 
 
     expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(1);
@@ -125,7 +126,7 @@ describe('Init', () => {
     const wrapper = await mount(container);
 
     await openModal(ModalTitle, {title: "test"});
-    await wrapper.find(".modal-container").trigger("click");
+    await triggerClickClose(wrapper);
 
 
     expect(wrapper.findAllComponents(WidgetModalContainerItem).length).toBe(0);

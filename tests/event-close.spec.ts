@@ -3,6 +3,7 @@ import {fireEvent, render} from "@testing-library/vue";
 import {container, openModal} from "../src/index";
 import ModalTitle from "./components/modal-title.vue";
 import wait from "./wait";
+import triggerClickClose from "./assets/trigger-click-close";
 
 describe("Testing event close", () => {
 	test("event.background should be true, after background click", async () => {
@@ -13,7 +14,7 @@ describe("Testing event close", () => {
 			backgroundValue = v.background;
 		}
 
-		await wrap.find(".modal-container").trigger("click");
+		await triggerClickClose(wrap);
 		await wait();
 		expect(backgroundValue).toBe(true)
 	})

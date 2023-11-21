@@ -7,6 +7,7 @@ import {
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 import NamespaceStore from "./../src/utils/NamespaceStore";
+import triggerClickClose from "./assets/trigger-click-close";
 
 let wrapper:any = null;
 
@@ -42,8 +43,8 @@ describe("Testing modal options", () => {
 		config({backgroundClose: false});
 		
 		const modal = await openModal(ModalTitle, {}, {backgroundClose: true})
-		
-		wrapper.find(".modal-container").trigger('click');
+
+		await triggerClickClose(wrapper);
 		await wait();
 		
 		expect(modal.closed.value).toBe(true)

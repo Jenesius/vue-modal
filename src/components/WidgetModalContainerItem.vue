@@ -1,5 +1,5 @@
 <template>
-	<div class = "widget__modal-container__item modal-container" ref ="containerRef" @click = "handelClick">
+	<div class = "widget__modal-container__item modal-container" @pointerdown.self.stop = "handelClick">
 		<component
 			:is = "modal.component"
 			v-bind = "modal.props.value"
@@ -16,16 +16,15 @@
 	import {getModalById} from "../utils/Modal";
 
 	const modalRef = ref(null);
-	const containerRef = ref(null);
-	
+
 	const props = defineProps({
 		id: Number,
 	})
 	
 	const modal = getModalById(props.id);
 
-	function handelClick(e	) {
-		if (e.target !== containerRef.value) return;
+	function handelClick() {
+		// if (e.target !== containerRef.value) return;
 		if (modal.backgroundClose) return closeById(modal.id, {background: true}).catch(() => {})
 	}
 

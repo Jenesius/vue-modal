@@ -4,6 +4,7 @@ import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 import NamespaceStore from "../src/utils/NamespaceStore";
 import ModalError from "../src/utils/ModalError";
+import triggerClickClose from "./assets/trigger-click-close";
 
 const modalQueue = getQueueByNamespace();
 beforeEach(async () => {
@@ -33,8 +34,8 @@ describe("Configuration function", () => {
 		});
 		
 		expect(modalQueue.length).toBe(1);
-		
-		await wrapper.find(".modal-container").trigger('click');
+
+		await triggerClickClose(wrapper);
 
 		expect(modalQueue.length).toBe(0);
 	})

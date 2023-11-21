@@ -1,3 +1,22 @@
+#### 1.10.3 (2023-11-21)
+
+##### Documentation Changes
+
+*  add information about sidebar modal. ([b13ea221](https://github.com/Jenesius/vue-modal/commit/b13ea221f1509b6585009bfa515d548207ac8f7d))
+
+##### New Features
+
+*  update event handler, [#103](https://github.com/Jenesius/vue-modal/pull/103) ([7e5ced6a](https://github.com/Jenesius/vue-modal/commit/7e5ced6a5c0ea844cd052c81b6163c7d9b248c6b))
+
+##### Other Changes
+
+*  update label of library ([a2c68260](https://github.com/Jenesius/vue-modal/commit/a2c68260963bbb8541b29c25434ee2e061289532))
+*  add sidebar example ([becc88dd](https://github.com/Jenesius/vue-modal/commit/becc88ddcd4c939cc0dda4b3d5ea80ee1f31f947))
+
+##### Tests
+
+*  update trigger method ([31d18573](https://github.com/Jenesius/vue-modal/commit/31d18573f39b0311892f1dd5da9e9a509aa1f084))
+
 #### 1.10.2 (2023-11-14)
 
 ##### Breaking Changes

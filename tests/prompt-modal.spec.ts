@@ -1,5 +1,5 @@
 import {mount} from "@vue/test-utils";
-import {container, promptModal} from "../src/index";
+import {container, promptModal, closeModal} from "../src/index";
 import ModalPromptValue from "./components/modal-prompt-value.vue";
 import wait from "./wait";
 import NamespaceStore from "./../src/utils/NamespaceStore";
@@ -22,14 +22,19 @@ describe("Testing prompt-modal", () => {
         expect(wrap.text()).toEqual(value);
     });
     it("Should be returned with provided value", async function () {
+
+    })
+    it('If modal was prompted and then just closed, promise should be resolved with value null', async () => {
         await mount(container);
 
         const value = Math.random();
-
-        expect(await promptModal(ModalPromptValue, {
+        const prResult = promptModal(ModalPromptValue, {
             value
-        })).toEqual(value)
+        })
+        await closeModal()
 
+
+        expect(await prResult).toEqual(null)
     })
 
 })

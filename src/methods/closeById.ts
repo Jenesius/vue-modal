@@ -29,9 +29,13 @@ export default function closeById(id: number, options: Partial<IEventClose> = {}
 
 	return runGuardQueue(arr)
 	.then(() => {
-
 		namespaceState.queue.splice(indexRemoveElement, 1);
-
+	})
+	.then(() => {
+		guards.get(id, "destroy")
+		.forEach((guard: GuardFunction) => guard(DTOEventClose(options)));
+	})
+	.then(() => {
 		guards.delete(id)
 	})
 }

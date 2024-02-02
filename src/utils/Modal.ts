@@ -132,7 +132,12 @@ export default class Modal{
     public set onclose(func: GuardFunction) {
         guards.add(this.id, "close", func);
     }
-
+    /**
+     * @description Hook for handling modal closing
+     * */
+    public set ondestroy(func: GuardFunction) {
+        guards.add(this.id, "destroy", func);
+    }
 
     /**
      * @description Method for handle default events from VueComponent.

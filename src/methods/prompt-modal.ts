@@ -13,7 +13,9 @@ export default async function promptModal<P extends WrapComponent>(component: P 
 
     return new Promise(resolve => {
         modal.on(Modal.EVENT_PROMPT, async data => {
+            console.log('+0')
             await modal.close();
+            console.log('+2')
             resolve(data);
         });
         /**
@@ -24,9 +26,9 @@ export default async function promptModal<P extends WrapComponent>(component: P 
          * Именно в таком случае, можно будет с полной уверенностью заявить о том, что модальное окно закрыто, а Promise
          * выполнен.
          */
-        // modal.ondestroy = () => resolve(null)
-        modal.onclose = () => {
-            resolve(null)
+        modal.ondestroy = () => {
+            console.log('+1')
+            resolve(null);
         }
     })
 }

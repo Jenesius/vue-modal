@@ -22,7 +22,18 @@ describe("Testing prompt-modal", () => {
         expect(wrap.text()).toEqual(value);
     });
     it("Should be returned with provided value", async function () {
+        const app = mount(container);
 
+        const value = Math.random();
+        const prResult = promptModal(ModalPromptValue, {
+            value
+        })
+        await wait()
+        app.find('button').trigger('click')
+
+        await wait()
+
+        expect(await prResult).toEqual(value)
     })
     it('If modal was prompted and then just closed, promise should be resolved with value null', async () => {
         await mount(container);
@@ -31,8 +42,8 @@ describe("Testing prompt-modal", () => {
         const prResult = promptModal(ModalPromptValue, {
             value
         })
+        await wait()
         await closeModal()
-
 
         expect(await prResult).toEqual(null)
     })

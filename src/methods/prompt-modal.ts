@@ -10,18 +10,17 @@ import {WrapComponent} from "../utils/types";
 
 export default async function promptModal<P extends WrapComponent>(component: P | string, props: any = {}, options: Partial<ModalOptions> = {}) {
     const modal = await pushModal(component, props, options);
+    let isPrompted = false;
 
     return new Promise(resolve => {
 
         /**
          * @description Переключатель, используемый для отлавливания того, что событие EVENT_PROMPT было вызвано.
          */
-        let isPrompted = false;
 
         modal.on(Modal.EVENT_PROMPT, async data => {
             isPrompted = true;
-
-            modal.close()
+            return modal.close()
             .then(() => resolve(data))
             .catch(() => isPrompted = false)
         });

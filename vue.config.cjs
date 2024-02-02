@@ -32,6 +32,9 @@ module.exports = {
         },
         "namespace": {
             entry: "examples/use-namespace/main.ts"
+        },
+        "test": {
+            entry: "project/src/test/main.ts"
         }
     }
 }

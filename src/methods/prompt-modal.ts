@@ -12,11 +12,18 @@ export default async function promptModal<P extends WrapComponent>(component: P 
     const modal = await pushModal(component, props, options);
 
     return new Promise(resolve => {
+
+        /**
+         * @description Переключатель, используемый для отлавливания того, что событие EVENT_PROMPT было вызвано.
+         */
+        let isPrompted = false;
+
         modal.on(Modal.EVENT_PROMPT, async data => {
-            console.log('+0')
-            await modal.close();
-            console.log('+2')
-            resolve(data);
+            isPrompted = true;
+
+            modal.close()
+            .then(() => resolve(data))
+            .catch(() => isPrompted = false)
         });
         /**
          * Концептуальная проблема: просто повесить обработчик на onclose не получится. Т.к. в случае, если закрытие
@@ -27,8 +34,7 @@ export default async function promptModal<P extends WrapComponent>(component: P 
          * выполнен.
          */
         modal.ondestroy = () => {
-            console.log('+1')
-            resolve(null);
+            if (!isPrompted) resolve(null);
         }
     })
 }

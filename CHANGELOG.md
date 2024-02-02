@@ -1,3 +1,27 @@
+### 1.11.0 (2024-02-02)
+
+##### Documentation Changes
+
+*  update information about prompt-modal, add info about ondestroy ([12c80958](https://github.com/Jenesius/vue-modal/commit/12c809584a701ffe5c9a831f0e0e294efad05774))
+*  add information about sidebar modal. ([b13ea221](https://github.com/Jenesius/vue-modal/commit/b13ea221f1509b6585009bfa515d548207ac8f7d))
+
+##### New Features
+
+*  add isPrompted semaphore ([ab57be9d](https://github.com/Jenesius/vue-modal/commit/ab57be9d822a5d2601c5a3bcd9e89481958b8022))
+*  add new event listener ondestroy. ([c4644a78](https://github.com/Jenesius/vue-modal/commit/c4644a7860ea41413531f6870c2f1d2d8bb42de5))
+*  add onclose handler for prompt-modal. Add new test. ([7d38470e](https://github.com/Jenesius/vue-modal/commit/7d38470e3f838b3f18075dbddb04898ba4e3733c))
+*  update event handler, [#103](https://github.com/Jenesius/vue-modal/pull/103) ([7e5ced6a](https://github.com/Jenesius/vue-modal/commit/7e5ced6a5c0ea844cd052c81b6163c7d9b248c6b))
+
+##### Other Changes
+
+*  add closing handlers with prompt modal ([ed0b1476](https://github.com/Jenesius/vue-modal/commit/ed0b1476684e2b6a5d9757446f1d04a76da8b259))
+*  update label of library ([a2c68260](https://github.com/Jenesius/vue-modal/commit/a2c68260963bbb8541b29c25434ee2e061289532))
+*  add sidebar example ([becc88dd](https://github.com/Jenesius/vue-modal/commit/becc88ddcd4c939cc0dda4b3d5ea80ee1f31f947))
+
+##### Tests
+
+*  update trigger method ([31d18573](https://github.com/Jenesius/vue-modal/commit/31d18573f39b0311892f1dd5da9e9a509aa1f084))
+
 #### 1.10.2 (2023-11-14)
 
 ##### Breaking Changes

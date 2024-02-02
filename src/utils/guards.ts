@@ -6,11 +6,11 @@ import ModalError from "./ModalError";
 import {GuardFunction, GuardFunctionPromisify} from "./types";
 import {getModalById, ModalID} from "./Modal";
 
-type AvailableKeys = 'close'
+type AvailableKeys = 'close' | 'destroy'
 interface GuardsInterface{
     store: {
         [index: number]: {
-            [key in AvailableKeys]: Array<GuardFunction>
+            [key in AvailableKeys]?: Array<GuardFunction>
         }
     },
     add(id: number, name: AvailableKeys, func: GuardFunction):void,
@@ -32,7 +32,7 @@ const guards:GuardsInterface = {
 
         if (!this.store[modalId][name]) this.store[modalId][name] = [];
 
-        this.store[modalId][name].push(func);
+        this.store[modalId][name]?.push(func);
     },
 
     get(id, name) {
@@ -40,7 +40,7 @@ const guards:GuardsInterface = {
         if (!(id in this.store)) return [];
         if (!(name in this.store[id])) return [];
 
-        return this.store[id][name];
+        return this.store[id][name] || [];
     },
 
     delete(id:number){
@@ -68,7 +68,7 @@ export function runGuardQueue(guards:Array<GuardFunctionPromisify>): Promise<voi
  * @return {Promise} promisify guard.
  *
  * If guard return void or true value - resolve.
- * Otherwise reject(err)
+ * Otherwise, reject(err)
  * */
 export function guardToPromiseFn(guard:GuardFunction, id: ModalID, props?: any): GuardFunctionPromisify{
     return () => new Promise((resolve, reject) => {

@@ -10,11 +10,30 @@ import {WrapComponent} from "../utils/types";
 
 export default async function promptModal<P extends WrapComponent>(component: P | string, props: any = {}, options: Partial<ModalOptions> = {}) {
     const modal = await pushModal(component, props, options);
+    let isPrompted = false;
 
     return new Promise(resolve => {
+
+        /**
+         * @description Переключатель, используемый для отлавливания того, что событие EVENT_PROMPT было вызвано.
+         */
+
         modal.on(Modal.EVENT_PROMPT, async data => {
-            await modal.close();
-            resolve(data);
+            isPrompted = true;
+            return modal.close()
+            .then(() => resolve(data))
+            .catch(() => isPrompted = false)
         });
+        /**
+         * Концептуальная проблема: просто повесить обработчик на onclose не получится. Т.к. в случае, если закрытие
+         * модального окно будет перехвачено другим(следующим после) обработчиком и отклонено - модальное окно не будет
+         * закрыто, но при этом Promise будет выполнен со значением null. Для решения данной задачи(Issue #109) необходимо
+         * добавить событие afterClose(ondestroy), которое будет срабатывать в момент полного закрытия модального окна.
+         * Именно в таком случае, можно будет с полной уверенностью заявить о том, что модальное окно закрыто, а Promise
+         * выполнен.
+         */
+        modal.ondestroy = () => {
+            if (!isPrompted) resolve(null);
+        }
     })
 }

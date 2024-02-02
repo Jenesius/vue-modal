@@ -121,6 +121,8 @@ export default {
 </script>
 ```
 
+If the modal window was closed without `Modal.EVENT_PROMPT` (for example, clicking on the background), then the Promise will be executed with the value `null`.
+
 :::warning
 There is no need to call the modal window's close method when you use
 mechanism `Modal.EVENT_PROMPT`. The library will do this for you.

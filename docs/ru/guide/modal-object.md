@@ -94,7 +94,7 @@ openModal(ModalComponent, {}, { namespace: "notification" })
 Данный метод используется для отлавливания момента, когда модальное окно было закрыто.
 Отменить(вернув значение `false`) закрытие модального окна на этом этапе уже не возможно.
 
-```
+```ts
 const modal = await openModal(Modal)
 modal.destroy = () => {
     console.log('Модальное окно было закрыто')

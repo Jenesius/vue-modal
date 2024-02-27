@@ -5,7 +5,7 @@
   "description": "The progressive and simple modal system for Vue.js v3",
   "author": "Jenesius",
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --mode development",
     "build": "vite build --config vite.config.mjs",
     "lint": "vue-cli-service lint",
     "test": "jest",
@@ -53,7 +53,7 @@
     "vite": "4.4.9",
     "vite-plugin-css-injected-by-js": "^3.1.0",
     "vite-tsconfig-paths": "4.2.0",
-    "vitepress": "1.0.0-rc.25",
+    "vitepress": "1.0.0-rc.41",
     "vue-router": "^4.0.12"
   },
   "browserslist": [

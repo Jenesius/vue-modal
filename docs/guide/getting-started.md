@@ -33,3 +33,4 @@ close modal windows. This library provides a wide range of functions for working
 - Return value
 - Working with events through the `ModalObject` object
 - Integration with `vue-router`
+- Availability of `namespace` and the ability to open elements in different spaces.

@@ -85,7 +85,7 @@ The default value is `true`.
 ### `onclose`
 
 Sets the modal window close handler. More details can be
-read [here](./guide-methods#onclose).
+read [here](./event-close.md).
 
 ### `ondestroy`
 

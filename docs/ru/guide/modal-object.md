@@ -87,7 +87,7 @@ openModal(ModalComponent, {}, { namespace: "notification" })
 ### `onclose`
 
 Устанавливает обработчик закрытия модального окна. Более подробно можно 
-прочитать [здесь](./guide-methods#onclose).
+прочитать [здесь](./event-close).
 
 ### `ondestroy`
 

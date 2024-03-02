@@ -1,3 +1,14 @@
+#### 1.11.1 (2024-03-02)
+
+##### Documentation Changes
+
+*  Updated main documentation pages. ([31364401](https://github.com/Jenesius/vue-modal/commit/31364401f5ef622167e9e202d10fe95adf6ef3fb))
+*  update Docs, add tag to transition-group. Add SEO test page. ([4c649bde](https://github.com/Jenesius/vue-modal/commit/4c649bde0efba59c310962fcd462c9bd8ba3d6b2))
+
+##### Bug Fixes
+
+*  update github-action vue version ([7a79ea21](https://github.com/Jenesius/vue-modal/commit/7a79ea2111b7d66984df2e92a70b10d2e657683c))
+
 ### 1.11.0 (2024-02-02)
 
 ##### Documentation Changes

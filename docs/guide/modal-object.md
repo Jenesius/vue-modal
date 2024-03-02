@@ -85,14 +85,14 @@ The default value is `true`.
 ### `onclose`
 
 Sets the modal window close handler. More details can be
-read [here](./guide-methods#onclose).
+read [here](./event-close.md).
 
 ### `ondestroy`
 
 This method is used to catch the moment when the fashion window was closed.
 It is no longer possible to cancel (inverted value `false`) closing the fashion window at this stage.
 
-```
+```ts
 const modal = await openModal(Modal)
 modal.destroy = () => {
     console.log('Modal has been closed')

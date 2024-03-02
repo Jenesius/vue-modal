@@ -22,5 +22,10 @@ features:
   - title: Built-in and custom
     icon: ✍
     details: This library don't add any design rules. You can use your components with your css classes.
-
+  - title: Abstraction
+    icon: 🤖
+    details: There is no need to embed a modal window in the component. Work with it at a different level of abstraction.
+  - title: Integration with vue-router
+    icon: 🎢
+    details: I use modal windows with vue-router.
 ---

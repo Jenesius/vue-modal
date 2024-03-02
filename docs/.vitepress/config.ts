@@ -26,7 +26,6 @@ export default {
 			label: "English",
 		},
 		ru: {
-
 			label: "Русский",
 			lang: "ru",
 			description: "Система форм для Vue",

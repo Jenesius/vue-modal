@@ -25,3 +25,12 @@ To get started, we need to initialize modal windows, add a container in which ou
 </script>
 ```
 
+## Let's continue
+
+Everything is ready to work with modal windows. Go to the [methods](./guide-methods.md) tab to learn how to open and
+close modal windows. This library provides a wide range of functions for working with modal windows:
+- Opening multiple modal windows
+- Return value
+- Working with events through the `ModalObject` object
+- Integration with `vue-router`
+- Availability of `namespace` and the ability to open elements in different spaces.

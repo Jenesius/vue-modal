@@ -28,7 +28,7 @@ export const ru = defineConfig({
 function nav() {
 	return [
 		{ text: 'Руководство', link: '/guide/getting-started', activeMatch: '/guide/' },
-		{ text: 'Примеры', link: '/examples/list', activeMatch: '/examples/' },
+		{ text: 'Примеры', link: '/ru/examples/list', activeMatch: '/examples/' },
 		{ text: 'Нашли ошибку?', link: 'https://github.com/Jenesius/vue-modal/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=[BUG]'},
 	]
 }

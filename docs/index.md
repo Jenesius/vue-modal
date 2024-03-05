@@ -1,11 +1,11 @@
 ---
 layout: home
 
-title: JenesiusVueModal
+title: Jenesius vue-modal
 titleTemplate: Jenesius Vue Modal & Simple Modal System for Vue
 
 hero:
-  name: Jenesius VueModal
+  name: Jenesius vue-modal
   text: Simple Modal System for Vue
   tagline: Simple, powerful, and performant.
   actions:
@@ -27,5 +27,5 @@ features:
     details: There is no need to embed a modal window in the component. Work with it at a different level of abstraction.
   - title: Integration with vue-router
     icon: 🎢
-    details: I use modal windows with vue-router.
+    details: You can connect this library to vue-router to make a more user-friendly interface.
 ---

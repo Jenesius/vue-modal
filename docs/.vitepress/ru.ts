@@ -1,7 +1,7 @@
 import {defineConfig} from "vitepress";
 export const ru = defineConfig({
 	lang: 'ru-RU',
-	description: "Система форм для Vue",
+	description: "Документация для vue-modal. Гибкая и простая библиотека для создания модальных окон в Vue3.",
 
 	themeConfig: {
 		nav: nav(),

@@ -21,7 +21,8 @@ const modalState = (function () {
         backgroundClose: true,      // Closing on click back area of modal.
         escClose: true,             // Closing on press ESC key
         store: {},
-        skipInitCheck: false
+        skipInitCheck: false,
+        draggable: false
     }
 
     // Default queue.
@@ -72,6 +73,11 @@ export interface ConfigInterface{
      * @description Disable throwing the error when the container has not been initialized.
      * */
     skipInitCheck: boolean,
+    /**
+     * @description If set to true, all modal windows will be draggable. If a string is set, then this string will be
+     * used as the name of the css class by default for all modular windows. Which will be used to move the window.
+     */
+    draggable: boolean | string,
     store: Record<string, Component>
 }
 

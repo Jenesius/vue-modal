@@ -1,3 +1,18 @@
+#### 1.11.2 (2024-05-20)
+
+##### Documentation Changes
+
+*  fix `ru` example link ([e6e527ea](https://github.com/Jenesius/vue-modal/commit/e6e527ea7766147728c810e91c94a698e411d44a))
+*  Update locales [#108](https://github.com/Jenesius/vue-modal/pull/108) ([81abe7bc](https://github.com/Jenesius/vue-modal/commit/81abe7bc159477a157ae15024cc4dc5b4d554e30))
+
+##### New Features
+
+*  add draggable options for openModal, pushModal ([c0da574a](https://github.com/Jenesius/vue-modal/commit/c0da574af8c2dd9088aa896a0bc599de5568a689))
+
+##### Other Changes
+
+*  add keywords to head ([75aebd27](https://github.com/Jenesius/vue-modal/commit/75aebd27a2ec4f3ab580bf7871eb2f7216b446d0))
+
 #### 1.11.1 (2024-03-02)
 
 ##### Documentation Changes

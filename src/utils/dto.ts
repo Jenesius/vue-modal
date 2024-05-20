@@ -9,7 +9,8 @@ export function DTOModalOptions(options: Partial<ModalOptions>): ModalOptions {
 	const output: ModalOptions = {
 		backgroundClose: configuration.backgroundClose,
 		isRoute: false,
-		namespace: NamespaceStore.DEFAULT_NAMESPACE
+		namespace: NamespaceStore.DEFAULT_NAMESPACE,
+		draggable: configuration.draggable
 	};
 
 	if (options.backgroundClose !== undefined)
@@ -17,6 +18,8 @@ export function DTOModalOptions(options: Partial<ModalOptions>): ModalOptions {
 
 	if (options.isRoute) output.isRoute = options.isRoute;
 	if (options.namespace) output.namespace = options.namespace;
+
+	if (options.draggable !== undefined) output.draggable = options.draggable;
 
 	return output;
 }

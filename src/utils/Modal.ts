@@ -15,7 +15,12 @@ import {INamespaceKey} from "./NamespaceStore";
 export interface ModalOptions {
     backgroundClose: boolean,
     isRoute: boolean,
-    namespace: Modal['namespace']
+    namespace: Modal['namespace'],
+    /**
+     * @description If set to any valid value, allows the modal window to be moved. If the value is a string, then it
+     * points to the css class that will be used to move the modal window.
+     */
+    draggable: boolean | string
 }
 export type ModalID = number;
 
@@ -62,6 +67,8 @@ export default class Modal{
      * @description If modal was opened like Route instance (useModalRouter) the value is true, otherwise false.
      */
     public readonly isRoute: boolean = false;
+
+    public draggable: ModalOptions['draggable'];
 
     /**
      * @description Event using for promptModal.
@@ -115,6 +122,7 @@ export default class Modal{
         this.backgroundClose = dtoOptions.backgroundClose;
         this.isRoute = dtoOptions.isRoute;
         this.namespace = dtoOptions.namespace;
+        this.draggable = dtoOptions.draggable;
 
         Modal.STORE.set(this.id, this);
     }

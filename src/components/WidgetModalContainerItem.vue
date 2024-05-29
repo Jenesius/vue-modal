@@ -14,7 +14,7 @@
 import {onMounted, ref, watch} from "vue";
 import closeById from "../methods/closeById";
 import {getModalById} from "../utils/Modal";
-import createDebug from "@/utils/create-debug";
+import createDebug from "../utils/create-debug";
 
 const modalRef = ref(null);
 const debug = createDebug('modal-item')

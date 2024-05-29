@@ -12,7 +12,8 @@
     "full": "npm run build && npm publish",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs"
+    "docs:serve": "vitepress serve docs",
+    "serve-with-debug-windows": "set DEBUG=jenesius-vue-modal*& vue-cli-service serve --mode development"
   },
   "main": "dist/jenesius-vue-modal.cjs.js",
   "module": "dist/jenesius-vue-modal.es.js",
@@ -36,6 +37,7 @@
     "@babel/preset-typescript": "7.22.11",
     "@rollup/plugin-typescript": "11.1.2",
     "@testing-library/vue": "8.0.0",
+    "@types/debug": "^4.1.12",
     "@types/jest": "^29.2.6",
     "@vitejs/plugin-vue": "4.3.1",
     "@vue/cli-plugin-babel": "~5.0.0",
@@ -74,5 +76,8 @@
     "type": "git",
     "url": "https://github.com/Jenesius/vue-modal.git"
   },
-  "url": "https://github.com/Jenesius/vue-modal/issues"
+  "url": "https://github.com/Jenesius/vue-modal/issues",
+  "dependencies": {
+    "debug": "^4.3.4"
+  }
 }

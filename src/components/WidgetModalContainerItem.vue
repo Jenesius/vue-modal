@@ -14,9 +14,10 @@
 import {onMounted, ref, watch} from "vue";
 import closeById from "../methods/closeById";
 import {getModalById} from "../utils/Modal";
+import createDebug from "@/utils/create-debug";
 
 const modalRef = ref(null);
-
+const debug = createDebug('modal-item')
 const props = defineProps({
 	id: Number,
 })
@@ -33,6 +34,7 @@ watch(() => modalRef.value, newValue => {
 
 onMounted(() => {
 	if (modal.draggable) {
+		debug('The modal window is movable.')
 		addDraggable(
 			document.querySelector(
 				typeof modal.draggable === 'string' ? modal.draggable : `[modalid=_modal_${props.id}]`
@@ -42,7 +44,10 @@ onMounted(() => {
 })
 
 function addDraggable(elementDraggable) {
-	if (!elementDraggable) return;
+	if (!elementDraggable) {
+		debug('draggable item not found.')
+		return;
+	}
 	const elementModal = document.querySelector(`[modalid=_modal_${props.id}]`);
 	
 	elementDraggable.addEventListener('pointerdown', (event) => {
@@ -57,6 +62,8 @@ function addDraggable(elementDraggable) {
 		const startX = clientX;
 		const startY = clientY;
 		
+		debug(`movement started at (${startY}, ${startY})`)
+		
 		document.addEventListener('pointermove', handleDraggableMove, { passive: true })
 		document.addEventListener('pointerup', handleDraggableEnd, {once: true})
 		
@@ -66,9 +73,12 @@ function addDraggable(elementDraggable) {
 			const resultX = shiftX + clientX - startX;
 			const resultY = shiftY + clientY - startY;
 			
+			debug(`move at (${resultX}, ${resultY})`)
+			
 			elementModal.style.transform = `translate(${resultX}px,${resultY}px)`
 		}
 		function handleDraggableEnd(event) {
+			debug(`movement completed`)
 			document.removeEventListener('pointermove', handleDraggableMove)
 			event.preventDefault();
 		}

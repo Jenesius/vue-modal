@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import {container as ModalContainer, openModal} from "../../src/index";
+import {container as ModalContainer, openModal, pushModal} from "../../src/index";
 import ModalInfo from "./modal-info.vue";
 import ModalWithHeader from "./modal-with-header.vue";
 
 function openFull() {
-	openModal(ModalInfo, { info: "test" }, {
+	pushModal(ModalInfo, { info: "test" }, {
 		draggable: true
 	});
 }
@@ -28,6 +28,7 @@ function openModalDefault() {
 		info: "Test"
 	})
 }
+
 
 </script>
 <style scoped>

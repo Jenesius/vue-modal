@@ -1,3 +1,9 @@
+#### 1.11.3 (2024-05-29)
+
+##### New Features
+
+*  add DEBUG ([4fa3d241](https://github.com/Jenesius/vue-modal/commit/4fa3d241e7fe9354314f4967d42269fb6fbc77c3))
+
 #### 1.11.2 (2024-05-20)
 
 ##### Documentation Changes

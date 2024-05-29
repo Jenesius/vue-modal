@@ -33,13 +33,16 @@ watch(() => modalRef.value, newValue => {
 })
 
 onMounted(() => {
+	debug(`Modal(${modal.id}) is mounted`);
+	
 	if (modal.draggable) {
-		debug('The modal window is movable.')
-		addDraggable(
-			document.querySelector(
-				typeof modal.draggable === 'string' ? modal.draggable : `[modalid=_modal_${props.id}]`
-			)
-		)
+		
+		const draggableSelector = typeof modal.draggable === 'string' ? modal.draggable : `[modalid=_modal_${props.id}]`
+		debug(`The modal window is movable(${draggableSelector}).`)
+		
+		setTimeout(() => {
+			addDraggable(document.querySelector(draggableSelector))
+		}, 0)
 	}
 })
 

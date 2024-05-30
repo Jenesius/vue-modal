@@ -1,3 +1,9 @@
+#### 1.11.6 (2024-05-30)
+
+##### Bug Fixes
+
+*  saving the modal instance only after complete refModal. ([c89d93a3](https://github.com/Jenesius/vue-modal/commit/c89d93a3d72cf86f16b5c48b613a6055eb3231a1))
+
 #### 1.11.5 (2024-05-30)
 
 ##### Bug Fixes

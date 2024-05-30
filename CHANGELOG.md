@@ -1,3 +1,9 @@
+#### 1.11.5 (2024-05-30)
+
+##### Bug Fixes
+
+*  move document ref to modalContainer ref. ([e89627b1](https://github.com/Jenesius/vue-modal/commit/e89627b1b1abd5b8186645c1ac25dcf4e19d3c7d))
+
 #### 1.11.4 (2024-05-29)
 
 #### 1.11.3 (2024-05-29)

@@ -32,10 +32,7 @@ function handelClick() {
 
 watch(() => modalRef.value, newValue => {
 	modal.instance = newValue;
-})
-
-onMounted(() => {
-	debug(`Modal(${modal.id}) is mounted`);
+	debug(`Modal(${modal.id}) instance is saved.`);
 	
 	if (modal.draggable) {
 		const MODAL_QUERY_SELECTOR = `[modalid=_modal_${props.id}]`;
@@ -52,6 +49,11 @@ onMounted(() => {
 			)
 		}
 	}
+})
+
+onMounted(() => {
+	debug(`Modal(${modal.id}) is mounted`);
+	
 })
 
 function addDraggable(elementModal: HTMLElement | null, elementDraggable: HTMLElement | null) {

@@ -32,10 +32,12 @@ describe("Integration with VueRouter", () => {
 		await router.push("/simple-modal");
 		await router.isReady();
 
-		const wrapper = await mount(App, {global: {plugins: [router]}});
+		const wrapper = await mount(App, {  stubs: {
+				transition: false
+			}, global: {plugins: [router]}});
 
 		await nextTick();
-
+		await wait(1000)
 		expect(wrapper.text()).toBe("Modal router");
 	})
 	it("Opening and the closing", async () => {
@@ -44,12 +46,11 @@ describe("Integration with VueRouter", () => {
 		await router.isReady();
 
 		const wrapper = await mount(App, {global: {plugins: [router]}});
-		await nextTick();
+		await wait(1000)
+		
 		expect(wrapper.text()).toBe("Modal router");
 		await router.push("/");
-
-		await wait()
-
+		await wait(1000)
 		expect(wrapper.text()).toBe("Test");
 
 	})
@@ -60,7 +61,7 @@ describe("Integration with VueRouter", () => {
 		const wrapper = await mount(App, {global: {plugins: [router]}});
 
 		await nextTick();
-
+		await wait(1000)
 		expect(wrapper.text()).toBe("user-3");
 	})
 	it("Open a list of child routeModal", async () => {

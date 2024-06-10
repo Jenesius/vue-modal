@@ -16,7 +16,7 @@
 			return () => {
 				const namespaceState = getNamespace(props.namespace);
 
-				return h(TransitionGroup, {name: configuration.animation, tag: "div"}, {
+				return h(TransitionGroup, {name: configuration.animation, tag: "div", appear: configuration.appear}, {
 					default: () => namespaceState.queue.map(modalObject => {
 						return h(WidgetContainerModalItem, {
                             key: modalObject.id,

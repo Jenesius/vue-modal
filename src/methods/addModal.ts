@@ -13,7 +13,7 @@ import {DTOModalOptions} from "../utils/dto";
  * - Component is required.
  * */
 
-export default function _addModal(component: string | Component, params: any, modalOptions: Partial<ModalOptions>):Modal{
+export default async function _addModal(component: string | Component, params: any, modalOptions: Partial<ModalOptions>):Promise<Modal>{
 
 	const options = DTOModalOptions(modalOptions);
 	const namespaceState = getNamespace(options.namespace);
@@ -25,6 +25,9 @@ export default function _addModal(component: string | Component, params: any, mo
 	if (options.namespace === NamespaceStore.DEFAULT_NAMESPACE && !namespaceState.initialized && !configuration.skipInitCheck)
 		throw ModalError.NotInitialized(options.namespace);
 
+	if ((await configuration.beforeEach()) === false)
+		throw ModalError.RejectedByBeforeEach();
+	
 	// If component is string. In this case we get the component from store.
 	if (typeof component === "string") {
 		const refComponent = getComponentFromStore(component);

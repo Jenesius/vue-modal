@@ -29,7 +29,9 @@ export default class ModalError extends Error{
     static GuardDeclarationType(func:Function){
         return new ModalError("Guard's type should be a function. Provided:", func);
     }
-
+    static RejectedByBeforeEach() {
+        return new ModalError("The opening of the modal was stopped in beforeEach");
+    }
     static ConfigurationType(config:object) {
         return new ModalError("Configuration type must be an Object. Provided", config)
     }

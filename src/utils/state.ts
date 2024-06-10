@@ -22,7 +22,9 @@ const modalState = (function () {
         escClose: true,             // Closing on press ESC key
         store: {},
         skipInitCheck: false,
-        draggable: false
+        draggable: false,
+        appear: true,
+        beforeEach: () => {}
     }
 
     // Default queue.
@@ -78,6 +80,15 @@ export interface ConfigInterface{
      * used as the name of the css class by default for all modular windows. Which will be used to move the window.
      */
     draggable: boolean | string,
+    /**
+     * @description TransitionGroup appear prop. For more details https://vuejs.org/guide/built-ins/transition.html#transition-on-appear
+     */
+    appear: boolean,
+    /**
+     * @description A hook that will fire before opening each modal window. In this hook, you can cancel closing by
+     * passing the value false.
+     */
+    beforeEach: () => any,
     store: Record<string, Component>
 }
 

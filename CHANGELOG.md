@@ -1,3 +1,9 @@
+#### 1.11.7 (2024-06-10)
+
+##### New Features
+
+*  resolve [#117](https://github.com/Jenesius/vue-modal/pull/117), add beforeEach to config. ([5bb27dd5](https://github.com/Jenesius/vue-modal/commit/5bb27dd549f7653c88d6a7534fe6047b9705a18c))
+
 #### 1.11.6 (2024-05-30)
 
 ##### Bug Fixes

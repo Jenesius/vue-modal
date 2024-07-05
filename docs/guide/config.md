@@ -43,3 +43,9 @@ you need to take care of the closure yourself.
 - **`store`** Default value is `{}`. Used for storage
   modal windows and opening them by key. You can read more in detail
   on [here](./store).
+
+- **`singleShow`** The default value is `false`. Used in case
+  if you need to show only the last modal window when using several
+  windows (via `pushModal`). In such a case, if the value is set to true,
+  When you open a fashion window, all voices will be closed (through the mechanism
+  `v-show`).

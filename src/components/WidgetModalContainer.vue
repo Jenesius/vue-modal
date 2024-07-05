@@ -1,7 +1,7 @@
 <script>
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
     import initialize from "../utils/initialize";
-    import {h, onMounted, TransitionGroup} from "vue";
+    import {h, onMounted, TransitionGroup, vShow} from "vue";
     import {getNamespace, configuration} from "../utils/state";
 
     export default {
@@ -17,10 +17,11 @@
 				const namespaceState = getNamespace(props.namespace);
 
 				return h(TransitionGroup, {name: configuration.animation, tag: "div", appear: configuration.appear}, {
-					default: () => namespaceState.queue.map(modalObject => {
+					default: () => namespaceState.queue.map((modalObject, index, arr) => {
 						return h(WidgetContainerModalItem, {
                             key: modalObject.id,
-                            id: modalObject.id
+                            id: modalObject.id,
+							show: configuration.singleShow === true ? index === arr.length - 1 : true
                         });
 					})
 				})

@@ -1,5 +1,5 @@
 <template>
-	<div class="widget__modal-container__item modal-container" @pointerdown.self.stop="handelClick" ref = "modalContainerRef">
+	<div class="widget__modal-container__item modal-container" @pointerdown.self.stop="handelClick" ref = "modalContainerRef" v-show = "show">
 		<component
 			:is="modal.component"
 			v-bind="modal.props.value"
@@ -18,7 +18,8 @@ import createDebug from "../utils/create-debug";
 
 const debug = createDebug('modal-item')
 const props = defineProps<{
-	id: number
+	id: number,
+	show: boolean
 }>()
 
 const modal = getModalById(props.id) as Modal;

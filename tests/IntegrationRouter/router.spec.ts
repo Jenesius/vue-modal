@@ -32,6 +32,7 @@ describe("Integration with VueRouter", () => {
 		await router.push("/simple-modal");
 		await router.isReady();
 
+		// @ts-ignore
 		const wrapper = await mount(App, {  stubs: {
 				transition: false
 			}, global: {plugins: [router]}});

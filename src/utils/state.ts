@@ -24,6 +24,7 @@ const modalState = (function () {
         skipInitCheck: false,
         draggable: false,
         appear: true,
+        singleShow: false,
         beforeEach: () => {}
     }
 
@@ -89,6 +90,11 @@ export interface ConfigInterface{
      * passing the value false.
      */
     beforeEach: () => any,
+    /**
+     * @description If the value is set to true, then only one modal window will be shown. If several are opened
+     * (using pushModal), only the last one will be shown, and the rest will be hidden using `v-show`.
+     */
+    singleShow: boolean,
     store: Record<string, Component>
 }
 

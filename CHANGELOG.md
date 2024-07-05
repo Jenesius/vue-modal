@@ -1,3 +1,17 @@
+#### 1.11.8 (2024-07-05)
+
+##### Documentation Changes
+
+*  add information about `singleShow` ([3159227b](https://github.com/Jenesius/vue-modal/commit/3159227bdbe1e23aa2125f8e1e3383ccfdee5aa1))
+
+##### New Features
+
+*  add 'singleShow' to configuration ([10bbbd17](https://github.com/Jenesius/vue-modal/commit/10bbbd1743ecb340574d86b7f45fd667caab87eb))
+
+##### Tests
+
+*  add 'singleShow' configuration ([958b0851](https://github.com/Jenesius/vue-modal/commit/958b0851212ff9bfdf036f3aec440881a451bbcb))
+
 #### 1.11.7 (2024-06-10)
 
 ##### New Features

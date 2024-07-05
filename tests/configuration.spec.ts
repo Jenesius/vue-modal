@@ -1,10 +1,11 @@
 import {mount} from "@vue/test-utils";
-import {closeModal, config, container, getQueueByNamespace, openModal, popModal} from "../src/index";
+import {closeModal, config, container, getQueueByNamespace, openModal, popModal, pushModal} from "../src/index";
 import wait from "./wait";
 import ModalTitle from "./components/modal-title.vue";
 import NamespaceStore from "../src/utils/NamespaceStore";
 import ModalError from "../src/utils/ModalError";
 import triggerClickClose from "./assets/trigger-click-close";
+import WidgetModalContainerItem from "../src/components/WidgetModalContainerItem.vue";
 
 const modalQueue = getQueueByNamespace();
 beforeEach(async () => {
@@ -138,5 +139,25 @@ describe("Configuration function", () => {
 		await expect(openModal(ModalTitle)).resolves.not.toThrow();
 	})
 	
+	test("SingleShow in configuration", async () => {
+		const app = await mount(container);
+		config({
+			singleShow: true
+		})
+		
+		await pushModal(ModalTitle)
+		await pushModal(ModalTitle)
+		await pushModal(ModalTitle)
+		await pushModal(ModalTitle)
+		
+		expect(modalQueue.length).toBe(4);
+		
+		
+		const arrayModalContainer = app.findAllComponents(WidgetModalContainerItem);
+		
+		arrayModalContainer.map(item => item.props('show'))
+		.forEach((value, index, arr) => expect(value).toBe(index === arr.length - 1))
+		
+	})
 	
 })

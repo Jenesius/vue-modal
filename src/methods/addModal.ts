@@ -1,5 +1,5 @@
 import Modal, {ModalOptions} from "../utils/Modal";
-import {configuration, getNamespace} from "../utils/state";
+import {configuration, getNamespace, isStoreComponentConfiguration} from "../utils/state";
 import ModalError from "../utils/ModalError";
 import {Component, markRaw} from "vue";
 import {getComponentFromStore} from "../index";
@@ -30,9 +30,17 @@ export default async function _addModal(component: string | Component, params: a
 	
 	// If component is string. In this case we get the component from store.
 	if (typeof component === "string") {
-		const refComponent = getComponentFromStore(component);
-		if (!refComponent) throw ModalError.ModalNotExistsInStore(component);
-		component = refComponent;
+		const storeElement = getComponentFromStore(component);
+		if (!storeElement) throw ModalError.ModalNotExistsInStore(component);
+		
+		if (isStoreComponentConfiguration(storeElement)) {
+			component = storeElement.component;
+			Object.assign(options, storeElement);
+			
+			if (storeElement.beforeEach && (await storeElement.beforeEach()) === false)
+				throw ModalError.RejectedByBeforeEach();
+			
+		} else component = storeElement;
 	}
 	if (!component) throw ModalError.ModalComponentNotProvided();
 

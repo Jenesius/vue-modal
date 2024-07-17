@@ -58,13 +58,15 @@ getComponentFromStore('confirm') // Component
 
 ```ts
 config({
-    confirm: {
-		component: ModalConfirm,
-        draggable: true,
-        backgroundClose: false,
-        beforeEach() {
-			Logger.write('Попытка открыть окно подтверждения.')
-        }
+    store: {
+		confirm: {
+			component: ModalConfirm,
+			draggable: true,
+			backgroundClose: false,
+			beforeEach() {
+				Logger.write('Попытка открыть окно подтверждения.')
+			}
+		}
     }
 })
 ```

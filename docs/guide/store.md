@@ -60,13 +60,15 @@ All these properties correspond to the parameter from [configuration](./config).
 
 ```ts
 config({
-	confirm: {
-		component: ModalConfirm,
-		draggable: true,
-		backgroundClose: false,
-		beforeEach() {
-			Logger.write('Attempting to open a confirmation window.')
-		}
-	}
+	store: {
+      confirm: {
+        component: ModalConfirm,
+        draggable: true,
+        backgroundClose: false,
+        beforeEach() {
+          Logger.write('Attempting to open a confirmation window.')
+        }
+      }
+    }
 })
 ```

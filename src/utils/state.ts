@@ -9,8 +9,9 @@
  *
  * */
 
-import {Component, watch} from "vue";
+import {watch} from "vue";
 import NamespaceStore, {INamespaceKey} from "./NamespaceStore";
+import {IBeforeEachCallback, IStoreComponentConfiguration, IStoreElement} from "./types";
 
 const modalState = (function () {
 
@@ -55,7 +56,7 @@ export function getNamespace(name?: INamespaceKey) {
 
 export const configuration = modalState.configuration;
 
-export interface ConfigInterface{
+export interface ConfigInterface {
     /**
      * @description Disable scrolling in time when modal is open.
      * */
@@ -89,12 +90,21 @@ export interface ConfigInterface{
      * @description A hook that will fire before opening each modal window. In this hook, you can cancel closing by
      * passing the value false.
      */
-    beforeEach: () => any,
+    beforeEach: IBeforeEachCallback,
     /**
      * @description If the value is set to true, then only one modal window will be shown. If several are opened
      * (using pushModal), only the last one will be shown, and the rest will be hidden using `v-show`.
      */
     singleShow: boolean,
-    store: Record<string, Component>
+    store: Record<string, IStoreElement>
 }
+
+/**
+ * @description The function determines whether the transferred data is an extended configuration of a storage element
+ */
+export function isStoreComponentConfiguration(element: unknown): element is IStoreComponentConfiguration {
+    return !!element && typeof element === 'object' && !!(element as IStoreComponentConfiguration).component;
+}
+
+
 

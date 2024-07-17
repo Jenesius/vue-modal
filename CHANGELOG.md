@@ -1,3 +1,13 @@
+#### 1.11.9 (2024-07-17)
+
+##### Documentation Changes
+
+*  update documentation for store. ([adec9381](https://github.com/Jenesius/vue-modal/commit/adec93819d8759c6a7a4b5cf24f25b7f0b3e1216))
+
+##### New Features
+
+*  add store element configuration ([44dda506](https://github.com/Jenesius/vue-modal/commit/44dda50636d01209bcedd861e4c4dd909d10da1f))
+
 #### 1.11.8 (2024-07-05)
 
 ##### Documentation Changes

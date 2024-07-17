@@ -1,7 +1,7 @@
 <script>
     import WidgetContainerModalItem from "./WidgetModalContainerItem.vue";
     import initialize from "../utils/initialize";
-    import {h, onMounted, TransitionGroup, vShow} from "vue";
+    import {h, onMounted, TransitionGroup} from "vue";
     import {getNamespace, configuration} from "../utils/state";
 
     export default {

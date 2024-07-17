@@ -13,16 +13,26 @@
 ```ts
 import {config} from "jenesius-vue-modal";
 import ModalConfirm from "./ModalConfirm";
+import ModalAlert from "./ModalAlert"
 
 config({
     store: {
-        confirm: ModalConfirm
+        confirm: ModalConfirm,
+        alert: {
+			component: "ModalAlert"
+        }
     }
 })
 ```
-В этом примере мы добавили в магазин одно модальное окно. Теперь его можно открыть по имени, передав туда ключ:
+В этом примере мы добавили в хранилище два модальных окна: 
+- передав напрямую компоненты
+- во втором случае, мы указали объект с установленным свойством `component`, это необходимо для установления некоторых
+свойств конкретно для данной компоненты.
+
+Теперь его можно открыть по имени, передав туда ключ:
 ```ts
 openModal('confirm');
+openModal('alert');
 ```
 Конечно, методы *pushModal* и *promptModal* также поддерживают эту функциональность.
 
@@ -34,3 +44,27 @@ getComponentFromStore('alert') // undefined
 getComponentFromStore('confirm') // Component
 ```
 **Возвращает** компонент VueComponent, если он был ранее инициализирован в хранилище, в противном случае *undefined*.
+
+## Расширенная передача компоненты
+
+В данной артикле рассмотрим случай, когда мы вместе компоненты передаём целый объект с описанным свойством `component`.
+В таком случае мы также можем указать следующие свойства:
+
+- `backgroundClose`
+- `draggable`
+- `beforeEach`
+
+Все эти свойства соответствуют параметром из [конфигурации](./config).
+
+```ts
+config({
+    confirm: {
+		component: ModalConfirm,
+        draggable: true,
+        backgroundClose: false,
+        beforeEach() {
+			Logger.write('Попытка открыть окно подтверждения.')
+        }
+    }
+})
+```

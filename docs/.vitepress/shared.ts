@@ -2,7 +2,7 @@ import {defineConfig} from "vitepress";
 
 export const shared = defineConfig({
 	title: 'Jenesius vue-modal',
-	lastUpdated: true,
+	// lastUpdated: true,
 
 	head: [
 		['link', { rel: 'icon', href: `/images/logo.png` }],
